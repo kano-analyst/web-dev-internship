@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 5 - CSS Styling</title>
+    <!-- Linking external CSS file for styling -->
+    <link rel="stylesheet" href="lesson-5-style.css">
+    <style>
+        /* Additional internal styles can be added here if needed */
+        h1{
+            color: purple;
+            font-size: 26px;
+        }
+        p{
+            color: green;
+            font-size: 20px;
+        }
+        .highlight {
+            background-color: yellow;
+            font-weight: bold;
+        }
+        #unique-heading {
+            text-decoration: underline;
+            color: orange;
+        }
+        #special-paragraph {
+            font-style: italic;
+            color: brown;
+        }
+        #main-content {
+            border: 2px solid black;
+            padding: 10px;
+        }
+        .container {
+            background-color: grey;
+            padding: 15px;
+        }   
+        .container .nested {
+            background-color: lightgrey;
+            margin-top: 10px;
+            padding: 10px;
+        }
+        .container .nested p{
+            color: darkblue;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="color: red; font-size: 24px;">Lesson 5 - CSS Styling</h1>
+    <p style="color: blue; font-size: 18px;">In this lesson, we will explore the basics of CSS (Cascading Style Sheets) and how to use it to style HTML elements. 
+        CSS allows you to control the layout, colors, fonts, and overall appearance of your web pages.</p>
+    <p style="color: blue; font-size: 18px;"> We will cover topics such as selectors, properties, and values, as well as how to 
+        link external CSS files to your HTML documents.  </p>
+
+     <!-- Demonstrating class selectors -->
+    <h2 class="highlight">This heading uses a class selector</h2>
+        <p class="highlight">This paragraph also uses the same class selector.</p>
+        <p class="info-text">This paragraph uses a different class selector.</p>
+        <div class="highlight">This div element uses the highlight class as well.</div>
+
+     <!-- Demonstrating id selectors -->
+        <h2 id="unique-heading">This heading uses an ID selector</h2>
+        <p id="special-paragraph">This paragraph has a unique ID selector.</p>
+        <div id="main-content">This div element uses an ID selector for unique styling.</div>
+
+        <!-- Demonstrating descendant selectors -->
+        <div class="container">
+            <h3>Parent Container</h3>
+            <p>This paragraph is inside the container div.</p>
+            <div class="nested">
+                <p>This paragraph is inside a nested div within the container.</p>
+                <span>This is a span inside the nested div.</span>
+            </div>
+            <ul>
+        </div>
+
+   
+</body>
+</html>
