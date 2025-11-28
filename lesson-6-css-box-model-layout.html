@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 6 - CSS Box Model and Layout</title>
+    <style>
+        .container {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            }
+        .profile {
+            width: 30%;
+            border: 1px solid #aaa;
+            padding: 15px;
+            }
+        .bio {
+            width: 70%;
+            border: 1px solid #aaa;
+            padding: 15px;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="profile">
+            <h2>John Doe</h2>
+            <img src="profile.jpeg" width="100">
+        </div>
+        <div class="bio">
+            <h3>Bio</h3>
+            <p>John is a web developer with interest in frontend technologies.</p>
+        </div>
+    </div>
+
+</body>
+</html>
