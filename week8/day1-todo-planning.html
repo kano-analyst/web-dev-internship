@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 8 Day 1: To-Do List App Planning</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        header { background: #f093fb; color: white; padding: 30px; border-radius: 15px 15px 0 0; }
+        .content { padding: 40px; }
+        h2 { color: #f093fb; border-bottom: 3px solid #f5576c; padding-bottom: 10px; margin: 30px 0 20px; }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+        .info-box { background: #fce4ec; border-left: 5px solid #f093fb; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        .wireframe { background: #f5f5f5; padding: 30px; border: 2px dashed #f093fb; margin: 20px 0; border-radius: 8px; }
+        .feature-card { background: #fce4ec; padding: 20px; margin: 15px 0; border-radius: 8px; border-left: 4px solid #f5576c; }
+        .btn { background: #f093fb; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 10px 10px 0; }
+        footer { background: #f093fb; color: white; padding: 20px; text-align: center; border-radius: 0 0 15px 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 8 - Day 1: To-Do List App Planning</h1>
+            <p>Monday | Duration: 3 hours</p>
+        </header>
+
+        <div class="content">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Plan a complete web application</li>
+                <li>Define project requirements</li>
+                <li>Design user interface wireframe</li>
+                <li>Identify needed HTML, CSS, and JavaScript</li>
+                <li>Create project file structure</li>
+            </ul>
+
+            <h2>📝 Project Overview</h2>
+            <div class="info-box">
+                <p><strong>To-Do List App:</strong> A fully functional task management application where users can add tasks, mark them complete, delete them, and see their progress. This project combines everything you've learned: HTML structure, CSS styling, Bootstrap components, and JavaScript interactivity.</p>
+            </div>
+
+            <h2>✨ Required Features</h2>
+            
+            <div class="feature-card">
+                <h3>1. Add New Tasks</h3>
+                <p>Users can type a task and add it to the list</p>
+                <ul>
+                    <li>Input field for task text</li>
+                    <li>Add button to submit</li>
+                    <li>Enter key support</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>2. Display Task List</h3>
+                <p>Show all tasks in a clean, organized list</p>
+                <ul>
+                    <li>Each task shows text</li>
+                    <li>Visual distinction between complete/incomplete</li>
+                    <li>Responsive layout</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>3. Mark Tasks Complete</h3>
+                <p>Click on task to toggle completion</p>
+                <ul>
+                    <li>Checkbox or click interaction</li>
+                    <li>Strike-through completed tasks</li>
+                    <li>Change visual appearance</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>4. Delete Tasks</h3>
+                <p>Remove tasks from the list</p>
+                <ul>
+                    <li>Delete button for each task</li>
+                    <li>Confirmation optional</li>
+                    <li>Smooth removal animation</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>5. Task Counter</h3>
+                <p>Show number of tasks and completion status</p>
+                <ul>
+                    <li>Total tasks count</li>
+                    <li>Completed tasks count</li>
+                    <li>Remaining tasks count</li>
+                </ul>
+            </div>
+
+            <h2>🎨 UI Wireframe</h2>
+            <div class="wireframe">
+                <pre>
+┌──────────────────────────────────────────┐
+│         MY TO-DO LIST 📝                 │
+├──────────────────────────────────────────┤
+│                                          │
+│  [Input: Add new task...     ] [+ Add]   │
+│                                          │
+├──────────────────────────────────────────┤
+│                                          │
+│  □ Buy groceries               [🗑️]      │
+│  ☑ Complete homework           [🗑️]      │
+│  □ Call dentist                [🗑️]      │
+│  □ Finish project              [🗑️]      │
+│                                          │
+├──────────────────────────────────────────┤
+│  Total: 4 | Completed: 1 | Remaining: 3 │
+└──────────────────────────────────────────┘
+                </pre>
+            </div>
+
+            <h2>🗂️ Project File Structure</h2>
+            <div class="code-block">
+todo-list-app/
+│
+├── index.html        (Main HTML structure)
+├── style.css         (Custom styles)
+└── script.js         (JavaScript functionality)
+            </div>
+
+            <h2>🧩 Technology Stack</h2>
+            <ul>
+                <li><strong>HTML5:</strong> Page structure, input field, task list</li>
+                <li><strong>Bootstrap 5:</strong> Cards, buttons, form controls, grid</li>
+                <li><strong>CSS3:</strong> Custom colors, animations, hover effects</li>
+                <li><strong>JavaScript:</strong> Add/delete/complete tasks, event handling</li>
+            </ul>
+
+            <h2>📋 HTML Elements Needed</h2>
+            <div class="code-block">
+<!-- Container -->
+<div class="container">
+    
+    <!-- Header -->
+    <h1>My To-Do List</h1>
+    
+    <!-- Input Section -->
+    <div class="input-section">
+        <input type="text" id="taskInput" placeholder="Add new task...">
+        <button id="addBtn">Add Task</button>
+    </div>
+    
+    <!-- Task List -->
+    <ul id="taskList">
+        <!-- Tasks will be added here dynamically -->
+    </ul>
+    
+    <!-- Stats Footer -->
+    <div class="stats">
+        <span>Total: <span id="totalCount">0</span></span>
+        <span>Completed: <span id="completedCount">0</span></span>
+        <span>Remaining: <span id="remainingCount">0</span></span>
+    </div>
+    
+</div>
+            </div>
+
+            <h2>🎨 CSS Styling Plan</h2>
+            <div class="code-block">
+/* Main container */
+- Center on page
+- Max width 600px
+- White background
+- Box shadow
+- Rounded corners
+
+/* Input section */
+- Flexbox layout
+- Full width input
+- Styled button
+- Padding and spacing
+
+/* Task items */
+- Flex layout for task + delete button
+- Hover effect
+- Completed tasks: strikethrough, gray color
+- Delete button on right side
+
+/* Stats footer */
+- Flex layout
+- Border top
+- Background color
+- Padding
+            </div>
+
+            <h2>⚙️ JavaScript Functions Needed</h2>
+            <div class="code-block">
+// 1. Add new task
+function addTask() {
+    // Get input value
+    // Create new task element
+    // Add to list
+    // Clear input
+    // Update counters
+}
+
+// 2. Delete task
+function deleteTask(taskElement) {
+    // Remove task from list
+    // Update counters
+}
+
+// 3. Toggle task completion
+function toggleComplete(taskElement) {
+    // Add/remove completed class
+    // Update counters
+}
+
+// 4. Update statistics
+function updateStats() {
+    // Count total tasks
+    // Count completed tasks
+    // Calculate remaining
+    // Update display
+}
+
+// 5. Event listeners
+// - Add button click
+// - Input enter key press
+// - Task click for toggle
+// - Delete button click
+            </div>
+
+            <h2>🚀 Development Steps</h2>
+            <ol>
+                <li><strong>Day 1 (Today):</strong> Planning, wireframe, file setup</li>
+                <li><strong>Day 2:</strong> Build HTML structure, add CSS styling, implement JavaScript</li>
+                <li><strong>Day 3:</strong> Testing, debugging, deployment to GitHub Pages</li>
+            </ol>
+
+            <h2>✏️ Today's Activities</h2>
+            <ol>
+                <li>Create project folder: <code>todo-list-app</code></li>
+                <li>Create three files: <code>index.html</code>, <code>style.css</code>, <code>script.js</code></li>
+                <li>Draw your own wireframe design on paper</li>
+                <li>List additional features you want to add (bonus features)</li>
+                <li>Research Bootstrap components to use (cards, buttons, forms)</li>
+            </ol>
+
+            <h2>💡 Bonus Features (Optional)</h2>
+            <ul>
+                <li>🌙 Dark mode toggle</li>
+                <li>💾 Save tasks to localStorage (persist on page reload)</li>
+                <li>📅 Add due dates to tasks</li>
+                <li>🎨 Color-code tasks by priority</li>
+                <li>🔍 Search/filter tasks</li>
+                <li>📱 Mobile responsive design</li>
+                <li>✏️ Edit existing tasks</li>
+            </ul>
+
+            <h2>📚 Resources to Review</h2>
+            <ul>
+                <li>Week 5: Bootstrap cards and buttons</li>
+                <li>Week 6: DOM manipulation and arrays</li>
+                <li>Week 7: Event handling and functions</li>
+                <li>Bootstrap documentation: <a href="https://getbootstrap.com" target="_blank">getbootstrap.com</a></li>
+            </ul>
+
+            <h2>✅ Today's Deliverable</h2>
+            <ul>
+                <li>✓ Project folder created: <code>todo-list-app</code></li>
+                <li>✓ Three empty files: index.html, style.css, script.js</li>
+                <li>✓ Hand-drawn wireframe (photo or scan)</li>
+                <li>✓ Features list documented</li>
+                <li>✓ Technology choices identified</li>
+                <li>✓ Development timeline planned</li>
+                <li>✓ Ready to start coding tomorrow!</li>
+            </ul>
+
+            <div style="margin-top: 40px;">
+                <a href="../week7/day3-form-validation.html" class="btn">← Previous</a>
+                <a href="../index.html" class="btn">Course Home</a>
+                <a href="day2-todo-development.html" class="btn">Next: Day 2 →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 8 - Day 1: To-Do List App Planning</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

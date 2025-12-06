@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 14 Day 1: Blade Templates & Syntax</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        header { background: #fcb69f; color: white; padding: 30px; border-radius: 15px 15px 0 0; }
+        .content { padding: 40px; }
+        h2 { color: #fcb69f; border-bottom: 3px solid #ffecd2; padding-bottom: 10px; margin: 30px 0 20px; }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        .info-box { background: #fff3cd; border-left: 5px solid #fcb69f; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border: 1px solid #ddd; }
+        th { background: #fcb69f; color: white; }
+        .btn { background: #fcb69f; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 10px 10px 0; }
+        footer { background: #fcb69f; color: white; padding: 20px; text-align: center; border-radius: 0 0 15px 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 14 - Day 1: Blade Templates & Syntax</h1>
+            <p>Monday | Duration: 3 hours | Master Laravel's Template Engine! 🎨</p>
+        </header>
+
+        <div class="content">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Understand Blade templating engine</li>
+                <li>Master Blade directives and syntax</li>
+                <li>Display data dynamically</li>
+                <li>Use control structures in templates</li>
+                <li>Convert HTML to Blade templates</li>
+            </ul>
+
+            <h2>🌟 What is Blade?</h2>
+            <div class="info-box">
+                <p><strong>Blade</strong> is Laravel's powerful templating engine. It allows you to write clean, readable templates with PHP logic while maintaining separation of concerns.</p>
+                <p><strong>File Extension:</strong> .blade.php (stored in resources/views/)</p>
+            </div>
+
+            <h2>📝 Displaying Data</h2>
+            
+            <h3>Basic Echo Syntax:</h3>
+            <div class="code-block">
+&lt;!-- Blade escapes HTML automatically (secure) --&gt;
+&lt;h1&gt;Hello, {{ $name }}!&lt;/h1&gt;
+
+&lt;!-- Display unescaped HTML (use carefully!) --&gt;
+&lt;div&gt;{!! $htmlContent !!}&lt;/div&gt;
+
+&lt;!-- Display if variable exists, otherwise default --&gt;
+&lt;p&gt;{{ $message ?? 'No message available' }}&lt;/p&gt;
+            </div>
+
+            <h3>Controller Example:</h3>
+            <div class="code-block">
+&lt;?php
+// app/Http/Controllers/PageController.php
+
+public function index()
+{
+    $name = "Ahmad Ibrahim";
+    $age = 20;
+    $course = "Web Development";
+    
+    return view('welcome', compact('name', 'age', 'course'));
+}
+?&gt;
+            </div>
+
+            <h3>View Example:</h3>
+            <div class="code-block">
+&lt;!-- resources/views/welcome.blade.php --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Welcome&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Welcome, {{ $name }}!&lt;/h1&gt;
+    &lt;p&gt;You are {{ $age }} years old.&lt;/p&gt;
+    &lt;p&gt;Enrolled in: {{ $course }}&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </div>
+
+            <h2>🔀 Conditional Statements</h2>
+            
+            <h3>@if, @elseif, @else:</h3>
+            <div class="code-block">
+&lt;!-- Check conditions --&gt;
+@if($score >= 80)
+    &lt;p style="color: green;"&gt;Excellent! Grade: A&lt;/p&gt;
+@elseif($score >= 70)
+    &lt;p style="color: blue;"&gt;Good! Grade: B&lt;/p&gt;
+@elseif($score >= 60)
+    &lt;p style="color: orange;"&gt;Average! Grade: C&lt;/p&gt;
+@else
+    &lt;p style="color: red;"&gt;Failed! Grade: F&lt;/p&gt;
+@endif
+            </div>
+
+            <h3>@unless (opposite of @if):</h3>
+            <div class="code-block">
+@unless($user->isAdmin)
+    &lt;p&gt;You don't have admin privileges.&lt;/p&gt;
+@endunless
+            </div>
+
+            <h3>@isset, @empty:</h3>
+            <div class="code-block">
+@isset($name)
+    &lt;p&gt;Name is set: {{ $name }}&lt;/p&gt;
+@endisset
+
+@empty($records)
+    &lt;p&gt;No records found!&lt;/p&gt;
+@endempty
+            </div>
+
+            <h2>🔁 Loops</h2>
+            
+            <h3>@foreach Loop:</h3>
+            <div class="code-block">
+&lt;!-- Controller --&gt;
+&lt;?php
+$students = [
+    ['name' => 'Ahmad', 'age' => 20],
+    ['name' => 'Fatima', 'age' => 19],
+    ['name' => 'Ibrahim', 'age' => 21],
+];
+return view('students', compact('students'));
+?&gt;
+
+&lt;!-- View --&gt;
+&lt;h2&gt;Students List&lt;/h2&gt;
+&lt;ul&gt;
+@foreach($students as $student)
+    &lt;li&gt;{{ $student['name'] }} - Age: {{ $student['age'] }}&lt;/li&gt;
+@endforeach
+&lt;/ul&gt;
+
+&lt;!-- Display message if empty --&gt;
+@forelse($students as $student)
+    &lt;li&gt;{{ $student['name'] }}&lt;/li&gt;
+@empty
+    &lt;p&gt;No students found.&lt;/p&gt;
+@endforelse
+            </div>
+
+            <h3>@for Loop:</h3>
+            <div class="code-block">
+&lt;h3&gt;Numbers 1 to 10:&lt;/h3&gt;
+&lt;ul&gt;
+@for($i = 1; $i <= 10; $i++)
+    &lt;li&gt;Number {{ $i }}&lt;/li&gt;
+@endfor
+&lt;/ul&gt;
+            </div>
+
+            <h3>@while Loop:</h3>
+            <div class="code-block">
+@php
+    $count = 1;
+@endphp
+
+@while($count <= 5)
+    &lt;p&gt;Count: {{ $count }}&lt;/p&gt;
+    @php
+        $count++;
+    @endphp
+@endwhile
+            </div>
+
+            <h3>$loop Variable (available in loops):</h3>
+            <div class="code-block">
+@foreach($students as $student)
+    &lt;p&gt;
+        @if($loop->first)
+            &lt;strong&gt;First:&lt;/strong&gt;
+        @endif
+        
+        {{ $student['name'] }}
+        
+        @if($loop->last)
+            &lt;strong&gt;(Last)&lt;/strong&gt;
+        @endif
+        
+        &lt;!-- Iteration: {{ $loop->iteration }} / {{ $loop->count }} --&gt;
+    &lt;/p&gt;
+@endforeach
+            </div>
+
+            <h2>📋 Blade Directives Reference</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Directive</th>
+                        <th>Purpose</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ }}</td>
+                        <td>Echo data (escaped)</td>
+                        <td>{{ $name }}</td>
+                    </tr>
+                    <tr>
+                        <td>{!! !!}</td>
+                        <td>Echo raw HTML</td>
+                        <td>{!! $html !!}</td>
+                    </tr>
+                    <tr>
+                        <td>@if / @endif</td>
+                        <td>Conditional</td>
+                        <td>@if($age > 18) Adult @endif</td>
+                    </tr>
+                    <tr>
+                        <td>@foreach / @endforeach</td>
+                        <td>Loop array</td>
+                        <td>@foreach($items as $item) ... @endforeach</td>
+                    </tr>
+                    <tr>
+                        <td>@for / @endfor</td>
+                        <td>For loop</td>
+                        <td>@for($i=0; $i<10; $i++) ... @endfor</td>
+                    </tr>
+                    <tr>
+                        <td>@php / @endphp</td>
+                        <td>Raw PHP code</td>
+                        <td>@php $x = 10; @endphp</td>
+                    </tr>
+                    <tr>
+                        <td>{{-- comment --}}</td>
+                        <td>Blade comment</td>
+                        <td>{{-- This won't show --}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>💻 Complete Example: Student Report Card</h2>
+            
+            <h3>Controller:</h3>
+            <div class="code-block">
+&lt;?php
+// app/Http/Controllers/ReportController.php
+
+namespace App\Http\Controllers;
+
+class ReportController extends Controller
+{
+    public function show()
+    {
+        $student = [
+            'name' => 'Ahmad Ibrahim',
+            'id' => 'STD001',
+            'class' => '10th Grade'
+        ];
+        
+        $subjects = [
+            ['name' => 'Mathematics', 'score' => 85],
+            ['name' => 'English', 'score' => 78],
+            ['name' => 'Science', 'score' => 92],
+            ['name' => 'History', 'score' => 70],
+            ['name' => 'Computer', 'score' => 88],
+        ];
+        
+        return view('report-card', compact('student', 'subjects'));
+    }
+}
+?&gt;
+            </div>
+
+            <h3>Route:</h3>
+            <div class="code-block">
+&lt;?php
+// routes/web.php
+
+use App\Http\Controllers\ReportController;
+
+Route::get('/report', [ReportController::class, 'show']);
+?&gt;
+            </div>
+
+            <h3>View (resources/views/report-card.blade.php):</h3>
+            <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Report Card&lt;/title&gt;
+    &lt;style&gt;
+        body { font-family: Arial; max-width: 600px; margin: 50px auto; }
+        h1 { color: #fcb69f; text-align: center; }
+        .info { background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 20px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border: 1px solid #ddd; }
+        th { background: #fcb69f; color: white; }
+        .grade-a { color: green; font-weight: bold; }
+        .grade-b { color: blue; }
+        .grade-c { color: orange; }
+        .grade-f { color: red; }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Report Card&lt;/h1&gt;
+    
+    &lt;div class="info"&gt;
+        &lt;p&gt;&lt;strong&gt;Name:&lt;/strong&gt; {{ $student['name'] }}&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Student ID:&lt;/strong&gt; {{ $student['id'] }}&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Class:&lt;/strong&gt; {{ $student['class'] }}&lt;/p&gt;
+    &lt;/div&gt;
+    
+    &lt;h2&gt;Subjects & Scores&lt;/h2&gt;
+    &lt;table&gt;
+        &lt;thead&gt;
+            &lt;tr&gt;
+                &lt;th&gt;#&lt;/th&gt;
+                &lt;th&gt;Subject&lt;/th&gt;
+                &lt;th&gt;Score&lt;/th&gt;
+                &lt;th&gt;Grade&lt;/th&gt;
+                &lt;th&gt;Status&lt;/th&gt;
+            &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+            @php
+                $totalScore = 0;
+            @endphp
+            
+            @foreach($subjects as $subject)
+                @php
+                    $totalScore += $subject['score'];
+                    
+                    // Calculate grade
+                    if($subject['score'] >= 80) {
+                        $grade = 'A';
+                        $gradeClass = 'grade-a';
+                    } elseif($subject['score'] >= 70) {
+                        $grade = 'B';
+                        $gradeClass = 'grade-b';
+                    } elseif($subject['score'] >= 60) {
+                        $grade = 'C';
+                        $gradeClass = 'grade-c';
+                    } else {
+                        $grade = 'F';
+                        $gradeClass = 'grade-f';
+                    }
+                @endphp
+                
+                &lt;tr&gt;
+                    &lt;td&gt;{{ $loop->iteration }}&lt;/td&gt;
+                    &lt;td&gt;{{ $subject['name'] }}&lt;/td&gt;
+                    &lt;td&gt;{{ $subject['score'] }}&lt;/td&gt;
+                    &lt;td class="{{ $gradeClass }}"&gt;{{ $grade }}&lt;/td&gt;
+                    &lt;td&gt;
+                        @if($subject['score'] >= 60)
+                            ✅ Pass
+                        @else
+                            ❌ Fail
+                        @endif
+                    &lt;/td&gt;
+                &lt;/tr&gt;
+            @endforeach
+        &lt;/tbody&gt;
+    &lt;/table&gt;
+    
+    @php
+        $average = $totalScore / count($subjects);
+    @endphp
+    
+    &lt;div class="info"&gt;
+        &lt;h3&gt;Summary&lt;/h3&gt;
+        &lt;p&gt;&lt;strong&gt;Total Subjects:&lt;/strong&gt; {{ count($subjects) }}&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Total Score:&lt;/strong&gt; {{ $totalScore }} / {{ count($subjects) * 100 }}&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Average:&lt;/strong&gt; {{ number_format($average, 2) }}%&lt;/p&gt;
+        
+        @if($average >= 80)
+            &lt;p style="color: green;"&gt;&lt;strong&gt;Overall Grade: A (Excellent!)&lt;/strong&gt;&lt;/p&gt;
+        @elseif($average >= 70)
+            &lt;p style="color: blue;"&gt;&lt;strong&gt;Overall Grade: B (Good)&lt;/strong&gt;&lt;/p&gt;
+        @elseif($average >= 60)
+            &lt;p style="color: orange;"&gt;&lt;strong&gt;Overall Grade: C (Average)&lt;/strong&gt;&lt;/p&gt;
+        @else
+            &lt;p style="color: red;"&gt;&lt;strong&gt;Overall Grade: F (Needs Improvement)&lt;/strong&gt;&lt;/p&gt;
+        @endif
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </div>
+
+            <h2>✏️ Practice Exercises</h2>
+            <ol>
+                <li>Create a product listing page using @foreach</li>
+                <li>Build a grade calculator with @if conditions</li>
+                <li>Display odd/even numbers using @for and @if</li>
+                <li>Create a shopping cart with @forelse (show message if empty)</li>
+                <li>Use $loop variable to add alternating row colors</li>
+                <li>Convert one of your previous HTML pages to Blade template</li>
+            </ol>
+
+            <h2>✅ Today's Deliverable</h2>
+            <ul>
+                <li>✓ Understand Blade syntax ({{ }}, @if, @foreach)</li>
+                <li>✓ Create dynamic pages with data</li>
+                <li>✓ Use control structures in templates</li>
+                <li>✓ Report card page displaying student grades</li>
+                <li>✓ At least 2 practice exercises completed</li>
+            </ul>
+
+            <div style="margin-top: 40px;">
+                <a href="../week13/day3-routes-controllers-views.html" class="btn">← Previous</a>
+                <a href="../index.html" class="btn">Course Home</a>
+                <a href="day2-layouts-partials.html" class="btn">Next →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 14 - Day 1: Blade Templates & Syntax</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

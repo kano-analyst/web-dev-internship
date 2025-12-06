@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 1: File Uploads and Storage in Laravel - Week 19</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        header {
+            background: #4facfe;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 2rem;
+        }
+
+        h2 {
+            color: #4facfe;
+            margin: 2rem 0 1rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #4facfe;
+        }
+
+        h3 {
+            color: #00f2fe;
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        .code-block {
+            background: #f4f4f4;
+            border-left: 4px solid #4facfe;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .info-box {
+            background: #e7f5ff;
+            border-left: 4px solid #00f2fe;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        ul, ol {
+            margin: 1rem 0 1rem 2rem;
+        }
+
+        li {
+            margin: 0.5rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        table th,
+        table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        table th {
+            background: #4facfe;
+            color: white;
+        }
+
+        table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .exercise {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            border: 2px solid #4facfe;
+        }
+
+        .deliverable {
+            background: #d4edda;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+            border: 2px solid #28a745;
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+        }
+
+        a {
+            color: #4facfe;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            background: #4facfe;
+            color: white;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📁 Day 1: File Uploads and Storage in Laravel</h1>
+            <p>Week 19 - Mastering File Uploads, Storage Configuration, and Security</p>
+        </header>
+
+        <div class="content">
+            <h2>📚 Introduction to File Uploads in Laravel</h2>
+            <p>Laravel provides a powerful and flexible file storage system built on top of Frank de Jonge's Flysystem PHP package. This abstraction allows you to seamlessly switch between local filesystem, Amazon S3, and other storage services with minimal code changes.</p>
+
+            <div class="info-box">
+                <strong>💡 Key Benefits:</strong>
+                <ul>
+                    <li>Unified API for different storage systems</li>
+                    <li>Built-in validation for file uploads</li>
+                    <li>Automatic file naming and organization</li>
+                    <li>Support for multiple storage disks</li>
+                    <li>Security features for private file storage</li>
+                </ul>
+            </div>
+
+            <h2>⚙️ Storage Configuration (config/filesystems.php)</h2>
+            <p>Laravel's storage system is configured in the <code>config/filesystems.php</code> file. This file defines various storage "disks" that your application can use.</p>
+
+            <h3>Default Configuration</h3>
+            <div class="code-block">
+'default' => env('FILESYSTEM_DISK', 'local'),
+
+'disks' => [
+
+    'local' => [
+        'driver' => 'local',
+        'root' => storage_path('app'),
+        'throw' => false,
+    ],
+
+    'public' => [
+        'driver' => 'local',
+        'root' => storage_path('app/public'),
+        'url' => env('APP_URL').'/storage',
+        'visibility' => 'public',
+        'throw' => false,
+    ],
+
+    's3' => [
+        'driver' => 's3',
+        'key' => env('AWS_ACCESS_KEY_ID'),
+        'secret' => env('AWS_SECRET_ACCESS_KEY'),
+        'region' => env('AWS_DEFAULT_REGION'),
+        'bucket' => env('AWS_BUCKET'),
+        'url' => env('AWS_URL'),
+        'endpoint' => env('AWS_ENDPOINT'),
+        'throw' => false,
+    ],
+
+],
+            </div>
+
+            <h3>Storage Disks Explained</h3>
+            <table>
+                <tr>
+                    <th>Disk</th>
+                    <th>Description</th>
+                    <th>Use Case</th>
+                </tr>
+                <tr>
+                    <td><strong>local</strong></td>
+                    <td>Private storage in storage/app</td>
+                    <td>Private documents, user data, temporary files</td>
+                </tr>
+                <tr>
+                    <td><strong>public</strong></td>
+                    <td>Public storage in storage/app/public</td>
+                    <td>Profile pictures, product images, downloadable files</td>
+                </tr>
+                <tr>
+                    <td><strong>s3</strong></td>
+                    <td>Amazon S3 cloud storage</td>
+                    <td>Large-scale applications, CDN integration</td>
+                </tr>
+            </table>
+
+            <h2>✅ File Validation</h2>
+            <p>Before storing uploaded files, it's crucial to validate them to ensure they meet your application's requirements and security standards.</p>
+
+            <h3>Common Validation Rules</h3>
+            <div class="code-block">
+// In a Controller or Form Request
+
+public function store(Request $request)
+{
+    $validated = $request->validate([
+        'avatar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'document' => 'required|file|mimes:pdf,doc,docx|max:5120',
+        'video' => 'nullable|mimetypes:video/avi,video/mpeg,video/mp4|max:51200',
+    ]);
+    
+    // Process the validated files...
+}
+            </div>
+
+            <h3>Validation Rules Reference</h3>
+            <table>
+                <tr>
+                    <th>Rule</th>
+                    <th>Description</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td><strong>file</strong></td>
+                    <td>Must be a successfully uploaded file</td>
+                    <td>'document' => 'file'</td>
+                </tr>
+                <tr>
+                    <td><strong>image</strong></td>
+                    <td>Must be an image (jpeg, png, bmp, gif, svg, or webp)</td>
+                    <td>'avatar' => 'image'</td>
+                </tr>
+                <tr>
+                    <td><strong>mimes</strong></td>
+                    <td>File must have a MIME type from the list</td>
+                    <td>'photo' => 'mimes:jpeg,png'</td>
+                </tr>
+                <tr>
+                    <td><strong>mimetypes</strong></td>
+                    <td>File must match specified MIME types</td>
+                    <td>'video' => 'mimetypes:video/mp4'</td>
+                </tr>
+                <tr>
+                    <td><strong>max</strong></td>
+                    <td>Maximum file size in kilobytes</td>
+                    <td>'file' => 'max:10240' (10MB)</td>
+                </tr>
+                <tr>
+                    <td><strong>min</strong></td>
+                    <td>Minimum file size in kilobytes</td>
+                    <td>'file' => 'min:100'</td>
+                </tr>
+                <tr>
+                    <td><strong>dimensions</strong></td>
+                    <td>Image dimension constraints</td>
+                    <td>'image' => 'dimensions:min_width=100,min_height=100'</td>
+                </tr>
+            </table>
+
+            <h3>Advanced Validation Example</h3>
+            <div class="code-block">
+use Illuminate\Validation\Rules\File;
+
+public function store(Request $request)
+{
+    $validated = $request->validate([
+        'avatar' => [
+            'required',
+            'image',
+            File::image()
+                ->min(100)
+                ->max(2 * 1024)
+                ->dimensions(Rule::dimensions()->maxWidth(1000)->maxHeight(1000)),
+        ],
+        'attachment' => [
+            'required',
+            File::types(['pdf', 'doc', 'docx'])
+                ->max(10 * 1024),
+        ],
+    ]);
+}
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Security Warning:</strong> Never trust the file extension alone. Always validate MIME types and consider using additional security measures like antivirus scanning for user-uploaded files.
+            </div>
+
+            <h2>📤 Handling File Uploads</h2>
+            <p>Laravel makes it easy to handle file uploads through the request object. Here are various methods to process uploaded files.</p>
+
+            <h3>Basic File Upload Form</h3>
+            <div class="code-block">
+&lt;!-- resources/views/upload.blade.php --&gt;
+&lt;form action="{{ route('files.store') }}" method="POST" enctype="multipart/form-data"&gt;
+    @csrf
+    
+    &lt;div class="form-group"&gt;
+        &lt;label for="avatar"&gt;Profile Picture&lt;/label&gt;
+        &lt;input type="file" name="avatar" id="avatar" class="form-control" accept="image/*"&gt;
+        @error('avatar')
+            &lt;span class="text-danger"&gt;{{ $message }}&lt;/span&gt;
+        @enderror
+    &lt;/div&gt;
+    
+    &lt;button type="submit" class="btn btn-primary"&gt;Upload&lt;/button&gt;
+&lt;/form&gt;
+            </div>
+
+            <h3>Controller - Basic Upload</h3>
+            <div class="code-block">
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
+class FileUploadController extends Controller
+{
+    public function store(Request $request)
+    {
+        // Validate the file
+        $request->validate([
+            'avatar' => 'required|image|mimes:jpeg,png,jpg|max:2048'
+        ]);
+        
+        // Store the file
+        if ($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+            
+            // Get file information
+            $fileName = $file->getClientOriginalName();
+            $fileSize = $file->getSize();
+            $fileMimeType = $file->getMimeType();
+            
+            // Store the file
+            $path = $file->store('avatars', 'public');
+            
+            return back()->with('success', 'File uploaded successfully!')
+                         ->with('path', $path);
+        }
+        
+        return back()->with('error', 'No file uploaded.');
+    }
+}
+            </div>
+
+            <h2>💾 Storing Files Securely</h2>
+            <p>Laravel provides multiple methods to store files with different levels of control and security.</p>
+
+            <h3>Storage Methods</h3>
+            <div class="code-block">
+// 1. Store with automatic name generation
+$path = $request->file('avatar')->store('avatars');
+// Result: avatars/random-hash.jpg
+
+// 2. Store on specific disk
+$path = $request->file('avatar')->store('avatars', 'public');
+// Stores in storage/app/public/avatars
+
+// 3. Store with custom name
+$path = $request->file('avatar')->storeAs(
+    'avatars',
+    auth()->id() . '-avatar.jpg',
+    'public'
+);
+// Result: avatars/123-avatar.jpg
+
+// 4. Using Storage facade
+$path = Storage::disk('public')->put(
+    'avatars',
+    $request->file('avatar')
+);
+
+// 5. Store with custom name using Storage facade
+$path = Storage::disk('public')->putFileAs(
+    'avatars',
+    $request->file('avatar'),
+    'custom-name.jpg'
+);
+
+// 6. Get file contents and store
+$contents = file_get_contents($request->file('avatar'));
+Storage::disk('public')->put('avatars/file.jpg', $contents);
+            </div>
+
+            <h3>Complete Upload Example with User Model</h3>
+            <div class="code-block">
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+
+class ProfileController extends Controller
+{
+    public function updateAvatar(Request $request)
+    {
+        $request->validate([
+            'avatar' => 'required|image|mimes:jpeg,png,jpg|max:2048'
+        ]);
+        
+        $user = auth()->user();
+        
+        // Delete old avatar if exists
+        if ($user->avatar) {
+            Storage::disk('public')->delete($user->avatar);
+        }
+        
+        // Generate unique filename
+        $fileName = Str::slug($user->name) . '-' . time() . '.' . 
+                    $request->file('avatar')->getClientOriginalExtension();
+        
+        // Store new avatar
+        $path = $request->file('avatar')->storeAs(
+            'avatars',
+            $fileName,
+            'public'
+        );
+        
+        // Update user record
+        $user->update([
+            'avatar' => $path
+        ]);
+        
+        return redirect()->back()->with('success', 'Avatar updated successfully!');
+    }
+}
+            </div>
+
+            <h2>🔍 Retrieving Files</h2>
+            <p>Laravel provides various methods to retrieve and work with stored files.</p>
+
+            <h3>File Retrieval Methods</h3>
+            <div class="code-block">
+use Illuminate\Support\Facades\Storage;
+
+// 1. Check if file exists
+if (Storage::disk('public')->exists('avatars/photo.jpg')) {
+    // File exists
+}
+
+// 2. Get file contents
+$contents = Storage::disk('public')->get('avatars/photo.jpg');
+
+// 3. Download a file
+return Storage::disk('public')->download('documents/report.pdf');
+
+// 4. Download with custom name
+return Storage::disk('public')->download(
+    'documents/report.pdf',
+    'monthly-report.pdf'
+);
+
+// 5. Get file URL (public disk only)
+$url = Storage::url('avatars/photo.jpg');
+// Returns: /storage/avatars/photo.jpg
+
+// 6. Get temporary URL (for private files with S3)
+$url = Storage::temporaryUrl(
+    'documents/private.pdf',
+    now()->addMinutes(5)
+);
+
+// 7. Get file size
+$size = Storage::size('avatars/photo.jpg');
+
+// 8. Get last modified time
+$time = Storage::lastModified('avatars/photo.jpg');
+
+// 9. Get all files in directory
+$files = Storage::files('avatars');
+
+// 10. Get all files recursively
+$files = Storage::allFiles('avatars');
+            </div>
+
+            <h3>Serving Private Files</h3>
+            <div class="code-block">
+namespace App\Http\Controllers;
+
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+
+class DocumentController extends Controller
+{
+    public function show($id)
+    {
+        $document = Document::findOrFail($id);
+        
+        // Authorization check
+        if (auth()->user()->cannot('view', $document)) {
+            abort(403);
+        }
+        
+        // Check if file exists
+        if (!Storage::exists($document->path)) {
+            abort(404);
+        }
+        
+        // Return file response
+        return response()->file(storage_path('app/' . $document->path));
+    }
+    
+    public function download($id)
+    {
+        $document = Document::findOrFail($id);
+        
+        // Authorization check
+        $this->authorize('download', $document);
+        
+        return Storage::download(
+            $document->path,
+            $document->original_name
+        );
+    }
+}
+            </div>
+
+            <h2>🖼️ Displaying Images</h2>
+            <p>Learn how to properly display uploaded images in your Laravel application.</p>
+
+            <h3>Creating the Symbolic Link</h3>
+            <div class="info-box">
+                <strong>📌 Important:</strong> Before you can access files in the public disk via URL, you need to create a symbolic link from <code>public/storage</code> to <code>storage/app/public</code>.
+            </div>
+
+            <div class="code-block">
+# Run this Artisan command once
+php artisan storage:link
+
+# This creates: public/storage -> storage/app/public
+            </div>
+
+            <h3>Displaying Images in Blade Templates</h3>
+            <div class="code-block">
+&lt;!-- Using Storage facade --&gt;
+&lt;img src="{{ Storage::url($user->avatar) }}" alt="User Avatar"&gt;
+
+&lt;!-- Using asset helper --&gt;
+&lt;img src="{{ asset('storage/' . $user->avatar) }}" alt="User Avatar"&gt;
+
+&lt;!-- With fallback image --&gt;
+&lt;img src="{{ $user->avatar ? Storage::url($user->avatar) : asset('images/default-avatar.png') }}" 
+     alt="User Avatar"&gt;
+
+&lt;!-- Responsive image with styling --&gt;
+&lt;div class="avatar-container"&gt;
+    &lt;img src="{{ Storage::url($user->avatar) }}" 
+         alt="{{ $user->name }}"
+         class="rounded-circle img-fluid"
+         style="width: 150px; height: 150px; object-fit: cover;"&gt;
+&lt;/div&gt;
+            </div>
+
+            <h3>Creating Thumbnails (with Intervention Image)</h3>
+            <div class="code-block">
+// First install: composer require intervention/image
+
+use Intervention\Image\Facades\Image;
+
+public function store(Request $request)
+{
+    $request->validate([
+        'photo' => 'required|image|max:5120'
+    ]);
+    
+    $file = $request->file('photo');
+    $fileName = time() . '-' . $file->getClientOriginalName();
+    
+    // Store original
+    $path = $file->storeAs('photos/originals', $fileName, 'public');
+    
+    // Create thumbnail
+    $thumbnail = Image::make($file)
+        ->fit(300, 300)
+        ->encode('jpg', 80);
+    
+    Storage::disk('public')->put(
+        'photos/thumbnails/' . $fileName,
+        $thumbnail
+    );
+    
+    return back()->with('success', 'Photo uploaded with thumbnail!');
+}
+            </div>
+
+            <h2>🔒 File Security</h2>
+            <p>Implementing proper security measures for file uploads and storage is critical for protecting your application.</p>
+
+            <h3>Public vs Private Storage</h3>
+            <table>
+                <tr>
+                    <th>Storage Type</th>
+                    <th>Location</th>
+                    <th>Accessibility</th>
+                    <th>Use Cases</th>
+                </tr>
+                <tr>
+                    <td><strong>Public</strong></td>
+                    <td>storage/app/public</td>
+                    <td>Direct URL access via /storage</td>
+                    <td>Profile pictures, product images, public documents</td>
+                </tr>
+                <tr>
+                    <td><strong>Private</strong></td>
+                    <td>storage/app</td>
+                    <td>Only via controller with authentication</td>
+                    <td>User documents, invoices, sensitive files</td>
+                </tr>
+            </table>
+
+            <h3>Secure File Upload Implementation</h3>
+            <div class="code-block">
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+
+class SecureFileController extends Controller
+{
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
+    public function store(Request $request)
+    {
+        $request->validate([
+            'document' => [
+                'required',
+                'file',
+                'mimes:pdf,doc,docx',
+                'max:10240', // 10MB
+            ]
+        ]);
+        
+        $file = $request->file('document');
+        
+        // Generate secure random filename
+        $fileName = Str::random(40) . '.' . $file->getClientOriginalExtension();
+        
+        // Store in private storage
+        $path = $file->storeAs(
+            'documents/' . auth()->id(),
+            $fileName,
+            'local' // Private disk
+        );
+        
+        // Save metadata to database
+        auth()->user()->documents()->create([
+            'original_name' => $file->getClientOriginalName(),
+            'file_path' => $path,
+            'file_size' => $file->getSize(),
+            'mime_type' => $file->getMimeType(),
+        ]);
+        
+        return back()->with('success', 'Document uploaded securely!');
+    }
+    
+    public function show($id)
+    {
+        $document = auth()->user()->documents()->findOrFail($id);
+        
+        if (!Storage::exists($document->file_path)) {
+            abort(404, 'File not found');
+        }
+        
+        return response()->file(
+            storage_path('app/' . $document->file_path)
+        );
+    }
+    
+    public function destroy($id)
+    {
+        $document = auth()->user()->documents()->findOrFail($id);
+        
+        // Delete file from storage
+        Storage::delete($document->file_path);
+        
+        // Delete database record
+        $document->delete();
+        
+        return back()->with('success', 'Document deleted successfully!');
+    }
+}
+            </div>
+
+            <h3>Additional Security Best Practices</h3>
+            <div class="warning-box">
+                <strong>🛡️ Security Checklist:</strong>
+                <ul>
+                    <li><strong>Validate MIME types:</strong> Don't rely on file extensions alone</li>
+                    <li><strong>Limit file sizes:</strong> Prevent denial-of-service attacks</li>
+                    <li><strong>Sanitize filenames:</strong> Use random names or sanitize user input</li>
+                    <li><strong>Store sensitive files privately:</strong> Use local disk, not public</li>
+                    <li><strong>Implement authorization:</strong> Check user permissions before serving files</li>
+                    <li><strong>Scan for malware:</strong> Consider integrating antivirus scanning</li>
+                    <li><strong>Use HTTPS:</strong> Encrypt file transfers</li>
+                    <li><strong>Set proper permissions:</strong> Ensure storage directories have correct permissions</li>
+                </ul>
+            </div>
+
+            <h2>🔗 Symbolic Links</h2>
+            <p>Understanding and managing symbolic links for public file access.</p>
+
+            <h3>What is a Symbolic Link?</h3>
+            <div class="info-box">
+                A symbolic link is a special type of file that points to another file or directory. In Laravel, we use it to make the <code>storage/app/public</code> directory accessible from the web by creating a link in the <code>public</code> directory.
+            </div>
+
+            <h3>Creating the Storage Link</h3>
+            <div class="code-block">
+# Command line method
+php artisan storage:link
+
+# Output:
+# The [public/storage] link has been connected to [storage/app/public].
+
+# Verify the link was created
+ls -la public/storage  # On Unix/Linux/Mac
+dir public\storage     # On Windows
+            </div>
+
+            <h3>Custom Symbolic Links</h3>
+            <div class="code-block">
+// In config/filesystems.php
+'links' => [
+    public_path('storage') => storage_path('app/public'),
+    public_path('images') => storage_path('app/images'),
+    public_path('documents') => storage_path('app/documents'),
+],
+
+// After adding custom links, run:
+// php artisan storage:link
+            </div>
+
+            <h3>Troubleshooting Symbolic Links</h3>
+            <div class="code-block">
+// If link already exists
+# Delete the old link first
+rm public/storage      # Unix/Linux/Mac
+rmdir public\storage   # Windows
+
+# Then recreate
+php artisan storage:link
+
+// On shared hosting without shell access
+// Create a route to manually create the link
+Route::get('/create-storage-link', function () {
+    if (!file_exists(public_path('storage'))) {
+        symlink(storage_path('app/public'), public_path('storage'));
+        return 'Storage link created successfully!';
+    }
+    return 'Storage link already exists!';
+});
+            </div>
+
+            <h2>📚 Multiple File Uploads</h2>
+            <p>Handle uploading multiple files simultaneously with proper validation and storage.</p>
+
+            <h3>Multiple Upload Form</h3>
+            <div class="code-block">
+&lt;!-- resources/views/gallery/create.blade.php --&gt;
+&lt;form action="{{ route('gallery.store') }}" method="POST" enctype="multipart/form-data"&gt;
+    @csrf
+    
+    &lt;div class="form-group"&gt;
+        &lt;label for="images"&gt;Upload Photos (Multiple)&lt;/label&gt;
+        &lt;input type="file" 
+               name="images[]" 
+               id="images" 
+               class="form-control" 
+               multiple 
+               accept="image/*"&gt;
+        @error('images.*')
+            &lt;span class="text-danger"&gt;{{ $message }}&lt;/span&gt;
+        @enderror
+    &lt;/div&gt;
+    
+    &lt;div class="form-group"&gt;
+        &lt;label for="title"&gt;Gallery Title&lt;/label&gt;
+        &lt;input type="text" name="title" id="title" class="form-control"&gt;
+    &lt;/div&gt;
+    
+    &lt;button type="submit" class="btn btn-primary"&gt;Upload Gallery&lt;/button&gt;
+&lt;/form&gt;
+
+&lt;!-- Preview uploaded images with JavaScript --&gt;
+&lt;div id="preview" class="row mt-3"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+document.getElementById('images').addEventListener('change', function(e) {
+    const preview = document.getElementById('preview');
+    preview.innerHTML = '';
+    
+    Array.from(e.target.files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const col = document.createElement('div');
+            col.className = 'col-md-3 mb-3';
+            col.innerHTML = `&lt;img src="${e.target.result}" class="img-fluid img-thumbnail"&gt;`;
+            preview.appendChild(col);
+        }
+        reader.readAsDataURL(file);
+    });
+});
+&lt;/script&gt;
+            </div>
+
+            <h3>Controller - Multiple Files</h3>
+            <div class="code-block">
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use App\Models\Gallery;
+
+class GalleryController extends Controller
+{
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'images' => 'required|array|min:1|max:10',
+            'images.*' => 'required|image|mimes:jpeg,png,jpg|max:2048'
+        ]);
+        
+        // Create gallery
+        $gallery = Gallery::create([
+            'title' => $request->title,
+            'user_id' => auth()->id(),
+        ]);
+        
+        // Process each image
+        $uploadedImages = [];
+        
+        foreach ($request->file('images') as $image) {
+            // Generate unique filename
+            $fileName = time() . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
+            
+            // Store image
+            $path = $image->storeAs('galleries/' . $gallery->id, $fileName, 'public');
+            
+            // Save to database
+            $gallery->images()->create([
+                'path' => $path,
+                'filename' => $fileName,
+                'size' => $image->getSize(),
+            ]);
+            
+            $uploadedImages[] = $path;
+        }
+        
+        return redirect()
+            ->route('gallery.show', $gallery)
+            ->with('success', count($uploadedImages) . ' images uploaded successfully!');
+    }
+    
+    public function show(Gallery $gallery)
+    {
+        return view('gallery.show', compact('gallery'));
+    }
+}
+            </div>
+
+            <h3>Database Migration for Gallery</h3>
+            <div class="code-block">
+// database/migrations/xxxx_create_galleries_table.php
+public function up()
+{
+    Schema::create('galleries', function (Blueprint $table) {
+        $table->id();
+        $table->foreignId('user_id')->constrained()->onDelete('cascade');
+        $table->string('title');
+        $table->timestamps();
+    });
+    
+    Schema::create('gallery_images', function (Blueprint $table) {
+        $table->id();
+        $table->foreignId('gallery_id')->constrained()->onDelete('cascade');
+        $table->string('path');
+        $table->string('filename');
+        $table->integer('size');
+        $table->timestamps();
+    });
+}
+            </div>
+
+            <h3>Display Gallery</h3>
+            <div class="code-block">
+&lt;!-- resources/views/gallery/show.blade.php --&gt;
+@extends('layouts.app')
+
+@section('content')
+&lt;div class="container"&gt;
+    &lt;h1&gt;{{ $gallery->title }}&lt;/h1&gt;
+    
+    &lt;div class="row"&gt;
+        @foreach($gallery->images as $image)
+        &lt;div class="col-md-3 mb-4"&gt;
+            &lt;div class="card"&gt;
+                &lt;img src="{{ Storage::url($image->path) }}" 
+                     class="card-img-top" 
+                     alt="Gallery Image"
+                     style="height: 200px; object-fit: cover;"&gt;
+                &lt;div class="card-body"&gt;
+                    &lt;p class="card-text"&gt;
+                        Size: {{ number_format($image->size / 1024, 2) }} KB
+                    &lt;/p&gt;
+                    &lt;form action="{{ route('gallery.image.destroy', $image) }}" method="POST"&gt;
+                        @csrf
+                        @method('DELETE')
+                        &lt;button type="submit" class="btn btn-danger btn-sm"&gt;Delete&lt;/button&gt;
+                    &lt;/form&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        @endforeach
+    &lt;/div&gt;
+&lt;/div&gt;
+@endsection
+            </div>
+
+            <h2>🎯 Practical Exercises</h2>
+
+            <div class="exercise">
+                <h3>Exercise 1: Profile Avatar Upload</h3>
+                <p><strong>Objective:</strong> Create a profile avatar upload system with validation and preview.</p>
+                <p><strong>Requirements:</strong></p>
+                <ul>
+                    <li>Create a form to upload profile avatars</li>
+                    <li>Validate: image type, max 2MB, dimensions at least 200x200</li>
+                    <li>Store in public storage with user-specific naming</li>
+                    <li>Delete old avatar when uploading new one</li>
+                    <li>Display avatar on profile page with fallback</li>
+                    <li>Add JavaScript preview before upload</li>
+                </ul>
+                <p><strong>Bonus:</strong> Create both original and thumbnail versions</p>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 2: Document Management System</h3>
+                <p><strong>Objective:</strong> Build a secure document upload and management system.</p>
+                <p><strong>Requirements:</strong></p>
+                <ul>
+                    <li>Allow users to upload PDF, DOC, DOCX files (max 10MB)</li>
+                    <li>Store files in private storage</li>
+                    <li>Create a documents table with: original_name, file_path, file_size, mime_type</li>
+                    <li>Display list of user's documents with download links</li>
+                    <li>Implement authorization (users can only access their own files)</li>
+                    <li>Add ability to delete documents</li>
+                    <li>Show file size in human-readable format</li>
+                </ul>
+                <p><strong>Bonus:</strong> Add file search and filtering functionality</p>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 3: Photo Gallery with Multiple Uploads</h3>
+                <p><strong>Objective:</strong> Create a photo gallery system supporting multiple image uploads.</p>
+                <p><strong>Requirements:</strong></p>
+                <ul>
+                    <li>Form to upload multiple images at once (3-10 images)</li>
+                    <li>Validate each image: jpeg/png, max 5MB per image</li>
+                    <li>Create gallery and gallery_images tables</li>
+                    <li>Store images in public storage organized by gallery ID</li>
+                    <li>Display gallery with grid layout</li>
+                    <li>Add ability to delete individual images</li>
+                    <li>Show upload progress for multiple files</li>
+                </ul>
+                <p><strong>Bonus:</strong> Add image reordering and gallery cover selection</p>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 4: File Type Icons</h3>
+                <p><strong>Objective:</strong> Display appropriate icons for different file types.</p>
+                <p><strong>Requirements:</strong></p>
+                <ul>
+                    <li>Create a helper function to determine file type from MIME type</li>
+                    <li>Display different icons for: PDF, Word, Excel, Images, Videos, Others</li>
+                    <li>Create a file listing page showing: icon, filename, size, upload date</li>
+                    <li>Add download functionality for each file</li>
+                    <li>Show file count by type</li>
+                </ul>
+                <p><strong>Bonus:</strong> Add inline preview for images and PDFs</p>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 5: Advanced File Management</h3>
+                <p><strong>Objective:</strong> Build a complete file management system with folders.</p>
+                <p><strong>Requirements:</strong></p>
+                <ul>
+                    <li>Allow users to create folders</li>
+                    <li>Upload files to specific folders</li>
+                    <li>Move files between folders</li>
+                    <li>Rename files and folders</li>
+                    <li>Display breadcrumb navigation</li>
+                    <li>Show total storage used by user</li>
+                    <li>Implement file sharing with other users</li>
+                </ul>
+                <p><strong>Bonus:</strong> Add zip download for folders and search functionality</p>
+            </div>
+
+            <h2>📦 Deliverable</h2>
+            <div class="deliverable">
+                <h3>Project: Personal Document Manager</h3>
+                <p>Create a complete personal document management application with the following features:</p>
+                
+                <h4>Core Features:</h4>
+                <ol>
+                    <li><strong>User Authentication:</strong>
+                        <ul>
+                            <li>User registration and login</li>
+                            <li>Profile page with avatar upload</li>
+                        </ul>
+                    </li>
+                    <li><strong>Document Upload:</strong>
+                        <ul>
+                            <li>Single and multiple file upload</li>
+                            <li>Support for PDF, DOC, DOCX, images (jpg, png)</li>
+                            <li>File validation (type and size)</li>
+                            <li>Upload progress indication</li>
+                        </ul>
+                    </li>
+                    <li><strong>Document Organization:</strong>
+                        <ul>
+                            <li>Create folders/categories</li>
+                            <li>Move documents between folders</li>
+                            <li>Rename documents and folders</li>
+                            <li>Tag documents with custom labels</li>
+                        </ul>
+                    </li>
+                    <li><strong>Document Viewing:</strong>
+                        <ul>
+                            <li>List view with file icons</li>
+                            <li>Grid view for images</li>
+                            <li>Search and filter documents</li>
+                            <li>Sort by name, date, size</li>
+                        </ul>
+                    </li>
+                    <li><strong>Security:</strong>
+                        <ul>
+                            <li>Private file storage</li>
+                            <li>User-level access control</li>
+                            <li>Secure file serving through controller</li>
+                            <li>File download with original name</li>
+                        </ul>
+                    </li>
+                    <li><strong>Storage Management:</strong>
+                        <ul>
+                            <li>Display total storage used</li>
+                            <li>Show storage breakdown by file type</li>
+                            <li>Delete files to free up space</li>
+                            <li>Storage limit per user (optional)</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <h4>Database Schema:</h4>
+                <div class="code-block">
+users: id, name, email, password, avatar, storage_limit
+folders: id, user_id, name, parent_id (for nested folders)
+documents: id, user_id, folder_id, original_name, stored_name, file_path, file_size, mime_type, timestamps
+tags: id, user_id, name
+document_tag: document_id, tag_id
+                </div>
+
+                <h4>Technical Requirements:</h4>
+                <ul>
+                    <li>Use Laravel's file validation rules</li>
+                    <li>Store sensitive documents in private storage (local disk)</li>
+                    <li>Store profile pictures in public storage</li>
+                    <li>Create symbolic link for public storage</li>
+                    <li>Implement proper authorization policies</li>
+                    <li>Use Bootstrap for responsive UI</li>
+                    <li>Add success/error flash messages</li>
+                    <li>Include JavaScript for file preview</li>
+                </ul>
+
+                <h4>Bonus Features:</h4>
+                <ul>
+                    <li>Generate thumbnails for images</li>
+                    <li>PDF preview in browser</li>
+                    <li>Share documents with other users</li>
+                    <li>Export folder as ZIP</li>
+                    <li>Activity log for file operations</li>
+                    <li>File versioning system</li>
+                </ul>
+
+                <h4>Submission Requirements:</h4>
+                <ol>
+                    <li>Complete Laravel application code</li>
+                    <li>Database migrations and seeders</li>
+                    <li>README with setup instructions</li>
+                    <li>Screenshots showing all features</li>
+                    <li>Video demonstration (2-3 minutes)</li>
+                </ol>
+            </div>
+
+            <div class="success-box">
+                <h3>✅ Key Takeaways</h3>
+                <ul>
+                    <li>Laravel provides a unified API for file storage across different systems</li>
+                    <li>Always validate file uploads (type, size, dimensions)</li>
+                    <li>Use public storage for accessible files, private storage for sensitive files</li>
+                    <li>Create symbolic links to access public storage files via URL</li>
+                    <li>Generate unique filenames to prevent conflicts and improve security</li>
+                    <li>Implement proper authorization when serving private files</li>
+                    <li>Delete old files when uploading replacements to save storage</li>
+                    <li>Use the Storage facade for consistent file operations</li>
+                    <li>Handle multiple file uploads with array validation</li>
+                    <li>Store file metadata in database for better management</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h3>📖 Additional Resources</h3>
+                <ul>
+                    <li><a href="https://laravel.com/docs/filesystem" target="_blank">Laravel File Storage Documentation</a></li>
+                    <li><a href="https://laravel.com/docs/validation#rule-file" target="_blank">Laravel Validation Rules</a></li>
+                    <li><a href="http://image.intervention.io/" target="_blank">Intervention Image Library</a></li>
+                    <li><a href="https://flysystem.thephpleague.com/" target="_blank">Flysystem Documentation</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2024 Web Development Internship - Week 19, Day 1 | File Uploads and Storage in Laravel</p>
+        </footer>
+    </div>
+</body>
+</html>

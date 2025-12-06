@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 7 Day 3: Form Validation with JavaScript</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        header { background: #43e97b; color: white; padding: 30px; border-radius: 15px 15px 0 0; }
+        .content { padding: 40px; }
+        h2 { color: #43e97b; border-bottom: 3px solid #38f9d7; padding-bottom: 10px; margin: 30px 0 20px; }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+        .info-box { background: #e8f5e9; border-left: 5px solid #43e97b; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        .demo { background: #f5f5f5; padding: 30px; margin: 20px 0; border: 2px solid #43e97b; border-radius: 8px; }
+        .error { color: red; font-size: 14px; margin-top: 5px; }
+        .success { color: green; font-size: 14px; margin-top: 5px; }
+        .btn { background: #43e97b; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 10px 10px 0; }
+        footer { background: #43e97b; color: white; padding: 20px; text-align: center; border-radius: 0 0 15px 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 7 - Day 3: Form Validation with JavaScript</h1>
+            <p>Friday | Duration: 3 hours</p>
+        </header>
+
+        <div class="content">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Understand form validation importance</li>
+                <li>Validate required fields</li>
+                <li>Check email format</li>
+                <li>Validate password strength</li>
+                <li>Display error messages</li>
+                <li>Prevent form submission on errors</li>
+            </ul>
+
+            <h2>🔍 Why Form Validation?</h2>
+            <div class="info-box">
+                <p><strong>Form validation</strong> ensures users enter correct data before submitting. This improves user experience and data quality by catching errors before they reach the server.</p>
+            </div>
+
+            <h2>✅ Common Validation Rules</h2>
+            <ul>
+                <li><strong>Required fields:</strong> Field cannot be empty</li>
+                <li><strong>Email format:</strong> Must contain @ and domain</li>
+                <li><strong>Password length:</strong> Minimum 8 characters</li>
+                <li><strong>Number validation:</strong> Must be a number</li>
+                <li><strong>Phone format:</strong> Correct phone number pattern</li>
+            </ul>
+
+            <h2>🔐 Basic Validation Examples</h2>
+            
+            <h3>1. Check if Field is Empty</h3>
+            <div class="code-block">
+function validateName() {
+    let name = document.getElementById("name").value;
+    
+    if (name === "" || name === null) {
+        alert("Name is required!");
+        return false;
+    }
+    return true;
+}
+            </div>
+
+            <h3>2. Email Validation</h3>
+            <div class="code-block">
+function validateEmail() {
+    let email = document.getElementById("email").value;
+    
+    // Check if email contains @ and .
+    if (!email.includes("@") || !email.includes(".")) {
+        alert("Please enter a valid email!");
+        return false;
+    }
+    return true;
+}
+
+// Better email validation with regex
+function isValidEmail(email) {
+    let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+}
+            </div>
+
+            <h3>3. Password Length Validation</h3>
+            <div class="code-block">
+function validatePassword() {
+    let password = document.getElementById("password").value;
+    
+    if (password.length < 8) {
+        alert("Password must be at least 8 characters!");
+        return false;
+    }
+    return true;
+}
+            </div>
+
+            <h2>🎨 Complete Form Validation Example</h2>
+            <div class="code-block">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Validation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background: #f5f5f5;
+        }
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #43e97b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #38f9d7;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Registration Form</h2>
+        <form id="registrationForm" onsubmit="return validateForm()">
+            
+            <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" name="fullName">
+                <div class="error-message" id="nameError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" id="email" name="email">
+                <div class="error-message" id="emailError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="text" id="phone" name="phone">
+                <div class="error-message" id="phoneError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password">
+                <div class="error-message" id="passwordError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword">
+                <div class="error-message" id="confirmError"></div>
+            </div>
+
+            <button type="submit">Register</button>
+        </form>
+    </div>
+
+    <script>
+        function validateForm() {
+            // Clear all previous errors
+            let errors = document.querySelectorAll(".error-message");
+            errors.forEach(function(error) {
+                error.style.display = "none";
+            });
+
+            let isValid = true;
+
+            // Validate Full Name
+            let fullName = document.getElementById("fullName").value;
+            if (fullName === "" || fullName.length < 3) {
+                document.getElementById("nameError").textContent = "Name must be at least 3 characters";
+                document.getElementById("nameError").style.display = "block";
+                isValid = false;
+            }
+
+            // Validate Email
+            let email = document.getElementById("email").value;
+            let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                document.getElementById("emailError").textContent = "Please enter a valid email";
+                document.getElementById("emailError").style.display = "block";
+                isValid = false;
+            }
+
+            // Validate Phone
+            let phone = document.getElementById("phone").value;
+            if (phone.length < 10 || isNaN(phone)) {
+                document.getElementById("phoneError").textContent = "Phone must be at least 10 digits";
+                document.getElementById("phoneError").style.display = "block";
+                isValid = false;
+            }
+
+            // Validate Password
+            let password = document.getElementById("password").value;
+            if (password.length < 8) {
+                document.getElementById("passwordError").textContent = "Password must be at least 8 characters";
+                document.getElementById("passwordError").style.display = "block";
+                isValid = false;
+            }
+
+            // Confirm Password Match
+            let confirmPassword = document.getElementById("confirmPassword").value;
+            if (password !== confirmPassword) {
+                document.getElementById("confirmError").textContent = "Passwords do not match";
+                document.getElementById("confirmError").style.display = "block";
+                isValid = false;
+            }
+
+            // If all validations pass
+            if (isValid) {
+                alert("Form submitted successfully!");
+            }
+
+            return isValid;  // Prevent form submission if invalid
+        }
+    </script>
+</body>
+</html>
+            </div>
+
+            <h2>🧪 Live Demo Form</h2>
+            <div class="demo">
+                <h3>Try the Validation</h3>
+                <form id="demoForm" onsubmit="return validateDemoForm()">
+                    <div style="margin-bottom: 15px;">
+                        <label>Name:</label>
+                        <input type="text" id="demoName" style="width: 100%; padding: 8px; margin-top: 5px;">
+                        <div id="demoNameError" class="error"></div>
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <label>Email:</label>
+                        <input type="text" id="demoEmail" style="width: 100%; padding: 8px; margin-top: 5px;">
+                        <div id="demoEmailError" class="error"></div>
+                    </div>
+                    
+                    <button type="submit" style="padding: 10px 20px; background: #43e97b; color: white; border: none; border-radius: 5px; cursor: pointer;">Validate Form</button>
+                </form>
+            </div>
+
+            <script>
+                function validateDemoForm() {
+                    document.getElementById("demoNameError").textContent = "";
+                    document.getElementById("demoEmailError").textContent = "";
+                    
+                    let isValid = true;
+                    
+                    let name = document.getElementById("demoName").value;
+                    if (name === "" || name.length < 3) {
+                        document.getElementById("demoNameError").textContent = "Name must be at least 3 characters";
+                        isValid = false;
+                    }
+                    
+                    let email = document.getElementById("demoEmail").value;
+                    let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailPattern.test(email)) {
+                        document.getElementById("demoEmailError").textContent = "Please enter a valid email address";
+                        isValid = false;
+                    }
+                    
+                    if (isValid) {
+                        alert("✅ Validation passed!");
+                    }
+                    
+                    return false; // Prevent actual form submission
+                }
+            </script>
+
+            <h2>📋 Validation Checklist</h2>
+            <ul>
+                <li>✓ Check if required fields are filled</li>
+                <li>✓ Validate email format with @ and domain</li>
+                <li>✓ Ensure password meets minimum length</li>
+                <li>✓ Confirm passwords match</li>
+                <li>✓ Display clear error messages</li>
+                <li>✓ Prevent form submission on errors</li>
+                <li>✓ Clear errors when form is valid</li>
+            </ul>
+
+            <h2>✏️ Practice Exercises</h2>
+            <ol>
+                <li>Create a login form with email and password validation</li>
+                <li>Add age validation (must be 18 or older)</li>
+                <li>Validate username (no spaces, min 5 characters)</li>
+                <li>Create password strength indicator (weak/medium/strong)</li>
+                <li>Build a contact form with all validation rules</li>
+            </ol>
+
+            <h2>✅ Today's Deliverable</h2>
+            <ul>
+                <li>✓ form-validation.html with complete validation</li>
+                <li>✓ Required field validation</li>
+                <li>✓ Email format validation</li>
+                <li>✓ Password validation (minimum 8 characters)</li>
+                <li>✓ Password confirmation match</li>
+                <li>✓ Error messages displayed correctly</li>
+                <li>✓ Form prevents submission when invalid</li>
+                <li>✓ Working demo screenshot</li>
+            </ul>
+
+            <div style="margin-top: 40px;">
+                <a href="day2-js-events.html" class="btn">← Previous</a>
+                <a href="../index.html" class="btn">Course Home</a>
+                <a href="../week8/day1-todo-planning.html" class="btn">Next: Week 8 →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 7 - Day 3: Form Validation with JavaScript</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

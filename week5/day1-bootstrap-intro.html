@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 5 Day 1: Introduction to Bootstrap & Setup</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        header { background: #fa709a; color: white; padding: 30px; }
+        .nav-breadcrumb {
+            background: #fff0f5;
+            padding: 15px 30px;
+            border-bottom: 2px solid #fa709a;
+        }
+        .nav-breadcrumb a { color: #fa709a; text-decoration: none; margin-right: 10px; }
+        .content { padding: 40px; }
+        .section { margin-bottom: 40px; }
+        .section h2 {
+            color: #fa709a;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #fee140;
+        }
+        .section h3 { color: #fa709a; margin: 20px 0 15px 0; }
+        .info-box {
+            background: #fff0f5;
+            border-left: 5px solid #fa709a;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .activity-box {
+            background: #fff8e1;
+            border-left: 5px solid #fee140;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+        ul, ol { margin-left: 30px; margin-top: 10px; }
+        li { margin-bottom: 10px; }
+        .checklist { list-style: none; margin-left: 0; }
+        .checklist li:before {
+            content: "✓ ";
+            color: #4caf50;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background: #fa709a;
+            color: white;
+        }
+        tr:nth-child(even) { background: #f9f9f9; }
+        footer { background: #fa709a; color: white; padding: 20px; text-align: center; }
+        .btn-primary {
+            background: #fa709a;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin: 10px 10px 10px 0;
+        }
+        .demo-box {
+            border: 2px solid #ddd;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 5 - Day 1: Introduction to Bootstrap & Setup</h1>
+            <p>Monday | Duration: 3 hours</p>
+            <p style="margin-top: 10px;">🎨 Learn Bootstrap Framework Basics</p>
+        </header>
+
+        <div class="nav-breadcrumb">
+            <a href="../index.html">← Back to Course Home</a> / Week 5 / Day 1
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2>🎯 Learning Objectives</h2>
+                <ul class="checklist">
+                    <li>Understand what Bootstrap is and its benefits</li>
+                    <li>Learn how to add Bootstrap via CDN</li>
+                    <li>Link Bootstrap to HTML projects</li>
+                    <li>Test Bootstrap components</li>
+                    <li>Understand Bootstrap documentation</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>🌟 What is Bootstrap?</h2>
+                
+                <div class="info-box">
+                    <p><strong>Bootstrap</strong> is the world's most popular front-end framework for building responsive, mobile-first websites.</p>
+                </div>
+
+                <h3>Why Use Bootstrap?</h3>
+                <ul>
+                    <li><strong>⚡ Faster Development:</strong> Pre-built components save time</li>
+                    <li><strong>📱 Responsive by Default:</strong> Mobile-first approach built-in</li>
+                    <li><strong>🎨 Professional Design:</strong> Clean, modern aesthetics</li>
+                    <li><strong>🔧 Customizable:</strong> Easy to modify and extend</li>
+                    <li><strong>🌐 Cross-Browser Compatible:</strong> Works on all modern browsers</li>
+                    <li><strong>📚 Great Documentation:</strong> Extensive resources and examples</li>
+                    <li><strong>👥 Large Community:</strong> Millions of developers worldwide</li>
+                </ul>
+
+                <h3>What Does Bootstrap Include?</h3>
+                <ul>
+                    <li><strong>Grid System:</strong> Flexible layout structure (12-column grid)</li>
+                    <li><strong>Components:</strong> Buttons, cards, navbars, forms, modals, etc.</li>
+                    <li><strong>Utilities:</strong> Spacing, colors, typography, display classes</li>
+                    <li><strong>JavaScript Plugins:</strong> Dropdowns, carousels, tooltips, etc.</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>📦 Installing Bootstrap</h2>
+                
+                <h3>Method 1: CDN (Content Delivery Network) - Recommended for Beginners</h3>
+                
+                <div class="info-box">
+                    <p><strong>CDN</strong> is the fastest way to get started. Files are hosted online, no download needed!</p>
+                </div>
+
+                <h4>Bootstrap CSS Link (Add to &lt;head&gt;):</h4>
+                <div class="code-block">
+&lt;!-- Bootstrap CSS --&gt;
+&lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
+      rel="stylesheet" 
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" 
+      crossorigin="anonymous"&gt;
+                </div>
+
+                <h4>Bootstrap JavaScript Bundle (Add before closing &lt;/body&gt;):</h4>
+                <div class="code-block">
+&lt;!-- Bootstrap JavaScript Bundle with Popper --&gt;
+&lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" 
+        crossorigin="anonymous"&gt;&lt;/script&gt;
+                </div>
+
+                <h3>Method 2: Download Bootstrap Files</h3>
+                <ol>
+                    <li>Visit <a href="https://getbootstrap.com/" target="_blank">getbootstrap.com</a></li>
+                    <li>Click "Download" button</li>
+                    <li>Extract files to your project folder</li>
+                    <li>Link CSS and JS files locally</li>
+                </ol>
+
+                <h3>Complete HTML Template with Bootstrap</h3>
+                <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;My First Bootstrap Page&lt;/title&gt;
+    
+    &lt;!-- Bootstrap CSS --&gt;
+    &lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
+          rel="stylesheet"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="container"&gt;
+        &lt;h1 class="text-center mt-5"&gt;Hello, Bootstrap!&lt;/h1&gt;
+        &lt;p class="lead text-center"&gt;My first Bootstrap webpage&lt;/p&gt;
+        &lt;button class="btn btn-primary"&gt;Click Me&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Bootstrap JavaScript --&gt;
+    &lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🧪 Testing Bootstrap Installation</h2>
+                
+                <h3>Test 1: Bootstrap Button</h3>
+                <div class="code-block">
+&lt;button class="btn btn-primary"&gt;Primary Button&lt;/button&gt;
+&lt;button class="btn btn-success"&gt;Success Button&lt;/button&gt;
+&lt;button class="btn btn-danger"&gt;Danger Button&lt;/button&gt;
+                </div>
+
+                <div class="demo-box">
+                    <p><strong>Expected Result:</strong> You should see three styled buttons with different colors (blue, green, red).</p>
+                </div>
+
+                <h3>Test 2: Bootstrap Alert</h3>
+                <div class="code-block">
+&lt;div class="alert alert-success" role="alert"&gt;
+    Bootstrap is working! ✅
+&lt;/div&gt;
+                </div>
+
+                <h3>Test 3: Bootstrap Container</h3>
+                <div class="code-block">
+&lt;div class="container"&gt;
+    &lt;h1&gt;Container Example&lt;/h1&gt;
+    &lt;p&gt;This content is centered with padding on the sides.&lt;/p&gt;
+&lt;/div&gt;
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📚 Understanding Bootstrap Classes</h2>
+                
+                <h3>Common Bootstrap Class Patterns</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Class</th>
+                            <th>Purpose</th>
+                            <th>Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>container</code></td>
+                            <td>Fixed-width responsive container</td>
+                            <td><code>&lt;div class="container"&gt;</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>container-fluid</code></td>
+                            <td>Full-width container</td>
+                            <td><code>&lt;div class="container-fluid"&gt;</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>btn</code></td>
+                            <td>Button styling</td>
+                            <td><code>&lt;button class="btn btn-primary"&gt;</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>text-center</code></td>
+                            <td>Center text</td>
+                            <td><code>&lt;p class="text-center"&gt;</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>mt-3</code></td>
+                            <td>Margin top (spacing)</td>
+                            <td><code>&lt;div class="mt-3"&gt;</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>p-4</code></td>
+                            <td>Padding (all sides)</td>
+                            <td><code>&lt;div class="p-4"&gt;</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Bootstrap Color Classes</h3>
+                <ul>
+                    <li><code>btn-primary</code> - Blue (main action)</li>
+                    <li><code>btn-secondary</code> - Gray (secondary action)</li>
+                    <li><code>btn-success</code> - Green (success)</li>
+                    <li><code>btn-danger</code> - Red (danger/delete)</li>
+                    <li><code>btn-warning</code> - Yellow (warning)</li>
+                    <li><code>btn-info</code> - Cyan (information)</li>
+                    <li><code>btn-light</code> - Light gray</li>
+                    <li><code>btn-dark</code> - Dark gray</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>💻 Practice Activity: Create Your First Bootstrap Page</h2>
+                
+                <div class="activity-box">
+                    <h3>Task: Build a Simple Bootstrap Welcome Page</h3>
+                    <p>Create <code>bootstrap-test.html</code> with the following elements:</p>
+                </div>
+
+                <h3>Complete Example Code</h3>
+                <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Bootstrap Test Page&lt;/title&gt;
+    &lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
+          rel="stylesheet"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- Navigation Bar --&gt;
+    &lt;nav class="navbar navbar-expand-lg navbar-dark bg-primary"&gt;
+        &lt;div class="container-fluid"&gt;
+            &lt;a class="navbar-brand" href="#"&gt;My First Bootstrap Site&lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/nav&gt;
+
+    &lt;!-- Main Content --&gt;
+    &lt;div class="container mt-5"&gt;
+        &lt;h1 class="text-center text-primary"&gt;Welcome to Bootstrap! 🎉&lt;/h1&gt;
+        &lt;p class="lead text-center"&gt;
+            Building responsive websites just got easier!
+        &lt;/p&gt;
+
+        &lt;!-- Alert Message --&gt;
+        &lt;div class="alert alert-success text-center" role="alert"&gt;
+            ✅ Bootstrap is successfully installed and working!
+        &lt;/div&gt;
+
+        &lt;!-- Buttons --&gt;
+        &lt;div class="text-center mt-4"&gt;
+            &lt;h3&gt;Button Examples&lt;/h3&gt;
+            &lt;button class="btn btn-primary"&gt;Primary&lt;/button&gt;
+            &lt;button class="btn btn-secondary"&gt;Secondary&lt;/button&gt;
+            &lt;button class="btn btn-success"&gt;Success&lt;/button&gt;
+            &lt;button class="btn btn-danger"&gt;Danger&lt;/button&gt;
+            &lt;button class="btn btn-warning"&gt;Warning&lt;/button&gt;
+            &lt;button class="btn btn-info"&gt;Info&lt;/button&gt;
+        &lt;/div&gt;
+
+        &lt;!-- Card Example --&gt;
+        &lt;div class="row mt-5"&gt;
+            &lt;div class="col-md-6 mx-auto"&gt;
+                &lt;div class="card"&gt;
+                    &lt;div class="card-body"&gt;
+                        &lt;h5 class="card-title"&gt;What is Bootstrap?&lt;/h5&gt;
+                        &lt;p class="card-text"&gt;
+                            Bootstrap is a powerful front-end framework that helps 
+                            you build responsive websites quickly and easily.
+                        &lt;/p&gt;
+                        &lt;a href="https://getbootstrap.com" 
+                           class="btn btn-primary" 
+                           target="_blank"&gt;
+                            Learn More
+                        &lt;/a&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Footer --&gt;
+    &lt;footer class="bg-dark text-white text-center p-4 mt-5"&gt;
+        &lt;p&gt;© 2025 My Bootstrap Journey&lt;/p&gt;
+    &lt;/footer&gt;
+
+    &lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                </div>
+
+                <h3>Steps to Complete</h3>
+                <ol>
+                    <li>Create a new file: <code>bootstrap-test.html</code></li>
+                    <li>Copy the code above</li>
+                    <li>Open in browser (Chrome, Firefox, Edge)</li>
+                    <li>Verify all components display correctly</li>
+                    <li>Try resizing the browser window to test responsiveness</li>
+                </ol>
+            </div>
+
+            <div class="section">
+                <h2>🔗 Bootstrap Documentation</h2>
+                
+                <h3>Essential Resources</h3>
+                <ul>
+                    <li><strong>Official Site:</strong> <a href="https://getbootstrap.com/" target="_blank">getbootstrap.com</a></li>
+                    <li><strong>Components:</strong> <a href="https://getbootstrap.com/docs/5.3/components/" target="_blank">Bootstrap Components</a></li>
+                    <li><strong>Utilities:</strong> <a href="https://getbootstrap.com/docs/5.3/utilities/" target="_blank">Bootstrap Utilities</a></li>
+                    <li><strong>Examples:</strong> <a href="https://getbootstrap.com/docs/5.3/examples/" target="_blank">Bootstrap Examples</a></li>
+                </ul>
+
+                <h3>How to Use Bootstrap Documentation</h3>
+                <ol>
+                    <li>Visit the official Bootstrap website</li>
+                    <li>Navigate to "Docs" section</li>
+                    <li>Browse components or search for what you need</li>
+                    <li>Copy example code snippets</li>
+                    <li>Paste into your HTML and customize</li>
+                </ol>
+            </div>
+
+            <div class="section">
+                <h2>✏️ Practice Exercises</h2>
+                
+                <div class="activity-box">
+                    <h3>Exercise 1: Button Collection</h3>
+                    <p>Create a page with all button variants:</p>
+                    <ul>
+                        <li>All 8 color variations</li>
+                        <li>Different sizes (btn-sm, btn-lg)</li>
+                        <li>Outline buttons (btn-outline-primary)</li>
+                    </ul>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Exercise 2: Alert Messages</h3>
+                    <p>Create different alert types:</p>
+                    <ul>
+                        <li>Success alert</li>
+                        <li>Warning alert</li>
+                        <li>Danger alert</li>
+                        <li>Info alert</li>
+                    </ul>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Exercise 3: Text Utilities</h3>
+                    <p>Practice text alignment and colors:</p>
+                    <ul>
+                        <li>Center, left, and right aligned text</li>
+                        <li>Different text colors (text-primary, text-danger)</li>
+                        <li>Text sizes (display-1, lead)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>✅ Today's Deliverable</h2>
+                <div class="activity-box">
+                    <ul class="checklist">
+                        <li>Bootstrap linked to HTML file via CDN</li>
+                        <li>Working bootstrap-test.html with navbar</li>
+                        <li>At least 6 different colored buttons</li>
+                        <li>One alert message displayed</li>
+                        <li>One card component working</li>
+                        <li>Page tested in browser</li>
+                        <li>Screenshot of working Bootstrap page</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🐛 Troubleshooting Common Issues</h2>
+                
+                <h3>Issue 1: Bootstrap Not Working</h3>
+                <ul>
+                    <li>✅ Check internet connection (CDN requires internet)</li>
+                    <li>✅ Verify CSS link is in <code>&lt;head&gt;</code></li>
+                    <li>✅ Verify JS script is before closing <code>&lt;/body&gt;</code></li>
+                    <li>✅ Check for typos in class names</li>
+                </ul>
+
+                <h3>Issue 2: Buttons Look Plain</h3>
+                <ul>
+                    <li>✅ Make sure you have both <code>btn</code> and <code>btn-primary</code> classes</li>
+                    <li>✅ Example: <code>&lt;button class="btn btn-primary"&gt;</code></li>
+                </ul>
+
+                <h3>Issue 3: Layout Not Responsive</h3>
+                <ul>
+                    <li>✅ Check viewport meta tag in <code>&lt;head&gt;</code></li>
+                    <li>✅ Must have: <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code></li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>📚 Additional Resources</h2>
+                <ul>
+                    <li><a href="https://getbootstrap.com/docs/5.3/getting-started/introduction/" target="_blank">Bootstrap Getting Started</a></li>
+                    <li><a href="https://www.w3schools.com/bootstrap5/" target="_blank">W3Schools Bootstrap Tutorial</a></li>
+                    <li><a href="https://www.youtube.com/watch?v=4sosXZsdy-s" target="_blank">Bootstrap 5 Crash Course (YouTube)</a></li>
+                    <li><a href="https://getbootstrap.com/docs/5.3/examples/" target="_blank">Bootstrap Official Examples</a></li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <a href="../week4/day3-project-review.html" class="btn-primary">← Previous: Week 4 Day 3</a>
+                <a href="../index.html" class="btn-primary">Back to Course Home</a>
+                <a href="day2-bootstrap-grid.html" class="btn-primary">Next: Day 2 →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 5 - Day 1: Introduction to Bootstrap & Setup</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

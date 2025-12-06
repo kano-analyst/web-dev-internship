@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 5 Day 3: Bootstrap Components & Utilities</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            padding: 20px;
+        }
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        header { background: #fa709a; color: white; padding: 30px; border-radius: 15px 15px 0 0; }
+        .content { padding: 40px; }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+        footer { background: #fa709a; color: white; padding: 20px; text-align: center; border-radius: 0 0 15px 15px; }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <header>
+            <h1>📅 Week 5 - Day 3: Bootstrap Components & Utilities</h1>
+            <p>Friday | Duration: 3 hours</p>
+        </header>
+
+        <div class="content">
+            <h2 class="text-primary mb-4">🎯 Learning Objectives</h2>
+            <ul>
+                <li>Master Bootstrap cards, buttons, and alerts</li>
+                <li>Learn navbar components</li>
+                <li>Use spacing utilities (margin & padding)</li>
+                <li>Redesign portfolio with Bootstrap</li>
+            </ul>
+
+            <h2 class="text-primary mt-5 mb-3">🎴 Bootstrap Cards</h2>
+            <p>Cards are flexible content containers with multiple variants and options.</p>
+            
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Card image">
+                        <div class="card-body">
+                            <h5 class="card-title">Card Title</h5>
+                            <p class="card-text">Some quick example text to build on the card title.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-primary">
+                        <div class="card-header bg-primary text-white">Featured</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Special Card</h5>
+                            <p class="card-text">Card with custom header and border.</p>
+                            <a href="#" class="btn btn-outline-primary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Card without Image</h5>
+                            <p class="card-text">Cards can be used without images too!</p>
+                            <a href="#" class="btn btn-success">Click Here</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-block mt-4">
+&lt;div class="card"&gt;
+    &lt;img src="image.jpg" class="card-img-top" alt="..."&gt;
+    &lt;div class="card-body"&gt;
+        &lt;h5 class="card-title"&gt;Card Title&lt;/h5&gt;
+        &lt;p class="card-text"&gt;Card content goes here.&lt;/p&gt;
+        &lt;a href="#" class="btn btn-primary"&gt;Button&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+            </div>
+
+            <h2 class="text-primary mt-5 mb-3">📐 Spacing Utilities</h2>
+            <table class="table table-striped">
+                <thead class="table-primary">
+                    <tr>
+                        <th>Class</th>
+                        <th>Property</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>m-3</code></td>
+                        <td>Margin all sides (1rem)</td>
+                        <td><code>&lt;div class="m-3"&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>mt-4</code></td>
+                        <td>Margin top (1.5rem)</td>
+                        <td><code>&lt;div class="mt-4"&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>mb-5</code></td>
+                        <td>Margin bottom (3rem)</td>
+                        <td><code>&lt;div class="mb-5"&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>p-3</code></td>
+                        <td>Padding all sides</td>
+                        <td><code>&lt;div class="p-3"&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>px-4</code></td>
+                        <td>Padding left & right</td>
+                        <td><code>&lt;div class="px-4"&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>py-2</code></td>
+                        <td>Padding top & bottom</td>
+                        <td><code>&lt;div class="py-2"&gt;</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 class="text-primary mt-5 mb-3">🎨 Activity: Redesign Portfolio with Bootstrap</h2>
+            <div class="alert alert-warning">
+                <strong>Task:</strong> Convert your existing portfolio to use Bootstrap components
+            </div>
+
+            <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;My Bootstrap Portfolio&lt;/title&gt;
+    &lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- Navbar --&gt;
+    &lt;nav class="navbar navbar-expand-lg navbar-dark bg-dark"&gt;
+        &lt;div class="container"&gt;
+            &lt;a class="navbar-brand" href="#"&gt;My Portfolio&lt;/a&gt;
+            &lt;button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"&gt;
+                &lt;span class="navbar-toggler-icon"&gt;&lt;/span&gt;
+            &lt;/button&gt;
+            &lt;div class="collapse navbar-collapse" id="navbarNav"&gt;
+                &lt;ul class="navbar-nav ms-auto"&gt;
+                    &lt;li class="nav-item"&gt;&lt;a class="nav-link" href="#about"&gt;About&lt;/a&gt;&lt;/li&gt;
+                    &lt;li class="nav-item"&gt;&lt;a class="nav-link" href="#skills"&gt;Skills&lt;/a&gt;&lt;/li&gt;
+                    &lt;li class="nav-item"&gt;&lt;a class="nav-link" href="#projects"&gt;Projects&lt;/a&gt;&lt;/li&gt;
+                    &lt;li class="nav-item"&gt;&lt;a class="nav-link" href="#contact"&gt;Contact&lt;/a&gt;&lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/nav&gt;
+
+    &lt;!-- Hero Section --&gt;
+    &lt;section class="bg-primary text-white text-center py-5"&gt;
+        &lt;div class="container"&gt;
+            &lt;h1 class="display-4"&gt;Welcome to My Portfolio&lt;/h1&gt;
+            &lt;p class="lead"&gt;I'm a Web Developer&lt;/p&gt;
+            &lt;a href="#projects" class="btn btn-light btn-lg"&gt;View My Work&lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;!-- Skills Section --&gt;
+    &lt;section id="skills" class="py-5"&gt;
+        &lt;div class="container"&gt;
+            &lt;h2 class="text-center mb-4"&gt;My Skills&lt;/h2&gt;
+            &lt;div class="row"&gt;
+                &lt;div class="col-md-4 mb-3"&gt;
+                    &lt;div class="card text-center"&gt;
+                        &lt;div class="card-body"&gt;
+                            &lt;h3&gt;HTML5&lt;/h3&gt;
+                            &lt;p&gt;Semantic markup and structure&lt;/p&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class="col-md-4 mb-3"&gt;
+                    &lt;div class="card text-center"&gt;
+                        &lt;div class="card-body"&gt;
+                            &lt;h3&gt;CSS3&lt;/h3&gt;
+                            &lt;p&gt;Styling and responsive design&lt;/p&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class="col-md-4 mb-3"&gt;
+                    &lt;div class="card text-center"&gt;
+                        &lt;div class="card-body"&gt;
+                            &lt;h3&gt;Bootstrap&lt;/h3&gt;
+                            &lt;p&gt;Rapid development framework&lt;/p&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </div>
+
+            <h2 class="text-primary mt-5 mb-3">✅ Today's Deliverable</h2>
+            <ul class="list-group">
+                <li class="list-group-item">✓ Bootstrap navbar implemented</li>
+                <li class="list-group-item">✓ At least 3 card components created</li>
+                <li class="list-group-item">✓ Buttons with different styles</li>
+                <li class="list-group-item">✓ Spacing utilities applied throughout</li>
+                <li class="list-group-item">✓ Portfolio redesigned with Bootstrap</li>
+                <li class="list-group-item">✓ Responsive on all devices</li>
+            </ul>
+
+            <div class="mt-5 d-flex justify-content-between">
+                <a href="day2-bootstrap-grid.html" class="btn btn-secondary">← Previous: Day 2</a>
+                <a href="../index.html" class="btn btn-primary">Back to Course Home</a>
+                <a href="../week6/day1-js-variables.html" class="btn btn-secondary">Next: Week 6 Day 1 →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 5 - Day 3: Bootstrap Components & Utilities</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

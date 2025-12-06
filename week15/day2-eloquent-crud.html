@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 15 Day 2: Eloquent CRUD Operations</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #ff9a56 0%, #ff6a00 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        header { background: #ff6a00; color: white; padding: 30px; border-radius: 15px 15px 0 0; }
+        .content { padding: 40px; }
+        h2 { color: #ff6a00; border-bottom: 3px solid #ff9a56; padding-bottom: 10px; margin: 30px 0 20px; }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        .info-box { background: #fff3cd; border-left: 5px solid #ff6a00; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border: 1px solid #ddd; }
+        th { background: #ff6a00; color: white; }
+        .btn { background: #ff6a00; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 10px 10px 0; }
+        footer { background: #ff6a00; color: white; padding: 20px; text-align: center; border-radius: 0 0 15px 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 15 - Day 2: Eloquent CRUD Operations</h1>
+            <p>Tuesday | Duration: 3 hours | Master Database Operations! 💾</p>
+        </header>
+
+        <div class="content">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Create (Insert) records with Eloquent</li>
+                <li>Read (Retrieve) data from database</li>
+                <li>Update existing records</li>
+                <li>Delete records</li>
+                <li>Understand mass assignment protection</li>
+            </ul>
+
+            <h2>➕ CREATE - Inserting Data</h2>
+            
+            <h3>Method 1: Create and Save</h3>
+            <div class="code-block">
+&lt;?php
+use App\Models\Student;
+
+// Create new instance
+$student = new Student();
+$student->name = "Ahmad Ibrahim";
+$student->email = "ahmad@example.com";
+$student->phone = "08012345678";
+$student->age = 20;
+$student->course = "Web Development";
+$student->save();  // Save to database
+
+echo "Student created with ID: " . $student->id;
+?&gt;
+            </div>
+
+            <h3>Method 2: Mass Assignment with create()</h3>
+            <div class="code-block">
+&lt;?php
+use App\Models\Student;
+
+$student = Student::create([
+    'name' => 'Fatima Yusuf',
+    'email' => 'fatima@example.com',
+    'phone' => '08098765432',
+    'age' => 19,
+    'course' => 'Data Science'
+]);
+
+echo "Created student: " . $student->name;
+?&gt;
+            </div>
+
+            <div class="info-box">
+                <p><strong>Important:</strong> For create() to work, fields must be listed in the model's $fillable property!</p>
+            </div>
+
+            <h3>Model Configuration for Mass Assignment:</h3>
+            <div class="code-block">
+&lt;?php
+// app/Models/Student.php
+
+class Student extends Model
+{
+    protected $fillable = [
+        'name',
+        'email',
+        'phone',
+        'age',
+        'course'
+    ];
+}
+?&gt;
+            </div>
+
+            <h2>📖 READ - Retrieving Data</h2>
+            
+            <h3>Get All Records:</h3>
+            <div class="code-block">
+&lt;?php
+use App\Models\Student;
+
+// Get all students
+$students = Student::all();
+
+foreach ($students as $student) {
+    echo $student->name . " - " . $student->email . "&lt;br&gt;";
+}
+?&gt;
+            </div>
+
+            <h3>Get Single Record by ID:</h3>
+            <div class="code-block">
+&lt;?php
+// Find by primary key
+$student = Student::find(1);
+
+if ($student) {
+    echo "Name: " . $student->name;
+} else {
+    echo "Student not found!";
+}
+
+// Find or fail (throws 404 if not found)
+$student = Student::findOrFail(1);
+?&gt;
+            </div>
+
+            <h3>Query with Where Conditions:</h3>
+            <div class="code-block">
+&lt;?php
+// Get students by course
+$webDevStudents = Student::where('course', 'Web Development')->get();
+
+// Multiple conditions
+$adults = Student::where('age', '>=', 18)
+                 ->where('course', 'Web Development')
+                 ->get();
+
+// OR condition
+$students = Student::where('course', 'Web Development')
+                   ->orWhere('course', 'Data Science')
+                   ->get();
+
+// Get first match
+$student = Student::where('email', 'ahmad@example.com')->first();
+?&gt;
+            </div>
+
+            <h3>Useful Query Methods:</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>all()</td>
+                        <td>Get all records</td>
+                        <td>Student::all()</td>
+                    </tr>
+                    <tr>
+                        <td>find($id)</td>
+                        <td>Find by primary key</td>
+                        <td>Student::find(5)</td>
+                    </tr>
+                    <tr>
+                        <td>first()</td>
+                        <td>Get first record</td>
+                        <td>Student::first()</td>
+                    </tr>
+                    <tr>
+                        <td>where()</td>
+                        <td>Add where condition</td>
+                        <td>where('age', '>', 18)</td>
+                    </tr>
+                    <tr>
+                        <td>orderBy()</td>
+                        <td>Sort results</td>
+                        <td>orderBy('name', 'asc')</td>
+                    </tr>
+                    <tr>
+                        <td>limit()</td>
+                        <td>Limit results</td>
+                        <td>limit(10)</td>
+                    </tr>
+                    <tr>
+                        <td>count()</td>
+                        <td>Count records</td>
+                        <td>Student::count()</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>✏️ UPDATE - Modifying Data</h2>
+            
+            <h3>Method 1: Find and Save</h3>
+            <div class="code-block">
+&lt;?php
+use App\Models\Student;
+
+// Find student
+$student = Student::find(1);
+
+// Update properties
+$student->name = "Ahmad Ibrahim Updated";
+$student->age = 21;
+
+// Save changes
+$student->save();
+
+echo "Student updated!";
+?&gt;
+            </div>
+
+            <h3>Method 2: Direct Update with where()</h3>
+            <div class="code-block">
+&lt;?php
+// Update all students in Web Development course
+Student::where('course', 'Web Development')
+       ->update(['age' => 20]);
+
+// Update single record
+Student::where('id', 1)
+       ->update([
+           'name' => 'New Name',
+           'email' => 'newemail@example.com'
+       ]);
+?&gt;
+            </div>
+
+            <h3>Method 3: updateOrCreate()</h3>
+            <div class="code-block">
+&lt;?php
+// Update if exists, create if doesn't
+Student::updateOrCreate(
+    ['email' => 'ahmad@example.com'],  // Search criteria
+    [
+        'name' => 'Ahmad Ibrahim',
+        'phone' => '08012345678',
+        'age' => 20,
+        'course' => 'Web Development'
+    ]
+);
+?&gt;
+            </div>
+
+            <h2>🗑️ DELETE - Removing Data</h2>
+            
+            <h3>Method 1: Find and Delete</h3>
+            <div class="code-block">
+&lt;?php
+use App\Models\Student;
+
+$student = Student::find(1);
+
+if ($student) {
+    $student->delete();
+    echo "Student deleted!";
+}
+?&gt;
+            </div>
+
+            <h3>Method 2: Delete by ID</h3>
+            <div class="code-block">
+&lt;?php
+// Delete single record
+Student::destroy(1);
+
+// Delete multiple records
+Student::destroy([1, 2, 3]);
+
+// Delete with where condition
+Student::where('age', '<', 18)->delete();
+?&gt;
+            </div>
+
+            <h2>💻 Complete CRUD Controller Example</h2>
+            
+            <h3>Create Controller:</h3>
+            <div class="code-block">
+php artisan make:controller StudentController --resource
+            </div>
+
+            <h3>Controller with Full CRUD:</h3>
+            <div class="code-block">
+&lt;?php
+// app/Http/Controllers/StudentController.php
+
+namespace App\Http\Controllers;
+
+use App\Models\Student;
+use Illuminate\Http\Request;
+
+class StudentController extends Controller
+{
+    // Display all students
+    public function index()
+    {
+        $students = Student::orderBy('name', 'asc')->get();
+        return view('students.index', compact('students'));
+    }
+    
+    // Show create form
+    public function create()
+    {
+        return view('students.create');
+    }
+    
+    // Store new student
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|min:3|max:50',
+            'email' => 'required|email|unique:students',
+            'phone' => 'required',
+            'age' => 'required|numeric|min:16',
+            'course' => 'required'
+        ]);
+        
+        Student::create($validated);
+        
+        return redirect('/students')->with('success', 'Student added successfully!');
+    }
+    
+    // Show single student
+    public function show($id)
+    {
+        $student = Student::findOrFail($id);
+        return view('students.show', compact('student'));
+    }
+    
+    // Show edit form
+    public function edit($id)
+    {
+        $student = Student::findOrFail($id);
+        return view('students.edit', compact('student'));
+    }
+    
+    // Update student
+    public function update(Request $request, $id)
+    {
+        $student = Student::findOrFail($id);
+        
+        $validated = $request->validate([
+            'name' => 'required|min:3|max:50',
+            'email' => 'required|email|unique:students,email,' . $id,
+            'phone' => 'required',
+            'age' => 'required|numeric|min:16',
+            'course' => 'required'
+        ]);
+        
+        $student->update($validated);
+        
+        return redirect('/students')->with('success', 'Student updated!');
+    }
+    
+    // Delete student
+    public function destroy($id)
+    {
+        $student = Student::findOrFail($id);
+        $student->delete();
+        
+        return redirect('/students')->with('success', 'Student deleted!');
+    }
+}
+?&gt;
+            </div>
+
+            <h3>Routes for CRUD:</h3>
+            <div class="code-block">
+&lt;?php
+// routes/web.php
+
+use App\Http\Controllers\StudentController;
+
+// Resource route creates all CRUD routes
+Route::resource('students', StudentController::class);
+
+// This creates:
+// GET    /students          -> index()
+// GET    /students/create   -> create()
+// POST   /students          -> store()
+// GET    /students/{id}     -> show()
+// GET    /students/{id}/edit -> edit()
+// PUT    /students/{id}     -> update()
+// DELETE /students/{id}     -> destroy()
+?&gt;
+            </div>
+
+            <h2>📊 Counting and Aggregates</h2>
+            <div class="code-block">
+&lt;?php
+// Count all students
+$totalStudents = Student::count();
+
+// Count with condition
+$webDevCount = Student::where('course', 'Web Development')->count();
+
+// Average age
+$avgAge = Student::avg('age');
+
+// Maximum age
+$maxAge = Student::max('age');
+
+// Minimum age
+$minAge = Student::min('age');
+
+// Sum (if you had a numeric column like fees)
+$totalFees = Student::sum('fees');
+?&gt;
+            </div>
+
+            <h2>🔍 Advanced Queries</h2>
+            <div class="code-block">
+&lt;?php
+// Order by multiple columns
+$students = Student::orderBy('course', 'asc')
+                   ->orderBy('name', 'asc')
+                   ->get();
+
+// Pagination
+$students = Student::paginate(10);  // 10 per page
+
+// Select specific columns
+$students = Student::select('name', 'email')->get();
+
+// Get latest/oldest
+$latest = Student::latest()->first();  // Most recent
+$oldest = Student::oldest()->first();  // Oldest
+
+// Check if exists
+$exists = Student::where('email', 'test@example.com')->exists();
+
+// Pluck (get array of column values)
+$names = Student::pluck('name');  // ['Ahmad', 'Fatima', ...]
+$emailMap = Student::pluck('email', 'id');  // [1 => 'email1', 2 => 'email2']
+?&gt;
+            </div>
+
+            <h2>✏️ Practice Exercises</h2>
+            <ol>
+                <li>Create 5 students using both save() and create() methods</li>
+                <li>Retrieve all students and display in a table</li>
+                <li>Find students older than 18 years</li>
+                <li>Update a student's course and age</li>
+                <li>Delete a student by ID</li>
+                <li>Count total students in each course</li>
+                <li>Create a complete CRUD system for Products</li>
+            </ol>
+
+            <h2>✅ Today's Deliverable</h2>
+            <ul>
+                <li>✓ Create students using create() and save()</li>
+                <li>✓ Read/display all students</li>
+                <li>✓ Update student information</li>
+                <li>✓ Delete student records</li>
+                <li>✓ Use where() queries effectively</li>
+                <li>✓ Build complete StudentController with CRUD</li>
+                <li>✓ Test all operations in browser</li>
+            </ul>
+
+            <div style="margin-top: 40px;">
+                <a href="day1-migrations-models.html" class="btn">← Previous</a>
+                <a href="../index.html" class="btn">Course Home</a>
+                <a href="day3-relationships.html" class="btn">Next →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 15 - Day 2: Eloquent CRUD Operations</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

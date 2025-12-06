@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 2 Day 2: Introduction to CSS</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        header { background: #5e35b1; color: white; padding: 30px; }
+        .nav-breadcrumb {
+            background: #ede7f6;
+            padding: 15px 30px;
+            border-bottom: 2px solid #673ab7;
+        }
+        .nav-breadcrumb a { color: #5e35b1; text-decoration: none; margin-right: 10px; }
+        .content { padding: 40px; }
+        .section { margin-bottom: 40px; }
+        .section h2 {
+            color: #5e35b1;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #673ab7;
+        }
+        .section h3 { color: #673ab7; margin: 20px 0 15px 0; }
+        .info-box {
+            background: #e8eaf6;
+            border-left: 5px solid #5e35b1;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .tip-box {
+            background: #fff3e0;
+            border-left: 5px solid #ff9800;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .activity-box {
+            background: #f1f8e9;
+            border-left: 5px solid #4caf50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+        .preview-box {
+            border: 3px solid #673ab7;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        .css-example {
+            border: 2px dashed #673ab7;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        .btn-primary {
+            display: inline-block;
+            background: #673ab7;
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 6px;
+            margin: 10px 10px 10px 0;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        .btn-primary:hover { background: #5e35b1; }
+        ul, ol { margin-left: 30px; margin-top: 10px; }
+        li { margin-bottom: 10px; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th { background: #673ab7; color: white; }
+        .checklist { list-style: none; margin-left: 0; }
+        .checklist li:before {
+            content: "✓ ";
+            color: #4caf50;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        footer { background: #5e35b1; color: white; padding: 20px; text-align: center; }
+        .color-swatch {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 2px solid #333;
+            margin: 5px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 2 - Day 2: Introduction to CSS</h1>
+            <p>Wednesday | Duration: 3 hours</p>
+        </header>
+
+        <div class="nav-breadcrumb">
+            <a href="../index.html">← Back to Course Home</a> / Week 2 / Day 2
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2>🎯 Learning Objectives</h2>
+                <ul class="checklist">
+                    <li>Understand what CSS is and its purpose</li>
+                    <li>Learn CSS syntax, selectors, and properties</li>
+                    <li>Apply inline, internal, and external CSS</li>
+                    <li>Use Chrome DevTools for live CSS editing</li>
+                    <li>Style the news page from Day 1</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>🎨 What is CSS?</h2>
+                <div class="info-box">
+                    <p><strong>CSS (Cascading Style Sheets)</strong> is a stylesheet language used to describe the presentation of HTML documents.</p>
+                    <p><strong>CSS controls:</strong></p>
+                    <ul>
+                        <li>Colors and backgrounds</li>
+                        <li>Fonts and text styling</li>
+                        <li>Spacing (margins, padding)</li>
+                        <li>Layout and positioning</li>
+                        <li>Animations and transitions</li>
+                    </ul>
+                </div>
+
+                <h3>Why Use CSS?</h3>
+                <ul>
+                    <li><strong>Separation of concerns:</strong> Keep content (HTML) separate from presentation (CSS)</li>
+                    <li><strong>Consistency:</strong> Apply same styles across multiple pages</li>
+                    <li><strong>Maintainability:</strong> Change design without touching HTML</li>
+                    <li><strong>Efficiency:</strong> One CSS file can style entire website</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>📝 CSS Syntax</h2>
+                <div class="code-block">
+selector {
+    property: value;
+    property: value;
+}
+                </div>
+                <p><strong>Example:</strong></p>
+                <div class="code-block">
+h1 {
+    color: blue;
+    font-size: 32px;
+    text-align: center;
+}
+                </div>
+                <ul>
+                    <li><strong>Selector:</strong> What element to style (h1)</li>
+                    <li><strong>Property:</strong> What aspect to change (color)</li>
+                    <li><strong>Value:</strong> The specific setting (blue)</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>🔗 Three Ways to Add CSS</h2>
+                
+                <h3>1. Inline CSS (Not Recommended)</h3>
+                <p>Applied directly to an element using the style attribute.</p>
+                <div class="code-block">
+&lt;p style="color: red; font-size: 20px;"&gt;This is red text.&lt;/p&gt;
+                </div>
+                <div class="tip-box">
+                    <p><strong>⚠️ Avoid inline CSS</strong> - It's hard to maintain and mixes content with presentation.</p>
+                </div>
+
+                <h3>2. Internal CSS (For Single Pages)</h3>
+                <p>Written in the &lt;style&gt; tag within the &lt;head&gt; section.</p>
+                <div class="code-block">
+&lt;head&gt;
+    &lt;style&gt;
+        body {
+            background-color: #f0f0f0;
+        }
+        h1 {
+            color: navy;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+                </div>
+
+                <h3>3. External CSS (Best Practice) ✅</h3>
+                <p>Written in a separate .css file and linked to HTML.</p>
+                <div class="code-block">
+&lt;!-- In HTML file --&gt;
+&lt;head&gt;
+    &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+                </div>
+                <div class="code-block">
+/* In style.css file */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+h1 {
+    color: #333;
+}
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🎯 CSS Selectors</h2>
+                
+                <h3>1. Element Selector</h3>
+                <div class="code-block">
+p {
+    color: black;
+}
+                </div>
+                <p>Selects all &lt;p&gt; elements.</p>
+
+                <h3>2. Class Selector (.)</h3>
+                <div class="code-block">
+.highlight {
+    background-color: yellow;
+}
+                </div>
+                <div class="code-block">
+&lt;p class="highlight"&gt;This paragraph is highlighted.&lt;/p&gt;
+                </div>
+
+                <h3>3. ID Selector (#)</h3>
+                <div class="code-block">
+#header {
+    background-color: navy;
+    color: white;
+}
+                </div>
+                <div class="code-block">
+&lt;div id="header"&gt;Header content&lt;/div&gt;
+                </div>
+                <div class="tip-box">
+                    <p><strong>💡 Classes vs IDs:</strong></p>
+                    <ul>
+                        <li>Use <strong>classes</strong> for multiple elements</li>
+                        <li>Use <strong>IDs</strong> for unique elements (only once per page)</li>
+                    </ul>
+                </div>
+
+                <h3>4. Multiple Selectors</h3>
+                <div class="code-block">
+h1, h2, h3 {
+    color: blue;
+    font-family: Arial;
+}
+                </div>
+
+                <h3>5. Descendant Selector</h3>
+                <div class="code-block">
+article p {
+    line-height: 1.6;
+}
+                </div>
+                <p>Selects all &lt;p&gt; elements inside &lt;article&gt;.</p>
+            </div>
+
+            <div class="section">
+                <h2>🎨 Common CSS Properties</h2>
+                
+                <h3>Text Styling</h3>
+                <table>
+                    <tr>
+                        <th>Property</th>
+                        <th>Values</th>
+                        <th>Example</th>
+                    </tr>
+                    <tr>
+                        <td>color</td>
+                        <td>red, #ff0000, rgb(255,0,0)</td>
+                        <td>color: blue;</td>
+                    </tr>
+                    <tr>
+                        <td>font-size</td>
+                        <td>16px, 1.5em, 100%</td>
+                        <td>font-size: 20px;</td>
+                    </tr>
+                    <tr>
+                        <td>font-family</td>
+                        <td>Arial, serif, sans-serif</td>
+                        <td>font-family: Arial;</td>
+                    </tr>
+                    <tr>
+                        <td>font-weight</td>
+                        <td>normal, bold, 700</td>
+                        <td>font-weight: bold;</td>
+                    </tr>
+                    <tr>
+                        <td>text-align</td>
+                        <td>left, center, right, justify</td>
+                        <td>text-align: center;</td>
+                    </tr>
+                    <tr>
+                        <td>text-decoration</td>
+                        <td>underline, none, line-through</td>
+                        <td>text-decoration: none;</td>
+                    </tr>
+                </table>
+
+                <h3>Background Properties</h3>
+                <div class="code-block">
+body {
+    background-color: #f5f5f5;
+    background-image: url('background.jpg');
+    background-size: cover;
+    background-position: center;
+}
+                </div>
+
+                <h3>Colors in CSS</h3>
+                <div class="css-example">
+                    <p><strong>Named Colors:</strong> <span class="color-swatch" style="background: red;"></span> red</p>
+                    <p><strong>Hex Colors:</strong> <span class="color-swatch" style="background: #3498db;"></span> #3498db</p>
+                    <p><strong>RGB:</strong> <span class="color-swatch" style="background: rgb(52, 152, 219);"></span> rgb(52, 152, 219)</p>
+                    <p><strong>RGBA (with transparency):</strong> <span class="color-swatch" style="background: rgba(52, 152, 219, 0.5);"></span> rgba(52, 152, 219, 0.5)</p>
+                </div>
+
+                <h3>Spacing: Margin and Padding</h3>
+                <div class="code-block">
+div {
+    margin: 20px;        /* Space outside element */
+    padding: 15px;       /* Space inside element */
+}
+
+/* Individual sides */
+div {
+    margin-top: 10px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    margin-left: 20px;
+}
+
+/* Shorthand */
+div {
+    margin: 10px 20px;           /* top/bottom left/right */
+    margin: 10px 20px 15px 25px; /* top right bottom left */
+}
+                </div>
+
+                <h3>Borders</h3>
+                <div class="code-block">
+div {
+    border: 2px solid black;
+    border-radius: 10px;        /* Rounded corners */
+}
+
+/* Individual properties */
+div {
+    border-width: 3px;
+    border-style: dashed;
+    border-color: red;
+}
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🛠️ Chrome DevTools for CSS</h2>
+                <div class="activity-box">
+                    <h3>How to Use DevTools:</h3>
+                    <ol>
+                        <li>Right-click on any element → "Inspect"</li>
+                        <li>Or press <strong>F12</strong> or <strong>Ctrl+Shift+I</strong></li>
+                        <li>Select the Elements tab</li>
+                        <li>View and edit CSS in real-time</li>
+                        <li>See the box model (margin, padding, border)</li>
+                    </ol>
+                    <p><strong>💡 Pro Tip:</strong> Changes in DevTools are temporary - copy them to your CSS file!</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>💻 Main Activity: Style Your News Page</h2>
+                
+                <div class="activity-box">
+                    <h3>Task: Create style.css and link to news-article.html</h3>
+                    <p>Create a new file: <code>C:\xampp\htdocs\web_basics\css\style.css</code></p>
+                </div>
+
+                <h3>Step 1: Link CSS to HTML</h3>
+                <p>Add this in the &lt;head&gt; of news-article.html:</p>
+                <div class="code-block">
+&lt;link rel="stylesheet" href="css/style.css"&gt;
+                </div>
+
+                <h3>Step 2: Create style.css</h3>
+                <div class="code-block">
+/* Reset default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styling */
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+}
+
+/* Header styling */
+header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+/* Navigation */
+nav {
+    background-color: #333;
+    padding: 10px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    display: inline-block;
+    transition: background 0.3s;
+}
+
+nav a:hover {
+    background-color: #555;
+}
+
+/* Main content */
+main {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Article styling */
+article {
+    margin-bottom: 30px;
+}
+
+article h2 {
+    color: #667eea;
+    font-size: 2em;
+    margin-bottom: 15px;
+}
+
+article h3 {
+    color: #555;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 5px;
+}
+
+article p {
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+/* Images */
+figure {
+    margin: 20px 0;
+}
+
+figure img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+figcaption {
+    font-style: italic;
+    color: #666;
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* Blockquote */
+blockquote {
+    background: #f9f9f9;
+    border-left: 5px solid #667eea;
+    padding: 15px 20px;
+    margin: 20px 0;
+    font-style: italic;
+}
+
+blockquote footer {
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #666;
+}
+
+/* Lists */
+ul {
+    margin-left: 30px;
+    margin-bottom: 15px;
+}
+
+li {
+    margin-bottom: 8px;
+}
+
+/* Sidebar */
+aside {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 30px;
+}
+
+aside h3 {
+    color: #667eea;
+    margin-bottom: 15px;
+}
+
+/* Footer */
+footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 30px;
+}
+
+footer a {
+    color: #667eea;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Video and Audio */
+video, audio {
+    width: 100%;
+    max-width: 640px;
+    border-radius: 8px;
+    margin: 15px 0;
+}
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>✏️ Practice Exercises</h2>
+                
+                <div class="activity-box">
+                    <h3>Exercise 1: Experiment with Colors</h3>
+                    <p>Change the following in your CSS:</p>
+                    <ul>
+                        <li>Try different background colors for header</li>
+                        <li>Change text colors</li>
+                        <li>Add a gradient background to body</li>
+                        <li>Use rgba() for transparent effects</li>
+                    </ul>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Exercise 2: Typography</h3>
+                    <ul>
+                        <li>Change font families (try: 'Georgia', 'Courier New', 'Times New Roman')</li>
+                        <li>Adjust font sizes</li>
+                        <li>Add letter-spacing and line-height</li>
+                        <li>Experiment with font-weight</li>
+                    </ul>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Exercise 3: Spacing and Borders</h3>
+                    <ul>
+                        <li>Add margins and padding to different elements</li>
+                        <li>Create bordered boxes with border-radius</li>
+                        <li>Add box-shadow to elements</li>
+                    </ul>
+                    <div class="code-block">
+/* Example */
+.card {
+    padding: 20px;
+    margin: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+                    </div>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Exercise 4: Style Your Profile Page</h3>
+                    <p>Go back to profile.html from Week 1 and create a separate CSS file for it.</p>
+                    <ul>
+                        <li>Style headings with colors</li>
+                        <li>Add borders and padding to sections</li>
+                        <li>Style links (change color, remove underline, add hover effect)</li>
+                        <li>Make the profile image circular</li>
+                    </ul>
+                    <div class="code-block">
+/* Circular image */
+img {
+    border-radius: 50%;
+    border: 3px solid #667eea;
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📝 CSS Cheat Sheet</h2>
+                <div class="info-box">
+                    <h4>Common Properties Quick Reference:</h4>
+                    <div class="code-block">
+/* Text */
+color: blue;
+font-size: 16px;
+font-weight: bold;
+text-align: center;
+text-decoration: underline;
+line-height: 1.5;
+
+/* Background */
+background-color: #f0f0f0;
+background-image: url('image.jpg');
+
+/* Spacing */
+margin: 10px;
+padding: 15px;
+
+/* Border */
+border: 1px solid black;
+border-radius: 5px;
+
+/* Display */
+display: block;
+display: inline;
+display: none;
+
+/* Size */
+width: 100%;
+height: 200px;
+max-width: 1200px;
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>✅ Today's Deliverable</h2>
+                <div class="activity-box">
+                    <ul class="checklist">
+                        <li>style.css file with comprehensive styling</li>
+                        <li>Styled news-article.html page</li>
+                        <li>Styled profile.html page with separate CSS</li>
+                        <li>Screenshots of before and after styling</li>
+                        <li>Committed and pushed to GitHub with message: "Add CSS styling"</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📚 Additional Resources</h2>
+                <ul>
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS" target="_blank">MDN: CSS Documentation</a></li>
+                    <li><a href="https://www.w3schools.com/css/" target="_blank">W3Schools: CSS Tutorial</a></li>
+                    <li><a href="https://cssreference.io/" target="_blank">CSS Reference - Visual Guide</a></li>
+                    <li><a href="https://coolors.co/" target="_blank">Coolors - Color Palette Generator</a></li>
+                    <li><a href="https://fonts.google.com/" target="_blank">Google Fonts</a></li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <a href="day1-semantic-html.html" class="btn-primary">← Previous: Day 1</a>
+                <a href="../index.html" class="btn-primary">Back to Course Home</a>
+                <a href="day3-box-model-layout.html" class="btn-primary">Next: Day 3 →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 2 - Day 2: Introduction to CSS</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

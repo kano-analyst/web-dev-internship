@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 16 Day 2: Create & Read Features</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        header { background: linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%); color: white; padding: 30px; border-radius: 15px 15px 0 0; }
+        .content { padding: 40px; }
+        h2 { color: #ff6e7f; border-bottom: 3px solid #bfe9ff; padding-bottom: 10px; margin: 30px 0 20px; }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        .info-box { background: #fff3cd; border-left: 5px solid #ff6e7f; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border: 1px solid #ddd; }
+        th { background: #ff6e7f; color: white; }
+        .btn { background: #ff6e7f; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 10px 10px 0; }
+        footer { background: linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%); color: white; padding: 20px; text-align: center; border-radius: 0 0 15px 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 16 - Day 2: Create & Read Features</h1>
+            <p>Tuesday | Duration: 3 hours | Build Registration & Display! 📝</p>
+        </header>
+
+        <div class="content">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Implement student registration form</li>
+                <li>Create course management forms</li>
+                <li>Display students in table</li>
+                <li>Show individual student details</li>
+                <li>Build dashboard with statistics</li>
+            </ul>
+
+            <h2>🗄️ Step 1: Define Migrations</h2>
+            
+            <h3>Students Table Migration:</h3>
+            <div class="code-block">
+&lt;?php
+// database/migrations/xxxx_create_students_table.php
+
+public function up(): void
+{
+    Schema::create('students', function (Blueprint $table) {
+        $table->id();
+        $table->string('name');
+        $table->string('email')->unique();
+        $table->string('phone');
+        $table->date('date_of_birth')->nullable();
+        $table->text('address')->nullable();
+        $table->timestamps();
+    });
+}
+            </div>
+
+            <h3>Courses Table Migration:</h3>
+            <div class="code-block">
+&lt;?php
+// database/migrations/xxxx_create_courses_table.php
+
+public function up(): void
+{
+    Schema::create('courses', function (Blueprint $table) {
+        $table->id();
+        $table->string('name');
+        $table->string('code')->unique();
+        $table->text('description')->nullable();
+        $table->integer('duration_weeks');
+        $table->timestamps();
+    });
+}
+            </div>
+
+            <h3>Run Migrations:</h3>
+            <div class="code-block">
+php artisan migrate
+            </div>
+
+            <h2>📦 Step 2: Configure Models</h2>
+            
+            <h3>Student Model:</h3>
+            <div class="code-block">
+&lt;?php
+// app/Models/Student.php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Student extends Model
+{
+    protected $fillable = [
+        'name',
+        'email',
+        'phone',
+        'date_of_birth',
+        'address'
+    ];
+    
+    // Relationship: Student has many courses
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class);
+    }
+}
+?&gt;
+            </div>
+
+            <h3>Course Model:</h3>
+            <div class="code-block">
+&lt;?php
+// app/Models/Course.php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Course extends Model
+{
+    protected $fillable = [
+        'name',
+        'code',
+        'description',
+        'duration_weeks'
+    ];
+    
+    // Relationship: Course has many students
+    public function students()
+    {
+        return $this->belongsToMany(Student::class);
+    }
+}
+?&gt;
+            </div>
+
+            <h2>🎮 Step 3: Student Controller</h2>
+            <div class="code-block">
+&lt;?php
+// app/Http/Controllers/StudentController.php
+
+namespace App\Http\Controllers;
+
+use App\Models\Student;
+use Illuminate\Http\Request;
+
+class StudentController extends Controller
+{
+    // Display all students
+    public function index()
+    {
+        $students = Student::orderBy('created_at', 'desc')->get();
+        return view('students.index', compact('students'));
+    }
+    
+    // Show create form
+    public function create()
+    {
+        return view('students.create');
+    }
+    
+    // Store new student
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:100',
+            'email' => 'required|email|unique:students,email',
+            'phone' => 'required|string|max:20',
+            'date_of_birth' => 'nullable|date',
+            'address' => 'nullable|string|max:500'
+        ]);
+        
+        Student::create($validated);
+        
+        return redirect()->route('students.index')
+                        ->with('success', 'Student added successfully!');
+    }
+    
+    // Show single student
+    public function show($id)
+    {
+        $student = Student::with('courses')->findOrFail($id);
+        return view('students.show', compact('student'));
+    }
+}
+?&gt;
+            </div>
+
+            <h2>🎨 Step 4: Create Master Layout</h2>
+            <div class="code-block">
+&lt;!-- resources/views/layouts/app.blade.php --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;@yield('title', 'Student Management System')&lt;/title&gt;
+    &lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"&gt;
+    &lt;style&gt;
+        .navbar { background: linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%); }
+        .card { box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .btn-primary { background: #ff6e7f; border: none; }
+        .btn-primary:hover { background: #ff5569; }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;nav class="navbar navbar-expand-lg navbar-dark"&gt;
+        &lt;div class="container"&gt;
+            &lt;a class="navbar-brand" href="/"&gt;🎓 Student Management&lt;/a&gt;
+            &lt;button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"&gt;
+                &lt;span class="navbar-toggler-icon"&gt;&lt;/span&gt;
+            &lt;/button&gt;
+            &lt;div class="collapse navbar-collapse" id="navbarNav"&gt;
+                &lt;ul class="navbar-nav ms-auto"&gt;
+                    &lt;li class="nav-item"&gt;&lt;a class="nav-link" href="{{ route('dashboard') }}"&gt;Dashboard&lt;/a&gt;&lt;/li&gt;
+                    &lt;li class="nav-item"&gt;&lt;a class="nav-link" href="{{ route('students.index') }}"&gt;Students&lt;/a&gt;&lt;/li&gt;
+                    &lt;li class="nav-item"&gt;&lt;a class="nav-link" href="{{ route('courses.index') }}"&gt;Courses&lt;/a&gt;&lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/nav&gt;
+    
+    &lt;div class="container mt-4"&gt;
+        @if(session('success'))
+            &lt;div class="alert alert-success alert-dismissible fade show"&gt;
+                {{ session('success') }}
+                &lt;button type="button" class="btn-close" data-bs-dismiss="alert"&gt;&lt;/button&gt;
+            &lt;/div&gt;
+        @endif
+        
+        @yield('content')
+    &lt;/div&gt;
+    
+    &lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </div>
+
+            <h2>📝 Step 5: Create Form View</h2>
+            <div class="code-block">
+&lt;!-- resources/views/students/create.blade.php --&gt;
+@extends('layouts.app')
+
+@section('title', 'Add New Student')
+
+@section('content')
+&lt;div class="row justify-content-center"&gt;
+    &lt;div class="col-md-8"&gt;
+        &lt;div class="card"&gt;
+            &lt;div class="card-header"&gt;
+                &lt;h3&gt;Add New Student&lt;/h3&gt;
+            &lt;/div&gt;
+            &lt;div class="card-body"&gt;
+                &lt;form action="{{ route('students.store') }}" method="POST"&gt;
+                    @csrf
+                    
+                    &lt;div class="mb-3"&gt;
+                        &lt;label class="form-label"&gt;Full Name *&lt;/label&gt;
+                        &lt;input type="text" name="name" class="form-control @error('name') is-invalid @enderror" 
+                               value="{{ old('name') }}" required&gt;
+                        @error('name')
+                            &lt;div class="invalid-feedback"&gt;{{ $message }}&lt;/div&gt;
+                        @enderror
+                    &lt;/div&gt;
+                    
+                    &lt;div class="mb-3"&gt;
+                        &lt;label class="form-label"&gt;Email Address *&lt;/label&gt;
+                        &lt;input type="email" name="email" class="form-control @error('email') is-invalid @enderror" 
+                               value="{{ old('email') }}" required&gt;
+                        @error('email')
+                            &lt;div class="invalid-feedback"&gt;{{ $message }}&lt;/div&gt;
+                        @enderror
+                    &lt;/div&gt;
+                    
+                    &lt;div class="mb-3"&gt;
+                        &lt;label class="form-label"&gt;Phone Number *&lt;/label&gt;
+                        &lt;input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror" 
+                               value="{{ old('phone') }}" required&gt;
+                        @error('phone')
+                            &lt;div class="invalid-feedback"&gt;{{ $message }}&lt;/div&gt;
+                        @enderror
+                    &lt;/div&gt;
+                    
+                    &lt;div class="mb-3"&gt;
+                        &lt;label class="form-label"&gt;Date of Birth&lt;/label&gt;
+                        &lt;input type="date" name="date_of_birth" class="form-control" value="{{ old('date_of_birth') }}"&gt;
+                    &lt;/div&gt;
+                    
+                    &lt;div class="mb-3"&gt;
+                        &lt;label class="form-label"&gt;Address&lt;/label&gt;
+                        &lt;textarea name="address" class="form-control" rows="3"&gt;{{ old('address') }}&lt;/textarea&gt;
+                    &lt;/div&gt;
+                    
+                    &lt;div class="d-flex justify-content-between"&gt;
+                        &lt;a href="{{ route('students.index') }}" class="btn btn-secondary"&gt;Cancel&lt;/a&gt;
+                        &lt;button type="submit" class="btn btn-primary"&gt;Add Student&lt;/button&gt;
+                    &lt;/div&gt;
+                &lt;/form&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+@endsection
+            </div>
+
+            <h2>📊 Step 6: Students List View</h2>
+            <div class="code-block">
+&lt;!-- resources/views/students/index.blade.php --&gt;
+@extends('layouts.app')
+
+@section('title', 'All Students')
+
+@section('content')
+&lt;div class="d-flex justify-content-between align-items-center mb-4"&gt;
+    &lt;h2&gt;All Students&lt;/h2&gt;
+    &lt;a href="{{ route('students.create') }}" class="btn btn-primary"&gt;+ Add New Student&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;div class="card"&gt;
+    &lt;div class="card-body"&gt;
+        @if($students->count() > 0)
+            &lt;div class="table-responsive"&gt;
+                &lt;table class="table table-hover"&gt;
+                    &lt;thead&gt;
+                        &lt;tr&gt;
+                            &lt;th&gt;ID&lt;/th&gt;
+                            &lt;th&gt;Name&lt;/th&gt;
+                            &lt;th&gt;Email&lt;/th&gt;
+                            &lt;th&gt;Phone&lt;/th&gt;
+                            &lt;th&gt;Registered&lt;/th&gt;
+                            &lt;th&gt;Actions&lt;/th&gt;
+                        &lt;/tr&gt;
+                    &lt;/thead&gt;
+                    &lt;tbody&gt;
+                        @foreach($students as $student)
+                        &lt;tr&gt;
+                            &lt;td&gt;{{ $student->id }}&lt;/td&gt;
+                            &lt;td&gt;{{ $student->name }}&lt;/td&gt;
+                            &lt;td&gt;{{ $student->email }}&lt;/td&gt;
+                            &lt;td&gt;{{ $student->phone }}&lt;/td&gt;
+                            &lt;td&gt;{{ $student->created_at->format('M d, Y') }}&lt;/td&gt;
+                            &lt;td&gt;
+                                &lt;a href="{{ route('students.show', $student->id) }}" class="btn btn-sm btn-info"&gt;View&lt;/a&gt;
+                                &lt;a href="{{ route('students.edit', $student->id) }}" class="btn btn-sm btn-warning"&gt;Edit&lt;/a&gt;
+                            &lt;/td&gt;
+                        &lt;/tr&gt;
+                        @endforeach
+                    &lt;/tbody&gt;
+                &lt;/table&gt;
+            &lt;/div&gt;
+        @else
+            &lt;div class="alert alert-info"&gt;
+                No students found. &lt;a href="{{ route('students.create') }}"&gt;Add your first student&lt;/a&gt;
+            &lt;/div&gt;
+        @endif
+    &lt;/div&gt;
+&lt;/div&gt;
+@endsection
+            </div>
+
+            <h2>👁️ Step 7: Student Details View</h2>
+            <div class="code-block">
+&lt;!-- resources/views/students/show.blade.php --&gt;
+@extends('layouts.app')
+
+@section('title', 'Student Details')
+
+@section('content')
+&lt;div class="row"&gt;
+    &lt;div class="col-md-8"&gt;
+        &lt;div class="card"&gt;
+            &lt;div class="card-header"&gt;
+                &lt;h3&gt;Student Information&lt;/h3&gt;
+            &lt;/div&gt;
+            &lt;div class="card-body"&gt;
+                &lt;table class="table"&gt;
+                    &lt;tr&gt;
+                        &lt;th width="30%"&gt;Student ID:&lt;/th&gt;
+                        &lt;td&gt;{{ $student->id }}&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt;
+                        &lt;th&gt;Name:&lt;/th&gt;
+                        &lt;td&gt;{{ $student->name }}&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt;
+                        &lt;th&gt;Email:&lt;/th&gt;
+                        &lt;td&gt;{{ $student->email }}&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt;
+                        &lt;th&gt;Phone:&lt;/th&gt;
+                        &lt;td&gt;{{ $student->phone }}&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt;
+                        &lt;th&gt;Date of Birth:&lt;/th&gt;
+                        &lt;td&gt;{{ $student->date_of_birth ?? 'Not provided' }}&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt;
+                        &lt;th&gt;Address:&lt;/th&gt;
+                        &lt;td&gt;{{ $student->address ?? 'Not provided' }}&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt;
+                        &lt;th&gt;Registered:&lt;/th&gt;
+                        &lt;td&gt;{{ $student->created_at->format('F d, Y') }}&lt;/td&gt;
+                    &lt;/tr&gt;
+                &lt;/table&gt;
+                
+                &lt;div class="mt-4"&gt;
+                    &lt;a href="{{ route('students.index') }}" class="btn btn-secondary"&gt;Back to List&lt;/a&gt;
+                    &lt;a href="{{ route('students.edit', $student->id) }}" class="btn btn-warning"&gt;Edit Student&lt;/a&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    
+    &lt;div class="col-md-4"&gt;
+        &lt;div class="card"&gt;
+            &lt;div class="card-header"&gt;
+                &lt;h5&gt;Enrolled Courses&lt;/h5&gt;
+            &lt;/div&gt;
+            &lt;div class="card-body"&gt;
+                @if($student->courses->count() > 0)
+                    &lt;ul class="list-group"&gt;
+                        @foreach($student->courses as $course)
+                        &lt;li class="list-group-item"&gt;{{ $course->name }}&lt;/li&gt;
+                        @endforeach
+                    &lt;/ul&gt;
+                @else
+                    &lt;p class="text-muted"&gt;Not enrolled in any courses yet.&lt;/p&gt;
+                @endif
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+@endsection
+            </div>
+
+            <h2>🏠 Step 8: Dashboard</h2>
+            <div class="code-block">
+&lt;?php
+// app/Http/Controllers/DashboardController.php
+
+namespace App\Http\Controllers;
+
+use App\Models\Student;
+use App\Models\Course;
+
+class DashboardController extends Controller
+{
+    public function index()
+    {
+        $totalStudents = Student::count();
+        $totalCourses = Course::count();
+        $recentStudents = Student::latest()->limit(5)->get();
+        
+        return view('dashboard', compact('totalStudents', 'totalCourses', 'recentStudents'));
+    }
+}
+?&gt;
+
+&lt;!-- resources/views/dashboard.blade.php --&gt;
+@extends('layouts.app')
+
+@section('title', 'Dashboard')
+
+@section('content')
+&lt;h2 class="mb-4"&gt;Dashboard&lt;/h2&gt;
+
+&lt;div class="row"&gt;
+    &lt;div class="col-md-4"&gt;
+        &lt;div class="card text-white bg-primary"&gt;
+            &lt;div class="card-body"&gt;
+                &lt;h5 class="card-title"&gt;Total Students&lt;/h5&gt;
+                &lt;h2&gt;{{ $totalStudents }}&lt;/h2&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    
+    &lt;div class="col-md-4"&gt;
+        &lt;div class="card text-white bg-success"&gt;
+            &lt;div class="card-body"&gt;
+                &lt;h5 class="card-title"&gt;Total Courses&lt;/h5&gt;
+                &lt;h2&gt;{{ $totalCourses }}&lt;/h2&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="card mt-4"&gt;
+    &lt;div class="card-header"&gt;
+        &lt;h5&gt;Recent Students&lt;/h5&gt;
+    &lt;/div&gt;
+    &lt;div class="card-body"&gt;
+        &lt;table class="table"&gt;
+            &lt;thead&gt;
+                &lt;tr&gt;
+                    &lt;th&gt;Name&lt;/th&gt;
+                    &lt;th&gt;Email&lt;/th&gt;
+                    &lt;th&gt;Registered&lt;/th&gt;
+                &lt;/tr&gt;
+            &lt;/thead&gt;
+            &lt;tbody&gt;
+                @foreach($recentStudents as $student)
+                &lt;tr&gt;
+                    &lt;td&gt;{{ $student->name }}&lt;/td&gt;
+                    &lt;td&gt;{{ $student->email }}&lt;/td&gt;
+                    &lt;td&gt;{{ $student->created_at->diffForHumans() }}&lt;/td&gt;
+                &lt;/tr&gt;
+                @endforeach
+            &lt;/tbody&gt;
+        &lt;/table&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+@endsection
+            </div>
+
+            <h2>✏️ Practice Exercises</h2>
+            <ol>
+                <li>Create similar CRUD for Courses (create.blade.php, index.blade.php)</li>
+                <li>Add search functionality to students list</li>
+                <li>Implement pagination for student list</li>
+                <li>Add student profile photo upload</li>
+                <li>Create a statistics card showing average age</li>
+            </ol>
+
+            <h2>✅ Today's Deliverable</h2>
+            <ul>
+                <li>✓ Student registration form working</li>
+                <li>✓ Students list displaying correctly</li>
+                <li>✓ View individual student details</li>
+                <li>✓ Bootstrap styling applied</li>
+                <li>✓ Dashboard showing statistics</li>
+                <li>✓ Flash messages for success</li>
+            </ul>
+
+            <div style="margin-top: 40px;">
+                <a href="day1-project-planning.html" class="btn">← Previous</a>
+                <a href="../index.html" class="btn">Course Home</a>
+                <a href="day3-update-delete.html" class="btn">Next →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 16 - Day 2: Create & Read Features</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

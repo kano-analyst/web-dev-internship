@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 14 Day 3: Laravel Forms & Validation</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        header { background: #fcb69f; color: white; padding: 30px; border-radius: 15px 15px 0 0; }
+        .content { padding: 40px; }
+        h2 { color: #fcb69f; border-bottom: 3px solid #ffecd2; padding-bottom: 10px; margin: 30px 0 20px; }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        .info-box { background: #fff3cd; border-left: 5px solid #fcb69f; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        .warning-box { background: #f8d7da; border-left: 5px solid #dc3545; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border: 1px solid #ddd; }
+        th { background: #fcb69f; color: white; }
+        .btn { background: #fcb69f; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 10px 10px 0; }
+        footer { background: #fcb69f; color: white; padding: 20px; text-align: center; border-radius: 0 0 15px 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 14 - Day 3: Laravel Forms & Validation</h1>
+            <p>Wednesday | Duration: 3 hours | Secure Form Handling! 🔒</p>
+        </header>
+
+        <div class="content">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Create Laravel forms with CSRF protection</li>
+                <li>Handle form submissions in controllers</li>
+                <li>Implement server-side validation</li>
+                <li>Display validation errors</li>
+                <li>Use old() helper to repopulate forms</li>
+            </ul>
+
+            <h2>🔐 CSRF Protection</h2>
+            <div class="warning-box">
+                <p><strong>Security First!</strong> Laravel protects against Cross-Site Request Forgery (CSRF) attacks. Every form MUST include @csrf directive.</p>
+            </div>
+
+            <h3>Basic Form with CSRF:</h3>
+            <div class="code-block">
+&lt;!-- resources/views/contact.blade.php --&gt;
+&lt;form action="/contact" method="POST"&gt;
+    @csrf
+    
+    &lt;label&gt;Name:&lt;/label&gt;
+    &lt;input type="text" name="name"&gt;
+    
+    &lt;label&gt;Email:&lt;/label&gt;
+    &lt;input type="email" name="email"&gt;
+    
+    &lt;label&gt;Message:&lt;/label&gt;
+    &lt;textarea name="message"&gt;&lt;/textarea&gt;
+    
+    &lt;button type="submit"&gt;Send&lt;/button&gt;
+&lt;/form&gt;
+            </div>
+
+            <h2>📝 Handling Form Submission</h2>
+            
+            <h3>Route Definition:</h3>
+            <div class="code-block">
+&lt;?php
+// routes/web.php
+
+use App\Http\Controllers\ContactController;
+
+Route::get('/contact', [ContactController::class, 'show']);
+Route::post('/contact', [ContactController::class, 'submit']);
+?&gt;
+            </div>
+
+            <h3>Controller with Validation:</h3>
+            <div class="code-block">
+&lt;?php
+// app/Http/Controllers/ContactController.php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class ContactController extends Controller
+{
+    public function show()
+    {
+        return view('contact');
+    }
+    
+    public function submit(Request $request)
+    {
+        // Validate form data
+        $validated = $request->validate([
+            'name' => 'required|min:3|max:50',
+            'email' => 'required|email',
+            'message' => 'required|min:10|max:500',
+        ]);
+        
+        // Process the data (save to database, send email, etc.)
+        // For now, just redirect with success message
+        return redirect('/contact')->with('success', 'Message sent successfully!');
+    }
+}
+?&gt;
+            </div>
+
+            <h2>✅ Validation Rules</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rule</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>required</td>
+                        <td>Field must not be empty</td>
+                        <td>'name' => 'required'</td>
+                    </tr>
+                    <tr>
+                        <td>email</td>
+                        <td>Must be valid email format</td>
+                        <td>'email' => 'email'</td>
+                    </tr>
+                    <tr>
+                        <td>min:n</td>
+                        <td>Minimum length/value</td>
+                        <td>'password' => 'min:8'</td>
+                    </tr>
+                    <tr>
+                        <td>max:n</td>
+                        <td>Maximum length/value</td>
+                        <td>'name' => 'max:50'</td>
+                    </tr>
+                    <tr>
+                        <td>numeric</td>
+                        <td>Must be a number</td>
+                        <td>'age' => 'numeric'</td>
+                    </tr>
+                    <tr>
+                        <td>alpha</td>
+                        <td>Only letters (A-Z, a-z)</td>
+                        <td>'name' => 'alpha'</td>
+                    </tr>
+                    <tr>
+                        <td>alpha_num</td>
+                        <td>Letters and numbers only</td>
+                        <td>'username' => 'alpha_num'</td>
+                    </tr>
+                    <tr>
+                        <td>confirmed</td>
+                        <td>Must match _confirmation field</td>
+                        <td>'password' => 'confirmed'</td>
+                    </tr>
+                    <tr>
+                        <td>unique:table</td>
+                        <td>Value must be unique in table</td>
+                        <td>'email' => 'unique:users'</td>
+                    </tr>
+                    <tr>
+                        <td>in:val1,val2</td>
+                        <td>Value must be in list</td>
+                        <td>'role' => 'in:admin,user'</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>🚨 Displaying Validation Errors</h2>
+            
+            <h3>Method 1: Display All Errors</h3>
+            <div class="code-block">
+&lt;!-- Show all errors at top of form --&gt;
+@if($errors->any())
+    &lt;div style="background: #f8d7da; color: #721c24; padding: 15px; border-radius: 5px; margin-bottom: 20px;"&gt;
+        &lt;strong&gt;Please fix the following errors:&lt;/strong&gt;
+        &lt;ul style="margin: 10px 0 0 20px;"&gt;
+            @foreach($errors->all() as $error)
+                &lt;li&gt;{{ $error }}&lt;/li&gt;
+            @endforeach
+        &lt;/ul&gt;
+    &lt;/div&gt;
+@endif
+            </div>
+
+            <h3>Method 2: Display Error Per Field</h3>
+            <div class="code-block">
+&lt;label&gt;Name:&lt;/label&gt;
+&lt;input type="text" name="name" value="{{ old('name') }}"&gt;
+@error('name')
+    &lt;span style="color: red; font-size: 0.9em;"&gt;{{ $message }}&lt;/span&gt;
+@enderror
+
+&lt;label&gt;Email:&lt;/label&gt;
+&lt;input type="email" name="email" value="{{ old('email') }}"&gt;
+@error('email')
+    &lt;span style="color: red; font-size: 0.9em;"&gt;{{ $message }}&lt;/span&gt;
+@enderror
+            </div>
+
+            <h2>🔄 Repopulating Forms with old()</h2>
+            <div class="info-box">
+                <p><strong>old() helper</strong> retrieves previously submitted values, so users don't have to re-type everything when validation fails.</p>
+            </div>
+
+            <div class="code-block">
+&lt;input type="text" name="name" value="{{ old('name') }}"&gt;
+&lt;input type="email" name="email" value="{{ old('email') }}"&gt;
+&lt;textarea name="message"&gt;{{ old('message') }}&lt;/textarea&gt;
+
+&lt;!-- For select dropdown --&gt;
+&lt;select name="country"&gt;
+    &lt;option value="nigeria" {{ old('country') == 'nigeria' ? 'selected' : '' }}&gt;Nigeria&lt;/option&gt;
+    &lt;option value="ghana" {{ old('country') == 'ghana' ? 'selected' : '' }}&gt;Ghana&lt;/option&gt;
+&lt;/select&gt;
+
+&lt;!-- For checkboxes --&gt;
+&lt;input type="checkbox" name="agree" {{ old('agree') ? 'checked' : '' }}&gt; I agree
+            </div>
+
+            <h2>💻 Complete Registration Form Example</h2>
+            
+            <h3>Route:</h3>
+            <div class="code-block">
+&lt;?php
+// routes/web.php
+
+use App\Http\Controllers\RegisterController;
+
+Route::get('/register', [RegisterController::class, 'show']);
+Route::post('/register', [RegisterController::class, 'store']);
+?&gt;
+            </div>
+
+            <h3>Controller:</h3>
+            <div class="code-block">
+&lt;?php
+// app/Http/Controllers/RegisterController.php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class RegisterController extends Controller
+{
+    public function show()
+    {
+        return view('register');
+    }
+    
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|min:3|max:50|alpha',
+            'email' => 'required|email|unique:users',
+            'phone' => 'required|numeric|min:10',
+            'password' => 'required|min:8|confirmed',
+            'age' => 'required|numeric|min:18|max:100',
+            'gender' => 'required|in:male,female',
+            'agree' => 'required',
+        ]);
+        
+        // Save to database (we'll learn this next week)
+        // For now, just show success
+        return redirect('/register')->with('success', 'Registration successful!');
+    }
+}
+?&gt;
+            </div>
+
+            <h3>View (resources/views/register.blade.php):</h3>
+            <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Registration Form&lt;/title&gt;
+    &lt;style&gt;
+        body { font-family: Arial; max-width: 600px; margin: 50px auto; padding: 20px; }
+        h1 { color: #fcb69f; text-align: center; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #333; }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .error { color: #dc3545; font-size: 0.9em; margin-top: 5px; }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .error-box {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        button {
+            background: #fcb69f;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        button:hover { background: #fa9882; }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Student Registration&lt;/h1&gt;
+    
+    @if(session('success'))
+        &lt;div class="success"&gt;
+            {{ session('success') }}
+        &lt;/div&gt;
+    @endif
+    
+    @if($errors->any())
+        &lt;div class="error-box"&gt;
+            &lt;strong&gt;Please fix the following errors:&lt;/strong&gt;
+            &lt;ul&gt;
+                @foreach($errors->all() as $error)
+                    &lt;li&gt;{{ $error }}&lt;/li&gt;
+                @endforeach
+            &lt;/ul&gt;
+        &lt;/div&gt;
+    @endif
+    
+    &lt;form action="/register" method="POST"&gt;
+        @csrf
+        
+        &lt;div class="form-group"&gt;
+            &lt;label&gt;Full Name *&lt;/label&gt;
+            &lt;input type="text" name="name" value="{{ old('name') }}" placeholder="Ahmad Ibrahim"&gt;
+            @error('name')
+                &lt;div class="error"&gt;{{ $message }}&lt;/div&gt;
+            @enderror
+        &lt;/div&gt;
+        
+        &lt;div class="form-group"&gt;
+            &lt;label&gt;Email Address *&lt;/label&gt;
+            &lt;input type="email" name="email" value="{{ old('email') }}" placeholder="ahmad@example.com"&gt;
+            @error('email')
+                &lt;div class="error"&gt;{{ $message }}&lt;/div&gt;
+            @enderror
+        &lt;/div&gt;
+        
+        &lt;div class="form-group"&gt;
+            &lt;label&gt;Phone Number *&lt;/label&gt;
+            &lt;input type="text" name="phone" value="{{ old('phone') }}" placeholder="08012345678"&gt;
+            @error('phone')
+                &lt;div class="error"&gt;{{ $message }}&lt;/div&gt;
+            @enderror
+        &lt;/div&gt;
+        
+        &lt;div class="form-group"&gt;
+            &lt;label&gt;Password *&lt;/label&gt;
+            &lt;input type="password" name="password" placeholder="Minimum 8 characters"&gt;
+            @error('password')
+                &lt;div class="error"&gt;{{ $message }}&lt;/div&gt;
+            @enderror
+        &lt;/div&gt;
+        
+        &lt;div class="form-group"&gt;
+            &lt;label&gt;Confirm Password *&lt;/label&gt;
+            &lt;input type="password" name="password_confirmation" placeholder="Re-type password"&gt;
+        &lt;/div&gt;
+        
+        &lt;div class="form-group"&gt;
+            &lt;label&gt;Age *&lt;/label&gt;
+            &lt;input type="number" name="age" value="{{ old('age') }}" placeholder="18"&gt;
+            @error('age')
+                &lt;div class="error"&gt;{{ $message }}&lt;/div&gt;
+            @enderror
+        &lt;/div&gt;
+        
+        &lt;div class="form-group"&gt;
+            &lt;label&gt;Gender *&lt;/label&gt;
+            &lt;select name="gender"&gt;
+                &lt;option value=""&gt;Select Gender&lt;/option&gt;
+                &lt;option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}&gt;Male&lt;/option&gt;
+                &lt;option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}&gt;Female&lt;/option&gt;
+            &lt;/select&gt;
+            @error('gender')
+                &lt;div class="error"&gt;{{ $message }}&lt;/div&gt;
+            @enderror
+        &lt;/div&gt;
+        
+        &lt;div class="form-group"&gt;
+            &lt;label&gt;
+                &lt;input type="checkbox" name="agree" {{ old('agree') ? 'checked' : '' }}&gt;
+                I agree to the terms and conditions *
+            &lt;/label&gt;
+            @error('agree')
+                &lt;div class="error"&gt;{{ $message }}&lt;/div&gt;
+            @enderror
+        &lt;/div&gt;
+        
+        &lt;button type="submit"&gt;Register&lt;/button&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </div>
+
+            <h2>📋 Custom Validation Messages</h2>
+            <div class="code-block">
+&lt;?php
+$validated = $request->validate([
+    'name' => 'required|min:3',
+    'email' => 'required|email',
+], [
+    'name.required' => 'Please enter your name.',
+    'name.min' => 'Name must be at least 3 characters.',
+    'email.required' => 'Email address is required.',
+    'email.email' => 'Please enter a valid email address.',
+]);
+?&gt;
+            </div>
+
+            <h2>🎯 Method Spoofing (PUT/DELETE)</h2>
+            <div class="info-box">
+                <p>HTML forms only support GET and POST. For PUT/PATCH/DELETE, use @method directive.</p>
+            </div>
+
+            <div class="code-block">
+&lt;!-- Update form (PUT) --&gt;
+&lt;form action="/students/{{ $id }}" method="POST"&gt;
+    @csrf
+    @method('PUT')
+    &lt;!-- form fields --&gt;
+    &lt;button type="submit"&gt;Update&lt;/button&gt;
+&lt;/form&gt;
+
+&lt;!-- Delete form --&gt;
+&lt;form action="/students/{{ $id }}" method="POST"&gt;
+    @csrf
+    @method('DELETE')
+    &lt;button type="submit"&gt;Delete&lt;/button&gt;
+&lt;/form&gt;
+            </div>
+
+            <h2>✏️ Practice Exercises</h2>
+            <ol>
+                <li>Create a login form with email and password validation</li>
+                <li>Build a contact form with name, email, subject, and message</li>
+                <li>Create a product form with name, price (numeric), and description</li>
+                <li>Add custom error messages to your forms</li>
+                <li>Implement a profile update form with PUT method</li>
+                <li>Create a form with dropdown, checkbox, and radio button validation</li>
+            </ol>
+
+            <h2>✅ Today's Deliverable</h2>
+            <ul>
+                <li>✓ Understand CSRF protection with @csrf</li>
+                <li>✓ Validate form data with multiple rules</li>
+                <li>✓ Display errors with @error directive</li>
+                <li>✓ Repopulate forms using old() helper</li>
+                <li>✓ Complete registration form with all validations</li>
+                <li>✓ Handle success messages with session flash</li>
+            </ul>
+
+            <div style="margin-top: 40px;">
+                <a href="day2-layouts-partials.html" class="btn">← Previous</a>
+                <a href="../index.html" class="btn">Course Home</a>
+                <a href="../week15/day1-migrations-models.html" class="btn">Next Week →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 14 - Day 3: Laravel Forms & Validation</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

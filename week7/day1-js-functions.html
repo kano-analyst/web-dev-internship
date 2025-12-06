@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 7 Day 1: JavaScript Functions</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        header { background: #43e97b; color: white; padding: 30px; border-radius: 15px 15px 0 0; }
+        .content { padding: 40px; }
+        h2 { color: #43e97b; border-bottom: 3px solid #38f9d7; padding-bottom: 10px; margin: 30px 0 20px; }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+        .info-box { background: #e8f5e9; border-left: 5px solid #43e97b; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        .btn { background: #43e97b; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 10px 10px 0; }
+        footer { background: #43e97b; color: white; padding: 20px; text-align: center; border-radius: 0 0 15px 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 7 - Day 1: JavaScript Functions</h1>
+            <p>Monday | Duration: 3 hours</p>
+        </header>
+
+        <div class="content">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Understand what functions are and why they're useful</li>
+                <li>Create functions with parameters</li>
+                <li>Use return statements</li>
+                <li>Write reusable code</li>
+                <li>Build practical function-based programs</li>
+            </ul>
+
+            <h2>📦 What is a Function?</h2>
+            <div class="info-box">
+                <p><strong>Function</strong> is a reusable block of code that performs a specific task. Instead of writing the same code multiple times, you write it once in a function and call it whenever needed.</p>
+            </div>
+
+            <h2>✍️ Function Declaration</h2>
+            <div class="code-block">
+// Basic function
+function greet() {
+    console.log("Hello, World!");
+}
+
+// Call the function
+greet();  // Output: Hello, World!
+greet();  // Output: Hello, World!
+            </div>
+
+            <h2>📥 Functions with Parameters</h2>
+            <p>Parameters allow you to pass data into functions:</p>
+            <div class="code-block">
+// Function with one parameter
+function greetUser(name) {
+    console.log("Hello, " + name + "!");
+}
+
+greetUser("Ahmad");   // Hello, Ahmad!
+greetUser("Fatima");  // Hello, Fatima!
+
+// Function with multiple parameters
+function addNumbers(a, b) {
+    let sum = a + b;
+    console.log(sum);
+}
+
+addNumbers(5, 3);   // 8
+addNumbers(10, 20); // 30
+            </div>
+
+            <h2>↩️ Return Statement</h2>
+            <p>Functions can return values that you can use elsewhere:</p>
+            <div class="code-block">
+// Function that returns a value
+function multiply(x, y) {
+    return x * y;
+}
+
+let result = multiply(5, 4);
+console.log(result);  // 20
+
+// Use returned value in calculations
+let total = multiply(3, 7) + 10;
+console.log(total);  // 31
+            </div>
+
+            <h2>🧮 Practical Function Examples</h2>
+            
+            <h3>1. Calculator Functions</h3>
+            <div class="code-block">
+function add(a, b) {
+    return a + b;
+}
+
+function subtract(a, b) {
+    return a - b;
+}
+
+function multiply(a, b) {
+    return a * b;
+}
+
+function divide(a, b) {
+    return a / b;
+}
+
+console.log(add(10, 5));       // 15
+console.log(subtract(10, 5));  // 5
+console.log(multiply(10, 5));  // 50
+console.log(divide(10, 5));    // 2
+            </div>
+
+            <h3>2. String Functions</h3>
+            <div class="code-block">
+function createFullName(firstName, lastName) {
+    return firstName + " " + lastName;
+}
+
+function shout(message) {
+    return message.toUpperCase();
+}
+
+let name = createFullName("Ahmad", "Garba");
+console.log(name);  // Ahmad Garba
+
+let loud = shout("hello");
+console.log(loud);  // HELLO
+            </div>
+
+            <h3>3. Validation Functions</h3>
+            <div class="code-block">
+function isAdult(age) {
+    if (age >= 18) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+console.log(isAdult(20));  // true
+console.log(isAdult(15));  // false
+
+// Short version
+function canVote(age) {
+    return age >= 18;
+}
+
+console.log(canVote(21));  // true
+            </div>
+
+            <h2>🔄 Function Expressions</h2>
+            <div class="code-block">
+// Store function in a variable
+const square = function(num) {
+    return num * num;
+};
+
+console.log(square(5));  // 25
+console.log(square(8));  // 64
+            </div>
+
+            <h2>🚀 Arrow Functions (Modern)</h2>
+            <div class="code-block">
+// Arrow function syntax
+const greet = (name) => {
+    return "Hello, " + name;
+};
+
+// Short version (one line)
+const double = (num) => num * 2;
+
+console.log(greet("Sarah"));  // Hello, Sarah
+console.log(double(5));       // 10
+            </div>
+
+            <h2>💻 Complete Practice Example</h2>
+            <div class="code-block">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript Functions Practice</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 40px; }
+        .result { background: #e8f5e9; padding: 20px; margin: 10px 0; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <h1>Function Practice</h1>
+    <div id="output"></div>
+
+    <script>
+        // Function to calculate rectangle area
+        function calculateArea(length, width) {
+            return length * width;
+        }
+
+        // Function to check even or odd
+        function isEven(number) {
+            return number % 2 === 0;
+        }
+
+        // Function to get grade
+        function getGrade(score) {
+            if (score >= 90) {
+                return "A";
+            } else if (score >= 80) {
+                return "B";
+            } else if (score >= 70) {
+                return "C";
+            } else {
+                return "F";
+            }
+        }
+
+        // Function to format currency
+        function formatCurrency(amount) {
+            return "₦" + amount.toFixed(2);
+        }
+
+        // Display results
+        let output = document.getElementById("output");
+        
+        output.innerHTML = `
+            <div class="result">
+                <h3>Rectangle Area</h3>
+                <p>Length: 10, Width: 5</p>
+                <p>Area: ${calculateArea(10, 5)}</p>
+            </div>
+            
+            <div class="result">
+                <h3>Even/Odd Checker</h3>
+                <p>Is 8 even? ${isEven(8)}</p>
+                <p>Is 7 even? ${isEven(7)}</p>
+            </div>
+            
+            <div class="result">
+                <h3>Grade Calculator</h3>
+                <p>Score 95: Grade ${getGrade(95)}</p>
+                <p>Score 82: Grade ${getGrade(82)}</p>
+            </div>
+            
+            <div class="result">
+                <h3>Currency Formatter</h3>
+                <p>${formatCurrency(1500)}</p>
+                <p>${formatCurrency(250.5)}</p>
+            </div>
+        `;
+    </script>
+</body>
+</html>
+            </div>
+
+            <h2>✏️ Practice Exercises</h2>
+            <ol>
+                <li>Create a function that calculates the area of a circle (π × r²)</li>
+                <li>Write a function that converts Celsius to Fahrenheit</li>
+                <li>Create a function that finds the largest of three numbers</li>
+                <li>Write a function that reverses a string</li>
+                <li>Create a discount calculator function (price, discount%)</li>
+            </ol>
+
+            <h2>🎯 Mini Project: BMI Calculator</h2>
+            <div class="code-block">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BMI Calculator</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 40px; max-width: 600px; margin: 0 auto; }
+        .calculator { background: #f5f5f5; padding: 30px; border-radius: 10px; }
+        input { width: 100%; padding: 10px; margin: 10px 0; font-size: 16px; }
+        button { width: 100%; padding: 15px; background: #43e97b; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
+        .result { background: white; padding: 20px; margin-top: 20px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <h1>BMI Calculator</h1>
+        <p>Weight (kg): <input type="number" id="weight" placeholder="Enter weight"></p>
+        <p>Height (m): <input type="number" id="height" step="0.01" placeholder="Enter height"></p>
+        <button onclick="calculateBMI()">Calculate BMI</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function calculateBMI() {
+            let weight = parseFloat(document.getElementById("weight").value);
+            let height = parseFloat(document.getElementById("height").value);
+            
+            let bmi = weight / (height * height);
+            let category = getBMICategory(bmi);
+            
+            document.getElementById("result").innerHTML = `
+                <div class="result">
+                    <h2>Your BMI: ${bmi.toFixed(2)}</h2>
+                    <p><strong>Category:</strong> ${category}</p>
+                </div>
+            `;
+        }
+
+        function getBMICategory(bmi) {
+            if (bmi < 18.5) {
+                return "Underweight";
+            } else if (bmi < 25) {
+                return "Normal weight";
+            } else if (bmi < 30) {
+                return "Overweight";
+            } else {
+                return "Obese";
+            }
+        }
+    </script>
+</body>
+</html>
+            </div>
+
+            <h2>✅ Today's Deliverable</h2>
+            <ul>
+                <li>✓ functions-practice.html with multiple functions</li>
+                <li>✓ At least 5 different functions created</li>
+                <li>✓ Functions with parameters and return values</li>
+                <li>✓ Calculator functions (add, subtract, multiply, divide)</li>
+                <li>✓ Validation function (age checker, even/odd)</li>
+                <li>✓ BMI Calculator mini-project completed</li>
+                <li>✓ All functions tested with console output</li>
+            </ul>
+
+            <div style="margin-top: 40px;">
+                <a href="../week6/day3-dom-manipulation.html" class="btn">← Previous</a>
+                <a href="../index.html" class="btn">Course Home</a>
+                <a href="day2-js-events.html" class="btn">Next: Day 2 →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 7 - Day 1: JavaScript Functions</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

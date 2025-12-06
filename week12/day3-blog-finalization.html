@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 12 Day 3: Blog Finalization & Deployment</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        header { background: #f5576c; color: white; padding: 30px; border-radius: 15px 15px 0 0; }
+        .content { padding: 40px; }
+        h2 { color: #f5576c; border-bottom: 3px solid #f093fb; padding-bottom: 10px; margin: 30px 0 20px; }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        .info-box { background: #fce4ec; border-left: 5px solid #f5576c; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        .success-box { background: #d4edda; border-left: 5px solid #28a745; padding: 20px; margin: 20px 0; border-radius: 5px; color: #155724; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border: 1px solid #ddd; }
+        th { background: #f5576c; color: white; }
+        .btn { background: #f5576c; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 10px 10px 0; }
+        footer { background: #f5576c; color: white; padding: 20px; text-align: center; border-radius: 0 0 15px 15px; }
+        .checklist { background: #f9f9f9; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        .checklist li { margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 12 - Day 3: Blog Finalization & Deployment</h1>
+            <p>Friday | Duration: 3 hours | Final Day! 🎉🎓</p>
+        </header>
+
+        <div class="content">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Complete edit and delete functionality</li>
+                <li>Implement search feature</li>
+                <li>Add security measures (SQL injection prevention)</li>
+                <li>Test entire application</li>
+                <li>Deploy and celebrate completion! 🎊</li>
+            </ul>
+
+            <h2>✏️ Edit Post (edit_post.php)</h2>
+            <div class="code-block">
+&lt;?php
+// edit_post.php
+require_once 'config/database.php';
+
+// Get post ID
+$post_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+
+// Fetch post
+$stmt = mysqli_prepare($conn, "SELECT * FROM posts WHERE id = ?");
+mysqli_stmt_bind_param($stmt, "i", $post_id);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+$post = mysqli_fetch_assoc($result);
+
+if (!$post) {
+    header("Location: index.php");
+    exit();
+}
+
+$pageTitle = "Edit: " . htmlspecialchars($post['title']);
+$errors = [];
+$success = "";
+
+// Handle form submission
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $title = trim($_POST['title']);
+    $content = trim($_POST['content']);
+    $author = trim($_POST['author']);
+    $category = trim($_POST['category']);
+    
+    // Validation
+    if (empty($title) || strlen($title) < 5) {
+        $errors[] = "Title must be at least 5 characters";
+    }
+    if (empty($content) || strlen($content) < 20) {
+        $errors[] = "Content must be at least 20 characters";
+    }
+    if (empty($author)) {
+        $errors[] = "Author name is required";
+    }
+    
+    // If no errors, update
+    if (empty($errors)) {
+        $updateStmt = mysqli_prepare($conn, "UPDATE posts SET title = ?, content = ?, author = ?, category = ? WHERE id = ?");
+        mysqli_stmt_bind_param($updateStmt, "ssssi", $title, $content, $author, $category, $post_id);
+        
+        if (mysqli_stmt_execute($updateStmt)) {
+            $success = "Post updated successfully!";
+            // Update local post data
+            $post['title'] = $title;
+            $post['content'] = $content;
+            $post['author'] = $author;
+            $post['category'] = $category;
+        } else {
+            $errors[] = "Error updating post";
+        }
+        
+        mysqli_stmt_close($updateStmt);
+    }
+}
+
+include 'includes/header.php';
+?&gt;
+
+&lt;div class="container"&gt;
+    &lt;div class="post-card"&gt;
+        &lt;h2 style="color: #f5576c; margin-bottom: 30px;"&gt;✏️ Edit Blog Post&lt;/h2&gt;
+        
+        &lt;?php if ($success): ?&gt;
+            &lt;div style="background: #d4edda; color: #155724; padding: 15px; border-radius: 5px; margin-bottom: 20px;"&gt;
+                &lt;?php echo $success; ?&gt;
+            &lt;/div&gt;
+        &lt;?php endif; ?&gt;
+        
+        &lt;?php if (!empty($errors)): ?&gt;
+            &lt;div style="background: #f8d7da; color: #721c24; padding: 15px; border-radius: 5px; margin-bottom: 20px;"&gt;
+                &lt;ul style="margin-left: 20px;"&gt;
+                    &lt;?php foreach ($errors as $error): ?&gt;
+                        &lt;li&gt;&lt;?php echo htmlspecialchars($error); ?&gt;&lt;/li&gt;
+                    &lt;?php endforeach; ?&gt;
+                &lt;/ul&gt;
+            &lt;/div&gt;
+        &lt;?php endif; ?&gt;
+        
+        &lt;form method="POST"&gt;
+            &lt;div style="margin-bottom: 20px;"&gt;
+                &lt;label style="display: block; margin-bottom: 5px; font-weight: bold;"&gt;Post Title:&lt;/label&gt;
+                &lt;input type="text" name="title" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px;"
+                       value="&lt;?php echo htmlspecialchars($post['title']); ?&gt;" required&gt;
+            &lt;/div&gt;
+            
+            &lt;div style="margin-bottom: 20px;"&gt;
+                &lt;label style="display: block; margin-bottom: 5px; font-weight: bold;"&gt;Author Name:&lt;/label&gt;
+                &lt;input type="text" name="author" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px;"
+                       value="&lt;?php echo htmlspecialchars($post['author']); ?&gt;" required&gt;
+            &lt;/div&gt;
+            
+            &lt;div style="margin-bottom: 20px;"&gt;
+                &lt;label style="display: block; margin-bottom: 5px; font-weight: bold;"&gt;Category:&lt;/label&gt;
+                &lt;select name="category" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px;"&gt;
+                    &lt;option value=""&gt;-- Select Category --&lt;/option&gt;
+                    &lt;option value="Technology" &lt;?php echo $post['category'] == 'Technology' ? 'selected' : ''; ?&gt;&gt;Technology&lt;/option&gt;
+                    &lt;option value="Career" &lt;?php echo $post['category'] == 'Career' ? 'selected' : ''; ?&gt;&gt;Career&lt;/option&gt;
+                    &lt;option value="Personal" &lt;?php echo $post['category'] == 'Personal' ? 'selected' : ''; ?&gt;&gt;Personal&lt;/option&gt;
+                    &lt;option value="Tutorial" &lt;?php echo $post['category'] == 'Tutorial' ? 'selected' : ''; ?&gt;&gt;Tutorial&lt;/option&gt;
+                    &lt;option value="General" &lt;?php echo $post['category'] == 'General' ? 'selected' : ''; ?&gt;&gt;General&lt;/option&gt;
+                &lt;/select&gt;
+            &lt;/div&gt;
+            
+            &lt;div style="margin-bottom: 20px;"&gt;
+                &lt;label style="display: block; margin-bottom: 5px; font-weight: bold;"&gt;Content:&lt;/label&gt;
+                &lt;textarea name="content" rows="12" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; resize: vertical;" required&gt;&lt;?php echo htmlspecialchars($post['content']); ?&gt;&lt;/textarea&gt;
+            &lt;/div&gt;
+            
+            &lt;button type="submit" class="btn"&gt;💾 Save Changes&lt;/button&gt;
+            &lt;a href="view_post.php?id=&lt;?php echo $post_id; ?&gt;" class="btn" style="background: #6c757d; text-decoration: none;"&gt;Cancel&lt;/a&gt;
+        &lt;/form&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;?php
+mysqli_close($conn);
+include 'includes/footer.php';
+?&gt;
+            </div>
+
+            <h2>🗑️ Delete Post (delete_post.php)</h2>
+            <div class="code-block">
+&lt;?php
+// delete_post.php
+require_once 'config/database.php';
+
+// Get post ID
+$post_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+
+if ($post_id > 0) {
+    // Delete post
+    $stmt = mysqli_prepare($conn, "DELETE FROM posts WHERE id = ?");
+    mysqli_stmt_bind_param($stmt, "i", $post_id);
+    
+    if (mysqli_stmt_execute($stmt)) {
+        if (mysqli_stmt_affected_rows($stmt) > 0) {
+            $message = "Post deleted successfully!";
+        } else {
+            $message = "Post not found.";
+        }
+    } else {
+        $message = "Error deleting post.";
+    }
+    
+    mysqli_stmt_close($stmt);
+} else {
+    $message = "Invalid post ID.";
+}
+
+mysqli_close($conn);
+
+// Redirect to homepage with message
+header("Location: index.php?message=" . urlencode($message));
+exit();
+?&gt;
+            </div>
+
+            <h2>🔍 Search Functionality (search.php)</h2>
+            <div class="code-block">
+&lt;?php
+// search.php
+$pageTitle = "Search Results - My Blog";
+require_once 'config/database.php';
+
+$searchTerm = isset($_GET['q']) ? trim($_GET['q']) : '';
+
+include 'includes/header.php';
+?&gt;
+
+&lt;div class="container"&gt;
+    &lt;!-- Search Form --&gt;
+    &lt;div class="post-card"&gt;
+        &lt;form method="GET" action="search.php" style="display: flex; gap: 10px;"&gt;
+            &lt;input type="text" name="q" placeholder="Search posts..." 
+                   style="flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 5px;"
+                   value="&lt;?php echo htmlspecialchars($searchTerm); ?&gt;"&gt;
+            &lt;button type="submit" class="btn"&gt;🔍 Search&lt;/button&gt;
+        &lt;/form&gt;
+    &lt;/div&gt;
+    
+    &lt;?php
+    if (!empty($searchTerm)) {
+        echo "&lt;h2 style='margin: 30px 0 20px;'&gt;Search Results for: \"" . htmlspecialchars($searchTerm) . "\"&lt;/h2&gt;";
+        
+        // Search in title and content
+        $search = "%{$searchTerm}%";
+        $stmt = mysqli_prepare($conn, "SELECT * FROM posts WHERE title LIKE ? OR content LIKE ? ORDER BY created_at DESC");
+        mysqli_stmt_bind_param($stmt, "ss", $search, $search);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        
+        if (mysqli_num_rows($result) > 0) {
+            while ($post = mysqli_fetch_assoc($result)) {
+                $excerpt = substr($post['content'], 0, 150) . '...';
+                ?&gt;
+                
+                &lt;div class="post-card"&gt;
+                    &lt;h3 style="color: #f5576c; margin-bottom: 10px;"&gt;
+                        &lt;a href="view_post.php?id=&lt;?php echo $post['id']; ?&gt;" style="text-decoration: none; color: inherit;"&gt;
+                            &lt;?php echo htmlspecialchars($post['title']); ?&gt;
+                        &lt;/a&gt;
+                    &lt;/h3&gt;
+                    
+                    &lt;div style="color: #666; font-size: 14px; margin-bottom: 15px;"&gt;
+                        &lt;span&gt;✍️ &lt;?php echo htmlspecialchars($post['author']); ?&gt;&lt;/span&gt;
+                        &lt;span style="margin: 0 10px;"&gt;|&lt;/span&gt;
+                        &lt;span&gt;📅 &lt;?php echo date('F j, Y', strtotime($post['created_at'])); ?&gt;&lt;/span&gt;
+                    &lt;/div&gt;
+                    
+                    &lt;p style="color: #555; margin-bottom: 15px;"&gt;
+                        &lt;?php echo htmlspecialchars($excerpt); ?&gt;
+                    &lt;/p&gt;
+                    
+                    &lt;a href="view_post.php?id=&lt;?php echo $post['id']; ?&gt;" class="btn"&gt;Read More →&lt;/a&gt;
+                &lt;/div&gt;
+                
+                &lt;?php
+            }
+        } else {
+            echo "&lt;p&gt;No posts found matching your search.&lt;/p&gt;";
+        }
+        
+        mysqli_stmt_close($stmt);
+    } else {
+        echo "&lt;p&gt;Please enter a search term.&lt;/p&gt;";
+    }
+    
+    mysqli_close($conn);
+    ?&gt;
+&lt;/div&gt;
+
+&lt;?php include 'includes/footer.php'; ?&gt;
+            </div>
+
+            <h2>🔒 Security Best Practices Implemented</h2>
+            <div class="checklist">
+                <h3>✅ Security Checklist:</h3>
+                <ul>
+                    <li>✓ <strong>Prepared Statements:</strong> All database queries use prepared statements to prevent SQL injection</li>
+                    <li>✓ <strong>Input Validation:</strong> All user inputs are validated before processing</li>
+                    <li>✓ <strong>Output Escaping:</strong> Using htmlspecialchars() to prevent XSS attacks</li>
+                    <li>✓ <strong>Type Casting:</strong> IDs are cast to integers: <code>(int)$_GET['id']</code></li>
+                    <li>✓ <strong>Sanitization:</strong> Using trim() to remove extra whitespace</li>
+                    <li>✓ <strong>Confirmation:</strong> JavaScript confirm() before deleting</li>
+                </ul>
+            </div>
+
+            <h2>🧪 Testing Checklist</h2>
+            <div class="checklist">
+                <h3>Test All Features:</h3>
+                <ol>
+                    <li>✓ View homepage - all posts display correctly</li>
+                    <li>✓ Click on post - view full content</li>
+                    <li>✓ View counter increments when viewing post</li>
+                    <li>✓ Create new post - saves to database</li>
+                    <li>✓ Edit post - changes are saved</li>
+                    <li>✓ Delete post - removes from database</li>
+                    <li>✓ Search functionality works</li>
+                    <li>✓ Validation errors display correctly</li>
+                    <li>✓ Success messages show after actions</li>
+                    <li>✓ All links work properly</li>
+                </ol>
+            </div>
+
+            <h2>🚀 Deployment Steps</h2>
+            <ol>
+                <li><strong>Local Testing:</strong> Test everything on localhost first</li>
+                <li><strong>Database Backup:</strong> Export your database from phpMyAdmin</li>
+                <li><strong>Choose Hosting:</strong> Options include:
+                    <ul>
+                        <li>InfinityFree (Free PHP hosting)</li>
+                        <li>000webhost (Free PHP hosting)</li>
+                        <li>Hostinger (Affordable paid option)</li>
+                    </ul>
+                </li>
+                <li><strong>Upload Files:</strong> Use FTP to upload project files</li>
+                <li><strong>Import Database:</strong> Create database on server and import SQL</li>
+                <li><strong>Update Config:</strong> Change database credentials in config/database.php</li>
+                <li><strong>Test Live:</strong> Visit your live site and test all features</li>
+            </ol>
+
+            <h2>🎯 Final Project Requirements</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Database with posts table</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td>Homepage listing all posts</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td>View single post page</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td>Create new post</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td>Edit existing post</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td>Delete post</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td>Search functionality</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td>View counter</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td>Input validation</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td>Security measures</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td>Clean, professional design</td>
+                        <td>✅</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="success-box">
+                <h2>🎊 Congratulations! You Did It! 🎉</h2>
+                <p><strong>You've completed the 12-Week Full Stack Web Development Bootcamp!</strong></p>
+                <p style="margin-top: 15px;">You've learned:</p>
+                <ul style="margin-top: 10px; margin-left: 20px;">
+                    <li>✨ HTML5 & Semantic Structure</li>
+                    <li>🎨 CSS3 & Responsive Design</li>
+                    <li>📱 Bootstrap Framework</li>
+                    <li>⚡ JavaScript & DOM Manipulation</li>
+                    <li>🐘 PHP Backend Development</li>
+                    <li>🗄️ MySQL Databases & SQL</li>
+                    <li>🔒 Security Best Practices</li>
+                    <li>🚀 Full CRUD Applications</li>
+                </ul>
+                <p style="margin-top: 15px;"><strong>You're now a Full Stack Web Developer!</strong></p>
+            </div>
+
+            <h2>📚 Next Steps in Your Journey</h2>
+            <ol>
+                <li><strong>Build More Projects:</strong> Portfolio website, e-commerce site, social network</li>
+                <li><strong>Learn Advanced Topics:</strong> User authentication, file uploads, APIs</li>
+                <li><strong>Explore Frameworks:</strong> Laravel (PHP), React (JavaScript)</li>
+                <li><strong>Join Communities:</strong> Stack Overflow, GitHub, Dev.to</li>
+                <li><strong>Keep Coding:</strong> Practice daily, even small projects count!</li>
+            </ol>
+
+            <h2>✅ Final Day Deliverable</h2>
+            <ul>
+                <li>✓ Complete blog with all CRUD operations</li>
+                <li>✓ Edit post functionality working</li>
+                <li>✓ Delete post with confirmation</li>
+                <li>✓ Search feature implemented</li>
+                <li>✓ All security measures in place</li>
+                <li>✓ Full testing completed</li>
+                <li>✓ Blog deployed (optional but recommended)</li>
+            </ul>
+
+            <div style="margin-top: 40px; text-align: center; padding: 30px; background: linear-gradient(135deg, #f093fb, #f5576c); border-radius: 10px; color: white;">
+                <h2 style="color: white; border: none; margin-bottom: 20px;">🎓 Course Completed!</h2>
+                <p style="font-size: 18px; margin-bottom: 20px;">You are now a certified Full Stack Web Developer!</p>
+                <p>Keep building, keep learning, and keep growing! 🚀</p>
+            </div>
+
+            <div style="margin-top: 40px;">
+                <a href="day2-blog-development.html" class="btn">← Previous</a>
+                <a href="../index.html" class="btn" style="background: #28a745;">🏠 Back to Course Home</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 12 - Day 3: Blog Finalization & Deployment</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+            <p style="margin-top: 10px;">🎉 Congratulations on completing the bootcamp! 🎉</p>
+        </footer>
+    </div>
+</body>
+</html>

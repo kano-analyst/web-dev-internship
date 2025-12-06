@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 14 Day 2: Layouts & Partials</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        header { background: #fcb69f; color: white; padding: 30px; border-radius: 15px 15px 0 0; }
+        .content { padding: 40px; }
+        h2 { color: #fcb69f; border-bottom: 3px solid #ffecd2; padding-bottom: 10px; margin: 30px 0 20px; }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        .info-box { background: #fff3cd; border-left: 5px solid #fcb69f; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border: 1px solid #ddd; }
+        th { background: #fcb69f; color: white; }
+        .btn { background: #fcb69f; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 10px 10px 0; }
+        footer { background: #fcb69f; color: white; padding: 20px; text-align: center; border-radius: 0 0 15px 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 14 - Day 2: Layouts & Partials</h1>
+            <p>Tuesday | Duration: 3 hours | Build Reusable Template Structure! 🏗️</p>
+        </header>
+
+        <div class="content">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Create master layout templates</li>
+                <li>Understand @extends and @section</li>
+                <li>Use @yield for content areas</li>
+                <li>Create reusable partials</li>
+                <li>Build complete multi-page website structure</li>
+            </ul>
+
+            <h2>🏗️ What are Layouts?</h2>
+            <div class="info-box">
+                <p><strong>Layouts</strong> are master templates that contain the common structure (header, footer, navigation) of your website. Child pages extend the layout and only define their specific content.</p>
+                <p><strong>Benefits:</strong> Write once, use everywhere! Changes to header/footer automatically apply to all pages.</p>
+            </div>
+
+            <h2>📐 Creating Master Layout</h2>
+            
+            <h3>Step 1: Create app.blade.php Layout</h3>
+            <div class="code-block">
+&lt;!-- resources/views/layouts/app.blade.php --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;@yield('title', 'My Laravel App')&lt;/title&gt;
+    &lt;style&gt;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; }
+        
+        header {
+            background: #fcb69f;
+            color: white;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        nav {
+            background: #333;
+            padding: 0;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 15px 20px;
+            display: block;
+        }
+        
+        nav a:hover {
+            background: #555;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: calc(100vh - 200px);
+        }
+        
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+        }
+        
+        @yield('styles')
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;header&gt;
+        &lt;h1&gt;@yield('header', 'Laravel Website')&lt;/h1&gt;
+    &lt;/header&gt;
+    
+    &lt;nav&gt;
+        &lt;ul&gt;
+            &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/about"&gt;About&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/services"&gt;Services&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/contact"&gt;Contact&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/nav&gt;
+    
+    &lt;div class="container"&gt;
+        @yield('content')
+    &lt;/div&gt;
+    
+    &lt;footer&gt;
+        &lt;p&gt;&amp;copy; 2025 My Laravel App. All rights reserved.&lt;/p&gt;
+    &lt;/footer&gt;
+    
+    @yield('scripts')
+&lt;/body&gt;
+&lt;/html&gt;
+            </div>
+
+            <h2>👶 Creating Child Pages</h2>
+            
+            <h3>Home Page (extends layout):</h3>
+            <div class="code-block">
+&lt;!-- resources/views/home.blade.php --&gt;
+@extends('layouts.app')
+
+@section('title', 'Home Page')
+
+@section('header', 'Welcome to Our Website')
+
+@section('content')
+    &lt;h2&gt;Home Page Content&lt;/h2&gt;
+    &lt;p&gt;This is the home page content. It uses the master layout!&lt;/p&gt;
+    
+    &lt;div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 30px;"&gt;
+        &lt;div style="border: 1px solid #ddd; padding: 20px; border-radius: 8px;"&gt;
+            &lt;h3&gt;Feature 1&lt;/h3&gt;
+            &lt;p&gt;Amazing feature description here.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div style="border: 1px solid #ddd; padding: 20px; border-radius: 8px;"&gt;
+            &lt;h3&gt;Feature 2&lt;/h3&gt;
+            &lt;p&gt;Another great feature description.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div style="border: 1px solid #ddd; padding: 20px; border-radius: 8px;"&gt;
+            &lt;h3&gt;Feature 3&lt;/h3&gt;
+            &lt;p&gt;Third fantastic feature description.&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+@endsection
+            </div>
+
+            <h3>About Page:</h3>
+            <div class="code-block">
+&lt;!-- resources/views/about.blade.php --&gt;
+@extends('layouts.app')
+
+@section('title', 'About Us')
+
+@section('header', 'About Our Company')
+
+@section('content')
+    &lt;h2&gt;Who We Are&lt;/h2&gt;
+    &lt;p&gt;We are a leading web development company specializing in Laravel applications.&lt;/p&gt;
+    
+    &lt;h3&gt;Our Mission&lt;/h3&gt;
+    &lt;p&gt;To deliver high-quality web solutions that help businesses grow.&lt;/p&gt;
+    
+    &lt;h3&gt;Our Team&lt;/h3&gt;
+    &lt;ul&gt;
+        &lt;li&gt;Ahmad - Lead Developer&lt;/li&gt;
+        &lt;li&gt;Fatima - UI/UX Designer&lt;/li&gt;
+        &lt;li&gt;Ibrahim - Project Manager&lt;/li&gt;
+    &lt;/ul&gt;
+@endsection
+
+@section('styles')
+    &lt;style&gt;
+        .content h2 { color: #fcb69f; margin-bottom: 15px; }
+        .content h3 { color: #555; margin-top: 20px; }
+    &lt;/style&gt;
+@endsection
+            </div>
+
+            <h2>📦 Understanding Blade Directives</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Directive</th>
+                        <th>Purpose</th>
+                        <th>Usage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@extends</td>
+                        <td>Extend a parent layout</td>
+                        <td>@extends('layouts.app')</td>
+                    </tr>
+                    <tr>
+                        <td>@section/@endsection</td>
+                        <td>Define content section</td>
+                        <td>@section('content') ... @endsection</td>
+                    </tr>
+                    <tr>
+                        <td>@yield</td>
+                        <td>Display section content</td>
+                        <td>@yield('content')</td>
+                    </tr>
+                    <tr>
+                        <td>@include</td>
+                        <td>Include partial file</td>
+                        <td>@include('partials.header')</td>
+                    </tr>
+                    <tr>
+                        <td>@parent</td>
+                        <td>Include parent section content</td>
+                        <td>@section('title') @parent - Page @endsection</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>🧩 Creating Partials</h2>
+            <div class="info-box">
+                <p><strong>Partials</strong> are small, reusable view components like headers, footers, or navigation menus that can be included in multiple pages.</p>
+            </div>
+
+            <h3>Header Partial:</h3>
+            <div class="code-block">
+&lt;!-- resources/views/partials/header.blade.php --&gt;
+&lt;header style="background: linear-gradient(135deg, #fcb69f, #ffecd2); color: white; padding: 30px; text-align: center; border-radius: 10px; margin-bottom: 30px;"&gt;
+    &lt;h1 style="font-size: 2.5em; margin-bottom: 10px;"&gt;{{ $title ?? 'Welcome' }}&lt;/h1&gt;
+    &lt;p style="font-size: 1.2em;"&gt;{{ $subtitle ?? 'Subtitle here' }}&lt;/p&gt;
+&lt;/header&gt;
+            </div>
+
+            <h3>Navigation Partial:</h3>
+            <div class="code-block">
+&lt;!-- resources/views/partials/nav.blade.php --&gt;
+&lt;nav style="background: #333; margin-bottom: 30px; border-radius: 5px;"&gt;
+    &lt;ul style="list-style: none; display: flex; padding: 0; margin: 0;"&gt;
+        &lt;li&gt;&lt;a href="/" style="color: white; text-decoration: none; padding: 15px 20px; display: block;"&gt;Home&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="/about" style="color: white; text-decoration: none; padding: 15px 20px; display: block;"&gt;About&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="/services" style="color: white; text-decoration: none; padding: 15px 20px; display: block;"&gt;Services&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="/contact" style="color: white; text-decoration: none; padding: 15px 20px; display: block;"&gt;Contact&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/nav&gt;
+            </div>
+
+            <h3>Footer Partial:</h3>
+            <div class="code-block">
+&lt;!-- resources/views/partials/footer.blade.php --&gt;
+&lt;footer style="background: #333; color: white; text-align: center; padding: 30px; margin-top: 50px; border-radius: 10px;"&gt;
+    &lt;p&gt;&amp;copy; {{ date('Y') }} {{ $company ?? 'My Company' }}. All rights reserved.&lt;/p&gt;
+    &lt;div style="margin-top: 15px;"&gt;
+        &lt;a href="/privacy" style="color: #fcb69f; margin: 0 10px;"&gt;Privacy Policy&lt;/a&gt;
+        &lt;a href="/terms" style="color: #fcb69f; margin: 0 10px;"&gt;Terms of Service&lt;/a&gt;
+        &lt;a href="/contact" style="color: #fcb69f; margin: 0 10px;"&gt;Contact&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/footer&gt;
+            </div>
+
+            <h2>🔌 Including Partials</h2>
+            
+            <h3>Layout with Partials:</h3>
+            <div class="code-block">
+&lt;!-- resources/views/layouts/main.blade.php --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;@yield('title')&lt;/title&gt;
+    &lt;style&gt;
+        body { font-family: Arial; max-width: 1200px; margin: 0 auto; padding: 20px; }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    @include('partials.header', ['title' => 'My Website', 'subtitle' => 'Building with Laravel'])
+    
+    @include('partials.nav')
+    
+    &lt;main&gt;
+        @yield('content')
+    &lt;/main&gt;
+    
+    @include('partials.footer', ['company' => 'Next-Step Technology'])
+&lt;/body&gt;
+&lt;/html&gt;
+            </div>
+
+            <h3>Page Using Layout with Partials:</h3>
+            <div class="code-block">
+&lt;!-- resources/views/services.blade.php --&gt;
+@extends('layouts.main')
+
+@section('title', 'Our Services')
+
+@section('content')
+    &lt;h2&gt;Our Services&lt;/h2&gt;
+    
+    &lt;div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin-top: 30px;"&gt;
+        &lt;div style="border: 2px solid #fcb69f; padding: 30px; border-radius: 10px;"&gt;
+            &lt;h3 style="color: #fcb69f;"&gt;Web Development&lt;/h3&gt;
+            &lt;p&gt;Custom web applications built with Laravel framework.&lt;/p&gt;
+            &lt;ul&gt;
+                &lt;li&gt;Responsive design&lt;/li&gt;
+                &lt;li&gt;Database integration&lt;/li&gt;
+                &lt;li&gt;API development&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt;
+        
+        &lt;div style="border: 2px solid #fcb69f; padding: 30px; border-radius: 10px;"&gt;
+            &lt;h3 style="color: #fcb69f;"&gt;Mobile Apps&lt;/h3&gt;
+            &lt;p&gt;Native and cross-platform mobile applications.&lt;/p&gt;
+            &lt;ul&gt;
+                &lt;li&gt;iOS & Android&lt;/li&gt;
+                &lt;li&gt;React Native&lt;/li&gt;
+                &lt;li&gt;Flutter development&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt;
+        
+        &lt;div style="border: 2px solid #fcb69f; padding: 30px; border-radius: 10px;"&gt;
+            &lt;h3 style="color: #fcb69f;"&gt;UI/UX Design&lt;/h3&gt;
+            &lt;p&gt;Beautiful and functional user interfaces.&lt;/p&gt;
+            &lt;ul&gt;
+                &lt;li&gt;Wireframing&lt;/li&gt;
+                &lt;li&gt;Prototyping&lt;/li&gt;
+                &lt;li&gt;User testing&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt;
+        
+        &lt;div style="border: 2px solid #fcb69f; padding: 30px; border-radius: 10px;"&gt;
+            &lt;h3 style="color: #fcb69f;"&gt;Consulting&lt;/h3&gt;
+            &lt;p&gt;Expert advice on technology solutions.&lt;/p&gt;
+            &lt;ul&gt;
+                &lt;li&gt;Architecture planning&lt;/li&gt;
+                &lt;li&gt;Code review&lt;/li&gt;
+                &lt;li&gt;Performance optimization&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+@endsection
+            </div>
+
+            <h2>💻 Complete Multi-Page Example</h2>
+            
+            <h3>Controller:</h3>
+            <div class="code-block">
+&lt;?php
+// app/Http/Controllers/PageController.php
+
+namespace App\Http\Controllers;
+
+class PageController extends Controller
+{
+    public function home()
+    {
+        return view('home');
+    }
+    
+    public function about()
+    {
+        $team = [
+            ['name' => 'Ahmad', 'role' => 'Developer'],
+            ['name' => 'Fatima', 'role' => 'Designer'],
+            ['name' => 'Ibrahim', 'role' => 'Manager'],
+        ];
+        
+        return view('about', compact('team'));
+    }
+    
+    public function services()
+    {
+        return view('services');
+    }
+    
+    public function contact()
+    {
+        return view('contact');
+    }
+}
+?&gt;
+            </div>
+
+            <h3>Routes:</h3>
+            <div class="code-block">
+&lt;?php
+// routes/web.php
+
+use App\Http\Controllers\PageController;
+
+Route::get('/', [PageController::class, 'home']);
+Route::get('/about', [PageController::class, 'about']);
+Route::get('/services', [PageController::class, 'services']);
+Route::get('/contact', [PageController::class, 'contact']);
+?&gt;
+            </div>
+
+            <h2>✏️ Practice Exercises</h2>
+            <ol>
+                <li>Create a master layout with header, navigation, content area, and footer</li>
+                <li>Build 4 pages (Home, About, Services, Contact) extending the layout</li>
+                <li>Create separate partials for header, nav, and footer</li>
+                <li>Add custom styles to specific pages using @section('styles')</li>
+                <li>Pass variables to partials using @include with parameters</li>
+                <li>Create a blog layout with sidebar partial</li>
+            </ol>
+
+            <h2>✅ Today's Deliverable</h2>
+            <ul>
+                <li>✓ Master layout (app.blade.php) created</li>
+                <li>✓ At least 4 pages extending the layout</li>
+                <li>✓ Header, nav, and footer partials</li>
+                <li>✓ @extends, @section, @yield, @include used correctly</li>
+                <li>✓ Working multi-page website with shared structure</li>
+            </ul>
+
+            <div style="margin-top: 40px;">
+                <a href="day1-blade-templates.html" class="btn">← Previous</a>
+                <a href="../index.html" class="btn">Course Home</a>
+                <a href="day3-forms-validation.html" class="btn">Next →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 14 - Day 2: Layouts & Partials</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

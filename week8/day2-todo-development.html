@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 8 Day 2: To-Do List App Development</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        header { background: #f093fb; color: white; padding: 30px; border-radius: 15px 15px 0 0; }
+        .content { padding: 40px; }
+        h2 { color: #f093fb; border-bottom: 3px solid #f5576c; padding-bottom: 10px; margin: 30px 0 20px; }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .info-box { background: #fce4ec; border-left: 5px solid #f093fb; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        .btn { background: #f093fb; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 10px 10px 0; }
+        footer { background: #f093fb; color: white; padding: 20px; text-align: center; border-radius: 0 0 15px 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 8 - Day 2: To-Do List App Development</h1>
+            <p>Wednesday | Duration: 5 hours (Extended Session)</p>
+        </header>
+
+        <div class="content">
+            <h2>🎯 Today's Objectives</h2>
+            <ul>
+                <li>Build complete HTML structure</li>
+                <li>Style app with CSS and Bootstrap</li>
+                <li>Implement all JavaScript functionality</li>
+                <li>Add task management features</li>
+                <li>Test all interactions</li>
+            </ul>
+
+            <h2>📄 Step 1: HTML Structure (index.html)</h2>
+            <div class="code-block">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My To-Do List App</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container my-5">
+        <div class="todo-container card shadow-lg">
+            
+            <!-- Header -->
+            <div class="card-header text-center">
+                <h1 class="display-4">📝 My To-Do List</h1>
+                <p class="text-muted">Stay organized and productive</p>
+            </div>
+            
+            <!-- Input Section -->
+            <div class="card-body">
+                <div class="input-group mb-4">
+                    <input 
+                        type="text" 
+                        id="taskInput" 
+                        class="form-control form-control-lg" 
+                        placeholder="Add a new task..."
+                        aria-label="New task">
+                    <button 
+                        id="addBtn" 
+                        class="btn btn-primary btn-lg">
+                        <span>➕ Add Task</span>
+                    </button>
+                </div>
+                
+                <!-- Task List -->
+                <ul id="taskList" class="list-group">
+                    <!-- Tasks will be added here dynamically -->
+                </ul>
+                
+                <!-- Empty State -->
+                <div id="emptyState" class="text-center py-5">
+                    <p class="text-muted">No tasks yet. Add one above!</p>
+                </div>
+            </div>
+            
+            <!-- Stats Footer -->
+            <div class="card-footer">
+                <div class="row text-center">
+                    <div class="col-4">
+                        <strong>Total:</strong>
+                        <span id="totalCount" class="badge bg-info">0</span>
+                    </div>
+                    <div class="col-4">
+                        <strong>Completed:</strong>
+                        <span id="completedCount" class="badge bg-success">0</span>
+                    </div>
+                    <div class="col-4">
+                        <strong>Remaining:</strong>
+                        <span id="remainingCount" class="badge bg-warning">0</span>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
+            </div>
+
+            <h2>🎨 Step 2: CSS Styling (style.css)</h2>
+            <div class="code-block">
+/* Body Background */
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+}
+
+/* Main Container */
+.todo-container {
+    max-width: 600px;
+    margin: 0 auto;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+/* Header Styling */
+.card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+}
+
+.card-header h1 {
+    margin-bottom: 10px;
+}
+
+/* Input Section */
+.input-group {
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+#taskInput {
+    border: 2px solid #e0e0e0;
+    padding: 15px;
+}
+
+#taskInput:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+#addBtn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    padding: 0 30px;
+    font-weight: bold;
+}
+
+#addBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* Task Items */
+.task-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border: none;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.task-item:hover {
+    background-color: #f8f9fa;
+    transform: translateX(5px);
+}
+
+.task-checkbox {
+    width: 20px;
+    height: 20px;
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+.task-text {
+    flex: 1;
+    font-size: 16px;
+    user-select: none;
+}
+
+.task-item.completed .task-text {
+    text-decoration: line-through;
+    color: #999;
+    opacity: 0.6;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+    transform: scale(1.1);
+}
+
+/* Empty State */
+#emptyState {
+    display: none;
+}
+
+/* Stats Footer */
+.card-footer {
+    background-color: #f8f9fa;
+    padding: 20px;
+}
+
+.badge {
+    font-size: 16px;
+    padding: 8px 15px;
+    margin-left: 5px;
+}
+
+/* Animations */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.task-item {
+    animation: slideIn 0.3s ease;
+}
+            </div>
+
+            <h2>⚙️ Step 3: JavaScript Functionality (script.js)</h2>
+            <div class="code-block">
+// Get DOM elements
+const taskInput = document.getElementById('taskInput');
+const addBtn = document.getElementById('addBtn');
+const taskList = document.getElementById('taskList');
+const emptyState = document.getElementById('emptyState');
+const totalCount = document.getElementById('totalCount');
+const completedCount = document.getElementById('completedCount');
+const remainingCount = document.getElementById('remainingCount');
+
+// Initialize tasks array
+let tasks = [];
+
+// Add task function
+function addTask() {
+    const taskText = taskInput.value.trim();
+    
+    // Validate input
+    if (taskText === '') {
+        alert('Please enter a task!');
+        return;
+    }
+    
+    // Create task object
+    const task = {
+        id: Date.now(),
+        text: taskText,
+        completed: false
+    };
+    
+    // Add to tasks array
+    tasks.push(task);
+    
+    // Clear input
+    taskInput.value = '';
+    
+    // Update display
+    renderTasks();
+    updateStats();
+}
+
+// Render tasks to DOM
+function renderTasks() {
+    // Clear current list
+    taskList.innerHTML = '';
+    
+    // Show/hide empty state
+    if (tasks.length === 0) {
+        emptyState.style.display = 'block';
+        return;
+    } else {
+        emptyState.style.display = 'none';
+    }
+    
+    // Create task elements
+    tasks.forEach(task => {
+        const li = document.createElement('li');
+        li.className = 'list-group-item task-item';
+        if (task.completed) {
+            li.classList.add('completed');
+        }
+        
+        li.innerHTML = `
+            <input 
+                type="checkbox" 
+                class="task-checkbox" 
+                ${task.completed ? 'checked' : ''}
+                onchange="toggleTask(${task.id})">
+            <span class="task-text">${task.text}</span>
+            <button class="delete-btn" onclick="deleteTask(${task.id})">
+                🗑️ Delete
+            </button>
+        `;
+        
+        taskList.appendChild(li);
+    });
+}
+
+// Toggle task completion
+function toggleTask(id) {
+    const task = tasks.find(t => t.id === id);
+    if (task) {
+        task.completed = !task.completed;
+        renderTasks();
+        updateStats();
+    }
+}
+
+// Delete task
+function deleteTask(id) {
+    if (confirm('Are you sure you want to delete this task?')) {
+        tasks = tasks.filter(t => t.id !== id);
+        renderTasks();
+        updateStats();
+    }
+}
+
+// Update statistics
+function updateStats() {
+    const total = tasks.length;
+    const completed = tasks.filter(t => t.completed).length;
+    const remaining = total - completed;
+    
+    totalCount.textContent = total;
+    completedCount.textContent = completed;
+    remainingCount.textContent = remaining;
+}
+
+// Event listeners
+addBtn.addEventListener('click', addTask);
+
+taskInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        addTask();
+    }
+});
+
+// Initialize app
+renderTasks();
+updateStats();
+            </div>
+
+            <h2>🧪 Testing Your App</h2>
+            <div class="info-box">
+                <h4>Test Checklist:</h4>
+                <ul>
+                    <li>✓ Add a new task - Does it appear in the list?</li>
+                    <li>✓ Click checkbox - Does task get strikethrough?</li>
+                    <li>✓ Click delete - Does task disappear?</li>
+                    <li>✓ Press Enter key - Does it add task?</li>
+                    <li>✓ Try empty input - Does it show alert?</li>
+                    <li>✓ Check counters - Do they update correctly?</li>
+                    <li>✓ Add multiple tasks - All working?</li>
+                    <li>✓ Responsive design - Works on mobile?</li>
+                </ul>
+            </div>
+
+            <h2>🚀 How to Run Your App</h2>
+            <ol>
+                <li>Save all three files in <code>todo-list-app</code> folder</li>
+                <li>Open <code>index.html</code> in your browser</li>
+                <li>Test all features thoroughly</li>
+                <li>Make adjustments as needed</li>
+            </ol>
+
+            <h2>💡 Enhancement Ideas</h2>
+            <ul>
+                <li><strong>LocalStorage:</strong> Save tasks so they persist on reload</li>
+                <li><strong>Edit Feature:</strong> Double-click task to edit text</li>
+                <li><strong>Priority Levels:</strong> Add high/medium/low priority tags</li>
+                <li><strong>Due Dates:</strong> Add calendar date picker</li>
+                <li><strong>Categories:</strong> Group tasks (Work, Personal, Shopping)</li>
+                <li><strong>Dark Mode:</strong> Toggle between light/dark themes</li>
+            </ul>
+
+            <h2>🐛 Common Issues & Solutions</h2>
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="background: #f093fb; color: white;">
+                        <th style="padding: 12px; border: 1px solid #ddd;">Problem</th>
+                        <th style="padding: 12px; border: 1px solid #ddd;">Solution</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd;">Tasks not showing</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">Check console for errors, verify script.js is linked</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd;">Styles not working</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">Verify style.css path, check Bootstrap CDN</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd;">Delete/toggle not working</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">Check function names match in HTML and JS</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd;">Counters not updating</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">Call updateStats() after each task change</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>✅ Today's Deliverable</h2>
+            <ul>
+                <li>✓ Complete working To-Do List App</li>
+                <li>✓ All three files created and linked</li>
+                <li>✓ Add task functionality working</li>
+                <li>✓ Toggle completion working</li>
+                <li>✓ Delete task working</li>
+                <li>✓ Statistics updating correctly</li>
+                <li>✓ Responsive Bootstrap styling</li>
+                <li>✓ Custom CSS animations</li>
+                <li>✓ Screenshots of working app</li>
+            </ul>
+
+            <div style="margin-top: 40px;">
+                <a href="day1-todo-planning.html" class="btn">← Previous</a>
+                <a href="../index.html" class="btn">Course Home</a>
+                <a href="day3-deployment.html" class="btn">Next: Day 3 →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 8 - Day 2: To-Do List App Development</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

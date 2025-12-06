@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 17 Day 1 - Authentication Introduction & Setup | Laravel Bootcamp</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: #764ba2;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+
+        h3 {
+            color: #667eea;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .highlight {
+            background: #f0f0ff;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            position: relative;
+        }
+
+        .code-block code {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .comment {
+            color: #6a9955;
+        }
+
+        .keyword {
+            color: #569cd6;
+        }
+
+        .string {
+            color: #ce9178;
+        }
+
+        .function {
+            color: #dcdcaa;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .exercise {
+            background: #fff3cd;
+            padding: 20px;
+            border-left: 4px solid #ffc107;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .tip {
+            background: #d1ecf1;
+            padding: 15px;
+            border-left: 4px solid #17a2b8;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔐 Week 17, Day 1: Authentication Introduction & Setup</h1>
+            <p>Learn Laravel Authentication with Breeze/UI</p>
+        </header>
+
+        <section>
+            <h2>📖 Learning Objectives</h2>
+            <ul>
+                <li>Understand authentication concepts in web applications</li>
+                <li>Learn about Laravel's authentication ecosystem</li>
+                <li>Install and configure Laravel Breeze</li>
+                <li>Explore the authentication scaffolding</li>
+                <li>Set up authentication database tables</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>🎯 What is Authentication?</h2>
+            
+            <div class="highlight">
+                <p><strong>Authentication</strong> is the process of verifying the identity of a user. It ensures that users are who they claim to be before granting access to protected resources.</p>
+            </div>
+
+            <h3>Key Authentication Concepts:</h3>
+            <ul>
+                <li><strong>Registration:</strong> Creating a new user account</li>
+                <li><strong>Login:</strong> Verifying user credentials</li>
+                <li><strong>Logout:</strong> Ending a user session</li>
+                <li><strong>Session:</strong> Maintaining user state across requests</li>
+                <li><strong>Password Hashing:</strong> Securely storing passwords</li>
+                <li><strong>Remember Me:</strong> Persistent login functionality</li>
+                <li><strong>Password Reset:</strong> Allowing users to recover accounts</li>
+            </ul>
+
+            <h3>Authentication vs Authorization:</h3>
+            <table>
+                <tr>
+                    <th>Authentication</th>
+                    <th>Authorization</th>
+                </tr>
+                <tr>
+                    <td>Who are you?</td>
+                    <td>What can you do?</td>
+                </tr>
+                <tr>
+                    <td>Verifies identity</td>
+                    <td>Verifies permissions</td>
+                </tr>
+                <tr>
+                    <td>Login/Register</td>
+                    <td>Roles/Permissions</td>
+                </tr>
+                <tr>
+                    <td>Example: User login</td>
+                    <td>Example: Admin access</td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <h2>🚀 Laravel Authentication Options</h2>
+            
+            <h3>1. Laravel Breeze (Recommended for Beginners)</h3>
+            <div class="highlight">
+                <p>Laravel Breeze is a minimal, simple implementation of all Laravel's authentication features including login, registration, password reset, email verification, and password confirmation.</p>
+            </div>
+
+            <h4>Features:</h4>
+            <ul>
+                <li>Blade templates</li>
+                <li>Tailwind CSS styling</li>
+                <li>Simple and easy to customize</li>
+                <li>Perfect for learning</li>
+            </ul>
+
+            <h3>2. Laravel UI (Bootstrap/Vue/React)</h3>
+            <div class="highlight">
+                <p>Laravel UI provides Bootstrap scaffolding for authentication. Good if you prefer Bootstrap over Tailwind.</p>
+            </div>
+
+            <h3>3. Laravel Jetstream (Advanced)</h3>
+            <div class="highlight">
+                <p>Jetstream includes more advanced features like team management, two-factor authentication, and API tokens.</p>
+            </div>
+
+            <div class="tip">
+                <strong>💡 Tip:</strong> For this bootcamp, we'll use Laravel Breeze because it's simple, modern, and easy to understand.
+            </div>
+        </section>
+
+        <section>
+            <h2>📦 Installing Laravel Breeze</h2>
+
+            <h3>Step 1: Create a New Laravel Project</h3>
+            <div class="code-block">
+<code><span class="comment"># Create new Laravel project</span>
+composer create-project laravel/laravel auth-app
+
+<span class="comment"># Navigate to project</span>
+cd auth-app</code>
+            </div>
+
+            <h3>Step 2: Install Laravel Breeze</h3>
+            <div class="code-block">
+<code><span class="comment"># Install Breeze via Composer</span>
+composer require laravel/breeze --dev</code>
+            </div>
+
+            <h3>Step 3: Install Breeze Scaffolding</h3>
+            <div class="code-block">
+<code><span class="comment"># Install Breeze with Blade templates</span>
+php artisan breeze:install blade
+
+<span class="comment"># Install NPM dependencies</span>
+npm install
+
+<span class="comment"># Compile assets</span>
+npm run dev</code>
+            </div>
+
+            <div class="highlight">
+                <p><strong>What does breeze:install do?</strong></p>
+                <ul>
+                    <li>Creates authentication routes in routes/auth.php</li>
+                    <li>Generates authentication controllers</li>
+                    <li>Creates Blade views for login, register, etc.</li>
+                    <li>Installs Tailwind CSS</li>
+                    <li>Sets up authentication middleware</li>
+                </ul>
+            </div>
+
+            <h3>Step 4: Configure Database</h3>
+            <div class="code-block">
+<code><span class="comment"># Edit .env file</span>
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=auth_app
+DB_USERNAME=root
+DB_PASSWORD=</code>
+            </div>
+
+            <div class="tip">
+                <strong>💡 Tip:</strong> Make sure your XAMPP MySQL is running and create a database named "auth_app" in phpMyAdmin.
+            </div>
+
+            <h3>Step 5: Run Migrations</h3>
+            <div class="code-block">
+<code><span class="comment"># Create authentication database tables</span>
+php artisan migrate</code>
+            </div>
+
+            <div class="highlight">
+                <p><strong>Tables Created:</strong></p>
+                <ul>
+                    <li><strong>users:</strong> Stores user accounts</li>
+                    <li><strong>password_reset_tokens:</strong> For password recovery</li>
+                    <li><strong>sessions:</strong> Manages user sessions</li>
+                    <li><strong>migrations:</strong> Tracks migration history</li>
+                </ul>
+            </div>
+
+            <h3>Step 6: Start Development Server</h3>
+            <div class="code-block">
+<code><span class="comment"># Start Laravel server</span>
+php artisan serve
+
+<span class="comment"># In another terminal, compile assets</span>
+npm run dev</code>
+            </div>
+
+            <div class="tip">
+                <strong>💡 Tip:</strong> Keep both terminals running - one for Laravel, one for Vite (asset compilation).
+            </div>
+        </section>
+
+        <section>
+            <h2>🔍 Exploring Authentication Files</h2>
+
+            <h3>1. Authentication Routes (routes/auth.php)</h3>
+            <div class="code-block">
+<code><span class="keyword">use</span> App\Http\Controllers\Auth\AuthenticatedSessionController;
+<span class="keyword">use</span> App\Http\Controllers\Auth\RegisteredUserController;
+<span class="keyword">use</span> Illuminate\Support\Facades\Route;
+
+<span class="comment">// Registration routes</span>
+Route::<span class="function">get</span>(<span class="string">'/register'</span>, [RegisteredUserController::<span class="keyword">class</span>, <span class="string">'create'</span>])
+    -><span class="function">name</span>(<span class="string">'register'</span>);
+
+Route::<span class="function">post</span>(<span class="string">'/register'</span>, [RegisteredUserController::<span class="keyword">class</span>, <span class="string">'store'</span>]);
+
+<span class="comment">// Login routes</span>
+Route::<span class="function">get</span>(<span class="string">'/login'</span>, [AuthenticatedSessionController::<span class="keyword">class</span>, <span class="string">'create'</span>])
+    -><span class="function">name</span>(<span class="string">'login'</span>);
+
+Route::<span class="function">post</span>(<span class="string">'/login'</span>, [AuthenticatedSessionController::<span class="keyword">class</span>, <span class="string">'store'</span>]);
+
+<span class="comment">// Logout route</span>
+Route::<span class="function">post</span>(<span class="string">'/logout'</span>, [AuthenticatedSessionController::<span class="keyword">class</span>, <span class="string">'destroy'</span>])
+    -><span class="function">name</span>(<span class="string">'logout'</span>);</code>
+            </div>
+
+            <h3>2. User Model (app/Models/User.php)</h3>
+            <div class="code-block">
+<code><span class="keyword">namespace</span> App\Models;
+
+<span class="keyword">use</span> Illuminate\Foundation\Auth\User <span class="keyword">as</span> Authenticatable;
+<span class="keyword">use</span> Illuminate\Notifications\Notifiable;
+
+<span class="keyword">class</span> <span class="function">User</span> <span class="keyword">extends</span> Authenticatable
+{
+    <span class="keyword">use</span> Notifiable;
+
+    <span class="comment">// Mass assignable attributes</span>
+    <span class="keyword">protected</span> $fillable = [
+        <span class="string">'name'</span>,
+        <span class="string">'email'</span>,
+        <span class="string">'password'</span>,
+    ];
+
+    <span class="comment">// Hidden attributes (not shown in JSON)</span>
+    <span class="keyword">protected</span> $hidden = [
+        <span class="string">'password'</span>,
+        <span class="string">'remember_token'</span>,
+    ];
+
+    <span class="comment">// Attribute casting</span>
+    <span class="keyword">protected</span> $casts = [
+        <span class="string">'email_verified_at'</span> => <span class="string">'datetime'</span>,
+        <span class="string">'password'</span> => <span class="string">'hashed'</span>,
+    ];
+}</code>
+            </div>
+
+            <h3>3. Users Migration (database/migrations/xxxx_create_users_table.php)</h3>
+            <div class="code-block">
+<code><span class="keyword">public function</span> <span class="function">up</span>(): <span class="keyword">void</span>
+{
+    Schema::<span class="function">create</span>(<span class="string">'users'</span>, <span class="keyword">function</span> (Blueprint $table) {
+        $table-><span class="function">id</span>();
+        $table-><span class="function">string</span>(<span class="string">'name'</span>);
+        $table-><span class="function">string</span>(<span class="string">'email'</span>)-><span class="function">unique</span>();
+        $table-><span class="function">timestamp</span>(<span class="string">'email_verified_at'</span>)-><span class="function">nullable</span>();
+        $table-><span class="function">string</span>(<span class="string">'password'</span>);
+        $table-><span class="function">rememberToken</span>();
+        $table-><span class="function">timestamps</span>();
+    });
+}</code>
+            </div>
+
+            <h3>4. Authentication Views (resources/views/auth/)</h3>
+            <ul>
+                <li><strong>login.blade.php:</strong> Login form</li>
+                <li><strong>register.blade.php:</strong> Registration form</li>
+                <li><strong>forgot-password.blade.php:</strong> Password reset request</li>
+                <li><strong>reset-password.blade.php:</strong> Password reset form</li>
+                <li><strong>verify-email.blade.php:</strong> Email verification</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>🎨 Testing the Authentication System</h2>
+
+            <h3>Visit Authentication Pages:</h3>
+            <div class="code-block">
+<code><span class="comment"># Register page</span>
+http://localhost:8000/register
+
+<span class="comment"># Login page</span>
+http://localhost:8000/login
+
+<span class="comment"># Dashboard (requires login)</span>
+http://localhost:8000/dashboard</code>
+            </div>
+
+            <h3>Test Registration:</h3>
+            <ol>
+                <li>Go to http://localhost:8000/register</li>
+                <li>Fill in:
+                    <ul>
+                        <li>Name: John Doe</li>
+                        <li>Email: john@example.com</li>
+                        <li>Password: password123</li>
+                        <li>Confirm Password: password123</li>
+                    </ul>
+                </li>
+                <li>Click "Register"</li>
+                <li>You should be redirected to the dashboard</li>
+            </ol>
+
+            <h3>Test Login:</h3>
+            <ol>
+                <li>Logout from the dashboard</li>
+                <li>Go to http://localhost:8000/login</li>
+                <li>Enter credentials:
+                    <ul>
+                        <li>Email: john@example.com</li>
+                        <li>Password: password123</li>
+                    </ul>
+                </li>
+                <li>Check "Remember me" (optional)</li>
+                <li>Click "Log in"</li>
+                <li>You should be logged in and redirected to dashboard</li>
+            </ol>
+        </section>
+
+        <section>
+            <h2>🔐 How Laravel Handles Passwords</h2>
+
+            <h3>Password Hashing:</h3>
+            <div class="highlight">
+                <p>Laravel uses <strong>bcrypt</strong> hashing algorithm to securely store passwords. Passwords are never stored in plain text!</p>
+            </div>
+
+            <div class="code-block">
+<code><span class="keyword">use</span> Illuminate\Support\Facades\Hash;
+
+<span class="comment">// Hash a password</span>
+$hashedPassword = Hash::<span class="function">make</span>(<span class="string">'password123'</span>);
+
+<span class="comment">// Verify a password</span>
+<span class="keyword">if</span> (Hash::<span class="function">check</span>(<span class="string">'password123'</span>, $hashedPassword)) {
+    <span class="comment">// Password matches</span>
+}</code>
+            </div>
+
+            <h3>Password Validation Rules:</h3>
+            <div class="code-block">
+<code><span class="keyword">use</span> Illuminate\Validation\Rules\Password;
+
+<span class="comment">// Basic password rules</span>
+<span class="string">'password'</span> => [<span class="string">'required'</span>, <span class="string">'confirmed'</span>, Password::<span class="function">min</span>(8)],
+
+<span class="comment">// Strong password rules</span>
+<span class="string">'password'</span> => [
+    <span class="string">'required'</span>,
+    <span class="string">'confirmed'</span>,
+    Password::<span class="function">min</span>(8)
+        -><span class="function">letters</span>()
+        -><span class="function">mixedCase</span>()
+        -><span class="function">numbers</span>()
+        -><span class="function">symbols</span>()
+],</code>
+            </div>
+        </section>
+
+        <section>
+            <h2>📊 Database Tables Explained</h2>
+
+            <h3>1. Users Table Structure:</h3>
+            <table>
+                <tr>
+                    <th>Column</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>id</td>
+                    <td>BIGINT</td>
+                    <td>Primary key</td>
+                </tr>
+                <tr>
+                    <td>name</td>
+                    <td>VARCHAR(255)</td>
+                    <td>User's full name</td>
+                </tr>
+                <tr>
+                    <td>email</td>
+                    <td>VARCHAR(255)</td>
+                    <td>Unique email address</td>
+                </tr>
+                <tr>
+                    <td>email_verified_at</td>
+                    <td>TIMESTAMP</td>
+                    <td>Email verification time</td>
+                </tr>
+                <tr>
+                    <td>password</td>
+                    <td>VARCHAR(255)</td>
+                    <td>Hashed password</td>
+                </tr>
+                <tr>
+                    <td>remember_token</td>
+                    <td>VARCHAR(100)</td>
+                    <td>Remember me token</td>
+                </tr>
+                <tr>
+                    <td>created_at</td>
+                    <td>TIMESTAMP</td>
+                    <td>Registration time</td>
+                </tr>
+                <tr>
+                    <td>updated_at</td>
+                    <td>TIMESTAMP</td>
+                    <td>Last update time</td>
+                </tr>
+            </table>
+
+            <h3>2. Sessions Table:</h3>
+            <p>Stores user session data for logged-in users.</p>
+
+            <h3>3. Password Reset Tokens Table:</h3>
+            <p>Stores tokens for password reset requests.</p>
+        </section>
+
+        <section>
+            <h2>🛠️ Customizing Authentication Views</h2>
+
+            <h3>Login View (resources/views/auth/login.blade.php):</h3>
+            <div class="code-block">
+<code><span class="keyword">&lt;x-guest-layout&gt;</span>
+    <span class="comment">&lt;!-- Session Status --&gt;</span>
+    <span class="keyword">&lt;x-auth-session-status</span> class=<span class="string">"mb-4"</span> :status=<span class="string">"session('status')"</span> <span class="keyword">/&gt;</span>
+
+    <span class="keyword">&lt;form</span> method=<span class="string">"POST"</span> action=<span class="string">"{{ route('login') }}"</span><span class="keyword">&gt;</span>
+        @csrf
+
+        <span class="comment">&lt;!-- Email Address --&gt;</span>
+        <span class="keyword">&lt;div&gt;</span>
+            <span class="keyword">&lt;x-input-label</span> for=<span class="string">"email"</span> :value=<span class="string">"__('Email')"</span> <span class="keyword">/&gt;</span>
+            <span class="keyword">&lt;x-text-input</span> id=<span class="string">"email"</span> class=<span class="string">"block mt-1 w-full"</span>
+                type=<span class="string">"email"</span> name=<span class="string">"email"</span> :value=<span class="string">"old('email')"</span>
+                required autofocus <span class="keyword">/&gt;</span>
+            <span class="keyword">&lt;x-input-error</span> :messages=<span class="string">"$errors->get('email')"</span> class=<span class="string">"mt-2"</span> <span class="keyword">/&gt;</span>
+        <span class="keyword">&lt;/div&gt;</span>
+
+        <span class="comment">&lt;!-- Password --&gt;</span>
+        <span class="keyword">&lt;div</span> class=<span class="string">"mt-4"</span><span class="keyword">&gt;</span>
+            <span class="keyword">&lt;x-input-label</span> for=<span class="string">"password"</span> :value=<span class="string">"__('Password')"</span> <span class="keyword">/&gt;</span>
+            <span class="keyword">&lt;x-text-input</span> id=<span class="string">"password"</span> class=<span class="string">"block mt-1 w-full"</span>
+                type=<span class="string">"password"</span> name=<span class="string">"password"</span>
+                required <span class="keyword">/&gt;</span>
+            <span class="keyword">&lt;x-input-error</span> :messages=<span class="string">"$errors->get('password')"</span> class=<span class="string">"mt-2"</span> <span class="keyword">/&gt;</span>
+        <span class="keyword">&lt;/div&gt;</span>
+
+        <span class="comment">&lt;!-- Remember Me --&gt;</span>
+        <span class="keyword">&lt;div</span> class=<span class="string">"block mt-4"</span><span class="keyword">&gt;</span>
+            <span class="keyword">&lt;label</span> for=<span class="string">"remember_me"</span> class=<span class="string">"inline-flex items-center"</span><span class="keyword">&gt;</span>
+                <span class="keyword">&lt;input</span> id=<span class="string">"remember_me"</span> type=<span class="string">"checkbox"</span> name=<span class="string">"remember"</span><span class="keyword">&gt;</span>
+                <span class="keyword">&lt;span</span> class=<span class="string">"ml-2"</span><span class="keyword">&gt;</span>{{ __(<span class="string">'Remember me'</span>) }}<span class="keyword">&lt;/span&gt;</span>
+            <span class="keyword">&lt;/label&gt;</span>
+        <span class="keyword">&lt;/div&gt;</span>
+
+        <span class="keyword">&lt;div</span> class=<span class="string">"flex items-center justify-end mt-4"</span><span class="keyword">&gt;</span>
+            <span class="keyword">&lt;x-primary-button&gt;</span>
+                {{ __(<span class="string">'Log in'</span>) }}
+            <span class="keyword">&lt;/x-primary-button&gt;</span>
+        <span class="keyword">&lt;/div&gt;</span>
+    <span class="keyword">&lt;/form&gt;</span>
+<span class="keyword">&lt;/x-guest-layout&gt;</span></code>
+            </div>
+
+            <div class="tip">
+                <strong>💡 Tip:</strong> Breeze uses Blade components (<code>&lt;x-input-label&gt;</code>) for reusable UI elements.
+            </div>
+        </section>
+
+        <section>
+            <h2>✍️ Practice Exercises</h2>
+
+            <div class="exercise">
+                <h3>Exercise 1: Install Laravel Breeze</h3>
+                <ol>
+                    <li>Create a new Laravel project named "student-auth"</li>
+                    <li>Install Laravel Breeze with Blade templates</li>
+                    <li>Configure database connection</li>
+                    <li>Run migrations</li>
+                    <li>Test registration and login</li>
+                </ol>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 2: Create Test Users</h3>
+                <ol>
+                    <li>Register 3 different users with different emails</li>
+                    <li>Login and logout with each user</li>
+                    <li>Check the users table in phpMyAdmin</li>
+                    <li>Note the hashed passwords</li>
+                </ol>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 3: Explore Authentication Files</h3>
+                <ol>
+                    <li>Open and read routes/auth.php</li>
+                    <li>Open app/Http/Controllers/Auth/ folder</li>
+                    <li>Explore RegisteredUserController.php</li>
+                    <li>Open resources/views/auth/ folder</li>
+                    <li>Customize the login page title</li>
+                </ol>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 4: Database Exploration</h3>
+                <ol>
+                    <li>Open phpMyAdmin</li>
+                    <li>Check the users table structure</li>
+                    <li>View registered users</li>
+                    <li>Check password_reset_tokens table</li>
+                    <li>Check sessions table</li>
+                </ol>
+            </div>
+        </section>
+
+        <section>
+            <h2>🎯 Today's Deliverable</h2>
+            <div class="highlight">
+                <h3>✅ Authentication System Setup</h3>
+                <p><strong>Requirements:</strong></p>
+                <ul>
+                    <li>Laravel project with Breeze installed</li>
+                    <li>Database configured and migrated</li>
+                    <li>Working registration system</li>
+                    <li>Working login system</li>
+                    <li>At least 2 test users created</li>
+                    <li>Screenshot of dashboard after login</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>📚 Summary</h2>
+            <ul>
+                <li>Authentication verifies user identity</li>
+                <li>Laravel Breeze provides simple authentication scaffolding</li>
+                <li>Installation includes routes, controllers, views, and migrations</li>
+                <li>Passwords are hashed using bcrypt for security</li>
+                <li>Users table stores user accounts</li>
+                <li>Registration and login work out of the box</li>
+                <li>Views can be customized in resources/views/auth/</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>🔜 What's Next?</h2>
+            <p>In Day 2, we'll dive deeper into:</p>
+            <ul>
+                <li>Customizing login and registration forms</li>
+                <li>Adding custom fields to registration</li>
+                <li>Password reset functionality</li>
+                <li>Email verification</li>
+                <li>User profile management</li>
+            </ul>
+        </section>
+
+        <div class="nav-buttons">
+            <a href="../index.html" class="btn">← Back to Home</a>
+            <a href="day2-login-registration.html" class="btn">Next: Login & Registration →</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 10 Day 3: File Handling & Form Processing</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #ee5a6f 0%, #f29263 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        header { background: #ee5a6f; color: white; padding: 30px; border-radius: 15px 15px 0 0; }
+        .content { padding: 40px; }
+        h2 { color: #ee5a6f; border-bottom: 3px solid #f29263; padding-bottom: 10px; margin: 30px 0 20px; }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        .info-box { background: #ffe0b2; border-left: 5px solid #ee5a6f; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border: 1px solid #ddd; }
+        th { background: #ee5a6f; color: white; }
+        .btn { background: #ee5a6f; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 10px 10px 0; }
+        footer { background: #ee5a6f; color: white; padding: 20px; text-align: center; border-radius: 0 0 15px 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 10 - Day 3: File Handling & Form Processing</h1>
+            <p>Friday | Duration: 3 hours</p>
+        </header>
+
+        <div class="content">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Read and write files in PHP</li>
+                <li>Handle file uploads</li>
+                <li>Process and save form data to files</li>
+                <li>Work with CSV files</li>
+                <li>Implement contact form with file storage</li>
+            </ul>
+
+            <h2>📁 File Functions in PHP</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Function</th>
+                        <th>Description</th>
+                        <th>Usage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>fopen()</td>
+                        <td>Opens a file</td>
+                        <td>fopen("file.txt", "r")</td>
+                    </tr>
+                    <tr>
+                        <td>fread()</td>
+                        <td>Reads from a file</td>
+                        <td>fread($file, filesize("file.txt"))</td>
+                    </tr>
+                    <tr>
+                        <td>fwrite()</td>
+                        <td>Writes to a file</td>
+                        <td>fwrite($file, $data)</td>
+                    </tr>
+                    <tr>
+                        <td>fclose()</td>
+                        <td>Closes a file</td>
+                        <td>fclose($file)</td>
+                    </tr>
+                    <tr>
+                        <td>file_get_contents()</td>
+                        <td>Reads entire file</td>
+                        <td>file_get_contents("file.txt")</td>
+                    </tr>
+                    <tr>
+                        <td>file_put_contents()</td>
+                        <td>Writes to file</td>
+                        <td>file_put_contents("file.txt", $data)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>📖 File Open Modes</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Mode</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>r</td>
+                        <td>Read only, pointer at beginning</td>
+                    </tr>
+                    <tr>
+                        <td>w</td>
+                        <td>Write only, erases existing content</td>
+                    </tr>
+                    <tr>
+                        <td>a</td>
+                        <td>Append, pointer at end</td>
+                    </tr>
+                    <tr>
+                        <td>r+</td>
+                        <td>Read/Write, pointer at beginning</td>
+                    </tr>
+                    <tr>
+                        <td>w+</td>
+                        <td>Read/Write, erases existing content</td>
+                    </tr>
+                    <tr>
+                        <td>a+</td>
+                        <td>Read/Append, pointer at end</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>📝 Writing to Files</h2>
+            
+            <h3>Method 1: Using fopen/fwrite/fclose</h3>
+            <div class="code-block">
+&lt;?php
+// Open file for writing
+$file = fopen("data.txt", "w");
+
+// Write data
+$text = "Hello, this is a test file!\n";
+$text .= "PHP file handling is fun!";
+fwrite($file, $text);
+
+// Close file
+fclose($file);
+
+echo "File written successfully!";
+?&gt;
+            </div>
+
+            <h3>Method 2: Using file_put_contents (Easier)</h3>
+            <div class="code-block">
+&lt;?php
+$text = "Hello, this is a test file!\n";
+$text .= "PHP file handling is fun!";
+
+file_put_contents("data.txt", $text);
+
+echo "File written successfully!";
+?&gt;
+            </div>
+
+            <h2>📖 Reading from Files</h2>
+            
+            <h3>Method 1: Using fopen/fread/fclose</h3>
+            <div class="code-block">
+&lt;?php
+// Open file for reading
+$file = fopen("data.txt", "r");
+
+// Read file content
+$content = fread($file, filesize("data.txt"));
+
+// Close file
+fclose($file);
+
+echo $content;
+?&gt;
+            </div>
+
+            <h3>Method 2: Using file_get_contents (Easier)</h3>
+            <div class="code-block">
+&lt;?php
+$content = file_get_contents("data.txt");
+echo $content;
+?&gt;
+            </div>
+
+            <h2>➕ Appending to Files</h2>
+            <div class="code-block">
+&lt;?php
+// Append new data to existing file
+$newData = "\nThis line is appended!";
+
+// Method 1: fopen with 'a' mode
+$file = fopen("data.txt", "a");
+fwrite($file, $newData);
+fclose($file);
+
+// Method 2: file_put_contents with FILE_APPEND flag
+file_put_contents("data.txt", $newData, FILE_APPEND);
+
+echo "Data appended successfully!";
+?&gt;
+            </div>
+
+            <h2>📋 Working with CSV Files</h2>
+            
+            <h3>Writing to CSV</h3>
+            <div class="code-block">
+&lt;?php
+$students = [
+    ["Ahmad", "ahmad@email.com", "20"],
+    ["Fatima", "fatima@email.com", "22"],
+    ["Ibrahim", "ibrahim@email.com", "21"]
+];
+
+$file = fopen("students.csv", "w");
+
+// Write header
+fputcsv($file, ["Name", "Email", "Age"]);
+
+// Write data rows
+foreach ($students as $student) {
+    fputcsv($file, $student);
+}
+
+fclose($file);
+echo "CSV file created successfully!";
+?&gt;
+            </div>
+
+            <h3>Reading from CSV</h3>
+            <div class="code-block">
+&lt;?php
+$file = fopen("students.csv", "r");
+
+echo "&lt;table border='1'&gt;";
+while (($row = fgetcsv($file)) !== false) {
+    echo "&lt;tr&gt;";
+    foreach ($row as $cell) {
+        echo "&lt;td&gt;" . $cell . "&lt;/td&gt;";
+    }
+    echo "&lt;/tr&gt;";
+}
+echo "&lt;/table&gt;";
+
+fclose($file);
+?&gt;
+            </div>
+
+            <h2>💻 Complete Contact Form with File Storage</h2>
+            <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Contact Form with File Storage&lt;/title&gt;
+    &lt;style&gt;
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f4f4f4;
+        }
+        .form-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        h2 { color: #ee5a6f; }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        button {
+            background: #ee5a6f;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #d94860;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="form-container"&gt;
+        &lt;h2&gt;Contact Us&lt;/h2&gt;
+        
+        &lt;?php
+        $errors = [];
+        $success = "";
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            // Validate inputs
+            $name = trim($_POST['name']);
+            $email = trim($_POST['email']);
+            $subject = trim($_POST['subject']);
+            $message = trim($_POST['message']);
+
+            if (empty($name)) {
+                $errors[] = "Name is required";
+            }
+            if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $errors[] = "Valid email is required";
+            }
+            if (empty($subject)) {
+                $errors[] = "Subject is required";
+            }
+            if (empty($message)) {
+                $errors[] = "Message is required";
+            }
+
+            // If no errors, save to file
+            if (empty($errors)) {
+                $date = date("Y-m-d H:i:s");
+                $separator = "----------------------------------------\n";
+                
+                $data = $separator;
+                $data .= "Date: " . $date . "\n";
+                $data .= "Name: " . $name . "\n";
+                $data .= "Email: " . $email . "\n";
+                $data .= "Subject: " . $subject . "\n";
+                $data .= "Message: " . $message . "\n";
+                $data .= $separator . "\n";
+
+                // Append to messages.txt file
+                file_put_contents("messages.txt", $data, FILE_APPEND);
+
+                // Also save to CSV for easy viewing
+                $csvData = [$date, $name, $email, $subject, $message];
+                $csvFile = fopen("messages.csv", "a");
+                fputcsv($csvFile, $csvData);
+                fclose($csvFile);
+
+                $success = "Thank you! Your message has been sent successfully.";
+                
+                // Clear form
+                $_POST = [];
+            }
+        }
+        ?&gt;
+
+        &lt;?php if (!empty($errors)): ?&gt;
+            &lt;div class="error"&gt;
+                &lt;ul&gt;
+                    &lt;?php foreach ($errors as $error): ?&gt;
+                        &lt;li&gt;&lt;?php echo $error; ?&gt;&lt;/li&gt;
+                    &lt;?php endforeach; ?&gt;
+                &lt;/ul&gt;
+            &lt;/div&gt;
+        &lt;?php endif; ?&gt;
+
+        &lt;?php if ($success): ?&gt;
+            &lt;div class="success"&gt;
+                &lt;?php echo $success; ?&gt;
+            &lt;/div&gt;
+        &lt;?php endif; ?&gt;
+
+        &lt;form method="POST" action=""&gt;
+            &lt;div class="form-group"&gt;
+                &lt;label&gt;Name:&lt;/label&gt;
+                &lt;input type="text" name="name" 
+                       value="&lt;?php echo isset($_POST['name']) ? htmlspecialchars($_POST['name']) : ''; ?&gt;"&gt;
+            &lt;/div&gt;
+
+            &lt;div class="form-group"&gt;
+                &lt;label&gt;Email:&lt;/label&gt;
+                &lt;input type="email" name="email"
+                       value="&lt;?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?&gt;"&gt;
+            &lt;/div&gt;
+
+            &lt;div class="form-group"&gt;
+                &lt;label&gt;Subject:&lt;/label&gt;
+                &lt;input type="text" name="subject"
+                       value="&lt;?php echo isset($_POST['subject']) ? htmlspecialchars($_POST['subject']) : ''; ?&gt;"&gt;
+            &lt;/div&gt;
+
+            &lt;div class="form-group"&gt;
+                &lt;label&gt;Message:&lt;/label&gt;
+                &lt;textarea name="message"&gt;&lt;?php echo isset($_POST['message']) ? htmlspecialchars($_POST['message']) : ''; ?&gt;&lt;/textarea&gt;
+            &lt;/div&gt;
+
+            &lt;button type="submit"&gt;Send Message&lt;/button&gt;
+        &lt;/form&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </div>
+
+            <h2>📊 View Messages Page</h2>
+            <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;View Messages&lt;/title&gt;
+    &lt;style&gt;
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .message {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .message h3 { color: #ee5a6f; margin-top: 0; }
+        .meta { color: #666; font-size: 14px; margin-bottom: 10px; }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Contact Messages&lt;/h1&gt;
+
+    &lt;?php
+    // Check if file exists
+    if (file_exists("messages.csv")) {
+        $file = fopen("messages.csv", "r");
+        
+        while (($row = fgetcsv($file)) !== false) {
+            echo "&lt;div class='message'&gt;";
+            echo "&lt;h3&gt;" . htmlspecialchars($row[3]) . "&lt;/h3&gt;";
+            echo "&lt;div class='meta'&gt;";
+            echo "From: " . htmlspecialchars($row[1]) . " (" . htmlspecialchars($row[2]) . ")&lt;br&gt;";
+            echo "Date: " . htmlspecialchars($row[0]);
+            echo "&lt;/div&gt;";
+            echo "&lt;p&gt;" . nl2br(htmlspecialchars($row[4])) . "&lt;/p&gt;";
+            echo "&lt;/div&gt;";
+        }
+        
+        fclose($file);
+    } else {
+        echo "&lt;p&gt;No messages yet.&lt;/p&gt;";
+    }
+    ?&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </div>
+
+            <h2>✏️ Practice Exercises</h2>
+            <ol>
+                <li>Create a guest book where visitors can sign their name</li>
+                <li>Build a simple blog that saves posts to a text file</li>
+                <li>Create a todo list that saves tasks to CSV</li>
+                <li>Build a feedback form with file storage</li>
+                <li>Create a page counter that tracks visits in a file</li>
+            </ol>
+
+            <h2>✅ Best Practices</h2>
+            <ul>
+                <li>✓ Always close files after opening them</li>
+                <li>✓ Check if file exists before reading</li>
+                <li>✓ Use FILE_APPEND to add to existing files</li>
+                <li>✓ Validate data before writing to files</li>
+                <li>✓ Use CSV for structured data</li>
+                <li>✓ Sanitize data with htmlspecialchars()</li>
+            </ul>
+
+            <h2>✅ Today's Deliverable</h2>
+            <ul>
+                <li>✓ Contact form that saves to text file</li>
+                <li>✓ Messages also saved to CSV format</li>
+                <li>✓ View messages page displaying all submissions</li>
+                <li>✓ Form validation working properly</li>
+                <li>✓ Success/error messages displaying</li>
+                <li>✓ Proper file handling (open/write/close)</li>
+            </ul>
+
+            <div style="margin-top: 40px;">
+                <a href="day2-includes.html" class="btn">← Previous</a>
+                <a href="../index.html" class="btn">Course Home</a>
+                <a href="../week11/day1-mysql-intro.html" class="btn">Next Week →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 10 - Day 3: File Handling & Form Processing</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

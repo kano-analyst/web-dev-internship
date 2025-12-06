@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 18 Day 1 - REST API Introduction & Concepts | Laravel Bootcamp</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #f093fb;
+        }
+
+        h1 {
+            color: #f093fb;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: #f5576c;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+
+        h3 {
+            color: #f093fb;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .highlight {
+            background: #f0f0ff;
+            padding: 15px;
+            border-left: 4px solid #f093fb;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            position: relative;
+        }
+
+        .code-block code {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .comment {
+            color: #6a9955;
+        }
+
+        .keyword {
+            color: #569cd6;
+        }
+
+        .string {
+            color: #ce9178;
+        }
+
+        .function {
+            color: #dcdcaa;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .exercise {
+            background: #fff3cd;
+            padding: 20px;
+            border-left: 4px solid #ffc107;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .tip {
+            background: #d1ecf1;
+            padding: 15px;
+            border-left: 4px solid #17a2b8;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #f093fb;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌐 Week 18, Day 1: REST API Introduction & Concepts</h1>
+            <p>Learn RESTful Architecture and Build Your First API</p>
+        </header>
+
+        <section>
+            <h2>📖 Learning Objectives</h2>
+            <ul>
+                <li>Understand REST principles and architectural constraints</li>
+                <li>Master HTTP methods (GET, POST, PUT, PATCH, DELETE)</li>
+                <li>Learn JSON format and API responses</li>
+                <li>Create API routes in Laravel using routes/api.php</li>
+                <li>Build simple API endpoints that return JSON data</li>
+                <li>Test APIs using Postman or similar tools</li>
+                <li>Understand API URL structure and conventions</li>
+                <li>Work with HTTP status codes (200, 201, 404, 500)</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>🎯 What is REST API?</h2>
+            
+            <div class="highlight">
+                <p><strong>REST (Representational State Transfer)</strong> is an architectural style for designing networked applications. A <strong>REST API</strong> allows different applications to communicate with each other over HTTP using standard methods.</p>
+            </div>
+
+            <h3>Key Characteristics of REST:</h3>
+            <ul>
+                <li><strong>Client-Server Architecture:</strong> Separation between client and server</li>
+                <li><strong>Stateless:</strong> Each request contains all necessary information</li>
+                <li><strong>Cacheable:</strong> Responses can be cached for better performance</li>
+                <li><strong>Uniform Interface:</strong> Consistent way to interact with resources</li>
+                <li><strong>Layered System:</strong> Can have intermediary servers (proxies, load balancers)</li>
+            </ul>
+
+            <h3>Why Use REST APIs?</h3>
+            <ul>
+                <li><strong>Platform Independent:</strong> Works with any programming language</li>
+                <li><strong>Mobile Apps:</strong> iOS and Android apps need APIs to communicate with servers</li>
+                <li><strong>Single Page Applications (SPAs):</strong> React, Vue, Angular apps use APIs</li>
+                <li><strong>Third-Party Integration:</strong> Allow other applications to access your data</li>
+                <li><strong>Microservices:</strong> Different services communicate via APIs</li>
+                <li><strong>Scalability:</strong> Separate frontend and backend for better scaling</li>
+            </ul>
+
+            <h3>REST vs Traditional Web Apps:</h3>
+            <table>
+                <tr>
+                    <th>Traditional Web App</th>
+                    <th>REST API</th>
+                </tr>
+                <tr>
+                    <td>Returns HTML pages</td>
+                    <td>Returns JSON/XML data</td>
+                </tr>
+                <tr>
+                    <td>Server-side rendering</td>
+                    <td>Client-side rendering</td>
+                </tr>
+                <tr>
+                    <td>Uses Blade templates</td>
+                    <td>Returns raw data</td>
+                </tr>
+                <tr>
+                    <td>Browser-specific</td>
+                    <td>Platform-independent</td>
+                </tr>
+                <tr>
+                    <td>Session-based</td>
+                    <td>Token-based (stateless)</td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <h2>🔧 HTTP Methods (CRUD Operations)</h2>
+            
+            <div class="highlight">
+                <p>REST APIs use standard HTTP methods to perform operations on resources. These methods correspond to CRUD (Create, Read, Update, Delete) operations.</p>
+            </div>
+
+            <table>
+                <tr>
+                    <th>HTTP Method</th>
+                    <th>CRUD Operation</th>
+                    <th>Description</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td><strong>GET</strong></td>
+                    <td>Read</td>
+                    <td>Retrieve data (does not modify)</td>
+                    <td>GET /api/posts - Get all posts<br>GET /api/posts/1 - Get post #1</td>
+                </tr>
+                <tr>
+                    <td><strong>POST</strong></td>
+                    <td>Create</td>
+                    <td>Create new resource</td>
+                    <td>POST /api/posts - Create new post</td>
+                </tr>
+                <tr>
+                    <td><strong>PUT</strong></td>
+                    <td>Update</td>
+                    <td>Replace entire resource</td>
+                    <td>PUT /api/posts/1 - Replace post #1</td>
+                </tr>
+                <tr>
+                    <td><strong>PATCH</strong></td>
+                    <td>Update</td>
+                    <td>Partially update resource</td>
+                    <td>PATCH /api/posts/1 - Update some fields</td>
+                </tr>
+                <tr>
+                    <td><strong>DELETE</strong></td>
+                    <td>Delete</td>
+                    <td>Remove resource</td>
+                    <td>DELETE /api/posts/1 - Delete post #1</td>
+                </tr>
+            </table>
+
+            <h3>HTTP Methods Characteristics:</h3>
+            <table>
+                <tr>
+                    <th>Method</th>
+                    <th>Safe</th>
+                    <th>Idempotent</th>
+                    <th>Has Body</th>
+                </tr>
+                <tr>
+                    <td>GET</td>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td>POST</td>
+                    <td>No</td>
+                    <td>No</td>
+                    <td>Yes</td>
+                </tr>
+                <tr>
+                    <td>PUT</td>
+                    <td>No</td>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                </tr>
+                <tr>
+                    <td>PATCH</td>
+                    <td>No</td>
+                    <td>No</td>
+                    <td>Yes</td>
+                </tr>
+                <tr>
+                    <td>DELETE</td>
+                    <td>No</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                </tr>
+            </table>
+
+            <div class="tip">
+                <strong>💡 Tip:</strong> <strong>Safe</strong> means the method doesn't modify data. <strong>Idempotent</strong> means calling it multiple times has the same effect as calling it once.
+            </div>
+        </section>
+
+        <section>
+            <h2>📄 JSON Format and Responses</h2>
+            
+            <div class="highlight">
+                <p><strong>JSON (JavaScript Object Notation)</strong> is the standard data format for REST APIs. It's lightweight, human-readable, and supported by all programming languages.</p>
+            </div>
+
+            <h3>JSON Structure Examples:</h3>
+
+            <h4>1. Single Resource (Object):</h4>
+            <div class="code-block">
+<code>{
+    <span class="string">"id"</span>: <span class="keyword">1</span>,
+    <span class="string">"title"</span>: <span class="string">"Introduction to REST APIs"</span>,
+    <span class="string">"content"</span>: <span class="string">"REST APIs are awesome..."</span>,
+    <span class="string">"author"</span>: <span class="string">"John Doe"</span>,
+    <span class="string">"created_at"</span>: <span class="string">"2024-01-15T10:30:00Z"</span>,
+    <span class="string">"updated_at"</span>: <span class="string">"2024-01-15T10:30:00Z"</span>
+}</code>
+            </div>
+
+            <h4>2. Collection of Resources (Array):</h4>
+            <div class="code-block">
+<code>{
+    <span class="string">"data"</span>: [
+        {
+            <span class="string">"id"</span>: <span class="keyword">1</span>,
+            <span class="string">"title"</span>: <span class="string">"First Post"</span>,
+            <span class="string">"author"</span>: <span class="string">"John"</span>
+        },
+        {
+            <span class="string">"id"</span>: <span class="keyword">2</span>,
+            <span class="string">"title"</span>: <span class="string">"Second Post"</span>,
+            <span class="string">"author"</span>: <span class="string">"Jane"</span>
+        }
+    ],
+    <span class="string">"total"</span>: <span class="keyword">2</span>,
+    <span class="string">"page"</span>: <span class="keyword">1</span>
+}</code>
+            </div>
+
+            <h4>3. Success Response:</h4>
+            <div class="code-block">
+<code>{
+    <span class="string">"success"</span>: <span class="keyword">true</span>,
+    <span class="string">"message"</span>: <span class="string">"Post created successfully"</span>,
+    <span class="string">"data"</span>: {
+        <span class="string">"id"</span>: <span class="keyword">3</span>,
+        <span class="string">"title"</span>: <span class="string">"New Post"</span>
+    }
+}</code>
+            </div>
+
+            <h4>4. Error Response:</h4>
+            <div class="code-block">
+<code>{
+    <span class="string">"success"</span>: <span class="keyword">false</span>,
+    <span class="string">"message"</span>: <span class="string">"Validation failed"</span>,
+    <span class="string">"errors"</span>: {
+        <span class="string">"title"</span>: [<span class="string">"The title field is required"</span>],
+        <span class="string">"content"</span>: [<span class="string">"The content must be at least 10 characters"</span>]
+    }
+}</code>
+            </div>
+
+            <h3>JSON Data Types:</h3>
+            <ul>
+                <li><strong>String:</strong> "text" (in double quotes)</li>
+                <li><strong>Number:</strong> 123, 45.67 (no quotes)</li>
+                <li><strong>Boolean:</strong> true, false (lowercase, no quotes)</li>
+                <li><strong>Array:</strong> [1, 2, 3] or ["a", "b", "c"]</li>
+                <li><strong>Object:</strong> {"key": "value"}</li>
+                <li><strong>Null:</strong> null (no quotes)</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>🚀 HTTP Status Codes</h2>
+            
+            <div class="highlight">
+                <p>HTTP status codes indicate the result of an API request. They help clients understand what happened without parsing the response body.</p>
+            </div>
+
+            <h3>Common Status Codes:</h3>
+            <table>
+                <tr>
+                    <th>Code</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                    <th>Usage</th>
+                </tr>
+                <tr>
+                    <td><strong>200</strong></td>
+                    <td>Success</td>
+                    <td>OK</td>
+                    <td>Successful GET, PUT, PATCH request</td>
+                </tr>
+                <tr>
+                    <td><strong>201</strong></td>
+                    <td>Success</td>
+                    <td>Created</td>
+                    <td>Resource successfully created (POST)</td>
+                </tr>
+                <tr>
+                    <td><strong>204</strong></td>
+                    <td>Success</td>
+                    <td>No Content</td>
+                    <td>Successful DELETE (no response body)</td>
+                </tr>
+                <tr>
+                    <td><strong>400</strong></td>
+                    <td>Client Error</td>
+                    <td>Bad Request</td>
+                    <td>Invalid request data/validation error</td>
+                </tr>
+                <tr>
+                    <td><strong>401</strong></td>
+                    <td>Client Error</td>
+                    <td>Unauthorized</td>
+                    <td>Authentication required</td>
+                </tr>
+                <tr>
+                    <td><strong>403</strong></td>
+                    <td>Client Error</td>
+                    <td>Forbidden</td>
+                    <td>Not authorized to access resource</td>
+                </tr>
+                <tr>
+                    <td><strong>404</strong></td>
+                    <td>Client Error</td>
+                    <td>Not Found</td>
+                    <td>Resource doesn't exist</td>
+                </tr>
+                <tr>
+                    <td><strong>422</strong></td>
+                    <td>Client Error</td>
+                    <td>Unprocessable Entity</td>
+                    <td>Validation errors</td>
+                </tr>
+                <tr>
+                    <td><strong>500</strong></td>
+                    <td>Server Error</td>
+                    <td>Internal Server Error</td>
+                    <td>Server crashed or exception occurred</td>
+                </tr>
+            </table>
+
+            <h3>Status Code Categories:</h3>
+            <ul>
+                <li><strong>1xx (Informational):</strong> Request received, processing</li>
+                <li><strong>2xx (Success):</strong> Request successfully received and processed</li>
+                <li><strong>3xx (Redirection):</strong> Further action needed</li>
+                <li><strong>4xx (Client Error):</strong> Problem with the request</li>
+                <li><strong>5xx (Server Error):</strong> Server failed to fulfill valid request</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>🛣️ Setting Up API Routes in Laravel</h2>
+            
+            <div class="highlight">
+                <p>Laravel provides a separate <strong>routes/api.php</strong> file for API routes. All routes in this file are automatically prefixed with <code>/api</code>.</p>
+            </div>
+
+            <h3>Difference Between web.php and api.php:</h3>
+            <table>
+                <tr>
+                    <th>routes/web.php</th>
+                    <th>routes/api.php</th>
+                </tr>
+                <tr>
+                    <td>For traditional web pages</td>
+                    <td>For API endpoints</td>
+                </tr>
+                <tr>
+                    <td>Returns HTML views</td>
+                    <td>Returns JSON data</td>
+                </tr>
+                <tr>
+                    <td>Uses sessions and cookies</td>
+                    <td>Stateless (uses tokens)</td>
+                </tr>
+                <tr>
+                    <td>CSRF protection enabled</td>
+                    <td>CSRF protection disabled</td>
+                </tr>
+                <tr>
+                    <td>URL: /posts</td>
+                    <td>URL: /api/posts</td>
+                </tr>
+            </table>
+
+            <h3>Basic API Routes (routes/api.php):</h3>
+            <div class="code-block">
+<code><span class="keyword">&lt;?php</span>
+
+<span class="keyword">use</span> Illuminate\Http\Request;
+<span class="keyword">use</span> Illuminate\Support\Facades\Route;
+
+<span class="comment">// Simple GET route - returns JSON</span>
+Route::<span class="function">get</span>(<span class="string">'/hello'</span>, <span class="keyword">function</span> () {
+    <span class="keyword">return</span> [<span class="string">'message'</span> => <span class="string">'Hello, World!'</span>];
+});
+
+<span class="comment">// GET route with parameter</span>
+Route::<span class="function">get</span>(<span class="string">'/users/{id}'</span>, <span class="keyword">function</span> ($id) {
+    <span class="keyword">return</span> [
+        <span class="string">'id'</span> => $id,
+        <span class="string">'name'</span> => <span class="string">'John Doe'</span>,
+        <span class="string">'email'</span> => <span class="string">'john@example.com'</span>
+    ];
+});
+
+<span class="comment">// POST route - receives data</span>
+Route::<span class="function">post</span>(<span class="string">'/posts'</span>, <span class="keyword">function</span> (Request $request) {
+    <span class="keyword">return</span> [
+        <span class="string">'success'</span> => <span class="keyword">true</span>,
+        <span class="string">'message'</span> => <span class="string">'Post created'</span>,
+        <span class="string">'data'</span> => $request-><span class="function">all</span>()
+    ];
+});</code>
+            </div>
+
+            <h3>RESTful Resource Routes:</h3>
+            <div class="code-block">
+<code><span class="comment">// Individual routes</span>
+Route::<span class="function">get</span>(<span class="string">'/posts'</span>, [PostController::<span class="keyword">class</span>, <span class="string">'index'</span>]);      <span class="comment">// List all</span>
+Route::<span class="function">post</span>(<span class="string">'/posts'</span>, [PostController::<span class="keyword">class</span>, <span class="string">'store'</span>]);     <span class="comment">// Create new</span>
+Route::<span class="function">get</span>(<span class="string">'/posts/{id}'</span>, [PostController::<span class="keyword">class</span>, <span class="string">'show'</span>]);    <span class="comment">// Show one</span>
+Route::<span class="function">put</span>(<span class="string">'/posts/{id}'</span>, [PostController::<span class="keyword">class</span>, <span class="string">'update'</span>]);  <span class="comment">// Update</span>
+Route::<span class="function">delete</span>(<span class="string">'/posts/{id}'</span>, [PostController::<span class="keyword">class</span>, <span class="string">'destroy'</span>]); <span class="comment">// Delete</span>
+
+<span class="comment">// OR use resource route (creates all routes above)</span>
+Route::<span class="function">apiResource</span>(<span class="string">'posts'</span>, PostController::<span class="keyword">class</span>);</code>
+            </div>
+
+            <div class="tip">
+                <strong>💡 Tip:</strong> Use <code>php artisan route:list</code> to see all registered routes including API routes.
+            </div>
+        </section>
+
+        <section>
+            <h2>💻 Creating Your First API Endpoints</h2>
+
+            <h3>Step 1: Create a Simple GET Endpoint</h3>
+            <p>Edit <strong>routes/api.php</strong>:</p>
+            <div class="code-block">
+<code><span class="keyword">&lt;?php</span>
+
+<span class="keyword">use</span> Illuminate\Http\Request;
+<span class="keyword">use</span> Illuminate\Support\Facades\Route;
+
+<span class="comment">// Test endpoint</span>
+Route::<span class="function">get</span>(<span class="string">'/test'</span>, <span class="keyword">function</span> () {
+    <span class="keyword">return</span> [
+        <span class="string">'status'</span> => <span class="string">'success'</span>,
+        <span class="string">'message'</span> => <span class="string">'API is working!'</span>,
+        <span class="string">'timestamp'</span> => <span class="function">now</span>()
+    ];
+});
+
+<span class="comment">// Get all students</span>
+Route::<span class="function">get</span>(<span class="string">'/students'</span>, <span class="keyword">function</span> () {
+    <span class="keyword">return</span> [
+        <span class="string">'data'</span> => [
+            [<span class="string">'id'</span> => 1, <span class="string">'name'</span> => <span class="string">'Alice'</span>, <span class="string">'grade'</span> => <span class="string">'A'</span>],
+            [<span class="string">'id'</span> => 2, <span class="string">'name'</span> => <span class="string">'Bob'</span>, <span class="string">'grade'</span> => <span class="string">'B'</span>],
+            [<span class="string">'id'</span> => 3, <span class="string">'name'</span> => <span class="string">'Charlie'</span>, <span class="string">'grade'</span> => <span class="string">'A'</span>]
+        ],
+        <span class="string">'total'</span> => 3
+    ];
+});
+
+<span class="comment">// Get single student by ID</span>
+Route::<span class="function">get</span>(<span class="string">'/students/{id}'</span>, <span class="keyword">function</span> ($id) {
+    $students = [
+        1 => [<span class="string">'id'</span> => 1, <span class="string">'name'</span> => <span class="string">'Alice'</span>, <span class="string">'grade'</span> => <span class="string">'A'</span>, <span class="string">'email'</span> => <span class="string">'alice@example.com'</span>],
+        2 => [<span class="string">'id'</span> => 2, <span class="string">'name'</span> => <span class="string">'Bob'</span>, <span class="string">'grade'</span> => <span class="string">'B'</span>, <span class="string">'email'</span> => <span class="string">'bob@example.com'</span>],
+        3 => [<span class="string">'id'</span> => 3, <span class="string">'name'</span> => <span class="string">'Charlie'</span>, <span class="string">'grade'</span> => <span class="string">'A'</span>, <span class="string">'email'</span> => <span class="string">'charlie@example.com'</span>]
+    ];
+    
+    <span class="keyword">if</span> (<span class="function">isset</span>($students[$id])) {
+        <span class="keyword">return</span> $students[$id];
+    }
+    
+    <span class="keyword">return</span> <span class="function">response</span>()-><span class="function">json</span>([
+        <span class="string">'error'</span> => <span class="string">'Student not found'</span>
+    ], 404);
+});</code>
+            </div>
+
+            <h3>Step 2: Create a POST Endpoint</h3>
+            <div class="code-block">
+<code><span class="comment">// Create new student</span>
+Route::<span class="function">post</span>(<span class="string">'/students'</span>, <span class="keyword">function</span> (Request $request) {
+    <span class="comment">// Validate incoming data</span>
+    $validated = $request-><span class="function">validate</span>([
+        <span class="string">'name'</span> => <span class="string">'required|string|max:255'</span>,
+        <span class="string">'grade'</span> => <span class="string">'required|string|max:2'</span>,
+        <span class="string">'email'</span> => <span class="string">'required|email'</span>
+    ]);
+    
+    <span class="comment">// In real app, save to database</span>
+    <span class="comment">// For now, just return the data with fake ID</span>
+    <span class="keyword">return</span> <span class="function">response</span>()-><span class="function">json</span>([
+        <span class="string">'success'</span> => <span class="keyword">true</span>,
+        <span class="string">'message'</span> => <span class="string">'Student created successfully'</span>,
+        <span class="string">'data'</span> => [
+            <span class="string">'id'</span> => <span class="function">rand</span>(4, 100),
+            <span class="string">'name'</span> => $validated[<span class="string">'name'</span>],
+            <span class="string">'grade'</span> => $validated[<span class="string">'grade'</span>],
+            <span class="string">'email'</span> => $validated[<span class="string">'email'</span>],
+            <span class="string">'created_at'</span> => <span class="function">now</span>()
+        ]
+    ], 201); <span class="comment">// 201 = Created</span>
+});</code>
+            </div>
+
+            <h3>Step 3: Return Proper Status Codes</h3>
+            <div class="code-block">
+<code><span class="comment">// Success with 200 OK</span>
+<span class="keyword">return</span> <span class="function">response</span>()-><span class="function">json</span>($data, 200);
+
+<span class="comment">// Created with 201 Created</span>
+<span class="keyword">return</span> <span class="function">response</span>()-><span class="function">json</span>($data, 201);
+
+<span class="comment">// Not found with 404</span>
+<span class="keyword">return</span> <span class="function">response</span>()-><span class="function">json</span>([<span class="string">'error'</span> => <span class="string">'Not found'</span>], 404);
+
+<span class="comment">// Validation error with 422</span>
+<span class="keyword">return</span> <span class="function">response</span>()-><span class="function">json</span>([<span class="string">'errors'</span> => $errors], 422);
+
+<span class="comment">// Server error with 500</span>
+<span class="keyword">return</span> <span class="function">response</span>()-><span class="function">json</span>([<span class="string">'error'</span> => <span class="string">'Server error'</span>], 500);</code>
+            </div>
+        </section>
+
+        <section>
+            <h2>🧪 Testing APIs with Postman</h2>
+            
+            <div class="highlight">
+                <p><strong>Postman</strong> is a popular tool for testing APIs. It allows you to send HTTP requests and view responses without writing any code.</p>
+            </div>
+
+            <h3>Installing Postman:</h3>
+            <ol>
+                <li>Go to <a href="https://www.postman.com/downloads/" target="_blank">https://www.postman.com/downloads/</a></li>
+                <li>Download Postman for Windows</li>
+                <li>Install and create a free account (optional)</li>
+                <li>Launch Postman</li>
+            </ol>
+
+            <h3>Testing GET Request:</h3>
+            <ol>
+                <li>Open Postman</li>
+                <li>Click "New" → "HTTP Request"</li>
+                <li>Set method to <strong>GET</strong></li>
+                <li>Enter URL: <code>http://localhost:8000/api/students</code></li>
+                <li>Click "Send"</li>
+                <li>View the JSON response below</li>
+            </ol>
+
+            <h3>Testing POST Request:</h3>
+            <ol>
+                <li>Create new request</li>
+                <li>Set method to <strong>POST</strong></li>
+                <li>Enter URL: <code>http://localhost:8000/api/students</code></li>
+                <li>Click "Body" tab</li>
+                <li>Select "raw" and choose "JSON" from dropdown</li>
+                <li>Enter JSON data:
+                    <div class="code-block">
+<code>{
+    <span class="string">"name"</span>: <span class="string">"David"</span>,
+    <span class="string">"grade"</span>: <span class="string">"A"</span>,
+    <span class="string">"email"</span>: <span class="string">"david@example.com"</span>
+}</code>
+                    </div>
+                </li>
+                <li>Click "Send"</li>
+                <li>You should see 201 Created status and response data</li>
+            </ol>
+
+            <h3>Alternative Tools:</h3>
+            <ul>
+                <li><strong>Thunder Client:</strong> VS Code extension (lightweight)</li>
+                <li><strong>Insomnia:</strong> Similar to Postman</li>
+                <li><strong>cURL:</strong> Command-line tool</li>
+                <li><strong>Browser:</strong> Only for GET requests (just visit the URL)</li>
+            </ul>
+
+            <div class="tip">
+                <strong>💡 Tip:</strong> For GET requests, you can test directly in browser: <code>http://localhost:8000/api/students</code>
+            </div>
+        </section>
+
+        <section>
+            <h2>🌐 API URL Structure and Conventions</h2>
+            
+            <h3>RESTful URL Patterns:</h3>
+            <table>
+                <tr>
+                    <th>Action</th>
+                    <th>HTTP Method</th>
+                    <th>URL Pattern</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td>List all</td>
+                    <td>GET</td>
+                    <td>/api/resources</td>
+                    <td>GET /api/posts</td>
+                </tr>
+                <tr>
+                    <td>Get one</td>
+                    <td>GET</td>
+                    <td>/api/resources/{id}</td>
+                    <td>GET /api/posts/5</td>
+                </tr>
+                <tr>
+                    <td>Create</td>
+                    <td>POST</td>
+                    <td>/api/resources</td>
+                    <td>POST /api/posts</td>
+                </tr>
+                <tr>
+                    <td>Update</td>
+                    <td>PUT/PATCH</td>
+                    <td>/api/resources/{id}</td>
+                    <td>PUT /api/posts/5</td>
+                </tr>
+                <tr>
+                    <td>Delete</td>
+                    <td>DELETE</td>
+                    <td>/api/resources/{id}</td>
+                    <td>DELETE /api/posts/5</td>
+                </tr>
+            </table>
+
+            <h3>URL Naming Best Practices:</h3>
+            <ul>
+                <li><strong>Use plural nouns:</strong> /api/posts (not /api/post)</li>
+                <li><strong>Use lowercase:</strong> /api/user-profiles (not /api/UserProfiles)</li>
+                <li><strong>Use hyphens for multi-word:</strong> /api/blog-posts (not /api/blog_posts)</li>
+                <li><strong>Don't use verbs:</strong> /api/posts (not /api/get-posts)</li>
+                <li><strong>Use nesting for relationships:</strong> /api/posts/5/comments</li>
+                <li><strong>Use query parameters for filtering:</strong> /api/posts?status=published</li>
+            </ul>
+
+            <h3>Query Parameters Examples:</h3>
+            <div class="code-block">
+<code><span class="comment">// Pagination</span>
+GET /api/posts?page=2&per_page=10
+
+<span class="comment">// Filtering</span>
+GET /api/posts?status=published&category=laravel
+
+<span class="comment">// Sorting</span>
+GET /api/posts?sort_by=created_at&order=desc
+
+<span class="comment">// Searching</span>
+GET /api/posts?search=rest+api
+
+<span class="comment">// Multiple filters</span>
+GET /api/posts?author=john&status=published&sort=latest</code>
+            </div>
+        </section>
+
+        <section>
+            <h2>🔨 Complete Working Example</h2>
+
+            <h3>Full API Routes (routes/api.php):</h3>
+            <div class="code-block">
+<code><span class="keyword">&lt;?php</span>
+
+<span class="keyword">use</span> Illuminate\Http\Request;
+<span class="keyword">use</span> Illuminate\Support\Facades\Route;
+
+<span class="comment">// In-memory data store (array)</span>
+$books = [
+    [<span class="string">'id'</span> => 1, <span class="string">'title'</span> => <span class="string">'Laravel Basics'</span>, <span class="string">'author'</span> => <span class="string">'John Doe'</span>, <span class="string">'price'</span> => 29.99],
+    [<span class="string">'id'</span> => 2, <span class="string">'title'</span> => <span class="string">'REST API Guide'</span>, <span class="string">'author'</span> => <span class="string">'Jane Smith'</span>, <span class="string">'price'</span> => 34.99],
+    [<span class="string">'id'</span> => 3, <span class="string">'title'</span> => <span class="string">'PHP Mastery'</span>, <span class="string">'author'</span> => <span class="string">'Bob Johnson'</span>, <span class="string">'price'</span> => 39.99],
+];
+
+<span class="comment">// GET /api/books - List all books</span>
+Route::<span class="function">get</span>(<span class="string">'/books'</span>, <span class="keyword">function</span> () <span class="keyword">use</span> ($books) {
+    <span class="keyword">return</span> <span class="function">response</span>()-><span class="function">json</span>([
+        <span class="string">'success'</span> => <span class="keyword">true</span>,
+        <span class="string">'data'</span> => $books,
+        <span class="string">'total'</span> => <span class="function">count</span>($books)
+    ], 200);
+});
+
+<span class="comment">// GET /api/books/{id} - Get single book</span>
+Route::<span class="function">get</span>(<span class="string">'/books/{id}'</span>, <span class="keyword">function</span> ($id) <span class="keyword">use</span> ($books) {
+    <span class="keyword">foreach</span> ($books <span class="keyword">as</span> $book) {
+        <span class="keyword">if</span> ($book[<span class="string">'id'</span>] == $id) {
+            <span class="keyword">return</span> <span class="function">response</span>()-><span class="function">json</span>([
+                <span class="string">'success'</span> => <span class="keyword">true</span>,
+                <span class="string">'data'</span> => $book
+            ], 200);
+        }
+    }
+    
+    <span class="keyword">return</span> <span class="function">response</span>()-><span class="function">json</span>([
+        <span class="string">'success'</span> => <span class="keyword">false</span>,
+        <span class="string">'message'</span> => <span class="string">'Book not found'</span>
+    ], 404);
+});
+
+<span class="comment">// POST /api/books - Create new book</span>
+Route::<span class="function">post</span>(<span class="string">'/books'</span>, <span class="keyword">function</span> (Request $request) {
+    <span class="comment">// Validate request data</span>
+    $validated = $request-><span class="function">validate</span>([
+        <span class="string">'title'</span> => <span class="string">'required|string|max:255'</span>,
+        <span class="string">'author'</span> => <span class="string">'required|string|max:255'</span>,
+        <span class="string">'price'</span> => <span class="string">'required|numeric|min:0'</span>
+    ]);
+    
+    <span class="comment">// Create new book (in real app, save to database)</span>
+    $newBook = [
+        <span class="string">'id'</span> => <span class="function">rand</span>(4, 1000),
+        <span class="string">'title'</span> => $validated[<span class="string">'title'</span>],
+        <span class="string">'author'</span> => $validated[<span class="string">'author'</span>],
+        <span class="string">'price'</span> => $validated[<span class="string">'price'</span>],
+        <span class="string">'created_at'</span> => <span class="function">now</span>()-><span class="function">toDateTimeString</span>()
+    ];
+    
+    <span class="keyword">return</span> <span class="function">response</span>()-><span class="function">json</span>([
+        <span class="string">'success'</span> => <span class="keyword">true</span>,
+        <span class="string">'message'</span> => <span class="string">'Book created successfully'</span>,
+        <span class="string">'data'</span> => $newBook
+    ], 201);
+});</code>
+            </div>
+
+            <div class="tip">
+                <strong>💡 Tip:</strong> This example uses an array for simplicity. In real applications, you'll use database models (covered in next lessons).
+            </div>
+        </section>
+
+        <section>
+            <h2>✍️ Practice Exercises</h2>
+
+            <div class="exercise">
+                <h3>Exercise 1: Create Basic API Routes</h3>
+                <ol>
+                    <li>Create a new Laravel project or use existing one</li>
+                    <li>Open routes/api.php</li>
+                    <li>Create GET /api/products route that returns 5 products</li>
+                    <li>Test in browser: http://localhost:8000/api/products</li>
+                    <li>Verify JSON response</li>
+                </ol>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 2: Install and Use Postman</h3>
+                <ol>
+                    <li>Download and install Postman</li>
+                    <li>Create a new collection named "Laravel API"</li>
+                    <li>Test your /api/products endpoint</li>
+                    <li>Save the request in your collection</li>
+                    <li>Take a screenshot of successful response</li>
+                </ol>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 3: Build Complete CRUD API</h3>
+                <ol>
+                    <li>Create routes for /api/tasks resource</li>
+                    <li>Implement GET /api/tasks (list all)</li>
+                    <li>Implement GET /api/tasks/{id} (get one)</li>
+                    <li>Implement POST /api/tasks (create)</li>
+                    <li>Use array for data storage (not database yet)</li>
+                    <li>Test all endpoints in Postman</li>
+                </ol>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 4: Handle Different Status Codes</h3>
+                <ol>
+                    <li>Create endpoint that returns 200 for success</li>
+                    <li>Create endpoint that returns 201 when creating</li>
+                    <li>Create endpoint that returns 404 for not found</li>
+                    <li>Add validation that returns 422 on error</li>
+                    <li>Test each status code in Postman</li>
+                </ol>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 5: Query Parameters</h3>
+                <ol>
+                    <li>Create GET /api/users endpoint</li>
+                    <li>Accept ?role= query parameter</li>
+                    <li>Filter results based on role</li>
+                    <li>Test: /api/users?role=admin</li>
+                    <li>Return filtered JSON response</li>
+                </ol>
+            </div>
+        </section>
+
+        <section>
+            <h2>🎯 Today's Deliverable</h2>
+            <div class="highlight">
+                <h3>✅ Working REST API with GET and POST Endpoints</h3>
+                <p><strong>Requirements:</strong></p>
+                <ul>
+                    <li>Laravel project with API routes configured</li>
+                    <li>At least 3 GET endpoints returning different data</li>
+                    <li>At least 2 POST endpoints with validation</li>
+                    <li>Proper JSON responses with status codes</li>
+                    <li>Postman collection with all requests saved</li>
+                    <li>Screenshot of Postman tests showing:
+                        <ul>
+                            <li>Successful GET request (200)</li>
+                            <li>Successful POST request (201)</li>
+                            <li>404 Not Found error</li>
+                            <li>422 Validation error</li>
+                        </ul>
+                    </li>
+                    <li>Document your API endpoints in comments</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>📚 Summary</h2>
+            <ul>
+                <li>REST API is an architectural style for building web services</li>
+                <li>Uses HTTP methods: GET, POST, PUT, PATCH, DELETE for CRUD operations</li>
+                <li>Returns data in JSON format (not HTML)</li>
+                <li>Laravel provides routes/api.php for API routes with /api prefix</li>
+                <li>HTTP status codes indicate request result (200, 201, 404, 500, etc.)</li>
+                <li>APIs are stateless and platform-independent</li>
+                <li>Postman is essential tool for testing API endpoints</li>
+                <li>RESTful URLs use plural nouns and standard patterns</li>
+                <li>Validation ensures data integrity in POST/PUT requests</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>🔜 What's Next?</h2>
+            <p>In Day 2, we'll learn about:</p>
+            <ul>
+                <li>Creating API Controllers</li>
+                <li>Using Eloquent models with APIs</li>
+                <li>Building database-backed API endpoints</li>
+                <li>Implementing full CRUD operations</li>
+                <li>API Resource Classes for data transformation</li>
+                <li>Pagination in API responses</li>
+                <li>Error handling and custom error responses</li>
+            </ul>
+        </section>
+
+        <div class="nav-buttons">
+            <a href="../index.html" class="btn">← Back to Home</a>
+            <a href="day2-api-controllers.html" class="btn">Next: API Controllers →</a>
+        </div>
+    </div>
+</body>
+</html>

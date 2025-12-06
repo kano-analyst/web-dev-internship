@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 20 Day 1 - Project Planning | Laravel Bootcamp</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #fa709a;
+        }
+        h1 { color: #fa709a; font-size: 2.5rem; margin-bottom: 10px; }
+        h2 { color: #fe8c00; margin-top: 30px; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #eee; }
+        h3 { color: #fa709a; margin-top: 25px; margin-bottom: 15px; }
+        .highlight {
+            background: #fff5e6;
+            padding: 15px;
+            border-left: 4px solid #fa709a;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+        .code-block code { font-size: 14px; line-height: 1.5; }
+        .comment { color: #6a9955; }
+        .keyword { color: #569cd6; }
+        .string { color: #ce9178; }
+        .function { color: #dcdcaa; }
+        ul, ol { margin-left: 30px; margin-bottom: 20px; }
+        li { margin-bottom: 10px; }
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: transform 0.3s ease;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .exercise {
+            background: #fff3cd;
+            padding: 20px;
+            border-left: 4px solid #ffc107;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .tip {
+            background: #d1ecf1;
+            padding: 15px;
+            border-left: 4px solid #17a2b8;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background: #fa709a; color: white; }
+        tr:nth-child(even) { background: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 Week 20, Day 1: Task Management System - Planning</h1>
+            <p>Design Your Final Laravel Project</p>
+        </header>
+
+        <section>
+            <h2>📖 Learning Objectives</h2>
+            <ul>
+                <li>Define project requirements and features</li>
+                <li>Design database schema and relationships</li>
+                <li>Create entity relationship (ER) diagrams</li>
+                <li>Plan authentication flow</li>
+                <li>Design API endpoints</li>
+                <li>Set up project structure</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>🎯 Project Overview: Task Management System</h2>
+            <div class="highlight">
+                <p><strong>Goal:</strong> Build a complete task management application with authentication, CRUD operations, file uploads, and REST API.</p>
+            </div>
+
+            <h3>Core Features:</h3>
+            <ul>
+                <li>✅ User registration and login (Laravel Breeze)</li>
+                <li>✅ Create, read, update, delete tasks</li>
+                <li>✅ Task categories and priorities</li>
+                <li>✅ File attachments for tasks</li>
+                <li>✅ Task status tracking (pending, in-progress, completed)</li>
+                <li>✅ User-specific task lists</li>
+                <li>✅ Task pagination</li>
+                <li>✅ Email notifications</li>
+                <li>✅ RESTful API with token authentication</li>
+            </ul>
+
+            <h3>Technologies Used:</h3>
+            <ul>
+                <li>Laravel 10+</li>
+                <li>Laravel Breeze (Authentication)</li>
+                <li>MySQL Database</li>
+                <li>Laravel Sanctum (API Authentication)</li>
+                <li>Blade Templates</li>
+                <li>Tailwind CSS</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>🗄️ Database Schema</h2>
+
+            <h3>Tables Required:</h3>
+            <table>
+                <tr>
+                    <th>Table</th>
+                    <th>Purpose</th>
+                </tr>
+                <tr>
+                    <td>users</td>
+                    <td>Store user accounts</td>
+                </tr>
+                <tr>
+                    <td>categories</td>
+                    <td>Task categories (Work, Personal, etc.)</td>
+                </tr>
+                <tr>
+                    <td>tasks</td>
+                    <td>Main task data</td>
+                </tr>
+                <tr>
+                    <td>attachments</td>
+                    <td>File uploads for tasks</td>
+                </tr>
+            </table>
+
+            <h3>Users Table:</h3>
+            <div class="code-block">
+<code><span class="comment">// Already created by Laravel Breeze</span>
+- id (bigint, PK)
+- name (string)
+- email (string, unique)
+- email_verified_at (timestamp, nullable)
+- password (string)
+- remember_token (string, nullable)
+- created_at, updated_at</code>
+            </div>
+
+            <h3>Categories Table:</h3>
+            <div class="code-block">
+<code><span class="comment">// Migration: create_categories_table</span>
+- id (bigint, PK)
+- name (string) <span class="comment">// Work, Personal, Shopping, etc.</span>
+- color (string) <span class="comment">// #ff0000 for display</span>
+- created_at, updated_at</code>
+            </div>
+
+            <h3>Tasks Table:</h3>
+            <div class="code-block">
+<code><span class="comment">// Migration: create_tasks_table</span>
+- id (bigint, PK)
+- user_id (bigint, FK → users.id)
+- category_id (bigint, FK → categories.id)
+- title (string)
+- description (text, nullable)
+- status (enum: pending, in_progress, completed)
+- priority (enum: low, medium, high)
+- due_date (date, nullable)
+- completed_at (timestamp, nullable)
+- created_at, updated_at</code>
+            </div>
+
+            <h3>Attachments Table:</h3>
+            <div class="code-block">
+<code><span class="comment">// Migration: create_attachments_table</span>
+- id (bigint, PK)
+- task_id (bigint, FK → tasks.id)
+- file_name (string)
+- file_path (string)
+- file_size (integer) <span class="comment">// in bytes</span>
+- mime_type (string)
+- created_at, updated_at</code>
+            </div>
+        </section>
+
+        <section>
+            <h2>📊 Entity Relationship Diagram</h2>
+
+            <div class="highlight">
+                <h3>Relationships:</h3>
+                <ul>
+                    <li><strong>User → Tasks:</strong> One-to-Many (A user has many tasks)</li>
+                    <li><strong>Category → Tasks:</strong> One-to-Many (A category has many tasks)</li>
+                    <li><strong>Task → Attachments:</strong> One-to-Many (A task has many attachments)</li>
+                </ul>
+            </div>
+
+            <div class="code-block">
+<code><span class="comment">// ER Diagram Structure</span>
+
+[User] 1----* [Task] *----1 [Category]
+              |
+              *
+              |
+         [Attachment]
+
+<span class="comment">// Relationships:</span>
+User.id → Task.user_id
+Category.id → Task.category_id
+Task.id → Attachment.task_id</code>
+            </div>
+        </section>
+
+        <section>
+            <h2>🔐 Authentication Flow</h2>
+
+            <h3>User Journey:</h3>
+            <ol>
+                <li><strong>Guest:</strong> Visit homepage → See login/register links</li>
+                <li><strong>Register:</strong> Fill registration form → Create account → Auto login → Redirect to dashboard</li>
+                <li><strong>Login:</strong> Enter credentials → Authenticate → Redirect to dashboard</li>
+                <li><strong>Dashboard:</strong> View task summary → Create/manage tasks</li>
+                <li><strong>Logout:</strong> Click logout → End session → Redirect to home</li>
+            </ol>
+
+            <h3>Protected Routes:</h3>
+            <div class="code-block">
+<code><span class="comment">// routes/web.php</span>
+Route::<span class="function">middleware</span>([<span class="string">'auth'</span>])-><span class="function">group</span>(<span class="keyword">function</span> () {
+    Route::<span class="function">get</span>(<span class="string">'/dashboard'</span>, [DashboardController::<span class="keyword">class</span>, <span class="string">'index'</span>]);
+    Route::<span class="function">resource</span>(<span class="string">'tasks'</span>, TaskController::<span class="keyword">class</span>);
+    Route::<span class="function">resource</span>(<span class="string">'categories'</span>, CategoryController::<span class="keyword">class</span>);
+});</code>
+            </div>
+        </section>
+
+        <section>
+            <h2>🚀 API Endpoints</h2>
+
+            <h3>Task API Routes:</h3>
+            <table>
+                <tr>
+                    <th>Method</th>
+                    <th>Endpoint</th>
+                    <th>Description</th>
+                    <th>Auth</th>
+                </tr>
+                <tr>
+                    <td>POST</td>
+                    <td>/api/register</td>
+                    <td>Register new user</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td>POST</td>
+                    <td>/api/login</td>
+                    <td>Login and get token</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td>GET</td>
+                    <td>/api/tasks</td>
+                    <td>Get all user tasks</td>
+                    <td>Yes</td>
+                </tr>
+                <tr>
+                    <td>POST</td>
+                    <td>/api/tasks</td>
+                    <td>Create new task</td>
+                    <td>Yes</td>
+                </tr>
+                <tr>
+                    <td>GET</td>
+                    <td>/api/tasks/{id}</td>
+                    <td>Get single task</td>
+                    <td>Yes</td>
+                </tr>
+                <tr>
+                    <td>PUT</td>
+                    <td>/api/tasks/{id}</td>
+                    <td>Update task</td>
+                    <td>Yes</td>
+                </tr>
+                <tr>
+                    <td>DELETE</td>
+                    <td>/api/tasks/{id}</td>
+                    <td>Delete task</td>
+                    <td>Yes</td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <h2>🏗️ Project Setup</h2>
+
+            <h3>Step 1: Create Laravel Project</h3>
+            <div class="code-block">
+<code><span class="comment"># Create project</span>
+composer create-project laravel/laravel task-manager
+
+<span class="comment"># Navigate to project</span>
+cd task-manager</code>
+            </div>
+
+            <h3>Step 2: Install Laravel Breeze</h3>
+            <div class="code-block">
+<code>composer require laravel/breeze --dev
+php artisan breeze:install blade
+npm install && npm run dev</code>
+            </div>
+
+            <h3>Step 3: Configure Database</h3>
+            <div class="code-block">
+<code><span class="comment"># .env</span>
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=task_manager
+DB_USERNAME=root
+DB_PASSWORD=</code>
+            </div>
+
+            <h3>Step 4: Run Initial Migrations</h3>
+            <div class="code-block">
+<code>php artisan migrate</code>
+            </div>
+
+            <h3>Step 5: Install Laravel Sanctum</h3>
+            <div class="code-block">
+<code>composer require laravel/sanctum
+php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
+php artisan migrate</code>
+            </div>
+        </section>
+
+        <section>
+            <h2>📁 Project Structure Planning</h2>
+
+            <h3>Controllers Needed:</h3>
+            <div class="code-block">
+<code><span class="comment"># Generate controllers</span>
+php artisan make:controller DashboardController
+php artisan make:controller TaskController --resource
+php artisan make:controller CategoryController --resource
+php artisan make:controller Api/AuthController
+php artisan make:controller Api/TaskController --api</code>
+            </div>
+
+            <h3>Models Needed:</h3>
+            <div class="code-block">
+<code><span class="comment"># Generate models with migrations</span>
+php artisan make:model Category -m
+php artisan make:model Task -m
+php artisan make:model Attachment -m</code>
+            </div>
+
+            <h3>Views Structure:</h3>
+            <div class="code-block">
+<code>resources/views/
+├── layouts/
+│   └── app.blade.php
+├── dashboard.blade.php
+├── tasks/
+│   ├── index.blade.php
+│   ├── create.blade.php
+│   ├── edit.blade.php
+│   └── show.blade.php
+└── categories/
+    ├── index.blade.php
+    └── create.blade.php</code>
+            </div>
+        </section>
+
+        <section>
+            <h2>✍️ Practice Exercises</h2>
+
+            <div class="exercise">
+                <h3>Exercise 1: Create ER Diagram</h3>
+                <ol>
+                    <li>Draw ER diagram on paper or use draw.io</li>
+                    <li>Include all 4 tables</li>
+                    <li>Show relationships with cardinality</li>
+                    <li>Mark primary and foreign keys</li>
+                </ol>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 2: Set Up Project</h3>
+                <ol>
+                    <li>Create new Laravel project "task-manager"</li>
+                    <li>Install Laravel Breeze</li>
+                    <li>Configure database connection</li>
+                    <li>Run migrations</li>
+                    <li>Test login/register pages</li>
+                </ol>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 3: Generate Resources</h3>
+                <ol>
+                    <li>Generate all required controllers</li>
+                    <li>Generate all models with migrations</li>
+                    <li>Create views folder structure</li>
+                    <li>Install Laravel Sanctum</li>
+                </ol>
+            </div>
+        </section>
+
+        <section>
+            <h2>🎯 Today's Deliverable</h2>
+            <div class="highlight">
+                <h3>✅ Project Planning Documentation</h3>
+                <p><strong>Requirements:</strong></p>
+                <ul>
+                    <li>Complete ER diagram (digital or hand-drawn)</li>
+                    <li>List of all features to implement</li>
+                    <li>Database schema for all tables</li>
+                    <li>API endpoint documentation</li>
+                    <li>Laravel project set up with Breeze</li>
+                    <li>Database created and migrated</li>
+                    <li>All controllers and models generated</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>📚 Summary</h2>
+            <ul>
+                <li>Task Management System combines all Laravel skills learned</li>
+                <li>Database has 4 main tables with clear relationships</li>
+                <li>Authentication protects all task routes</li>
+                <li>API endpoints provide mobile/external access</li>
+                <li>Project structure follows Laravel conventions</li>
+                <li>Planning phase ensures smooth development</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>🔜 What's Next?</h2>
+            <p>In Day 2, we'll implement:</p>
+            <ul>
+                <li>Database migrations for all tables</li>
+                <li>Eloquent models with relationships</li>
+                <li>Task CRUD operations</li>
+                <li>File attachment functionality</li>
+                <li>User authentication integration</li>
+            </ul>
+        </section>
+
+        <div class="nav-buttons">
+            <a href="../week19/day3-notifications.html" class="btn">← Previous: Notifications</a>
+            <a href="day2-auth-crud.html" class="btn">Next: CRUD Implementation →</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 2 Day 3: The Box Model & Layout Fundamentals</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        header { background: #0d7377; color: white; padding: 30px; }
+        .nav-breadcrumb {
+            background: #e0f7fa;
+            padding: 15px 30px;
+            border-bottom: 2px solid #0d7377;
+        }
+        .nav-breadcrumb a { color: #0d7377; text-decoration: none; margin-right: 10px; }
+        .content { padding: 40px; }
+        .section { margin-bottom: 40px; }
+        .section h2 {
+            color: #0d7377;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #11998e;
+        }
+        .section h3 { color: #11998e; margin: 20px 0 15px 0; }
+        .info-box {
+            background: #e0f7fa;
+            border-left: 5px solid #0d7377;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .activity-box {
+            background: #f1f8e9;
+            border-left: 5px solid #4caf50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+        .box-model-diagram {
+            border: 3px solid #0d7377;
+            padding: 40px;
+            margin: 30px auto;
+            max-width: 500px;
+            background: white;
+        }
+        .box-layer {
+            border: 3px dashed;
+            padding: 15px;
+            margin: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .margin-layer { border-color: #ff6b6b; background: #ffe0e0; }
+        .border-layer { border-color: #4ecdc4; background: #d4f4f1; }
+        .padding-layer { border-color: #45b7d1; background: #d9f0f7; }
+        .content-layer { border-color: #96ceb4; background: #e8f5e9; }
+        .btn-primary {
+            display: inline-block;
+            background: #0d7377;
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 6px;
+            margin: 10px 10px 10px 0;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        .btn-primary:hover { background: #11998e; }
+        .layout-example {
+            border: 2px solid #0d7377;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .two-column {
+            display: flex;
+            gap: 20px;
+        }
+        .column {
+            flex: 1;
+            padding: 20px;
+            background: #e0f7fa;
+            border-radius: 5px;
+        }
+        ul, ol { margin-left: 30px; margin-top: 10px; }
+        li { margin-bottom: 10px; }
+        .checklist { list-style: none; margin-left: 0; }
+        .checklist li:before {
+            content: "✓ ";
+            color: #4caf50;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        footer { background: #0d7377; color: white; padding: 20px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 2 - Day 3: The Box Model & Layout Fundamentals</h1>
+            <p>Friday | Duration: 3 hours</p>
+        </header>
+
+        <div class="nav-breadcrumb">
+            <a href="../index.html">← Back to Course Home</a> / Week 2 / Day 3
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2>🎯 Learning Objectives</h2>
+                <ul class="checklist">
+                    <li>Understand the CSS Box Model</li>
+                    <li>Master margin, padding, and borders</li>
+                    <li>Learn display properties</li>
+                    <li>Create basic layouts using width and height</li>
+                    <li>Build a 2-column layout</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>📦 The CSS Box Model</h2>
+                <div class="info-box">
+                    <p>Every HTML element is a rectangular box. The <strong>Box Model</strong> describes how space is calculated around elements.</p>
+                </div>
+
+                <div class="box-model-diagram">
+                    <div class="box-layer margin-layer">
+                        MARGIN (transparent, outside spacing)
+                        <div class="box-layer border-layer">
+                            BORDER (visible edge)
+                            <div class="box-layer padding-layer">
+                                PADDING (space inside border)
+                                <div class="box-layer content-layer">
+                                    CONTENT
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Box Model Components</h3>
+                <ol>
+                    <li><strong>Content:</strong> The actual content (text, images)</li>
+                    <li><strong>Padding:</strong> Space between content and border</li>
+                    <li><strong>Border:</strong> Edge around the padding</li>
+                    <li><strong>Margin:</strong> Space outside the border (between elements)</li>
+                </ol>
+
+                <div class="code-block">
+div {
+    width: 300px;           /* Content width */
+    padding: 20px;          /* Space inside */
+    border: 5px solid black; /* Border */
+    margin: 10px;           /* Space outside */
+}
+
+/* Total width = 300 + 20*2 + 5*2 + 10*2 = 370px */
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📏 Margin (Outer Spacing)</h2>
+                <div class="info-box">
+                    <p>Margin creates space <strong>outside</strong> an element's border.</p>
+                </div>
+
+                <div class="code-block">
+/* All sides */
+div {
+    margin: 20px;
+}
+
+/* Individual sides */
+div {
+    margin-top: 10px;
+    margin-right: 20px;
+    margin-bottom: 30px;
+    margin-left: 40px;
+}
+
+/* Shorthand - 4 values (top right bottom left) */
+div {
+    margin: 10px 20px 30px 40px;
+}
+
+/* Shorthand - 2 values (vertical horizontal) */
+div {
+    margin: 10px 20px;  /* 10px top/bottom, 20px left/right */
+}
+
+/* Center an element */
+div {
+    margin: 0 auto;
+    width: 80%;
+}
+
+/* Negative margins */
+div {
+    margin-top: -10px;  /* Pulls element up */
+}
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🎨 Padding (Inner Spacing)</h2>
+                <div class="info-box">
+                    <p>Padding creates space <strong>inside</strong> an element's border.</p>
+                </div>
+
+                <div class="code-block">
+/* Same syntax as margin */
+div {
+    padding: 15px;                     /* All sides */
+    padding: 10px 20px;                /* vertical horizontal */
+    padding: 5px 10px 15px 20px;       /* top right bottom left */
+}
+
+/* Individual sides */
+div {
+    padding-top: 10px;
+    padding-right: 15px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+}
+                </div>
+
+                <div class="layout-example">
+                    <div style="background: #e0f7fa; padding: 20px; border: 3px solid #0d7377;">
+                        <p>This box has 20px padding. Notice the space between this text and the border.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🔲 Borders</h2>
+                <div class="code-block">
+/* Border shorthand */
+div {
+    border: 3px solid black;
+}
+
+/* Individual properties */
+div {
+    border-width: 2px;
+    border-style: solid;  /* solid, dashed, dotted, double */
+    border-color: red;
+}
+
+/* Individual sides */
+div {
+    border-top: 1px solid black;
+    border-right: 2px dashed red;
+    border-bottom: 3px dotted blue;
+    border-left: 4px double green;
+}
+
+/* Rounded corners */
+div {
+    border-radius: 10px;           /* All corners */
+    border-radius: 10px 20px;      /* top-left/bottom-right, top-right/bottom-left */
+    border-radius: 5px 10px 15px 20px;  /* Each corner */
+}
+
+/* Perfect circle (use with square element) */
+div {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📐 Width and Height</h2>
+                <div class="code-block">
+div {
+    width: 300px;
+    height: 200px;
+}
+
+/* Percentage */
+div {
+    width: 80%;    /* 80% of parent */
+    height: 50vh;  /* 50% of viewport height */
+}
+
+/* Max and Min */
+div {
+    max-width: 1200px;
+    min-width: 300px;
+    max-height: 500px;
+    min-height: 100px;
+}
+
+/* Auto */
+div {
+    width: auto;   /* Default, fits content */
+}
+                </div>
+
+                <div class="info-box">
+                    <p><strong>box-sizing Property:</strong></p>
+                    <div class="code-block">
+/* Default behavior */
+div {
+    box-sizing: content-box;  /* width/height = content only */
+}
+
+/* Better for layouts */
+div {
+    box-sizing: border-box;   /* width/height includes padding and border */
+}
+
+/* Apply to all elements */
+* {
+    box-sizing: border-box;
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🎭 Display Property</h2>
+                
+                <h3>Block Elements</h3>
+                <div class="code-block">
+div, h1, p {
+    display: block;
+}
+                </div>
+                <ul>
+                    <li>Takes full width available</li>
+                    <li>Starts on new line</li>
+                    <li>Respects width, height, margin, padding</li>
+                </ul>
+
+                <h3>Inline Elements</h3>
+                <div class="code-block">
+span, a, strong {
+    display: inline;
+}
+                </div>
+                <ul>
+                    <li>Takes only necessary width</li>
+                    <li>Does not start on new line</li>
+                    <li>Ignores width and height</li>
+                    <li>Vertical margin/padding has no effect</li>
+                </ul>
+
+                <h3>Inline-Block</h3>
+                <div class="code-block">
+div {
+    display: inline-block;
+}
+                </div>
+                <ul>
+                    <li>Flows like inline but respects width/height</li>
+                    <li>Perfect for horizontal menus</li>
+                </ul>
+
+                <h3>Hide Element</h3>
+                <div class="code-block">
+div {
+    display: none;  /* Removes from layout */
+}
+
+div {
+    visibility: hidden;  /* Hides but keeps space */
+}
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>💻 Main Activity: Build 2-Column Layout</h2>
+                
+                <div class="activity-box">
+                    <h3>Task: Create profile-bio.html</h3>
+                    <p>Build a page with profile on left and bio on right.</p>
+                </div>
+
+                <h3>HTML Structure</h3>
+                <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Profile & Bio&lt;/title&gt;
+    &lt;link rel="stylesheet" href="css/layout.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;header&gt;
+        &lt;h1&gt;My Profile & Biography&lt;/h1&gt;
+    &lt;/header&gt;
+
+    &lt;div class="container"&gt;
+        &lt;div class="profile-column"&gt;
+            &lt;img src="https://via.placeholder.com/200" alt="Profile"&gt;
+            &lt;h2&gt;Ahmad Tijjani Garba&lt;/h2&gt;
+            &lt;p&gt;Web Developer Student&lt;/p&gt;
+            
+            &lt;h3&gt;Contact Info&lt;/h3&gt;
+            &lt;ul&gt;
+                &lt;li&gt;Email: ahmad@example.com&lt;/li&gt;
+                &lt;li&gt;Phone: 0801234567&lt;/li&gt;
+                &lt;li&gt;Location: Kano, Nigeria&lt;/li&gt;
+            &lt;/ul&gt;
+            
+            &lt;h3&gt;Skills&lt;/h3&gt;
+            &lt;ul&gt;
+                &lt;li&gt;HTML&lt;/li&gt;
+                &lt;li&gt;CSS&lt;/li&gt;
+                &lt;li&gt;Git/GitHub&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt;
+
+        &lt;div class="bio-column"&gt;
+            &lt;h2&gt;About Me&lt;/h2&gt;
+            &lt;p&gt;
+                I am a passionate web development student at Next-Step Technology.
+                I love building beautiful and functional websites.
+            &lt;/p&gt;
+            
+            &lt;h3&gt;Education&lt;/h3&gt;
+            &lt;p&gt;
+                &lt;strong&gt;Bayero University Kano&lt;/strong&gt;&lt;br&gt;
+                Department of Information Technology&lt;br&gt;
+                Expected Graduation: 2026
+            &lt;/p&gt;
+            
+            &lt;h3&gt;Experience&lt;/h3&gt;
+            &lt;p&gt;
+                &lt;strong&gt;Web Development Intern&lt;/strong&gt; - Next-Step Technology&lt;br&gt;
+                December 2025 - Present&lt;br&gt;
+                Learning HTML, CSS, and JavaScript to build modern web applications.
+            &lt;/p&gt;
+            
+            &lt;h3&gt;Projects&lt;/h3&gt;
+            &lt;ul&gt;
+                &lt;li&gt;Personal Portfolio Website&lt;/li&gt;
+                &lt;li&gt;Student Registration Form&lt;/li&gt;
+                &lt;li&gt;News Article Page&lt;/li&gt;
+            &lt;/ul&gt;
+            
+            &lt;h3&gt;Goals&lt;/h3&gt;
+            &lt;p&gt;
+                My goal is to become a full-stack web developer and build applications
+                that solve real-world problems in my community.
+            &lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;footer&gt;
+        &lt;p&gt;&copy; 2025 Ahmad Tijjani Garba. All rights reserved.&lt;/p&gt;
+    &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                </div>
+
+                <h3>CSS for 2-Column Layout (layout.css)</h3>
+                <div class="code-block">
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+}
+
+/* Header */
+header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.5em;
+}
+
+/* Container for columns */
+.container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+    display: flex;
+    gap: 30px;
+}
+
+/* Profile Column (Left - 30%) */
+.profile-column {
+    width: 30%;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.profile-column img {
+    width: 100%;
+    border-radius: 50%;
+    border: 5px solid #667eea;
+    margin-bottom: 20px;
+}
+
+.profile-column h2 {
+    color: #667eea;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.profile-column > p {
+    text-align: center;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.profile-column h3 {
+    color: #555;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 5px;
+}
+
+.profile-column ul {
+    list-style: none;
+}
+
+.profile-column li {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+/* Bio Column (Right - 70%) */
+.bio-column {
+    width: 70%;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.bio-column h2 {
+    color: #667eea;
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.bio-column h3 {
+    color: #555;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 5px;
+}
+
+.bio-column p {
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+.bio-column ul {
+    margin-left: 30px;
+    margin-bottom: 15px;
+}
+
+.bio-column li {
+    margin-bottom: 10px;
+}
+
+/* Footer */
+footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 30px;
+}
+
+/* Responsive: Stack on small screens */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+    
+    .profile-column,
+    .bio-column {
+        width: 100%;
+    }
+}
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>✏️ Practice Exercises</h2>
+                
+                <div class="activity-box">
+                    <h3>Exercise 1: Box Model Playground</h3>
+                    <p>Create a page with different colored boxes to practice:</p>
+                    <ul>
+                        <li>Try different margin and padding values</li>
+                        <li>Experiment with borders and border-radius</li>
+                        <li>Use Chrome DevTools to see the box model</li>
+                    </ul>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Exercise 2: Create a Card Layout</h3>
+                    <p>Build a page with 3 product cards side by side:</p>
+                    <ul>
+                        <li>Use inline-block or float</li>
+                        <li>Add padding, borders, and box-shadow</li>
+                        <li>Include image, title, description, and price</li>
+                    </ul>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Exercise 3: Margin Collapse</h3>
+                    <p>Experiment with vertical margin collapse:</p>
+                    <div class="code-block">
+&lt;div style="margin-bottom: 30px;"&gt;Box 1&lt;/div&gt;
+&lt;div style="margin-top: 20px;"&gt;Box 2&lt;/div&gt;
+&lt;!-- Total space = 30px (not 50px!) --&gt;
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>✅ Today's Deliverable</h2>
+                <div class="activity-box">
+                    <ul class="checklist">
+                        <li>profile-bio.html with 2-column layout</li>
+                        <li>layout.css with proper box model styling</li>
+                        <li>Screenshot showing the layout</li>
+                        <li>Committed to GitHub with message: "Add 2-column layout"</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📚 Additional Resources</h2>
+                <ul>
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/The_box_model" target="_blank">MDN: The Box Model</a></li>
+                    <li><a href="https://css-tricks.com/the-css-box-model/" target="_blank">CSS-Tricks: Box Model</a></li>
+                    <li><a href="https://www.w3schools.com/css/css_boxmodel.asp" target="_blank">W3Schools: Box Model</a></li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <a href="day2-intro-to-css.html" class="btn-primary">← Previous: Day 2</a>
+                <a href="../index.html" class="btn-primary">Back to Course Home</a>
+                <a href="../week3/day1-responsive-design.html" class="btn-primary">Next: Week 3 Day 1 →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 2 - Day 3: The Box Model & Layout Fundamentals</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

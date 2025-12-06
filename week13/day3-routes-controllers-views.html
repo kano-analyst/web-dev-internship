@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 13 Day 3: Routes, Controllers & Views</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        header { background: #fa709a; color: white; padding: 30px; border-radius: 15px 15px 0 0; }
+        .content { padding: 40px; }
+        h2 { color: #fa709a; border-bottom: 3px solid #fee140; padding-bottom: 10px; margin: 30px 0 20px; }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        .info-box { background: #fff3cd; border-left: 5px solid #fa709a; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border: 1px solid #ddd; }
+        th { background: #fa709a; color: white; }
+        .btn { background: #fa709a; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 10px 10px 0; }
+        footer { background: #fa709a; color: white; padding: 20px; text-align: center; border-radius: 0 0 15px 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 13 - Day 3: Routes, Controllers & Views</h1>
+            <p>Friday | Duration: 3 hours | Build Your First MVC App! 🎯</p>
+        </header>
+
+        <div class="content">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Understand Laravel routing system</li>
+                <li>Create controllers with Artisan</li>
+                <li>Build Blade views</li>
+                <li>Implement complete MVC workflow</li>
+                <li>Pass data from controller to view</li>
+            </ul>
+
+            <h2>🛣️ Laravel Routes</h2>
+            <div class="info-box">
+                <p><strong>Routes</strong> define how your application responds to HTTP requests. They map URLs to controllers or closures.</p>
+            </div>
+
+            <h3>routes/web.php - Web Routes File</h3>
+            <div class="code-block">
+&lt;?php
+
+use Illuminate\Support\Facades\Route;
+
+// Basic route - returns text
+Route::get('/', function () {
+    return 'Welcome to Laravel!';
+});
+
+// Route returning view
+Route::get('/home', function () {
+    return view('home');
+});
+
+// Route with parameter
+Route::get('/user/{id}', function ($id) {
+    return "User ID: " . $id;
+});
+
+// Route with optional parameter
+Route::get('/post/{id?}', function ($id = null) {
+    if ($id) {
+        return "Post ID: " . $id;
+    }
+    return "All Posts";
+});
+?&gt;
+            </div>
+
+            <h2>🎮 HTTP Methods in Routes</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Purpose</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>GET</td>
+                        <td>Retrieve/display data</td>
+                        <td><code>Route::get('/students', ...)</code></td>
+                    </tr>
+                    <tr>
+                        <td>POST</td>
+                        <td>Submit form data</td>
+                        <td><code>Route::post('/students', ...)</code></td>
+                    </tr>
+                    <tr>
+                        <td>PUT/PATCH</td>
+                        <td>Update existing data</td>
+                        <td><code>Route::put('/students/{id}', ...)</code></td>
+                    </tr>
+                    <tr>
+                        <td>DELETE</td>
+                        <td>Delete data</td>
+                        <td><code>Route::delete('/students/{id}', ...)</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>🎛️ Creating Controllers</h2>
+            
+            <h3>Generate Controller with Artisan:</h3>
+            <div class="code-block">
+# Basic controller
+php artisan make:controller HomeController
+
+# Resource controller (with CRUD methods)
+php artisan make:controller StudentController --resource
+
+# Created: app/Http/Controllers/HomeController.php
+            </div>
+
+            <h3>Basic Controller Structure:</h3>
+            <div class="code-block">
+&lt;?php
+// app/Http/Controllers/HomeController.php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class HomeController extends Controller
+{
+    // Method to display homepage
+    public function index()
+    {
+        return view('home');
+    }
+    
+    // Method to display about page
+    public function about()
+    {
+        return view('about');
+    }
+    
+    // Method with parameter
+    public function show($id)
+    {
+        return view('student.show', ['id' => $id]);
+    }
+}
+?&gt;
+            </div>
+
+            <h2>🔗 Connecting Routes to Controllers</h2>
+            <div class="code-block">
+&lt;?php
+// routes/web.php
+
+use App\Http\Controllers\HomeController;
+
+// Route to controller method
+Route::get('/', [HomeController::class, 'index']);
+Route::get('/about', [HomeController::class, 'about']);
+Route::get('/student/{id}', [HomeController::class, 'show']);
+
+// Named routes (useful for redirects)
+Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
+?&gt;
+            </div>
+
+            <h2>👁️ Creating Views (Blade Templates)</h2>
+            
+            <h3>View File Location:</h3>
+            <p><code>resources/views/</code></p>
+
+            <h3>Create home.blade.php:</h3>
+            <div class="code-block">
+&lt;!-- resources/views/home.blade.php --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Home Page&lt;/title&gt;
+    &lt;style&gt;
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        h1 { color: #fa709a; }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Welcome to Laravel!&lt;/h1&gt;
+    &lt;p&gt;This is your first Laravel page using MVC architecture.&lt;/p&gt;
+    &lt;a href="/about"&gt;About Us&lt;/a&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </div>
+
+            <h2>📦 Passing Data to Views</h2>
+            
+            <h3>Method 1: Array</h3>
+            <div class="code-block">
+&lt;?php
+// In Controller
+public function index()
+{
+    $name = "Ahmad";
+    $age = 25;
+    
+    return view('home', ['name' => $name, 'age' => $age]);
+}
+?&gt;
+            </div>
+
+            <h3>Method 2: Compact</h3>
+            <div class="code-block">
+&lt;?php
+public function index()
+{
+    $name = "Ahmad";
+    $age = 25;
+    
+    return view('home', compact('name', 'age'));
+}
+?&gt;
+            </div>
+
+            <h3>Method 3: With</h3>
+            <div class="code-block">
+&lt;?php
+public function index()
+{
+    return view('home')
+        ->with('name', 'Ahmad')
+        ->with('age', 25);
+}
+?&gt;
+            </div>
+
+            <h3>Display Data in View:</h3>
+            <div class="code-block">
+&lt;!-- resources/views/home.blade.php --&gt;
+&lt;h1&gt;Welcome, {{ $name }}!&lt;/h1&gt;
+&lt;p&gt;You are {{ $age }} years old.&lt;/p&gt;
+
+&lt;!-- Blade escapes HTML by default for security --&gt;
+&lt;!-- To display raw HTML (be careful!): --&gt;
+{!! $htmlContent !!}
+            </div>
+
+            <h2>💻 Complete MVC Example</h2>
+            
+            <h3>1. Create Controller:</h3>
+            <div class="code-block">
+php artisan make:controller StudentController
+            </div>
+
+            <h3>2. Build Controller (app/Http/Controllers/StudentController.php):</h3>
+            <div class="code-block">
+&lt;?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class StudentController extends Controller
+{
+    public function index()
+    {
+        $students = [
+            ['id' => 1, 'name' => 'Ahmad Ibrahim', 'course' => 'Web Development'],
+            ['id' => 2, 'name' => 'Fatima Yusuf', 'course' => 'Data Science'],
+            ['id' => 3, 'name' => 'Ibrahim Musa', 'course' => 'UI/UX Design'],
+        ];
+        
+        return view('students.index', compact('students'));
+    }
+    
+    public function show($id)
+    {
+        $student = [
+            'id' => $id,
+            'name' => 'Ahmad Ibrahim',
+            'email' => 'ahmad@email.com',
+            'course' => 'Web Development',
+            'age' => 20
+        ];
+        
+        return view('students.show', compact('student'));
+    }
+}
+?&gt;
+            </div>
+
+            <h3>3. Define Routes (routes/web.php):</h3>
+            <div class="code-block">
+&lt;?php
+
+use App\Http\Controllers\StudentController;
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/students', [StudentController::class, 'index']);
+Route::get('/students/{id}', [StudentController::class, 'show']);
+?&gt;
+            </div>
+
+            <h3>4. Create View (resources/views/students/index.blade.php):</h3>
+            <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Students List&lt;/title&gt;
+    &lt;style&gt;
+        body { font-family: Arial; max-width: 800px; margin: 50px auto; padding: 20px; }
+        h1 { color: #fa709a; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; text-align: left; border: 1px solid #ddd; }
+        th { background: #fa709a; color: white; }
+        a { color: #fa709a; text-decoration: none; }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Students List&lt;/h1&gt;
+    
+    &lt;table&gt;
+        &lt;thead&gt;
+            &lt;tr&gt;
+                &lt;th&gt;ID&lt;/th&gt;
+                &lt;th&gt;Name&lt;/th&gt;
+                &lt;th&gt;Course&lt;/th&gt;
+                &lt;th&gt;Action&lt;/th&gt;
+            &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+            @foreach($students as $student)
+            &lt;tr&gt;
+                &lt;td&gt;{{ $student['id'] }}&lt;/td&gt;
+                &lt;td&gt;{{ $student['name'] }}&lt;/td&gt;
+                &lt;td&gt;{{ $student['course'] }}&lt;/td&gt;
+                &lt;td&gt;&lt;a href="/students/{{ $student['id'] }}"&gt;View&lt;/a&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            @endforeach
+        &lt;/tbody&gt;
+    &lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </div>
+
+            <h2>✏️ Practice Exercises</h2>
+            <ol>
+                <li>Create a HomeController with index() and about() methods</li>
+                <li>Define routes for / and /about</li>
+                <li>Create home.blade.php and about.blade.php views</li>
+                <li>Pass your name and age to the view</li>
+                <li>Create a StudentController with list and show methods</li>
+                <li>Build students listing page with Blade @foreach</li>
+            </ol>
+
+            <h2>✅ Today's Deliverable</h2>
+            <ul>
+                <li>✓ HomeController created with methods</li>
+                <li>✓ Routes defined in web.php</li>
+                <li>✓ Views created in resources/views/</li>
+                <li>✓ Data passed from controller to view</li>
+                <li>✓ Complete MVC workflow working</li>
+                <li>✓ Students list displaying correctly</li>
+            </ul>
+
+            <div style="margin-top: 40px;">
+                <a href="day2-folder-structure.html" class="btn">← Previous</a>
+                <a href="../index.html" class="btn">Course Home</a>
+                <a href="../week14/day1-blade-templates.html" class="btn">Next Week →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 13 - Day 3: Routes, Controllers & Views</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 13 Day 1: Laravel Installation & Setup</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        header { background: #fa709a; color: white; padding: 30px; border-radius: 15px 15px 0 0; }
+        .content { padding: 40px; }
+        h2 { color: #fa709a; border-bottom: 3px solid #fee140; padding-bottom: 10px; margin: 30px 0 20px; }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        .info-box { background: #fff3cd; border-left: 5px solid #fa709a; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border: 1px solid #ddd; }
+        th { background: #fa709a; color: white; }
+        .btn { background: #fa709a; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 10px 10px 0; }
+        footer { background: #fa709a; color: white; padding: 20px; text-align: center; border-radius: 0 0 15px 15px; }
+        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 20px 0; }
+        .feature-card { background: #f9f9f9; padding: 20px; border-radius: 8px; border-left: 4px solid #fa709a; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 13 - Day 1: Laravel Installation & Setup</h1>
+            <p>Monday | Duration: 3 hours | Welcome to Laravel! 🚀</p>
+        </header>
+
+        <div class="content">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Understand what Laravel is and why it's popular</li>
+                <li>Learn MVC (Model-View-Controller) architecture</li>
+                <li>Install Composer dependency manager</li>
+                <li>Create your first Laravel project</li>
+                <li>Run Laravel development server</li>
+            </ul>
+
+            <h2>🔥 What is Laravel?</h2>
+            <div class="info-box">
+                <p><strong>Laravel</strong> is the most popular PHP framework for building modern web applications. It provides elegant syntax, powerful tools, and follows the MVC architecture pattern.</p>
+                <p style="margin-top: 10px;"><strong>Created by:</strong> Taylor Otwell in 2011</p>
+                <p><strong>Current Version:</strong> Laravel 11 (as of 2024)</p>
+            </div>
+
+            <h2>✨ Why Use Laravel?</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>🎨 Elegant Syntax</h3>
+                    <p>Clean, expressive code that's easy to read and write</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🗄️ Eloquent ORM</h3>
+                    <p>Powerful database abstraction for working with data</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🔐 Built-in Security</h3>
+                    <p>Protection against SQL injection, XSS, CSRF attacks</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📝 Blade Templates</h3>
+                    <p>Powerful templating engine for dynamic views</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🚀 Fast Development</h3>
+                    <p>Built-in tools speed up common tasks</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📚 Great Documentation</h3>
+                    <p>Comprehensive docs and large community</p>
+                </div>
+            </div>
+
+            <h2>🏗️ Understanding MVC Architecture</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Purpose</th>
+                        <th>Laravel Location</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Model</strong></td>
+                        <td>Handles data and business logic</td>
+                        <td>app/Models/</td>
+                    </tr>
+                    <tr>
+                        <td><strong>View</strong></td>
+                        <td>Displays data (HTML/Blade templates)</td>
+                        <td>resources/views/</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Controller</strong></td>
+                        <td>Handles requests and coordinates Model-View</td>
+                        <td>app/Http/Controllers/</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="code-block">
+User Request → Routes → Controller → Model (Database) → View (HTML) → Response
+            </div>
+
+            <h2>📦 Step 1: Install Composer</h2>
+            <div class="info-box">
+                <p><strong>Composer</strong> is a dependency manager for PHP. It allows you to install Laravel and its required packages.</p>
+            </div>
+
+            <h3>Windows Installation:</h3>
+            <ol>
+                <li>Visit: <a href="https://getcomposer.org/download/" target="_blank" style="color: #fa709a;">https://getcomposer.org/download/</a></li>
+                <li>Download <strong>Composer-Setup.exe</strong></li>
+                <li>Run the installer and follow the steps</li>
+                <li>Make sure to select the PHP executable (usually in XAMPP: <code>C:\xampp\php\php.exe</code>)</li>
+                <li>Click "Install" and wait for completion</li>
+            </ol>
+
+            <h3>Verify Composer Installation:</h3>
+            <div class="code-block">
+# Open PowerShell or Command Prompt
+composer --version
+
+# Expected output:
+# Composer version 2.x.x
+            </div>
+
+            <h2>🚀 Step 2: Install Laravel</h2>
+            
+            <h3>Option 1: Install Laravel Installer (Recommended)</h3>
+            <div class="code-block">
+# Install Laravel globally
+composer global require laravel/installer
+
+# Verify installation
+laravel --version
+            </div>
+
+            <h3>Option 2: Create Project Directly with Composer</h3>
+            <div class="code-block">
+# Navigate to your projects directory
+cd C:\xampp\htdocs
+
+# Create new Laravel project
+composer create-project laravel/laravel my-first-app
+
+# This will take a few minutes to download and install
+            </div>
+
+            <h2>🎉 Step 3: Create Your First Laravel Project</h2>
+            
+            <h3>Using Laravel Installer:</h3>
+            <div class="code-block">
+# Navigate to your directory
+cd C:\xampp\htdocs
+
+# Create new project
+laravel new student-management
+
+# Navigate into project
+cd student-management
+            </div>
+
+            <h3>Using Composer:</h3>
+            <div class="code-block">
+# Create project
+composer create-project laravel/laravel student-management
+
+# Navigate into project
+cd student-management
+            </div>
+
+            <h2>🌐 Step 4: Run Laravel Development Server</h2>
+            <div class="code-block">
+# Make sure you're in the project directory
+cd C:\xampp\htdocs\student-management
+
+# Start Laravel server
+php artisan serve
+
+# Expected output:
+# INFO  Server running on [http://127.0.0.1:8000].
+            </div>
+
+            <h3>View Your Laravel Application:</h3>
+            <ol>
+                <li>Open your browser</li>
+                <li>Go to: <code>http://127.0.0.1:8000</code> or <code>http://localhost:8000</code></li>
+                <li>You should see the Laravel welcome page! 🎉</li>
+            </ol>
+
+            <h2>📁 Laravel Project Structure (Quick Overview)</h2>
+            <div class="code-block">
+student-management/
+│
+├── app/                    # Application core
+│   ├── Http/
+│   │   └── Controllers/    # Your controllers
+│   └── Models/            # Your models
+│
+├── config/                # Configuration files
+├── database/
+│   ├── migrations/        # Database migrations
+│   └── seeders/          # Database seeders
+│
+├── public/               # Publicly accessible files
+│   └── index.php        # Entry point
+│
+├── resources/
+│   └── views/           # Blade templates
+│
+├── routes/
+│   └── web.php         # Web routes
+│
+├── .env                # Environment configuration
+└── artisan            # Laravel command-line tool
+            </div>
+
+            <h2>🛠️ Useful Artisan Commands</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Command</th>
+                        <th>Purpose</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>php artisan serve</code></td>
+                        <td>Start development server</td>
+                    </tr>
+                    <tr>
+                        <td><code>php artisan --version</code></td>
+                        <td>Check Laravel version</td>
+                    </tr>
+                    <tr>
+                        <td><code>php artisan list</code></td>
+                        <td>List all available commands</td>
+                    </tr>
+                    <tr>
+                        <td><code>php artisan make:controller</code></td>
+                        <td>Create a new controller</td>
+                    </tr>
+                    <tr>
+                        <td><code>php artisan make:model</code></td>
+                        <td>Create a new model</td>
+                    </tr>
+                    <tr>
+                        <td><code>php artisan migrate</code></td>
+                        <td>Run database migrations</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>💻 Test Your Installation</h2>
+            <div class="code-block">
+# 1. Check PHP version (Laravel 10+ requires PHP 8.1+)
+php -v
+
+# 2. Check Composer version
+composer --version
+
+# 3. Check Laravel version
+cd C:\xampp\htdocs\student-management
+php artisan --version
+
+# 4. Start server
+php artisan serve
+
+# 5. Open browser: http://localhost:8000
+            </div>
+
+            <h2>❗ Common Installation Issues</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Issue</th>
+                        <th>Solution</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Composer not found</td>
+                        <td>Restart terminal after installation or add to PATH</td>
+                    </tr>
+                    <tr>
+                        <td>PHP version too old</td>
+                        <td>Update XAMPP to latest version (PHP 8.1+)</td>
+                    </tr>
+                    <tr>
+                        <td>Port 8000 in use</td>
+                        <td>Use different port: <code>php artisan serve --port=8080</code></td>
+                    </tr>
+                    <tr>
+                        <td>Permission errors</td>
+                        <td>Run terminal as Administrator</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>🔧 Enable Required PHP Extensions</h2>
+            <p>Open <code>C:\xampp\php\php.ini</code> and uncomment (remove semicolon):</p>
+            <div class="code-block">
+extension=fileinfo
+extension=mbstring
+extension=openssl
+extension=pdo_mysql
+extension=curl
+extension=gd
+            </div>
+            <p><strong>Note:</strong> Restart Apache after making changes.</p>
+
+            <h2>✏️ Practice Exercises</h2>
+            <ol>
+                <li>Install Composer on your system</li>
+                <li>Create a new Laravel project called "blog-app"</li>
+                <li>Run the development server</li>
+                <li>Take a screenshot of the Laravel welcome page</li>
+                <li>Run <code>php artisan list</code> and explore available commands</li>
+            </ol>
+
+            <h2>✅ Today's Deliverable</h2>
+            <ul>
+                <li>✓ Composer installed and verified</li>
+                <li>✓ Laravel project created ("student-management")</li>
+                <li>✓ Development server running successfully</li>
+                <li>✓ Laravel welcome page displaying in browser</li>
+                <li>✓ Screenshot of working Laravel installation</li>
+            </ul>
+
+            <div style="margin-top: 40px;">
+                <a href="../week12/day3-blog-finalization.html" class="btn">← Previous Week</a>
+                <a href="../index.html" class="btn">Course Home</a>
+                <a href="day2-folder-structure.html" class="btn">Next: Day 2 →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 13 - Day 1: Laravel Installation & Setup</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

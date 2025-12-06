@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 3 Day 3: Git Advanced - Branching & Merging</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        header { background: #c2185b; color: white; padding: 30px; }
+        .nav-breadcrumb {
+            background: #fce4ec;
+            padding: 15px 30px;
+            border-bottom: 2px solid #e91e63;
+        }
+        .nav-breadcrumb a { color: #c2185b; text-decoration: none; margin-right: 10px; }
+        .content { padding: 40px; }
+        .section { margin-bottom: 40px; }
+        .section h2 {
+            color: #c2185b;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #e91e63;
+        }
+        .section h3 { color: #e91e63; margin: 20px 0 15px 0; }
+        .info-box {
+            background: #fce4ec;
+            border-left: 5px solid #c2185b;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .activity-box {
+            background: #fff3e0;
+            border-left: 5px solid #ff9800;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .warning-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+        .diagram {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            font-family: monospace;
+            border: 2px solid #ddd;
+        }
+        ul, ol { margin-left: 30px; margin-top: 10px; }
+        li { margin-bottom: 10px; }
+        .checklist { list-style: none; margin-left: 0; }
+        .checklist li:before {
+            content: "✓ ";
+            color: #4caf50;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background: #c2185b;
+            color: white;
+        }
+        tr:nth-child(even) { background: #f9f9f9; }
+        footer { background: #c2185b; color: white; padding: 20px; text-align: center; }
+        .btn-primary {
+            background: #c2185b;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin: 10px 10px 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 3 - Day 3: Git Advanced - Branching & Merging</h1>
+            <p>Friday | Duration: 3 hours</p>
+        </header>
+
+        <div class="nav-breadcrumb">
+            <a href="../index.html">← Back to Course Home</a> / Week 3 / Day 3
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2>🎯 Learning Objectives</h2>
+                <ul class="checklist">
+                    <li>Understand Git branching workflow</li>
+                    <li>Create and switch between branches</li>
+                    <li>Merge branches successfully</li>
+                    <li>Resolve merge conflicts</li>
+                    <li>Practice collaborative Git workflow</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>🌳 Understanding Branches</h2>
+                
+                <div class="info-box">
+                    <p><strong>What is a Branch?</strong></p>
+                    <p>A branch is an independent line of development. It allows you to work on features without affecting the main codebase.</p>
+                </div>
+
+                <h3>Why Use Branches?</h3>
+                <ul>
+                    <li><strong>Isolation:</strong> Develop features independently</li>
+                    <li><strong>Experimentation:</strong> Try new ideas without risk</li>
+                    <li><strong>Collaboration:</strong> Multiple team members work simultaneously</li>
+                    <li><strong>Organization:</strong> Keep different versions separate</li>
+                    <li><strong>Code Review:</strong> Review changes before merging to main</li>
+                </ul>
+
+                <h3>Branch Visualization</h3>
+                <div class="diagram">
+<pre>
+main:     A---B---C---F---G
+               \       /
+feature:        D---E
+</pre>
+                    <p>Commits D and E happen on feature branch, then merged back to main</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🔧 Essential Git Branch Commands</h2>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Command</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>git branch</code></td>
+                            <td>List all local branches</td>
+                        </tr>
+                        <tr>
+                            <td><code>git branch branch-name</code></td>
+                            <td>Create a new branch</td>
+                        </tr>
+                        <tr>
+                            <td><code>git checkout branch-name</code></td>
+                            <td>Switch to a branch</td>
+                        </tr>
+                        <tr>
+                            <td><code>git checkout -b branch-name</code></td>
+                            <td>Create and switch to a new branch</td>
+                        </tr>
+                        <tr>
+                            <td><code>git merge branch-name</code></td>
+                            <td>Merge branch into current branch</td>
+                        </tr>
+                        <tr>
+                            <td><code>git branch -d branch-name</code></td>
+                            <td>Delete a branch (safe)</td>
+                        </tr>
+                        <tr>
+                            <td><code>git branch -D branch-name</code></td>
+                            <td>Force delete a branch</td>
+                        </tr>
+                        <tr>
+                            <td><code>git branch -a</code></td>
+                            <td>List all branches (local and remote)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="section">
+                <h2>📝 Creating and Using Branches</h2>
+                
+                <h3>Step 1: Check Current Branch</h3>
+                <div class="code-block">
+# See which branch you're on
+git branch
+
+# Output shows all branches, current branch has *
+* main
+                </div>
+
+                <h3>Step 2: Create a New Branch</h3>
+                <div class="code-block">
+# Method 1: Create branch
+git branch feature-form-styling
+
+# Then switch to it
+git checkout feature-form-styling
+
+# Method 2: Create and switch in one command (recommended)
+git checkout -b feature-form-styling
+                </div>
+
+                <h3>Step 3: Work on Your Branch</h3>
+                <div class="code-block">
+# Make changes to files
+# Then add and commit as usual
+
+git add .
+git commit -m "Add beautiful form styling with transitions"
+
+# Make more commits
+git add .
+git commit -m "Add hover effects to buttons"
+                </div>
+
+                <h3>Step 4: Push Branch to GitHub</h3>
+                <div class="code-block">
+# First time pushing a new branch
+git push -u origin feature-form-styling
+
+# After that, just use
+git push
+                </div>
+
+                <h3>Step 5: Switch Between Branches</h3>
+                <div class="code-block">
+# Go back to main
+git checkout main
+
+# Go to feature branch
+git checkout feature-form-styling
+
+# Or use newer syntax (Git 2.23+)
+git switch main
+git switch feature-form-styling
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🔀 Merging Branches</h2>
+                
+                <div class="info-box">
+                    <p><strong>Merging</strong> combines changes from one branch into another.</p>
+                </div>
+
+                <h3>Fast-Forward Merge</h3>
+                <p>Occurs when there are no new commits on the target branch.</p>
+                
+                <div class="diagram">
+<pre>
+Before merge:
+main:     A---B
+               \
+feature:        C---D
+
+After merge:
+main:     A---B---C---D
+</pre>
+                </div>
+
+                <div class="code-block">
+# Switch to main branch
+git checkout main
+
+# Merge feature branch
+git merge feature-form-styling
+
+# Output:
+# Fast-forward
+#  styled-form.css | 150 +++++++++++++++++
+#  1 file changed, 150 insertions(+)
+                </div>
+
+                <h3>Three-Way Merge</h3>
+                <p>Occurs when both branches have new commits.</p>
+                
+                <div class="diagram">
+<pre>
+Before merge:
+main:     A---B---E
+               \
+feature:        C---D
+
+After merge:
+main:     A---B---E---M
+               \   /
+feature:        C-D
+</pre>
+                </div>
+
+                <div class="code-block">
+# Switch to main
+git checkout main
+
+# Merge creates a merge commit
+git merge feature-form-styling
+
+# Git opens editor for merge commit message
+# Save and close to complete merge
+                </div>
+
+                <h3>Delete Branch After Merge</h3>
+                <div class="code-block">
+# Delete local branch
+git branch -d feature-form-styling
+
+# Delete remote branch
+git push origin --delete feature-form-styling
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>⚠️ Merge Conflicts</h2>
+                
+                <div class="warning-box">
+                    <p><strong>Merge conflicts</strong> happen when the same line in a file is changed differently in two branches.</p>
+                </div>
+
+                <h3>When Conflicts Occur</h3>
+                <div class="code-block">
+git checkout main
+git merge feature-branch
+
+# Output:
+# Auto-merging style.css
+# CONFLICT (content): Merge conflict in style.css
+# Automatic merge failed; fix conflicts and then commit the result.
+                </div>
+
+                <h3>Conflict Markers in File</h3>
+                <div class="code-block">
+/* style.css */
+
+button {
+    padding: 10px 20px;
+<<<<<<< HEAD
+    background: blue;
+    color: white;
+=======
+    background: green;
+    color: #fff;
+>>>>>>> feature-branch
+    border: none;
+}
+                </div>
+
+                <p><strong>Explanation:</strong></p>
+                <ul>
+                    <li><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code>: Your current branch (main)</li>
+                    <li><code>=======</code>: Divider</li>
+                    <li><code>&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature-branch</code>: Incoming changes</li>
+                </ul>
+
+                <h3>Resolving Conflicts</h3>
+                <ol>
+                    <li><strong>Open the conflicted file</strong></li>
+                    <li><strong>Choose which version to keep</strong> (or combine both)</li>
+                    <li><strong>Remove conflict markers</strong></li>
+                    <li><strong>Add and commit</strong></li>
+                </ol>
+
+                <div class="code-block">
+/* After resolution - choose what you want */
+button {
+    padding: 10px 20px;
+    background: green;  /* Kept feature-branch version */
+    color: white;
+    border: none;
+}
+                </div>
+
+                <div class="code-block">
+# After fixing conflicts
+git add style.css
+git commit -m "Resolve merge conflict in button styling"
+                </div>
+
+                <h3>Check Conflict Status</h3>
+                <div class="code-block">
+# See conflicted files
+git status
+
+# Unmerged paths:
+#   (use "git add <file>..." to mark resolution)
+#         both modified:   style.css
+
+# Abort merge if needed
+git merge --abort
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🔄 Collaborative Workflow</h2>
+                
+                <h3>Feature Branch Workflow</h3>
+                <ol>
+                    <li><strong>Pull latest changes:</strong> <code>git pull origin main</code></li>
+                    <li><strong>Create feature branch:</strong> <code>git checkout -b feature-name</code></li>
+                    <li><strong>Work and commit:</strong> Make multiple commits</li>
+                    <li><strong>Push branch:</strong> <code>git push -u origin feature-name</code></li>
+                    <li><strong>Create Pull Request:</strong> On GitHub</li>
+                    <li><strong>Code Review:</strong> Team reviews your changes</li>
+                    <li><strong>Merge:</strong> After approval, merge to main</li>
+                    <li><strong>Delete branch:</strong> Clean up after merge</li>
+                </ol>
+
+                <h3>Best Practices</h3>
+                <ul>
+                    <li>✅ Use descriptive branch names: <code>feature-user-auth</code>, <code>fix-login-bug</code></li>
+                    <li>✅ Keep branches short-lived</li>
+                    <li>✅ Commit often with clear messages</li>
+                    <li>✅ Pull from main regularly to avoid conflicts</li>
+                    <li>✅ Test before merging</li>
+                    <li>❌ Don't commit directly to main in team projects</li>
+                    <li>❌ Don't have multiple features in one branch</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>💻 Main Activity: Branch & Merge Workflow</h2>
+                
+                <div class="activity-box">
+                    <h3>Task: Practice Git Branching</h3>
+                    <p>Create multiple branches for different styling updates</p>
+                </div>
+
+                <h3>Activity Steps</h3>
+                
+                <h4>Part 1: Create Feature Branch for Form Styling</h4>
+                <div class="code-block">
+# 1. Make sure you're on main and up to date
+git checkout main
+git pull origin main
+
+# 2. Create new branch for form styling
+git checkout -b feature-form-styling
+
+# 3. Create styled-form.css (from previous lesson)
+# Add your CSS code
+
+# 4. Commit changes
+git add styled-form.css
+git commit -m "Add comprehensive form styling"
+
+# 5. Make another change - update HTML
+# Link CSS in your HTML file
+
+git add registration.html
+git commit -m "Link form stylesheet to registration page"
+
+# 6. Push branch to GitHub
+git push -u origin feature-form-styling
+                </div>
+
+                <h4>Part 2: Create Another Branch for Button Styles</h4>
+                <div class="code-block">
+# 1. Go back to main
+git checkout main
+
+# 2. Create branch for buttons
+git checkout -b feature-button-library
+
+# 3. Create buttons.html with various button styles
+# (Create the file with different button examples)
+
+# 4. Commit
+git add buttons.html
+git commit -m "Create button library with multiple styles"
+
+# 5. Push to GitHub
+git push -u origin feature-button-library
+                </div>
+
+                <h4>Part 3: Merge Branches</h4>
+                <div class="code-block">
+# 1. Switch to main
+git checkout main
+
+# 2. Merge form styling
+git merge feature-form-styling
+# Message: "Merge form styling into main"
+
+# 3. Push updated main
+git push origin main
+
+# 4. Merge button library
+git merge feature-button-library
+# Message: "Merge button library into main"
+
+# 5. Push again
+git push origin main
+
+# 6. Delete merged branches
+git branch -d feature-form-styling
+git branch -d feature-button-library
+
+# 7. Delete remote branches
+git push origin --delete feature-form-styling
+git push origin --delete feature-button-library
+                </div>
+
+                <h4>Part 4: Simulate Merge Conflict</h4>
+                <div class="code-block">
+# 1. Create two branches from main
+git checkout main
+git checkout -b style-update-1
+
+# 2. Edit style.css - change button color to blue
+git add style.css
+git commit -m "Change button color to blue"
+
+# 3. Go back to main
+git checkout main
+
+# 4. Create another branch
+git checkout -b style-update-2
+
+# 5. Edit style.css - change SAME button color to green
+git add style.css
+git commit -m "Change button color to green"
+
+# 6. Merge first branch - no problem
+git checkout main
+git merge style-update-1
+
+# 7. Try to merge second branch - CONFLICT!
+git merge style-update-2
+
+# 8. Open style.css and resolve conflict
+# Choose one color or combine changes
+
+# 9. Complete merge
+git add style.css
+git commit -m "Resolve button color conflict"
+
+# 10. Clean up
+git branch -d style-update-1
+git branch -d style-update-2
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>✏️ Practice Exercises</h2>
+                
+                <div class="activity-box">
+                    <h3>Exercise 1: Feature Development</h3>
+                    <p>Create a branch for each feature:</p>
+                    <ul>
+                        <li>Branch 1: Add navigation bar</li>
+                        <li>Branch 2: Add footer</li>
+                        <li>Branch 3: Add contact form</li>
+                        <li>Merge all three into main</li>
+                    </ul>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Exercise 2: Bug Fix Branch</h3>
+                    <p>Practice creating bug fix branches:</p>
+                    <ul>
+                        <li>Create <code>fix-responsive-layout</code> branch</li>
+                        <li>Fix any responsive issues</li>
+                        <li>Commit with message: "Fix: responsive layout on mobile"</li>
+                        <li>Merge to main</li>
+                    </ul>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Exercise 3: Conflict Resolution</h3>
+                    <p>Practice resolving conflicts:</p>
+                    <ul>
+                        <li>Create two branches modifying the same CSS</li>
+                        <li>Merge first branch</li>
+                        <li>Attempt to merge second branch</li>
+                        <li>Resolve the conflict</li>
+                        <li>Complete the merge</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🎓 Git Branching Cheat Sheet</h2>
+                <div class="code-block">
+# View branches
+git branch                    # Local branches
+git branch -a                 # All branches
+git branch -r                 # Remote branches
+
+# Create branches
+git branch branch-name        # Create
+git checkout -b branch-name   # Create and switch
+
+# Switch branches
+git checkout branch-name      # Old way
+git switch branch-name        # New way (Git 2.23+)
+
+# Merge branches
+git merge branch-name         # Merge into current branch
+git merge --no-ff branch-name # Force merge commit
+
+# Delete branches
+git branch -d branch-name     # Safe delete (merged only)
+git branch -D branch-name     # Force delete
+git push origin --delete branch-name  # Delete remote
+
+# Update branch
+git pull origin main          # Get latest from remote
+git fetch                     # Fetch without merging
+
+# Undo merge
+git merge --abort             # Cancel conflicted merge
+git reset --hard HEAD~1       # Undo last merge (careful!)
+
+# Compare branches
+git diff main..feature        # See differences
+git log main..feature         # See commits
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>✅ Today's Deliverable</h2>
+                <div class="activity-box">
+                    <ul class="checklist">
+                        <li>Feature branch created for form styling</li>
+                        <li>Multiple commits on feature branch</li>
+                        <li>Successfully merged branch to main</li>
+                        <li>Resolved at least one merge conflict</li>
+                        <li>Deleted branches after merging</li>
+                        <li>GitHub repository showing branch history</li>
+                        <li>Screenshot of <code>git log --graph --oneline --all</code></li>
+                    </ul>
+                </div>
+
+                <h3>Visualize Your Branches</h3>
+                <div class="code-block">
+# See branch graph in terminal
+git log --graph --oneline --all --decorate
+
+# Example output:
+# *   a4b5c6d (HEAD -> main) Merge branch 'feature-form-styling'
+# |\
+# | * d3e4f5g Add button hover effects
+# | * c2d3e4f Add form styling
+# |/
+# * b1c2d3e Initial commit
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📚 Additional Resources</h2>
+                <ul>
+                    <li><a href="https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging" target="_blank">Git Book: Branching and Merging</a></li>
+                    <li><a href="https://learngitbranching.js.org/" target="_blank">Learn Git Branching (Interactive)</a></li>
+                    <li><a href="https://www.atlassian.com/git/tutorials/using-branches" target="_blank">Atlassian: Git Branches Tutorial</a></li>
+                    <li><a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-branches" target="_blank">GitHub: About Branches</a></li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <a href="day2-styling-forms.html" class="btn-primary">← Previous: Day 2</a>
+                <a href="../index.html" class="btn-primary">Back to Course Home</a>
+                <a href="../week4/day1-project-planning.html" class="btn-primary">Next: Week 4 Day 1 →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 3 - Day 3: Git Advanced - Branching & Merging</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

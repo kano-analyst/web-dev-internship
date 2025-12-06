@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 1 Day 3: HTML Forms, Tables & Git Basics</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        header { background: #1e3c72; color: white; padding: 30px; }
+        header h1 { margin-bottom: 10px; }
+        .nav-breadcrumb {
+            background: #f0f4ff;
+            padding: 15px 30px;
+            border-bottom: 2px solid #667eea;
+        }
+        .nav-breadcrumb a { color: #667eea; text-decoration: none; margin-right: 10px; }
+        .content { padding: 40px; }
+        .section { margin-bottom: 40px; }
+        .section h2 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        .section h3 { color: #667eea; margin: 20px 0 15px 0; }
+        .info-box {
+            background: #e3f2fd;
+            border-left: 5px solid #2196f3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .tip-box {
+            background: #fff3e0;
+            border-left: 5px solid #ff9800;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .activity-box {
+            background: #f1f8e9;
+            border-left: 5px solid #4caf50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .warning-box {
+            background: #ffebee;
+            border-left: 5px solid #f44336;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        .preview-box {
+            border: 3px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        ul, ol { margin-left: 30px; margin-top: 10px; }
+        li { margin-bottom: 10px; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th { background: #667eea; color: white; }
+        tr:nth-child(even) { background: #f9f9f9; }
+        .btn-primary {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 6px;
+            margin: 10px 10px 10px 0;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        .btn-primary:hover { background: #764ba2; transform: scale(1.05); }
+        .checklist { list-style: none; margin-left: 0; }
+        .checklist li:before {
+            content: "✓ ";
+            color: #4caf50;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        footer { background: #1e3c72; color: white; padding: 20px; text-align: center; }
+        .command-line {
+            background: #000;
+            color: #0f0;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+        }
+        .command-line::before {
+            content: "$ ";
+            color: #0ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 1 - Day 3: HTML Forms, Tables & Git Basics</h1>
+            <p>Friday | Duration: 3 hours</p>
+        </header>
+
+        <div class="nav-breadcrumb">
+            <a href="../index.html">← Back to Course Home</a> / Week 1 / Day 3
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2>🎯 Learning Objectives</h2>
+                <ul class="checklist">
+                    <li>Create HTML forms with various input types</li>
+                    <li>Build structured tables for data display</li>
+                    <li>Understand Git version control basics</li>
+                    <li>Initialize a Git repository</li>
+                    <li>Make commits and push to GitHub</li>
+                </ul>
+            </div>
+
+            <!-- PART 1: HTML FORMS -->
+            <div class="section">
+                <h2>📝 Part 1: HTML Forms</h2>
+                
+                <h3>What are HTML Forms?</h3>
+                <div class="info-box">
+                    <p>Forms are used to collect user input. The data is typically sent to a server for processing.</p>
+                    <p><strong>Common uses:</strong> Login pages, registration, contact forms, search boxes, surveys</p>
+                </div>
+
+                <h3>Basic Form Structure</h3>
+                <div class="code-block">
+&lt;form action="/submit" method="POST"&gt;
+    &lt;!-- Form elements go here --&gt;
+&lt;/form&gt;
+                </div>
+                <ul>
+                    <li><strong>action:</strong> Where to send form data (URL/file)</li>
+                    <li><strong>method:</strong> How to send data (GET or POST)</li>
+                </ul>
+
+                <h3>Common Form Elements</h3>
+                
+                <h4>1. Text Input</h4>
+                <div class="code-block">
+&lt;label for="name"&gt;Name:&lt;/label&gt;
+&lt;input type="text" id="name" name="name" required&gt;
+                </div>
+
+                <h4>2. Email Input</h4>
+                <div class="code-block">
+&lt;label for="email"&gt;Email:&lt;/label&gt;
+&lt;input type="email" id="email" name="email" required&gt;
+                </div>
+
+                <h4>3. Password Input</h4>
+                <div class="code-block">
+&lt;label for="password"&gt;Password:&lt;/label&gt;
+&lt;input type="password" id="password" name="password" required&gt;
+                </div>
+
+                <h4>4. Radio Buttons (Choose One)</h4>
+                <div class="code-block">
+&lt;p&gt;Gender:&lt;/p&gt;
+&lt;input type="radio" id="male" name="gender" value="male"&gt;
+&lt;label for="male"&gt;Male&lt;/label&gt;
+
+&lt;input type="radio" id="female" name="gender" value="female"&gt;
+&lt;label for="female"&gt;Female&lt;/label&gt;
+                </div>
+
+                <h4>5. Checkboxes (Choose Multiple)</h4>
+                <div class="code-block">
+&lt;p&gt;Skills:&lt;/p&gt;
+&lt;input type="checkbox" id="html" name="skills" value="html"&gt;
+&lt;label for="html"&gt;HTML&lt;/label&gt;
+
+&lt;input type="checkbox" id="css" name="skills" value="css"&gt;
+&lt;label for="css"&gt;CSS&lt;/label&gt;
+                </div>
+
+                <h4>6. Dropdown (Select)</h4>
+                <div class="code-block">
+&lt;label for="department"&gt;Department:&lt;/label&gt;
+&lt;select id="department" name="department"&gt;
+    &lt;option value=""&gt;--Select--&lt;/option&gt;
+    &lt;option value="cs"&gt;Computer Science&lt;/option&gt;
+    &lt;option value="it"&gt;Information Technology&lt;/option&gt;
+    &lt;option value="se"&gt;Software Engineering&lt;/option&gt;
+&lt;/select&gt;
+                </div>
+
+                <h4>7. Textarea (Multi-line Text)</h4>
+                <div class="code-block">
+&lt;label for="message"&gt;Message:&lt;/label&gt;
+&lt;textarea id="message" name="message" rows="5" cols="40"&gt;&lt;/textarea&gt;
+                </div>
+
+                <h4>8. Submit Button</h4>
+                <div class="code-block">
+&lt;button type="submit"&gt;Submit Form&lt;/button&gt;
+&lt;!-- OR --&gt;
+&lt;input type="submit" value="Submit"&gt;
+                </div>
+
+                <h3>Complete Student Registration Form</h3>
+                <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Student Registration Form&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Student Registration Form&lt;/h1&gt;
+    
+    &lt;form action="#" method="POST"&gt;
+        &lt;!-- Personal Information --&gt;
+        &lt;h2&gt;Personal Information&lt;/h2&gt;
+        
+        &lt;label for="fullname"&gt;Full Name:&lt;/label&gt;&lt;br&gt;
+        &lt;input type="text" id="fullname" name="fullname" required&gt;&lt;br&gt;&lt;br&gt;
+        
+        &lt;label for="email"&gt;Email:&lt;/label&gt;&lt;br&gt;
+        &lt;input type="email" id="email" name="email" required&gt;&lt;br&gt;&lt;br&gt;
+        
+        &lt;label for="phone"&gt;Phone Number:&lt;/label&gt;&lt;br&gt;
+        &lt;input type="tel" id="phone" name="phone" required&gt;&lt;br&gt;&lt;br&gt;
+        
+        &lt;label for="dob"&gt;Date of Birth:&lt;/label&gt;&lt;br&gt;
+        &lt;input type="date" id="dob" name="dob"&gt;&lt;br&gt;&lt;br&gt;
+        
+        &lt;p&gt;Gender:&lt;/p&gt;
+        &lt;input type="radio" id="male" name="gender" value="male"&gt;
+        &lt;label for="male"&gt;Male&lt;/label&gt;
+        
+        &lt;input type="radio" id="female" name="gender" value="female"&gt;
+        &lt;label for="female"&gt;Female&lt;/label&gt;&lt;br&gt;&lt;br&gt;
+        
+        &lt;!-- Academic Information --&gt;
+        &lt;h2&gt;Academic Information&lt;/h2&gt;
+        
+        &lt;label for="matric"&gt;Matric Number:&lt;/label&gt;&lt;br&gt;
+        &lt;input type="text" id="matric" name="matric" required&gt;&lt;br&gt;&lt;br&gt;
+        
+        &lt;label for="department"&gt;Department:&lt;/label&gt;&lt;br&gt;
+        &lt;select id="department" name="department" required&gt;
+            &lt;option value=""&gt;--Select Department--&lt;/option&gt;
+            &lt;option value="cs"&gt;Computer Science&lt;/option&gt;
+            &lt;option value="it"&gt;Information Technology&lt;/option&gt;
+            &lt;option value="se"&gt;Software Engineering&lt;/option&gt;
+        &lt;/select&gt;&lt;br&gt;&lt;br&gt;
+        
+        &lt;label for="level"&gt;Level:&lt;/label&gt;&lt;br&gt;
+        &lt;select id="level" name="level" required&gt;
+            &lt;option value="100"&gt;100&lt;/option&gt;
+            &lt;option value="200"&gt;200&lt;/option&gt;
+            &lt;option value="300"&gt;300&lt;/option&gt;
+            &lt;option value="400"&gt;400&lt;/option&gt;
+        &lt;/select&gt;&lt;br&gt;&lt;br&gt;
+        
+        &lt;p&gt;Skills:&lt;/p&gt;
+        &lt;input type="checkbox" id="html" name="skills" value="html"&gt;
+        &lt;label for="html"&gt;HTML&lt;/label&gt;&lt;br&gt;
+        
+        &lt;input type="checkbox" id="css" name="skills" value="css"&gt;
+        &lt;label for="css"&gt;CSS&lt;/label&gt;&lt;br&gt;
+        
+        &lt;input type="checkbox" id="js" name="skills" value="js"&gt;
+        &lt;label for="js"&gt;JavaScript&lt;/label&gt;&lt;br&gt;&lt;br&gt;
+        
+        &lt;label for="comments"&gt;Additional Comments:&lt;/label&gt;&lt;br&gt;
+        &lt;textarea id="comments" name="comments" rows="5" cols="50"&gt;&lt;/textarea&gt;&lt;br&gt;&lt;br&gt;
+        
+        &lt;input type="checkbox" id="agree" name="agree" required&gt;
+        &lt;label for="agree"&gt;I agree to the terms and conditions&lt;/label&gt;&lt;br&gt;&lt;br&gt;
+        
+        &lt;button type="submit"&gt;Register&lt;/button&gt;
+        &lt;button type="reset"&gt;Clear Form&lt;/button&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                </div>
+            </div>
+
+            <!-- PART 2: HTML TABLES -->
+            <div class="section">
+                <h2>📊 Part 2: HTML Tables</h2>
+                
+                <h3>Table Structure</h3>
+                <div class="info-box">
+                    <p>Tables display data in rows and columns.</p>
+                    <p><strong>Main elements:</strong></p>
+                    <ul>
+                        <li>&lt;table&gt; - Container for the table</li>
+                        <li>&lt;tr&gt; - Table row</li>
+                        <li>&lt;th&gt; - Table header (bold, centered)</li>
+                        <li>&lt;td&gt; - Table data cell</li>
+                    </ul>
+                </div>
+
+                <h3>Basic Table Example</h3>
+                <div class="code-block">
+&lt;table border="1"&gt;
+    &lt;tr&gt;
+        &lt;th&gt;Name&lt;/th&gt;
+        &lt;th&gt;Age&lt;/th&gt;
+        &lt;th&gt;Department&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Ahmad Tijjani&lt;/td&gt;
+        &lt;td&gt;22&lt;/td&gt;
+        &lt;td&gt;IT&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Abdullahi Haruna&lt;/td&gt;
+        &lt;td&gt;20&lt;/td&gt;
+        &lt;td&gt;CS&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+                </div>
+
+                <h3>Student Records Table Example</h3>
+                <div class="code-block">
+&lt;h2&gt;Student Records&lt;/h2&gt;
+&lt;table border="1"&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th&gt;S/N&lt;/th&gt;
+            &lt;th&gt;Matric Number&lt;/th&gt;
+            &lt;th&gt;Full Name&lt;/th&gt;
+            &lt;th&gt;Department&lt;/th&gt;
+            &lt;th&gt;Level&lt;/th&gt;
+            &lt;th&gt;CGPA&lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;
+            &lt;td&gt;1&lt;/td&gt;
+            &lt;td&gt;BUK/CS/18/0001&lt;/td&gt;
+            &lt;td&gt;Ahmad Tijjani Garba&lt;/td&gt;
+            &lt;td&gt;Information Technology&lt;/td&gt;
+            &lt;td&gt;400&lt;/td&gt;
+            &lt;td&gt;4.50&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;2&lt;/td&gt;
+            &lt;td&gt;BUK/CS/19/0050&lt;/td&gt;
+            &lt;td&gt;Abdullahi Haruna Yahaya&lt;/td&gt;
+            &lt;td&gt;Computer Science&lt;/td&gt;
+            &lt;td&gt;300&lt;/td&gt;
+            &lt;td&gt;4.20&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;3&lt;/td&gt;
+            &lt;td&gt;BUK/SE/20/0100&lt;/td&gt;
+            &lt;td&gt;Muhammad Nasir Hassan&lt;/td&gt;
+            &lt;td&gt;Software Engineering&lt;/td&gt;
+            &lt;td&gt;200&lt;/td&gt;
+            &lt;td&gt;3.85&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;
+                </div>
+            </div>
+
+            <!-- PART 3: GIT BASICS -->
+            <div class="section">
+                <h2>🔧 Part 3: Git Version Control Basics</h2>
+                
+                <h3>What is Git?</h3>
+                <div class="info-box">
+                    <p><strong>Git</strong> is a version control system that tracks changes in your code over time.</p>
+                    <p><strong>Benefits:</strong></p>
+                    <ul>
+                        <li>Track all changes to your files</li>
+                        <li>Collaborate with other developers</li>
+                        <li>Revert to previous versions if needed</li>
+                        <li>Work on multiple features simultaneously (branches)</li>
+                    </ul>
+                </div>
+
+                <h3>Git vs GitHub</h3>
+                <table>
+                    <tr>
+                        <th>Git</th>
+                        <th>GitHub</th>
+                    </tr>
+                    <tr>
+                        <td>Version control software</td>
+                        <td>Web-based hosting service for Git repositories</td>
+                    </tr>
+                    <tr>
+                        <td>Works locally on your computer</td>
+                        <td>Cloud-based platform</td>
+                    </tr>
+                    <tr>
+                        <td>Free and open-source</td>
+                        <td>Freemium service</td>
+                    </tr>
+                </table>
+
+                <h3>Essential Git Commands</h3>
+                
+                <h4>1. Configure Git (First Time Only)</h4>
+                <div class="command-line">git config --global user.name "Your Name"</div>
+                <div class="command-line">git config --global user.email "your.email@example.com"</div>
+
+                <h4>2. Initialize a Git Repository</h4>
+                <div class="command-line">git init</div>
+                <p>This creates a new Git repository in your current folder.</p>
+
+                <h4>3. Check Status</h4>
+                <div class="command-line">git status</div>
+                <p>Shows which files have been modified, added, or deleted.</p>
+
+                <h4>4. Stage Files (Add to Staging Area)</h4>
+                <div class="command-line">git add filename.html</div>
+                <div class="command-line">git add .</div>
+                <p>The dot (.) adds all changed files.</p>
+
+                <h4>5. Commit Changes</h4>
+                <div class="command-line">git commit -m "Your commit message"</div>
+                <p>Saves a snapshot of your staged changes with a descriptive message.</p>
+
+                <h4>6. Connect to GitHub</h4>
+                <div class="command-line">git remote add origin https://github.com/username/repo-name.git</div>
+
+                <h4>7. Push to GitHub</h4>
+                <div class="command-line">git push -u origin main</div>
+                <p>Uploads your commits to GitHub.</p>
+
+                <h3>Git Workflow Diagram</h3>
+                <div class="info-box">
+                    <ol>
+                        <li><strong>Working Directory</strong> → Make changes to files</li>
+                        <li><strong>git add</strong> → Stage files</li>
+                        <li><strong>git commit</strong> → Save snapshot</li>
+                        <li><strong>git push</strong> → Upload to GitHub</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- HANDS-ON ACTIVITY -->
+            <div class="section">
+                <h2>💻 Hands-On Activity: Complete Workflow</h2>
+                
+                <div class="activity-box">
+                    <h3>Step 1: Create Registration Form</h3>
+                    <ol>
+                        <li>Create <code>registration.html</code> using the student registration form code above</li>
+                        <li>Add your own personal touches</li>
+                        <li>Test in browser</li>
+                    </ol>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Step 2: Create Student Table</h3>
+                    <ol>
+                        <li>Create <code>students-table.html</code></li>
+                        <li>Build a table with at least 5 students</li>
+                        <li>Include: S/N, Name, Department, Level, Email</li>
+                    </ol>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Step 3: Create GitHub Account</h3>
+                    <ol>
+                        <li>Go to <a href="https://github.com" target="_blank">github.com</a></li>
+                        <li>Sign up for a free account</li>
+                        <li>Verify your email</li>
+                        <li>Create a new repository named "web-dev-internship"</li>
+                    </ol>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Step 4: Initialize Git in Your Project</h3>
+                    <p>Open Command Prompt or Terminal in your project folder:</p>
+                    <div class="command-line">cd C:\xampp\htdocs\web_basics</div>
+                    <div class="command-line">git init</div>
+                    <div class="command-line">git config --global user.name "Your Name"</div>
+                    <div class="command-line">git config --global user.email "your@email.com"</div>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Step 5: Make Your First Commit</h3>
+                    <div class="command-line">git add .</div>
+                    <div class="command-line">git commit -m "Initial commit: Added HTML pages"</div>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Step 6: Push to GitHub</h3>
+                    <div class="command-line">git remote add origin https://github.com/yourusername/web-dev-internship.git</div>
+                    <div class="command-line">git branch -M main</div>
+                    <div class="command-line">git push -u origin main</div>
+                </div>
+
+                <div class="tip-box">
+                    <h4>💡 Pro Tips:</h4>
+                    <ul>
+                        <li>Commit often with meaningful messages</li>
+                        <li>Use present tense: "Add feature" not "Added feature"</li>
+                        <li>Keep commits focused on one change</li>
+                        <li>Always pull before you push if working in a team</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>✏️ Practice Exercises</h2>
+                
+                <div class="activity-box">
+                    <h3>Exercise 1: Contact Form</h3>
+                    <p>Create a contact form with:</p>
+                    <ul>
+                        <li>Name, email, phone fields</li>
+                        <li>Subject dropdown (Inquiry, Support, Feedback)</li>
+                        <li>Message textarea</li>
+                        <li>Submit button</li>
+                    </ul>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Exercise 2: Course Schedule Table</h3>
+                    <p>Create a table showing your class schedule:</p>
+                    <ul>
+                        <li>Columns: Day, Time, Course Code, Course Title, Lecturer</li>
+                        <li>At least 5 courses</li>
+                        <li>Use proper table structure with thead and tbody</li>
+                    </ul>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Exercise 3: Git Practice</h3>
+                    <ol>
+                        <li>Make a change to your index.html file</li>
+                        <li>Check status with <code>git status</code></li>
+                        <li>Stage the change with <code>git add index.html</code></li>
+                        <li>Commit with message: "Update index page"</li>
+                        <li>Push to GitHub</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>✅ Today's Deliverable</h2>
+                <div class="activity-box">
+                    <h3>Submit:</h3>
+                    <ul class="checklist">
+                        <li>registration.html (working student registration form)</li>
+                        <li>students-table.html (table with student data)</li>
+                        <li>Link to your GitHub repository</li>
+                        <li>Screenshot of your repo showing commits</li>
+                        <li>Screenshot of git log showing commit history</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📚 Additional Resources</h2>
+                <ul>
+                    <li><a href="https://www.w3schools.com/html/html_forms.asp" target="_blank">W3Schools: HTML Forms</a></li>
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/table" target="_blank">MDN: HTML Tables</a></li>
+                    <li><a href="https://git-scm.com/book/en/v2" target="_blank">Pro Git Book (Free)</a></li>
+                    <li><a href="https://docs.github.com/en/get-started" target="_blank">GitHub Docs</a></li>
+                    <li><a href="https://learngitbranching.js.org/" target="_blank">Interactive Git Tutorial</a></li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <a href="day2-html-fundamentals.html" class="btn-primary">← Previous: Day 2</a>
+                <a href="../index.html" class="btn-primary">Back to Course Home</a>
+                <a href="../week2/day1-semantic-html.html" class="btn-primary">Next: Week 2 Day 1 →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 1 - Day 3: HTML Forms, Tables & Git Basics</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

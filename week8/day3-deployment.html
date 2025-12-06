@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 8 Day 3: Testing, Deployment & Presentation</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        header { background: #f093fb; color: white; padding: 30px; border-radius: 15px 15px 0 0; }
+        .content { padding: 40px; }
+        h2 { color: #f093fb; border-bottom: 3px solid #f5576c; padding-bottom: 10px; margin: 30px 0 20px; }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+        .info-box { background: #fce4ec; border-left: 5px solid #f093fb; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        .step-card { background: #f9f9f9; padding: 25px; margin: 20px 0; border-left: 4px solid #f5576c; border-radius: 8px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border: 1px solid #ddd; }
+        th { background: #f093fb; color: white; }
+        .btn { background: #f093fb; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 10px 10px 0; }
+        .success-box { background: #d4edda; border-left: 5px solid #28a745; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        footer { background: #f093fb; color: white; padding: 20px; text-align: center; border-radius: 0 0 15px 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 8 - Day 3: Testing, Deployment & Presentation</h1>
+            <p>Friday | Duration: 3 hours</p>
+        </header>
+
+        <div class="content">
+            <h2>🎯 Today's Objectives</h2>
+            <ul>
+                <li>Test application thoroughly</li>
+                <li>Debug and fix issues</li>
+                <li>Deploy to GitHub Pages</li>
+                <li>Create project documentation</li>
+                <li>Prepare presentation</li>
+                <li>Celebrate completion! 🎉</li>
+            </ul>
+
+            <h2>✅ Testing Checklist</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Test</th>
+                        <th>Expected Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Add Task</td>
+                        <td>Type task and click Add</td>
+                        <td>Task appears in list</td>
+                    </tr>
+                    <tr>
+                        <td>Empty Input</td>
+                        <td>Click Add without text</td>
+                        <td>Shows alert message</td>
+                    </tr>
+                    <tr>
+                        <td>Enter Key</td>
+                        <td>Press Enter after typing</td>
+                        <td>Task is added</td>
+                    </tr>
+                    <tr>
+                        <td>Complete Task</td>
+                        <td>Click checkbox</td>
+                        <td>Text strikethrough, grayed out</td>
+                    </tr>
+                    <tr>
+                        <td>Uncomplete Task</td>
+                        <td>Click checked checkbox</td>
+                        <td>Removes strikethrough</td>
+                    </tr>
+                    <tr>
+                        <td>Delete Task</td>
+                        <td>Click delete button</td>
+                        <td>Task removed from list</td>
+                    </tr>
+                    <tr>
+                        <td>Total Counter</td>
+                        <td>Add/delete tasks</td>
+                        <td>Number updates correctly</td>
+                    </tr>
+                    <tr>
+                        <td>Completed Counter</td>
+                        <td>Toggle checkboxes</td>
+                        <td>Number updates correctly</td>
+                    </tr>
+                    <tr>
+                        <td>Remaining Counter</td>
+                        <td>Complete/uncomplete tasks</td>
+                        <td>Calculation is accurate</td>
+                    </tr>
+                    <tr>
+                        <td>Responsive Design</td>
+                        <td>Resize browser window</td>
+                        <td>Layout adapts to screen size</td>
+                    </tr>
+                    <tr>
+                        <td>Mobile View</td>
+                        <td>Open on phone or use DevTools</td>
+                        <td>Works on small screens</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>🐛 Debugging Tips</h2>
+            <div class="info-box">
+                <h4>Open Browser Developer Tools (F12)</h4>
+                <ul>
+                    <li><strong>Console:</strong> Check for JavaScript errors (red text)</li>
+                    <li><strong>Elements:</strong> Inspect HTML structure and CSS</li>
+                    <li><strong>Network:</strong> Verify Bootstrap CSS/JS are loading</li>
+                    <li><strong>Responsive Mode:</strong> Test different screen sizes</li>
+                </ul>
+            </div>
+
+            <h3>Common Errors & Fixes</h3>
+            <div class="code-block">
+// Error: Function not defined
+// Fix: Make sure function is declared before calling
+
+// Error: Cannot read property of null
+// Fix: Verify ID names match between HTML and JavaScript
+
+// Error: Styles not applying
+// Fix: Check CSS file path, verify link tag in HTML
+
+// Error: Bootstrap not working
+// Fix: Verify CDN links, check internet connection
+            </div>
+
+            <h2>🚀 Deploy to GitHub Pages</h2>
+            
+            <div class="step-card">
+                <h3>Step 1: Create GitHub Repository</h3>
+                <ol>
+                    <li>Go to <a href="https://github.com" target="_blank">github.com</a></li>
+                    <li>Click "New Repository" (green button)</li>
+                    <li>Name: <code>todo-list-app</code></li>
+                    <li>Description: "My To-Do List Application"</li>
+                    <li>Public repository</li>
+                    <li>Click "Create Repository"</li>
+                </ol>
+            </div>
+
+            <div class="step-card">
+                <h3>Step 2: Initialize Git Locally</h3>
+                <div class="code-block">
+# Navigate to your project folder
+cd todo-list-app
+
+# Initialize Git repository
+git init
+
+# Add all files
+git add .
+
+# Commit files
+git commit -m "Initial commit: To-Do List App"
+                </div>
+            </div>
+
+            <div class="step-card">
+                <h3>Step 3: Push to GitHub</h3>
+                <div class="code-block">
+# Add remote repository
+git remote add origin https://github.com/YOUR-USERNAME/todo-list-app.git
+
+# Push to GitHub
+git branch -M main
+git push -u origin main
+                </div>
+            </div>
+
+            <div class="step-card">
+                <h3>Step 4: Enable GitHub Pages</h3>
+                <ol>
+                    <li>Go to your repository on GitHub</li>
+                    <li>Click "Settings" tab</li>
+                    <li>Scroll to "Pages" section (left sidebar)</li>
+                    <li>Under "Source", select "main" branch</li>
+                    <li>Click "Save"</li>
+                    <li>Wait 1-2 minutes for deployment</li>
+                    <li>Your app will be live at: <code>https://YOUR-USERNAME.github.io/todo-list-app/</code></li>
+                </ol>
+            </div>
+
+            <h2>📝 Create README.md</h2>
+            <div class="code-block">
+# To-Do List App
+
+A simple and elegant task management application built with HTML, CSS, Bootstrap, and JavaScript.
+
+## Features
+- ✅ Add new tasks
+- ✅ Mark tasks as complete
+- ✅ Delete tasks
+- ✅ Track task statistics
+- ✅ Responsive design
+- ✅ Beautiful gradient UI
+
+## Technologies Used
+- HTML5
+- CSS3
+- Bootstrap 5.3
+- JavaScript (ES6)
+
+## Live Demo
+[View Live App](https://YOUR-USERNAME.github.io/todo-list-app/)
+
+## Screenshot
+![To-Do List App Screenshot](screenshot.png)
+
+## Installation
+1. Clone repository: `git clone https://github.com/YOUR-USERNAME/todo-list-app.git`
+2. Open `index.html` in browser
+
+## Author
+Your Name - [Your GitHub](https://github.com/YOUR-USERNAME)
+
+## License
+MIT License
+
+## Acknowledgments
+- Next-Step Technology Web Development Internship
+- Bootstrap for UI components
+            </div>
+
+            <h2>📸 Take Screenshots</h2>
+            <ul>
+                <li>Empty state (no tasks)</li>
+                <li>App with multiple tasks</li>
+                <li>Some tasks completed (strikethrough)</li>
+                <li>Statistics showing correct counts</li>
+                <li>Mobile responsive view</li>
+            </ul>
+
+            <h2>🎤 Presentation Preparation</h2>
+            
+            <div class="info-box">
+                <h4>Presentation Outline (5-7 minutes)</h4>
+                <ol>
+                    <li><strong>Introduction (30 seconds)</strong>
+                        <ul>
+                            <li>Project name and purpose</li>
+                            <li>Problem it solves</li>
+                        </ul>
+                    </li>
+                    <li><strong>Demo (2 minutes)</strong>
+                        <ul>
+                            <li>Add tasks</li>
+                            <li>Mark complete</li>
+                            <li>Delete tasks</li>
+                            <li>Show statistics</li>
+                            <li>Test on mobile (responsive)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Technical Overview (2 minutes)</strong>
+                        <ul>
+                            <li>HTML structure</li>
+                            <li>Bootstrap components used</li>
+                            <li>JavaScript functions</li>
+                            <li>CSS styling highlights</li>
+                        </ul>
+                    </li>
+                    <li><strong>Challenges & Solutions (1 minute)</strong>
+                        <ul>
+                            <li>Biggest challenge faced</li>
+                            <li>How you solved it</li>
+                            <li>What you learned</li>
+                        </ul>
+                    </li>
+                    <li><strong>Future Enhancements (30 seconds)</strong>
+                        <ul>
+                            <li>Features you'd like to add</li>
+                            <li>Improvements planned</li>
+                        </ul>
+                    </li>
+                    <li><strong>Conclusion (30 seconds)</strong>
+                        <ul>
+                            <li>Key takeaways</li>
+                            <li>Thank you message</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+
+            <h2>💼 Portfolio Addition</h2>
+            <p>Add this project to your portfolio with:</p>
+            <ul>
+                <li>Project title and description</li>
+                <li>Screenshots or GIF demo</li>
+                <li>Live link to GitHub Pages</li>
+                <li>GitHub repository link</li>
+                <li>Technologies used badges</li>
+                <li>Key features list</li>
+            </ul>
+
+            <h2>🎓 Skills Demonstrated</h2>
+            <div class="success-box">
+                <h4>Congratulations! You've demonstrated:</h4>
+                <ul>
+                    <li>✅ HTML5 semantic structure</li>
+                    <li>✅ CSS3 styling and animations</li>
+                    <li>✅ Bootstrap framework integration</li>
+                    <li>✅ JavaScript DOM manipulation</li>
+                    <li>✅ Event handling</li>
+                    <li>✅ Function creation and usage</li>
+                    <li>✅ Array methods and data management</li>
+                    <li>✅ Responsive web design</li>
+                    <li>✅ Git version control</li>
+                    <li>✅ GitHub Pages deployment</li>
+                    <li>✅ Project planning and execution</li>
+                    <li>✅ Testing and debugging</li>
+                </ul>
+            </div>
+
+            <h2>🎉 Bootcamp Completion!</h2>
+            <div class="success-box">
+                <h3>Congratulations on completing the 8-Week Web Development Bootcamp!</h3>
+                <p>You've learned:</p>
+                <ul>
+                    <li><strong>Weeks 1-4:</strong> HTML, CSS, Responsive Design, Forms, Git</li>
+                    <li><strong>Week 5:</strong> Bootstrap Framework</li>
+                    <li><strong>Week 6:</strong> JavaScript Fundamentals & DOM</li>
+                    <li><strong>Week 7:</strong> Functions, Events, Form Validation</li>
+                    <li><strong>Week 8:</strong> Full Project Development</li>
+                </ul>
+                <p><strong>You are now a Frontend Developer!</strong> 🚀</p>
+            </div>
+
+            <h2>🔜 Next Steps</h2>
+            <ul>
+                <li>📚 Continue learning React.js or Vue.js</li>
+                <li>🎨 Build more projects for your portfolio</li>
+                <li>💼 Apply for internships or junior positions</li>
+                <li>🤝 Contribute to open-source projects</li>
+                <li>📖 Learn backend (Node.js, Python, PHP)</li>
+                <li>🔐 Study web security basics</li>
+                <li>⚡ Explore performance optimization</li>
+                <li>🌐 Learn about APIs and AJAX</li>
+            </ul>
+
+            <h2>✅ Final Deliverables</h2>
+            <ul>
+                <li>✓ Fully tested To-Do List App</li>
+                <li>✓ GitHub repository created</li>
+                <li>✓ Code pushed to GitHub</li>
+                <li>✓ GitHub Pages deployed and live</li>
+                <li>✓ README.md documentation</li>
+                <li>✓ Project screenshots</li>
+                <li>✓ Presentation prepared</li>
+                <li>✓ Portfolio updated</li>
+                <li>✓ Certificate of completion earned! 🏆</li>
+            </ul>
+
+            <div style="margin-top: 40px;">
+                <a href="day2-todo-development.html" class="btn">← Previous</a>
+                <a href="../index.html" class="btn">🏠 Course Home</a>
+                <a href="../index.html" class="btn">🎉 View Certificate</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 8 - Day 3: Testing, Deployment & Presentation</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+            <p><strong>Congratulations on completing the bootcamp! 🎓</strong></p>
+        </footer>
+    </div>
+</body>
+</html>

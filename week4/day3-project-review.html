@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 4 Day 3: Project Review & Presentation</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        header { background: #00796b; color: white; padding: 30px; }
+        .nav-breadcrumb {
+            background: #e0f2f1;
+            padding: 15px 30px;
+            border-bottom: 2px solid #00897b;
+        }
+        .nav-breadcrumb a { color: #00796b; text-decoration: none; margin-right: 10px; }
+        .content { padding: 40px; }
+        .section { margin-bottom: 40px; }
+        .section h2 {
+            color: #00796b;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #00897b;
+        }
+        .section h3 { color: #00897b; margin: 20px 0 15px 0; }
+        .info-box {
+            background: #e0f2f1;
+            border-left: 5px solid #00796b;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .activity-box {
+            background: #fff3e0;
+            border-left: 5px solid #ff9800;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .success-box {
+            background: #e8f5e9;
+            border-left: 5px solid #4caf50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+        ul, ol { margin-left: 30px; margin-top: 10px; }
+        li { margin-bottom: 10px; }
+        .checklist { list-style: none; margin-left: 0; }
+        .checklist li:before {
+            content: "✓ ";
+            color: #4caf50;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background: #00796b;
+            color: white;
+        }
+        tr:nth-child(even) { background: #f9f9f9; }
+        footer { background: #00796b; color: white; padding: 20px; text-align: center; }
+        .btn-primary {
+            background: #00796b;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin: 10px 10px 10px 0;
+        }
+        .congrats {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            border-radius: 10px;
+            margin: 40px 0;
+        }
+        .congrats h2 { color: white; font-size: 3rem; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 4 - Day 3: Project Review & Presentation</h1>
+            <p>Wednesday | Duration: 3 hours</p>
+            <p style="margin-top: 10px;">🎉 Final Testing, Deployment & Presentation</p>
+        </header>
+
+        <div class="nav-breadcrumb">
+            <a href="../index.html">← Back to Course Home</a> / Week 4 / Day 3
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2>🎯 Learning Objectives</h2>
+                <ul class="checklist">
+                    <li>Conduct comprehensive testing</li>
+                    <li>Fix bugs and optimize code</li>
+                    <li>Deploy portfolio to GitHub Pages</li>
+                    <li>Present your work professionally</li>
+                    <li>Document your learning journey</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>🔍 Final Testing Checklist</h2>
+                
+                <h3>Functionality Testing</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Test Case</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Navigation</td>
+                            <td>All menu links work and smooth scroll</td>
+                            <td>☐</td>
+                        </tr>
+                        <tr>
+                            <td>Mobile Menu</td>
+                            <td>Hamburger opens/closes correctly</td>
+                            <td>☐</td>
+                        </tr>
+                        <tr>
+                            <td>Internal Links</td>
+                            <td>All anchor links scroll to correct sections</td>
+                            <td>☐</td>
+                        </tr>
+                        <tr>
+                            <td>External Links</td>
+                            <td>GitHub, LinkedIn links open in new tab</td>
+                            <td>☐</td>
+                        </tr>
+                        <tr>
+                            <td>Contact Form</td>
+                            <td>Form validation works properly</td>
+                            <td>☐</td>
+                        </tr>
+                        <tr>
+                            <td>Images</td>
+                            <td>All images load without errors</td>
+                            <td>☐</td>
+                        </tr>
+                        <tr>
+                            <td>Hover Effects</td>
+                            <td>Buttons, cards have proper hover states</td>
+                            <td>☐</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Responsive Testing</h3>
+                <div class="code-block">
+# Test these breakpoints in Chrome DevTools:
+
+1. Mobile (375px) - iPhone SE
+2. Mobile (414px) - iPhone Pro Max
+3. Tablet (768px) - iPad
+4. Tablet (1024px) - iPad Pro
+5. Desktop (1280px) - Laptop
+6. Desktop (1920px) - Full HD Monitor
+
+Right-click → Inspect → Toggle Device Toolbar (Ctrl+Shift+M)
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Device</th>
+                            <th>Width</th>
+                            <th>Check</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>iPhone SE</td>
+                            <td>375px</td>
+                            <td>☐ Layout, text readable, nav works</td>
+                        </tr>
+                        <tr>
+                            <td>iPad</td>
+                            <td>768px</td>
+                            <td>☐ Columns adjust, spacing good</td>
+                        </tr>
+                        <tr>
+                            <td>Laptop</td>
+                            <td>1280px</td>
+                            <td>☐ Full layout, all sections visible</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Browser Testing</h3>
+                <p>Test your portfolio in multiple browsers:</p>
+                <ul>
+                    <li>☐ Google Chrome</li>
+                    <li>☐ Mozilla Firefox</li>
+                    <li>☐ Microsoft Edge</li>
+                    <li>☐ Safari (if on Mac)</li>
+                </ul>
+
+                <h3>Performance Testing</h3>
+                <ul>
+                    <li>☐ Page loads in under 3 seconds</li>
+                    <li>☐ Images optimized (under 500KB each)</li>
+                    <li>☐ No console errors or warnings</li>
+                    <li>☐ Smooth scrolling performance</li>
+                </ul>
+
+                <h3>Validation</h3>
+                <div class="code-block">
+# Validate HTML
+Visit: https://validator.w3.org/
+Upload your index.html or enter your GitHub Pages URL
+Fix any errors shown
+
+# Validate CSS
+Visit: https://jigsaw.w3.org/css-validator/
+Upload your style.css
+Fix any errors shown
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🚀 Deploying to GitHub Pages</h2>
+                
+                <div class="info-box">
+                    <p><strong>GitHub Pages</strong> is a free hosting service for static websites directly from your GitHub repository.</p>
+                </div>
+
+                <h3>Step 1: Prepare Your Repository</h3>
+                <div class="code-block">
+# Make sure all changes are committed
+git status
+
+# If there are changes, commit them
+git add .
+git commit -m "Final version ready for deployment"
+git push origin main
+                </div>
+
+                <h3>Step 2: Enable GitHub Pages</h3>
+                <ol>
+                    <li>Go to your GitHub repository</li>
+                    <li>Click <strong>Settings</strong> tab</li>
+                    <li>Scroll down to <strong>Pages</strong> section (left sidebar)</li>
+                    <li>Under <strong>Source</strong>, select <strong>main</strong> branch</li>
+                    <li>Keep <strong>/ (root)</strong> selected</li>
+                    <li>Click <strong>Save</strong></li>
+                </ol>
+
+                <div class="success-box">
+                    <h3>🎉 Your site will be published at:</h3>
+                    <p><code>https://yourusername.github.io/portfolio/</code></p>
+                    <p>It may take 1-2 minutes to go live!</p>
+                </div>
+
+                <h3>Step 3: Verify Deployment</h3>
+                <ol>
+                    <li>Wait 1-2 minutes</li>
+                    <li>Visit your GitHub Pages URL</li>
+                    <li>Test all functionality</li>
+                    <li>Check on mobile device if possible</li>
+                </ol>
+
+                <h3>Troubleshooting Common Issues</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Problem</th>
+                            <th>Solution</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Images not loading</td>
+                            <td>Check image paths are relative: images/profile.jpg</td>
+                        </tr>
+                        <tr>
+                            <td>CSS not applying</td>
+                            <td>Verify CSS link path: &lt;link rel="stylesheet" href="style.css"&gt;</td>
+                        </tr>
+                        <tr>
+                            <td>404 error</td>
+                            <td>Make sure index.html is in root folder</td>
+                        </tr>
+                        <tr>
+                            <td>Old version showing</td>
+                            <td>Clear browser cache (Ctrl+F5)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Custom Domain (Optional)</h3>
+                <div class="code-block">
+# If you own a domain, you can connect it:
+
+1. Create CNAME file in your repository root
+2. Add your domain: www.yourdomain.com
+3. Configure DNS at your domain registrar:
+   - Type: CNAME
+   - Name: www
+   - Value: yourusername.github.io
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🐛 Bug Fixing & Optimization</h2>
+                
+                <h3>Common Issues to Check</h3>
+                
+                <div class="activity-box">
+                    <h4>1. Mobile Menu Not Working</h4>
+                    <div class="code-block">
+// Check if JavaScript is included in HTML
+// Verify hamburger click event
+
+const hamburger = document.querySelector('.hamburger');
+const navMenu = document.querySelector('.nav-menu');
+
+hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    navMenu.classList.toggle('active');
+});
+                    </div>
+                </div>
+
+                <div class="activity-box">
+                    <h4>2. Images Not Displaying</h4>
+                    <div class="code-block">
+<!-- Check image paths -->
+<!-- Make sure images are in correct folder -->
+
+CORRECT:
+&lt;img src="images/profile.jpg" alt="Profile"&gt;
+
+WRONG:
+&lt;img src="/images/profile.jpg" alt="Profile"&gt;
+&lt;img src="C:/Users/images/profile.jpg" alt="Profile"&gt;
+                    </div>
+                </div>
+
+                <div class="activity-box">
+                    <h4>3. Layout Breaking on Mobile</h4>
+                    <div class="code-block">
+/* Ensure viewport meta tag is present */
+&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+
+/* Check media queries */
+@media (max-width: 768px) {
+    .about-content {
+        grid-template-columns: 1fr; /* Stack on mobile */
+    }
+}
+                    </div>
+                </div>
+
+                <h3>Code Optimization Tips</h3>
+                <ul>
+                    <li><strong>Compress images:</strong> Use TinyPNG or similar tools</li>
+                    <li><strong>Minify CSS:</strong> Remove unnecessary spaces (for production)</li>
+                    <li><strong>Remove unused code:</strong> Clean up commented-out sections</li>
+                    <li><strong>Optimize fonts:</strong> Load only needed font weights</li>
+                    <li><strong>Add alt text:</strong> All images should have descriptive alt text</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>📊 Presentation Preparation</h2>
+                
+                <div class="info-box">
+                    <h3>Prepare a 5-minute presentation covering:</h3>
+                </div>
+
+                <h3>1. Introduction (30 seconds)</h3>
+                <ul>
+                    <li>Your name</li>
+                    <li>Project title: "Personal Portfolio Website"</li>
+                    <li>Purpose: Showcase my web development skills</li>
+                </ul>
+
+                <h3>2. Demonstration (2 minutes)</h3>
+                <ul>
+                    <li><strong>Live Demo:</strong> Show your deployed site</li>
+                    <li><strong>Navigation:</strong> Click through all sections</li>
+                    <li><strong>Responsive Design:</strong> Show mobile view in DevTools</li>
+                    <li><strong>Interactive Features:</strong> Hover effects, form, mobile menu</li>
+                </ul>
+
+                <h3>3. Technical Discussion (2 minutes)</h3>
+                <ul>
+                    <li><strong>Technologies Used:</strong>
+                        <ul>
+                            <li>HTML5 - Semantic structure</li>
+                            <li>CSS3 - Styling, Grid, Flexbox</li>
+                            <li>Responsive Design - Mobile-first approach</li>
+                            <li>Git & GitHub - Version control</li>
+                        </ul>
+                    </li>
+                    <li><strong>Key Features:</strong>
+                        <ul>
+                            <li>Responsive across all devices</li>
+                            <li>Smooth scrolling navigation</li>
+                            <li>Interactive hover effects</li>
+                            <li>Contact form with validation</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>4. Challenges & Solutions (1 minute)</h3>
+                <ul>
+                    <li><strong>Challenge 1:</strong> "Mobile menu wasn't working"
+                        <ul>
+                            <li><strong>Solution:</strong> Added JavaScript event listeners</li>
+                        </ul>
+                    </li>
+                    <li><strong>Challenge 2:</strong> "Layout breaking on different screen sizes"
+                        <ul>
+                            <li><strong>Solution:</strong> Used CSS Grid with media queries</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>5. Future Improvements (30 seconds)</h3>
+                <ul>
+                    <li>Add dark mode toggle</li>
+                    <li>Implement actual form submission</li>
+                    <li>Add blog section</li>
+                    <li>Include more projects as I build them</li>
+                </ul>
+
+                <h3>Presentation Tips</h3>
+                <div class="activity-box">
+                    <ul>
+                        <li>✅ Practice your demo beforehand</li>
+                        <li>✅ Have your site open and ready</li>
+                        <li>✅ Test your internet connection</li>
+                        <li>✅ Speak clearly and confidently</li>
+                        <li>✅ Make eye contact with audience</li>
+                        <li>✅ Be prepared for questions</li>
+                        <li>✅ Show enthusiasm for your work!</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📝 Final Project Submission</h2>
+                
+                <h3>Submit the Following:</h3>
+                <ul class="checklist">
+                    <li>GitHub repository URL</li>
+                    <li>Live GitHub Pages URL</li>
+                    <li>Updated README.md with:
+                        <ul>
+                            <li>Project description</li>
+                            <li>Features list</li>
+                            <li>Technologies used</li>
+                            <li>Installation instructions</li>
+                            <li>Screenshots</li>
+                            <li>Live demo link</li>
+                        </ul>
+                    </li>
+                    <li>Screenshots folder with:
+                        <ul>
+                            <li>Desktop view (full page)</li>
+                            <li>Tablet view</li>
+                            <li>Mobile view</li>
+                            <li>Each section highlighted</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>Updated README.md Template</h3>
+                <div class="code-block">
+# 🚀 Personal Portfolio Website
+
+![Portfolio Preview](screenshots/desktop-view.png)
+
+## 📌 Overview
+This is my personal portfolio website built to showcase my web development 
+skills and projects. Developed as the final project for Next-Step Technology 
+Web Development Bootcamp.
+
+## ✨ Features
+- 📱 Fully responsive design (mobile, tablet, desktop)
+- 🎨 Modern and clean UI with smooth animations
+- 🔍 Semantic HTML5 structure
+- 💅 Custom CSS styling (no frameworks)
+- 📬 Contact form with validation
+- 🎯 Smooth scrolling navigation
+- 🍔 Mobile hamburger menu
+
+## 🛠️ Technologies Used
+- HTML5
+- CSS3 (Flexbox, Grid, Media Queries)
+- JavaScript (vanilla)
+- Git & GitHub
+- GitHub Pages (deployment)
+
+## 📸 Screenshots
+
+### Desktop View
+![Desktop](screenshots/desktop.png)
+
+### Mobile View
+![Mobile](screenshots/mobile.png)
+
+## 🌐 Live Demo
+**[View Live Portfolio](https://yourusername.github.io/portfolio/)**
+
+## 📂 Project Structure
+```
+portfolio/
+├── index.html
+├── style.css
+├── README.md
+├── images/
+│   ├── profile.jpg
+│   ├── project1.png
+│   ├── project2.png
+│   └── project3.png
+└── screenshots/
+    ├── desktop.png
+    └── mobile.png
+```
+
+## 🚀 Installation & Setup
+```bash
+# Clone repository
+git clone https://github.com/yourusername/portfolio.git
+
+# Navigate to folder
+cd portfolio
+
+# Open in browser
+start index.html  # Windows
+open index.html   # Mac
+```
+
+## 🎓 Learning Outcomes
+Through this project, I learned:
+- Semantic HTML5 structure and accessibility
+- CSS Grid and Flexbox for layouts
+- Responsive design with mobile-first approach
+- Git version control and GitHub workflow
+- Deploying websites with GitHub Pages
+- Problem-solving and debugging
+
+## 🔮 Future Enhancements
+- [ ] Add dark mode toggle
+- [ ] Implement blog section
+- [ ] Add more interactive animations
+- [ ] Include testimonials section
+- [ ] Connect contact form to backend
+
+## 👤 Author
+**Your Name**
+- GitHub: [@yourusername](https://github.com/yourusername)
+- LinkedIn: [Your Name](https://linkedin.com/in/yourprofile)
+- Email: your.email@example.com
+
+## 📄 License
+This project is open source and available under the [MIT License](LICENSE).
+
+## 🙏 Acknowledgments
+- Next-Step Technology Web Development Bootcamp
+- Instructors and mentors
+- Fellow bootcamp students
+
+---
+⭐ Star this repository if you found it helpful!
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🎓 Reflection & Next Steps</h2>
+                
+                <h3>Reflect on Your Journey</h3>
+                <div class="activity-box">
+                    <p><strong>Take time to reflect on what you've learned:</strong></p>
+                    <ul>
+                        <li>What was your biggest challenge?</li>
+                        <li>What are you most proud of?</li>
+                        <li>What would you do differently next time?</li>
+                        <li>What did you learn about web development?</li>
+                        <li>How has your problem-solving improved?</li>
+                    </ul>
+                </div>
+
+                <h3>Continue Learning</h3>
+                <ul>
+                    <li>📚 <strong>JavaScript:</strong> Add interactivity beyond basics</li>
+                    <li>⚛️ <strong>React:</strong> Learn modern JavaScript framework</li>
+                    <li>🎨 <strong>CSS Frameworks:</strong> Bootstrap, Tailwind CSS</li>
+                    <li>🔧 <strong>Build Tools:</strong> Webpack, Vite</li>
+                    <li>🗄️ <strong>Backend:</strong> Node.js, Express, databases</li>
+                    <li>📱 <strong>Mobile Development:</strong> React Native, Flutter</li>
+                </ul>
+
+                <h3>Keep Building</h3>
+                <div class="success-box">
+                    <h4>Project Ideas to Continue Your Learning:</h4>
+                    <ul>
+                        <li>🍕 Restaurant website with menu and ordering</li>
+                        <li>📝 Blog with multiple pages and posts</li>
+                        <li>🎮 Simple game using HTML5 Canvas</li>
+                        <li>📊 Dashboard with charts and data visualization</li>
+                        <li>🛒 E-commerce product page</li>
+                        <li>📅 Event countdown timer</li>
+                        <li>☁️ Weather app using API</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="congrats">
+                <h2>🎉 Congratulations! 🎉</h2>
+                <p style="font-size: 1.3rem; margin-bottom: 20px;">
+                    You've completed the Next-Step Technology Web Development Bootcamp!
+                </p>
+                <p style="font-size: 1.1rem;">
+                    You've learned HTML5, CSS3, Responsive Design, Git, and built a complete portfolio website.
+                    This is just the beginning of your web development journey!
+                </p>
+            </div>
+
+            <div class="section">
+                <h2>✅ Final Deliverables</h2>
+                <div class="activity-box">
+                    <ul class="checklist">
+                        <li>Complete portfolio website deployed on GitHub Pages</li>
+                        <li>All code pushed to GitHub repository</li>
+                        <li>Comprehensive README.md with documentation</li>
+                        <li>Screenshots of desktop and mobile views</li>
+                        <li>5-minute presentation prepared</li>
+                        <li>Testing completed across devices and browsers</li>
+                        <li>HTML and CSS validated</li>
+                        <li>Reflection on learning journey</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📚 Additional Resources</h2>
+                <ul>
+                    <li><a href="https://www.freecodecamp.org/" target="_blank">freeCodeCamp - Continue Learning</a></li>
+                    <li><a href="https://javascript.info/" target="_blank">JavaScript.info - Learn JavaScript</a></li>
+                    <li><a href="https://css-tricks.com/" target="_blank">CSS-Tricks - CSS Reference</a></li>
+                    <li><a href="https://developer.mozilla.org/" target="_blank">MDN Web Docs - Complete Reference</a></li>
+                    <li><a href="https://www.theodinproject.com/" target="_blank">The Odin Project - Full Stack</a></li>
+                    <li><a href="https://frontendmentor.io/" target="_blank">Frontend Mentor - Practice Projects</a></li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <a href="day2-portfolio-development.html" class="btn-primary">← Previous: Day 2</a>
+                <a href="../index.html" class="btn-primary">Back to Course Home</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 4 - Day 3: Project Review & Presentation</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+            <p style="margin-top: 10px;">🎓 Congratulations on completing the bootcamp! 🎓</p>
+        </footer>
+    </div>
+</body>
+</html>

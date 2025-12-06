@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 6 Day 3: DOM Manipulation</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        header { background: #4facfe; color: white; padding: 30px; border-radius: 15px 15px 0 0; }
+        .content { padding: 40px; }
+        h2 { color: #4facfe; border-bottom: 3px solid #00f2fe; padding-bottom: 10px; margin: 30px 0 20px; }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+        .info-box { background: #e3f2fd; border-left: 5px solid #4facfe; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        .demo { background: #f5f5f5; padding: 20px; margin: 20px 0; border: 2px solid #4facfe; border-radius: 8px; }
+        .btn { background: #4facfe; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 10px 10px 0; }
+        footer { background: #4facfe; color: white; padding: 20px; text-align: center; border-radius: 0 0 15px 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 6 - Day 3: DOM Manipulation</h1>
+            <p>Friday | Duration: 3 hours</p>
+        </header>
+
+        <div class="content">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Understand the DOM (Document Object Model)</li>
+                <li>Select HTML elements with JavaScript</li>
+                <li>Change HTML content dynamically</li>
+                <li>Modify CSS styles with JavaScript</li>
+                <li>Build interactive web pages</li>
+            </ul>
+
+            <h2>🌳 What is the DOM?</h2>
+            <div class="info-box">
+                <p><strong>DOM (Document Object Model)</strong> is a programming interface that represents your HTML document as a tree structure. JavaScript can access and change all elements, attributes, and styles.</p>
+            </div>
+
+            <h2>🎯 Selecting Elements</h2>
+            
+            <h3>getElementById()</h3>
+            <div class="code-block">
+// HTML
+&lt;h1 id="title"&gt;Hello World&lt;/h1&gt;
+
+// JavaScript
+let titleElement = document.getElementById("title");
+console.log(titleElement);  // <h1 id="title">Hello World</h1>
+            </div>
+
+            <h3>querySelector()</h3>
+            <div class="code-block">
+// Select by ID
+let title = document.querySelector("#title");
+
+// Select by class
+let button = document.querySelector(".btn");
+
+// Select by tag
+let paragraph = document.querySelector("p");
+            </div>
+
+            <h3>querySelectorAll()</h3>
+            <div class="code-block">
+// Select ALL elements with class "card"
+let cards = document.querySelectorAll(".card");
+console.log(cards.length);  // Number of cards
+            </div>
+
+            <h2>✏️ Changing HTML Content</h2>
+            
+            <h3>textContent</h3>
+            <div class="code-block">
+// HTML
+&lt;p id="demo"&gt;Original text&lt;/p&gt;
+
+// JavaScript
+let demo = document.getElementById("demo");
+demo.textContent = "New text!";
+// Result: <p id="demo">New text!</p>
+            </div>
+
+            <h3>innerHTML</h3>
+            <div class="code-block">
+// Can include HTML tags
+let container = document.getElementById("container");
+container.innerHTML = "&lt;h2&gt;Hello&lt;/h2&gt;&lt;p&gt;Welcome!&lt;/p&gt;";
+            </div>
+
+            <h2>🎨 Changing CSS Styles</h2>
+            <div class="code-block">
+let box = document.getElementById("box");
+
+// Change individual styles
+box.style.color = "red";
+box.style.backgroundColor = "yellow";
+box.style.fontSize = "24px";
+box.style.padding = "20px";
+box.style.border = "2px solid black";
+            </div>
+
+            <h2>➕ Adding/Removing Classes</h2>
+            <div class="code-block">
+let element = document.getElementById("myElement");
+
+// Add class
+element.classList.add("active");
+
+// Remove class
+element.classList.remove("hidden");
+
+// Toggle class (add if not present, remove if present)
+element.classList.toggle("visible");
+            </div>
+
+            <h2>🔘 Changing Attributes</h2>
+            <div class="code-block">
+let image = document.querySelector("img");
+
+// Change src attribute
+image.src = "newimage.jpg";
+
+// Change alt text
+image.alt = "New description";
+
+// Add/change href
+let link = document.querySelector("a");
+link.href = "https://google.com";
+            </div>
+
+            <h2>💻 Complete Interactive Example</h2>
+            <div class="code-block">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOM Manipulation Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background: #f0f0f0;
+        }
+        .box {
+            width: 200px;
+            height: 200px;
+            background: lightblue;
+            margin: 20px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .highlight {
+            background: yellow;
+            font-weight: bold;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="heading">DOM Manipulation Practice</h1>
+    <p id="message">This is the original message</p>
+    
+    <div id="box" class="box">
+        <p>This is a box</p>
+    </div>
+
+    <button onclick="changeText()">Change Text</button>
+    <button onclick="changeColor()">Change Color</button>
+    <button onclick="toggleHighlight()">Toggle Highlight</button>
+    <button onclick="addContent()">Add Content</button>
+
+    <div id="output"></div>
+
+    <script>
+        // Change text content
+        function changeText() {
+            let heading = document.getElementById("heading");
+            heading.textContent = "Text Changed!";
+            
+            let message = document.getElementById("message");
+            message.textContent = "The message has been updated";
+        }
+
+        // Change CSS styles
+        function changeColor() {
+            let box = document.getElementById("box");
+            box.style.backgroundColor = "lightcoral";
+            box.style.color = "white";
+            box.style.fontSize = "20px";
+        }
+
+        // Toggle CSS class
+        function toggleHighlight() {
+            let message = document.getElementById("message");
+            message.classList.toggle("highlight");
+        }
+
+        // Add new HTML content
+        function addContent() {
+            let output = document.getElementById("output");
+            output.innerHTML += "<p>New paragraph added!</p>";
+        }
+    </script>
+</body>
+</html>
+            </div>
+
+            <h2>🧪 Live Demo on This Page</h2>
+            <div class="demo">
+                <h3 id="demoHeading">Click the button below!</h3>
+                <button onclick="changeHeading()" style="padding: 10px 20px; cursor: pointer; background: #4facfe; color: white; border: none; border-radius: 5px;">Change Heading</button>
+                
+                <div id="demoBox" style="width: 200px; height: 100px; background: lightblue; margin: 20px 0; padding: 20px; border-radius: 8px;">
+                    <p>Original Box</p>
+                </div>
+                <button onclick="changeBoxStyle()" style="padding: 10px 20px; cursor: pointer; background: #00f2fe; color: white; border: none; border-radius: 5px;">Change Box Style</button>
+            </div>
+
+            <script>
+                function changeHeading() {
+                    document.getElementById("demoHeading").textContent = "Heading Changed Successfully!";
+                }
+
+                function changeBoxStyle() {
+                    let box = document.getElementById("demoBox");
+                    box.style.backgroundColor = "lightcoral";
+                    box.style.color = "white";
+                    box.style.fontWeight = "bold";
+                    box.innerHTML = "<p>Style Changed!</p>";
+                }
+            </script>
+
+            <h2>✏️ Practice Exercises</h2>
+            <ol>
+                <li>Create a page with a heading - add button to change the heading text</li>
+                <li>Create a div with background color - add button to change the color</li>
+                <li>Create a paragraph - add button to toggle between two different texts</li>
+                <li>Create an image - add button to change the image source</li>
+                <li>Create multiple elements - add button to hide/show them</li>
+            </ol>
+
+            <h2>🎯 Mini Project: Profile Card Updater</h2>
+            <div class="code-block">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile Card Updater</title>
+    <style>
+        .profile-card {
+            width: 300px;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        .profile-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+        }
+        button { margin: 5px; padding: 10px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="profile-card">
+        <img id="profilePic" src="avatar1.jpg" alt="Profile">
+        <h2 id="profileName">John Doe</h2>
+        <p id="profileRole">Web Developer</p>
+        <p id="profileBio">Learning JavaScript</p>
+    </div>
+
+    <button onclick="updateProfile()">Update Profile</button>
+    <button onclick="changeTheme()">Change Theme</button>
+
+    <script>
+        function updateProfile() {
+            document.getElementById("profileName").textContent = "Ahmad Garba";
+            document.getElementById("profileRole").textContent = "Frontend Developer";
+            document.getElementById("profileBio").textContent = "Expert in HTML, CSS & JavaScript";
+        }
+
+        function changeTheme() {
+            let card = document.querySelector(".profile-card");
+            card.style.background = "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
+            card.style.color = "white";
+        }
+    </script>
+</body>
+</html>
+            </div>
+
+            <h2>✅ Today's Deliverable</h2>
+            <ul>
+                <li>✓ dom-practice.html with interactive features</li>
+                <li>✓ At least 3 buttons that change content</li>
+                <li>✓ Change text using textContent or innerHTML</li>
+                <li>✓ Change CSS styles using style property</li>
+                <li>✓ Use getElementById() or querySelector()</li>
+                <li>✓ Profile Card Updater mini-project completed</li>
+                <li>✓ Working demo screenshots</li>
+            </ul>
+
+            <div style="margin-top: 40px;">
+                <a href="day2-js-operators.html" class="btn">← Previous</a>
+                <a href="../index.html" class="btn">Course Home</a>
+                <a href="../week7/day1-js-functions.html" class="btn">Next: Week 7 →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 6 - Day 3: DOM Manipulation</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

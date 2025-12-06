@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 15 Day 3: Database Relationships</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #ff9a56 0%, #ff6a00 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        header { background: #ff6a00; color: white; padding: 30px; border-radius: 15px 15px 0 0; }
+        .content { padding: 40px; }
+        h2 { color: #ff6a00; border-bottom: 3px solid #ff9a56; padding-bottom: 10px; margin: 30px 0 20px; }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        .info-box { background: #fff3cd; border-left: 5px solid #ff6a00; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border: 1px solid #ddd; }
+        th { background: #ff6a00; color: white; }
+        .btn { background: #ff6a00; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 10px 10px 0; }
+        footer { background: #ff6a00; color: white; padding: 20px; text-align: center; border-radius: 0 0 15px 15px; }
+        .diagram { background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0; font-family: monospace; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 15 - Day 3: Database Relationships</h1>
+            <p>Wednesday | Duration: 3 hours | Connect Your Data! 🔗</p>
+        </header>
+
+        <div class="content">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Understand database relationships</li>
+                <li>Implement One-to-One relationships</li>
+                <li>Create One-to-Many relationships</li>
+                <li>Build Many-to-Many relationships</li>
+                <li>Access related data easily</li>
+            </ul>
+
+            <h2>🔗 Types of Relationships</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Relationship</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>One-to-One</td>
+                        <td>One record relates to one other</td>
+                        <td>User → Profile</td>
+                    </tr>
+                    <tr>
+                        <td>One-to-Many</td>
+                        <td>One record has many related</td>
+                        <td>User → Posts</td>
+                    </tr>
+                    <tr>
+                        <td>Many-to-Many</td>
+                        <td>Multiple records relate to multiple</td>
+                        <td>Students ↔ Courses</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>1️⃣ One-to-One Relationship</h2>
+            <div class="info-box">
+                <p><strong>Example:</strong> Each User has one Profile. Each Profile belongs to one User.</p>
+            </div>
+
+            <div class="diagram">
+users table           profiles table
+┌────┬─────────┐     ┌────┬─────────┬────────────┐
+│ id │ name    │     │ id │ user_id │ bio        │
+├────┼─────────┤     ├────┼─────────┼────────────┤
+│ 1  │ Ahmad   │ ←── │ 1  │ 1       │ Developer  │
+│ 2  │ Fatima  │ ←── │ 2  │ 2       │ Designer   │
+└────┴─────────┘     └────┴─────────┴────────────┘
+            </div>
+
+            <h3>Step 1: Create Migrations</h3>
+            <div class="code-block">
+# Create users table (if not exists)
+php artisan make:migration create_users_table
+
+# Create profiles table
+php artisan make:migration create_profiles_table
+
+&lt;?php
+// database/migrations/xxxx_create_profiles_table.php
+
+public function up(): void
+{
+    Schema::create('profiles', function (Blueprint $table) {
+        $table->id();
+        $table->foreignId('user_id')->constrained()->onDelete('cascade');
+        $table->text('bio')->nullable();
+        $table->string('avatar')->nullable();
+        $table->string('website')->nullable();
+        $table->timestamps();
+    });
+}
+?&gt;
+            </div>
+
+            <h3>Step 2: Define Relationship in Models</h3>
+            <div class="code-block">
+&lt;?php
+// app/Models/User.php
+
+class User extends Model
+{
+    // User has one profile
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
+    }
+}
+
+// app/Models/Profile.php
+
+class Profile extends Model
+{
+    protected $fillable = ['user_id', 'bio', 'avatar', 'website'];
+    
+    // Profile belongs to one user
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+}
+?&gt;
+            </div>
+
+            <h3>Step 3: Access Related Data</h3>
+            <div class="code-block">
+&lt;?php
+// Get user's profile
+$user = User::find(1);
+$profile = $user->profile;
+echo $profile->bio;
+
+// Get profile's user
+$profile = Profile::find(1);
+$user = $profile->user;
+echo $user->name;
+?&gt;
+            </div>
+
+            <h2>2️⃣ One-to-Many Relationship</h2>
+            <div class="info-box">
+                <p><strong>Example:</strong> One User can have many Posts. Each Post belongs to one User.</p>
+            </div>
+
+            <div class="diagram">
+users table           posts table
+┌────┬─────────┐     ┌────┬─────────┬──────────────┐
+│ id │ name    │     │ id │ user_id │ title        │
+├────┼─────────┤     ├────┼─────────┼──────────────┤
+│ 1  │ Ahmad   │ ←── │ 1  │ 1       │ First Post   │
+│    │         │ ←── │ 2  │ 1       │ Second Post  │
+│ 2  │ Fatima  │ ←── │ 3  │ 2       │ Fatima Post  │
+└────┴─────────┘     └────┴─────────┴──────────────┘
+            </div>
+
+            <h3>Step 1: Create Posts Migration</h3>
+            <div class="code-block">
+php artisan make:model Post -m
+
+&lt;?php
+// database/migrations/xxxx_create_posts_table.php
+
+public function up(): void
+{
+    Schema::create('posts', function (Blueprint $table) {
+        $table->id();
+        $table->foreignId('user_id')->constrained()->onDelete('cascade');
+        $table->string('title');
+        $table->text('content');
+        $table->timestamps();
+    });
+}
+?&gt;
+            </div>
+
+            <h3>Step 2: Define Relationships</h3>
+            <div class="code-block">
+&lt;?php
+// app/Models/User.php
+
+class User extends Model
+{
+    // User has many posts
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+}
+
+// app/Models/Post.php
+
+class Post extends Model
+{
+    protected $fillable = ['user_id', 'title', 'content'];
+    
+    // Post belongs to one user
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+}
+?&gt;
+            </div>
+
+            <h3>Step 3: Use the Relationship</h3>
+            <div class="code-block">
+&lt;?php
+// Get all posts by a user
+$user = User::find(1);
+$posts = $user->posts;  // Collection of Post models
+
+foreach ($posts as $post) {
+    echo $post->title . "&lt;br&gt;";
+}
+
+// Get post's author
+$post = Post::find(1);
+$author = $post->user;
+echo "Written by: " . $author->name;
+
+// Count user's posts
+$postCount = $user->posts()->count();
+
+// Create post for user
+$user->posts()->create([
+    'title' => 'New Post',
+    'content' => 'Post content here'
+]);
+?&gt;
+            </div>
+
+            <h2>3️⃣ Many-to-Many Relationship</h2>
+            <div class="info-box">
+                <p><strong>Example:</strong> Students can enroll in many Courses. Courses can have many Students.</p>
+            </div>
+
+            <div class="diagram">
+students             course_student (pivot)      courses
+┌────┬────────┐     ┌────┬────────────┬──────────┐     ┌────┬─────────────┐
+│ id │ name   │     │ id │ student_id │ course_id│     │ id │ name        │
+├────┼────────┤     ├────┼────────────┼──────────┤     ├────┼─────────────┤
+│ 1  │ Ahmad  │ ←── │ 1  │ 1          │ 1        │ ──→ │ 1  │ Web Dev     │
+│    │        │ ←── │ 2  │ 1          │ 2        │ ──→ │ 2  │ Data Sci    │
+│ 2  │ Fatima │ ←── │ 3  │ 2          │ 1        │     │ 3  │ UI/UX       │
+│    │        │ ←── │ 4  │ 2          │ 3        │ ──→ └────┴─────────────┘
+└────┴────────┘     └────┴────────────┴──────────┘
+            </div>
+
+            <h3>Step 1: Create Migrations</h3>
+            <div class="code-block">
+# Create students and courses tables
+php artisan make:model Student -m
+php artisan make:model Course -m
+
+# Create pivot table (alphabetical order: course_student)
+php artisan make:migration create_course_student_table
+
+&lt;?php
+// database/migrations/xxxx_create_students_table.php
+public function up(): void
+{
+    Schema::create('students', function (Blueprint $table) {
+        $table->id();
+        $table->string('name');
+        $table->string('email')->unique();
+        $table->timestamps();
+    });
+}
+
+// database/migrations/xxxx_create_courses_table.php
+public function up(): void
+{
+    Schema::create('courses', function (Blueprint $table) {
+        $table->id();
+        $table->string('name');
+        $table->text('description');
+        $table->timestamps();
+    });
+}
+
+// database/migrations/xxxx_create_course_student_table.php
+public function up(): void
+{
+    Schema::create('course_student', function (Blueprint $table) {
+        $table->id();
+        $table->foreignId('student_id')->constrained()->onDelete('cascade');
+        $table->foreignId('course_id')->constrained()->onDelete('cascade');
+        $table->timestamps();
+    });
+}
+?&gt;
+            </div>
+
+            <h3>Step 2: Define Relationships</h3>
+            <div class="code-block">
+&lt;?php
+// app/Models/Student.php
+
+class Student extends Model
+{
+    protected $fillable = ['name', 'email'];
+    
+    // Student belongs to many courses
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class);
+    }
+}
+
+// app/Models/Course.php
+
+class Course extends Model
+{
+    protected $fillable = ['name', 'description'];
+    
+    // Course belongs to many students
+    public function students()
+    {
+        return $this->belongsToMany(Student::class);
+    }
+}
+?&gt;
+            </div>
+
+            <h3>Step 3: Working with Many-to-Many</h3>
+            <div class="code-block">
+&lt;?php
+// Get student's courses
+$student = Student::find(1);
+$courses = $student->courses;
+
+foreach ($courses as $course) {
+    echo $course->name . "&lt;br&gt;";
+}
+
+// Get course's students
+$course = Course::find(1);
+$students = $course->students;
+
+// Enroll student in course (attach)
+$student->courses()->attach($courseId);
+
+// Enroll in multiple courses
+$student->courses()->attach([1, 2, 3]);
+
+// Remove enrollment (detach)
+$student->courses()->detach($courseId);
+
+// Remove all enrollments
+$student->courses()->detach();
+
+// Sync (replace all enrollments)
+$student->courses()->sync([1, 3, 5]);
+
+// Toggle enrollment
+$student->courses()->toggle($courseId);
+
+// Check if enrolled
+if ($student->courses()->where('course_id', 1)->exists()) {
+    echo "Already enrolled!";
+}
+?&gt;
+            </div>
+
+            <h2>💻 Complete Enrollment System Example</h2>
+            
+            <h3>Controller:</h3>
+            <div class="code-block">
+&lt;?php
+// app/Http/Controllers/EnrollmentController.php
+
+namespace App\Http\Controllers;
+
+use App\Models\Student;
+use App\Models\Course;
+use Illuminate\Http\Request;
+
+class EnrollmentController extends Controller
+{
+    // Show enrollment form
+    public function create()
+    {
+        $students = Student::all();
+        $courses = Course::all();
+        
+        return view('enrollment.create', compact('students', 'courses'));
+    }
+    
+    // Process enrollment
+    public function store(Request $request)
+    {
+        $student = Student::find($request->student_id);
+        
+        // Check if already enrolled
+        if ($student->courses()->where('course_id', $request->course_id)->exists()) {
+            return back()->with('error', 'Already enrolled in this course!');
+        }
+        
+        // Enroll student
+        $student->courses()->attach($request->course_id);
+        
+        return back()->with('success', 'Student enrolled successfully!');
+    }
+    
+    // Show student's courses
+    public function show($studentId)
+    {
+        $student = Student::with('courses')->findOrFail($studentId);
+        
+        return view('enrollment.show', compact('student'));
+    }
+    
+    // Unenroll
+    public function destroy($studentId, $courseId)
+    {
+        $student = Student::findOrFail($studentId);
+        $student->courses()->detach($courseId);
+        
+        return back()->with('success', 'Unenrolled successfully!');
+    }
+}
+?&gt;
+            </div>
+
+            <h3>Display Student's Courses:</h3>
+            <div class="code-block">
+&lt;!-- resources/views/enrollment/show.blade.php --&gt;
+&lt;h1&gt;{{ $student->name }}'s Courses&lt;/h1&gt;
+
+@if($student->courses->count() > 0)
+    &lt;table&gt;
+        &lt;tr&gt;
+            &lt;th&gt;Course Name&lt;/th&gt;
+            &lt;th&gt;Description&lt;/th&gt;
+            &lt;th&gt;Action&lt;/th&gt;
+        &lt;/tr&gt;
+        @foreach($student->courses as $course)
+        &lt;tr&gt;
+            &lt;td&gt;{{ $course->name }}&lt;/td&gt;
+            &lt;td&gt;{{ $course->description }}&lt;/td&gt;
+            &lt;td&gt;
+                &lt;form action="/enrollment/{{ $student->id }}/{{ $course->id }}" method="POST"&gt;
+                    @csrf
+                    @method('DELETE')
+                    &lt;button&gt;Unenroll&lt;/button&gt;
+                &lt;/form&gt;
+            &lt;/td&gt;
+        &lt;/tr&gt;
+        @endforeach
+    &lt;/table&gt;
+@else
+    &lt;p&gt;Not enrolled in any courses yet.&lt;/p&gt;
+@endif
+            </div>
+
+            <h2>⚡ Eager Loading (Performance)</h2>
+            <div class="code-block">
+&lt;?php
+// BAD: N+1 Query Problem
+$students = Student::all();
+foreach ($students as $student) {
+    echo $student->courses;  // Separate query for EACH student!
+}
+
+// GOOD: Eager Loading (2 queries total)
+$students = Student::with('courses')->get();
+foreach ($students as $student) {
+    echo $student->courses;  // Already loaded!
+}
+
+// Load multiple relationships
+$students = Student::with(['courses', 'profile'])->get();
+?&gt;
+            </div>
+
+            <h2>✏️ Practice Exercises</h2>
+            <ol>
+                <li>Create Author → Books (One-to-Many) relationship</li>
+                <li>Implement Product → Reviews (One-to-Many)</li>
+                <li>Build Tags ↔ Posts (Many-to-Many) system</li>
+                <li>Create enrollment system for students and courses</li>
+                <li>Display all courses with student count</li>
+                <li>Show all students with their enrolled courses</li>
+            </ol>
+
+            <h2>✅ Today's Deliverable</h2>
+            <ul>
+                <li>✓ Understand One-to-One relationships</li>
+                <li>✓ Implement One-to-Many with Users/Posts</li>
+                <li>✓ Create Many-to-Many with Students/Courses</li>
+                <li>✓ Use attach(), detach(), sync() methods</li>
+                <li>✓ Build complete enrollment system</li>
+                <li>✓ Display related data in views</li>
+            </ul>
+
+            <div style="margin-top: 40px;">
+                <a href="day2-eloquent-crud.html" class="btn">← Previous</a>
+                <a href="../index.html" class="btn">Course Home</a>
+                <a href="../week16/day1-project-planning.html" class="btn">Next Week →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 15 - Day 3: Database Relationships</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 2: Pagination in Laravel - Week 19</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        header {
+            background: #4facfe;
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: #4facfe;
+            margin: 30px 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #4facfe;
+        }
+
+        h3 {
+            color: #00f2fe;
+            margin: 25px 0 15px 0;
+        }
+
+        .code-block {
+            background: #f8f9fa;
+            border-left: 4px solid #4facfe;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            color: #e83e8c;
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        .code-block code {
+            background: transparent;
+            padding: 0;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .info-box {
+            background: #e7f5ff;
+            border-left: 4px solid #4facfe;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        ul, ol {
+            margin: 15px 0 15px 30px;
+        }
+
+        li {
+            margin: 10px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background: #4facfe;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .exercise {
+            background: #f0f8ff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border: 2px solid #4facfe;
+        }
+
+        .deliverable {
+            background: #fff0f6;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border: 2px solid #e83e8c;
+        }
+
+        .navigation {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .nav-button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 5px;
+            background: #4facfe;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .nav-button:hover {
+            background: #00f2fe;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📄 Day 2: Pagination in Laravel</h1>
+            <p>Week 19 - Advanced Laravel Features</p>
+        </header>
+
+        <section>
+            <h2>🎯 What is Pagination and Why is it Needed?</h2>
+            
+            <p>Pagination is the process of dividing a large dataset into smaller, manageable chunks or pages. Instead of loading thousands of records at once, pagination allows you to display a subset of results with navigation controls to move between pages.</p>
+
+            <h3>Why Pagination is Essential</h3>
+            <ul>
+                <li><strong>Performance:</strong> Loading fewer records reduces memory usage and database query time</li>
+                <li><strong>User Experience:</strong> Users can navigate through data more easily with organized pages</li>
+                <li><strong>Bandwidth:</strong> Smaller data transfers reduce server load and improve page load times</li>
+                <li><strong>Database Load:</strong> Fewer concurrent queries improve overall application performance</li>
+                <li><strong>Mobile Compatibility:</strong> Smaller data chunks are better for mobile devices with limited resources</li>
+            </ul>
+
+            <div class="info-box">
+                <strong>💡 Real-World Example:</strong> Imagine an e-commerce site with 10,000 products. Loading all products at once would take several seconds and consume significant memory. With pagination showing 20 products per page, the page loads instantly and users can easily browse through categories.
+            </div>
+        </section>
+
+        <section>
+            <h2>📊 paginate() vs simplePaginate() Methods</h2>
+            
+            <p>Laravel provides two primary methods for pagination, each suited for different scenarios:</p>
+
+            <h3>paginate() Method</h3>
+            <p>The <code>paginate()</code> method provides full pagination with page numbers and total count.</p>
+
+            <div class="code-block">
+                <strong>Controller Example:</strong>
+                <pre><code>&lt;?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Post;
+use Illuminate\Http\Request;
+
+class PostController extends Controller
+{
+    public function index()
+    {
+        // Paginate with 15 items per page
+        $posts = Post::orderBy('created_at', 'desc')->paginate(15);
+        
+        return view('posts.index', compact('posts'));
+    }
+    
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        
+        // Pagination with search
+        $posts = Post::where('title', 'like', "%{$query}%")
+                    ->orWhere('content', 'like', "%{$query}%")
+                    ->paginate(20);
+        
+        return view('posts.search', compact('posts', 'query'));
+    }
+}</code></pre>
+            </div>
+
+            <h3>simplePaginate() Method</h3>
+            <p>The <code>simplePaginate()</code> method provides simple "Previous" and "Next" navigation without page numbers.</p>
+
+            <div class="code-block">
+                <strong>Simple Pagination Example:</strong>
+                <pre><code>&lt;?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Product;
+
+class ProductController extends Controller
+{
+    public function index()
+    {
+        // Simple pagination with 25 items per page
+        $products = Product::simplePaginate(25);
+        
+        return view('products.index', compact('products'));
+    }
+    
+    public function categoryProducts($categoryId)
+    {
+        // Simple pagination with filtering
+        $products = Product::where('category_id', $categoryId)
+                          ->simplePaginate(20);
+        
+        return view('products.category', compact('products'));
+    }
+}</code></pre>
+            </div>
+
+            <h3>Comparison Table</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>paginate()</th>
+                        <th>simplePaginate()</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Page Numbers</td>
+                        <td>✅ Yes</td>
+                        <td>❌ No</td>
+                    </tr>
+                    <tr>
+                        <td>Total Count Query</td>
+                        <td>✅ Yes (COUNT query)</td>
+                        <td>❌ No (more efficient)</td>
+                    </tr>
+                    <tr>
+                        <td>Navigation</td>
+                        <td>First, Previous, Numbers, Next, Last</td>
+                        <td>Previous, Next only</td>
+                    </tr>
+                    <tr>
+                        <td>Performance</td>
+                        <td>Good</td>
+                        <td>Better (no COUNT query)</td>
+                    </tr>
+                    <tr>
+                        <td>Best For</td>
+                        <td>Small to medium datasets</td>
+                        <td>Large datasets, infinite scroll</td>
+                    </tr>
+                    <tr>
+                        <td>Total Records</td>
+                        <td>Available</td>
+                        <td>Not available</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="warning-box">
+                <strong>⚠️ Performance Tip:</strong> For very large datasets (millions of records), use <code>simplePaginate()</code> to avoid the expensive COUNT query. The COUNT operation can become a bottleneck as your database grows.
+            </div>
+        </section>
+
+        <section>
+            <h2>🎨 Customizing Pagination Views</h2>
+            
+            <p>Laravel allows you to customize the appearance of pagination links to match your application's design.</p>
+
+            <h3>Publishing Pagination Views</h3>
+            <div class="code-block">
+                <strong>Command:</strong>
+                <pre><code>php artisan vendor:publish --tag=laravel-pagination</code></pre>
+            </div>
+
+            <p>This creates pagination views in <code>resources/views/vendor/pagination/</code>:</p>
+            <ul>
+                <li><code>bootstrap-5.blade.php</code> - Bootstrap 5 styling</li>
+                <li><code>bootstrap-4.blade.php</code> - Bootstrap 4 styling</li>
+                <li><code>tailwind.blade.php</code> - Tailwind CSS styling</li>
+                <li><code>default.blade.php</code> - Default styling</li>
+            </ul>
+
+            <h3>Custom Pagination View</h3>
+            <div class="code-block">
+                <strong>resources/views/vendor/pagination/custom.blade.php:</strong>
+                <pre><code>@if ($paginator->hasPages())
+    &lt;nav class="pagination-wrapper"&gt;
+        &lt;ul class="pagination"&gt;
+            {{-- Previous Page Link --}}
+            @if ($paginator->onFirstPage())
+                &lt;li class="disabled"&gt;&lt;span&gt;← Previous&lt;/span&gt;&lt;/li&gt;
+            @else
+                &lt;li&gt;&lt;a href="{{ $paginator->previousPageUrl() }}"&gt;← Previous&lt;/a&gt;&lt;/li&gt;
+            @endif
+
+            {{-- Pagination Elements --}}
+            @foreach ($elements as $element)
+                {{-- "Three Dots" Separator --}}
+                @if (is_string($element))
+                    &lt;li class="disabled"&gt;&lt;span&gt;{{ $element }}&lt;/span&gt;&lt;/li&gt;
+                @endif
+
+                {{-- Array Of Links --}}
+                @if (is_array($element))
+                    @foreach ($element as $page => $url)
+                        @if ($page == $paginator->currentPage())
+                            &lt;li class="active"&gt;&lt;span&gt;{{ $page }}&lt;/span&gt;&lt;/li&gt;
+                        @else
+                            &lt;li&gt;&lt;a href="{{ $url }}"&gt;{{ $page }}&lt;/a&gt;&lt;/li&gt;
+                        @endif
+                    @endforeach
+                @endif
+            @endforeach
+
+            {{-- Next Page Link --}}
+            @if ($paginator->hasMorePages())
+                &lt;li&gt;&lt;a href="{{ $paginator->nextPageUrl() }}"&gt;Next →&lt;/a&gt;&lt;/li&gt;
+            @else
+                &lt;li class="disabled"&gt;&lt;span&gt;Next →&lt;/span&gt;&lt;/li&gt;
+            @endif
+        &lt;/ul&gt;
+    &lt;/nav&gt;
+@endif</code></pre>
+            </div>
+
+            <h3>Using Custom View in Blade</h3>
+            <div class="code-block">
+                <pre><code>{{ $posts->links('vendor.pagination.custom') }}</code></pre>
+            </div>
+
+            <h3>Setting Default Pagination View</h3>
+            <div class="code-block">
+                <strong>AppServiceProvider.php:</strong>
+                <pre><code>&lt;?php
+
+namespace App\Providers;
+
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Pagination\Paginator;
+
+class AppServiceProvider extends ServiceProvider
+{
+    public function boot()
+    {
+        // Use Bootstrap 5
+        Paginator::useBootstrapFive();
+        
+        // Or use Bootstrap 4
+        // Paginator::useBootstrapFour();
+        
+        // Or use Tailwind
+        // Paginator::useTailwind();
+        
+        // Or use custom view
+        // Paginator::defaultView('vendor.pagination.custom');
+    }
+}</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>🖼️ Pagination in Blade Templates</h2>
+            
+            <h3>Basic Pagination Display</h3>
+            <div class="code-block">
+                <strong>resources/views/posts/index.blade.php:</strong>
+                <pre><code>@extends('layouts.app')
+
+@section('content')
+    &lt;div class="container"&gt;
+        &lt;h1&gt;Blog Posts&lt;/h1&gt;
+        
+        &lt;div class="posts-grid"&gt;
+            @forelse($posts as $post)
+                &lt;article class="post-card"&gt;
+                    &lt;h2&gt;{{ $post->title }}&lt;/h2&gt;
+                    &lt;p class="meta"&gt;
+                        By {{ $post->author->name }} | 
+                        {{ $post->created_at->format('M d, Y') }}
+                    &lt;/p&gt;
+                    &lt;p&gt;{{ Str::limit($post->content, 150) }}&lt;/p&gt;
+                    &lt;a href="{{ route('posts.show', $post) }}" class="btn"&gt;Read More&lt;/a&gt;
+                &lt;/article&gt;
+            @empty
+                &lt;p class="no-results"&gt;No posts found.&lt;/p&gt;
+            @endforelse
+        &lt;/div&gt;
+        
+        {{-- Pagination Links --}}
+        &lt;div class="pagination-wrapper"&gt;
+            {{ $posts->links() }}
+        &lt;/div&gt;
+        
+        {{-- Pagination Information --}}
+        &lt;div class="pagination-info"&gt;
+            Showing {{ $posts->firstItem() }} to {{ $posts->lastItem() }} 
+            of {{ $posts->total() }} results
+        &lt;/div&gt;
+    &lt;/div&gt;
+@endsection</code></pre>
+            </div>
+
+            <h3>Pagination with Custom Styling</h3>
+            <div class="code-block">
+                <strong>Advanced Blade Template:</strong>
+                <pre><code>@extends('layouts.app')
+
+@section('content')
+    &lt;div class="products-container"&gt;
+        &lt;div class="header"&gt;
+            &lt;h1&gt;Products ({{ $products->total() }})&lt;/h1&gt;
+            &lt;div class="per-page-selector"&gt;
+                &lt;span&gt;Items per page:&lt;/span&gt;
+                &lt;select onchange="window.location.href=this.value"&gt;
+                    &lt;option value="?per_page=10" {{ request('per_page') == 10 ? 'selected' : '' }}&gt;10&lt;/option&gt;
+                    &lt;option value="?per_page=25" {{ request('per_page') == 25 ? 'selected' : '' }}&gt;25&lt;/option&gt;
+                    &lt;option value="?per_page=50" {{ request('per_page') == 50 ? 'selected' : '' }}&gt;50&lt;/option&gt;
+                    &lt;option value="?per_page=100" {{ request('per_page') == 100 ? 'selected' : '' }}&gt;100&lt;/option&gt;
+                &lt;/select&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        
+        @if($products->hasPages())
+            &lt;div class="top-pagination"&gt;
+                {{ $products->onEachSide(2)->links() }}
+            &lt;/div&gt;
+        @endif
+        
+        &lt;div class="products-grid"&gt;
+            @foreach($products as $product)
+                &lt;div class="product-card"&gt;
+                    &lt;img src="{{ $product->image }}" alt="{{ $product->name }}"&gt;
+                    &lt;h3&gt;{{ $product->name }}&lt;/h3&gt;
+                    &lt;p class="price"&gt;${{ number_format($product->price, 2) }}&lt;/p&gt;
+                    &lt;a href="{{ route('products.show', $product) }}"&gt;View Details&lt;/a&gt;
+                &lt;/div&gt;
+            @endforeach
+        &lt;/div&gt;
+        
+        @if($products->hasPages())
+            &lt;div class="bottom-pagination"&gt;
+                {{ $products->links() }}
+            &lt;/div&gt;
+            
+            &lt;div class="pagination-summary"&gt;
+                &lt;p&gt;
+                    Page {{ $products->currentPage() }} of {{ $products->lastPage() }}
+                    ({{ $products->total() }} total items)
+                &lt;/p&gt;
+            &lt;/div&gt;
+        @endif
+    &lt;/div&gt;
+@endsection</code></pre>
+            </div>
+
+            <h3>Pagination Helper Methods</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>links()</code></td>
+                        <td>Render pagination links</td>
+                        <td>{{ $items->links() }}</td>
+                    </tr>
+                    <tr>
+                        <td><code>total()</code></td>
+                        <td>Total number of items</td>
+                        <td>{{ $items->total() }}</td>
+                    </tr>
+                    <tr>
+                        <td><code>currentPage()</code></td>
+                        <td>Current page number</td>
+                        <td>{{ $items->currentPage() }}</td>
+                    </tr>
+                    <tr>
+                        <td><code>lastPage()</code></td>
+                        <td>Last page number</td>
+                        <td>{{ $items->lastPage() }}</td>
+                    </tr>
+                    <tr>
+                        <td><code>hasPages()</code></td>
+                        <td>Check if multiple pages exist</td>
+                        <td>@if($items->hasPages())</td>
+                    </tr>
+                    <tr>
+                        <td><code>firstItem()</code></td>
+                        <td>First item number on page</td>
+                        <td>{{ $items->firstItem() }}</td>
+                    </tr>
+                    <tr>
+                        <td><code>lastItem()</code></td>
+                        <td>Last item number on page</td>
+                        <td>{{ $items->lastItem() }}</td>
+                    </tr>
+                    <tr>
+                        <td><code>perPage()</code></td>
+                        <td>Items per page</td>
+                        <td>{{ $items->perPage() }}</td>
+                    </tr>
+                    <tr>
+                        <td><code>onFirstPage()</code></td>
+                        <td>Check if on first page</td>
+                        <td>@if($items->onFirstPage())</td>
+                    </tr>
+                    <tr>
+                        <td><code>hasMorePages()</code></td>
+                        <td>Check if more pages available</td>
+                        <td>@if($items->hasMorePages())</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>🔗 Pagination with Query Strings</h2>
+            
+            <p>When working with filters and search, you need to preserve query parameters across pagination links.</p>
+
+            <h3>Controller with Query Parameters</h3>
+            <div class="code-block">
+                <pre><code>&lt;?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Product;
+use Illuminate\Http\Request;
+
+class ProductController extends Controller
+{
+    public function index(Request $request)
+    {
+        $query = Product::query();
+        
+        // Apply filters
+        if ($request->filled('category')) {
+            $query->where('category_id', $request->category);
+        }
+        
+        if ($request->filled('min_price')) {
+            $query->where('price', '>=', $request->min_price);
+        }
+        
+        if ($request->filled('max_price')) {
+            $query->where('price', '<=', $request->max_price);
+        }
+        
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+        
+        // Sort
+        $sortBy = $request->get('sort', 'created_at');
+        $sortOrder = $request->get('order', 'desc');
+        $query->orderBy($sortBy, $sortOrder);
+        
+        // Paginate with custom per page
+        $perPage = $request->get('per_page', 20);
+        $products = $query->paginate($perPage);
+        
+        return view('products.index', compact('products'));
+    }
+}</code></pre>
+            </div>
+
+            <h3>Appending Query Parameters in Blade</h3>
+            <div class="code-block">
+                <pre><code>{{-- Method 1: Append all current query parameters --}}
+{{ $products->appends(request()->query())->links() }}
+
+{{-- Method 2: Append specific parameters --}}
+{{ $products->appends([
+    'category' => request('category'),
+    'search' => request('search'),
+    'sort' => request('sort')
+])->links() }}
+
+{{-- Method 3: Append and preserve specific params --}}
+{{ $products->appends([
+    'category' => $category,
+    'min_price' => $minPrice,
+    'max_price' => $maxPrice
+])->withQueryString()->links() }}</code></pre>
+            </div>
+
+            <h3>Complete Filter Example</h3>
+            <div class="code-block">
+                <strong>View with Filters and Pagination:</strong>
+                <pre><code>@extends('layouts.app')
+
+@section('content')
+    &lt;div class="container"&gt;
+        &lt;h1&gt;Product Catalog&lt;/h1&gt;
+        
+        &lt;form method="GET" action="{{ route('products.index') }}" class="filters"&gt;
+            &lt;div class="filter-group"&gt;
+                &lt;label&gt;Search:&lt;/label&gt;
+                &lt;input type="text" name="search" value="{{ request('search') }}"&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="filter-group"&gt;
+                &lt;label&gt;Category:&lt;/label&gt;
+                &lt;select name="category"&gt;
+                    &lt;option value=""&gt;All Categories&lt;/option&gt;
+                    @foreach($categories as $category)
+                        &lt;option value="{{ $category->id }}" 
+                            {{ request('category') == $category->id ? 'selected' : '' }}&gt;
+                            {{ $category->name }}
+                        &lt;/option&gt;
+                    @endforeach
+                &lt;/select&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="filter-group"&gt;
+                &lt;label&gt;Price Range:&lt;/label&gt;
+                &lt;input type="number" name="min_price" placeholder="Min" value="{{ request('min_price') }}"&gt;
+                &lt;input type="number" name="max_price" placeholder="Max" value="{{ request('max_price') }}"&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="filter-group"&gt;
+                &lt;label&gt;Sort By:&lt;/label&gt;
+                &lt;select name="sort"&gt;
+                    &lt;option value="created_at" {{ request('sort') == 'created_at' ? 'selected' : '' }}&gt;Newest&lt;/option&gt;
+                    &lt;option value="name" {{ request('sort') == 'name' ? 'selected' : '' }}&gt;Name&lt;/option&gt;
+                    &lt;option value="price" {{ request('sort') == 'price' ? 'selected' : '' }}&gt;Price&lt;/option&gt;
+                &lt;/select&gt;
+                &lt;select name="order"&gt;
+                    &lt;option value="asc" {{ request('order') == 'asc' ? 'selected' : '' }}&gt;Ascending&lt;/option&gt;
+                    &lt;option value="desc" {{ request('order') == 'desc' ? 'selected' : '' }}&gt;Descending&lt;/option&gt;
+                &lt;/select&gt;
+            &lt;/div&gt;
+            
+            &lt;button type="submit"&gt;Apply Filters&lt;/button&gt;
+            &lt;a href="{{ route('products.index') }}"&gt;Clear Filters&lt;/a&gt;
+        &lt;/form&gt;
+        
+        &lt;div class="results-info"&gt;
+            Found {{ $products->total() }} products
+        &lt;/div&gt;
+        
+        &lt;div class="products-grid"&gt;
+            @foreach($products as $product)
+                &lt;div class="product-card"&gt;
+                    &lt;h3&gt;{{ $product->name }}&lt;/h3&gt;
+                    &lt;p&gt;${{ $product->price }}&lt;/p&gt;
+                &lt;/div&gt;
+            @endforeach
+        &lt;/div&gt;
+        
+        {{-- Preserve all filters in pagination --}}
+        {{ $products->appends(request()->query())->links() }}
+    &lt;/div&gt;
+@endsection</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>🔧 Custom Pagination Links</h2>
+            
+            <h3>Manual Pagination URLs</h3>
+            <div class="code-block">
+                <pre><code>&lt;div class="custom-pagination"&gt;
+    {{-- First Page --}}
+    @if(!$products->onFirstPage())
+        &lt;a href="{{ $products->url(1) }}"&gt;First&lt;/a&gt;
+    @endif
+    
+    {{-- Previous Page --}}
+    @if($products->previousPageUrl())
+        &lt;a href="{{ $products->previousPageUrl() }}"&gt;← Previous&lt;/a&gt;
+    @endif
+    
+    {{-- Page Numbers --}}
+    @for($i = 1; $i <= $products->lastPage(); $i++)
+        @if($i == $products->currentPage())
+            &lt;span class="active"&gt;{{ $i }}&lt;/span&gt;
+        @else
+            &lt;a href="{{ $products->url($i) }}"&gt;{{ $i }}&lt;/a&gt;
+        @endif
+    @endfor
+    
+    {{-- Next Page --}}
+    @if($products->nextPageUrl())
+        &lt;a href="{{ $products->nextPageUrl() }}"&gt;Next →&lt;/a&gt;
+    @endif
+    
+    {{-- Last Page --}}
+    @if($products->hasMorePages())
+        &lt;a href="{{ $products->url($products->lastPage()) }}"&gt;Last&lt;/a&gt;
+    @endif
+&lt;/div&gt;</code></pre>
+            </div>
+
+            <h3>AJAX Pagination</h3>
+            <div class="code-block">
+                <strong>JavaScript Implementation:</strong>
+                <pre><code>&lt;script&gt;
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle pagination clicks
+    document.addEventListener('click', function(e) {
+        if (e.target.matches('.pagination a')) {
+            e.preventDefault();
+            
+            const url = e.target.getAttribute('href');
+            loadProducts(url);
+        }
+    });
+    
+    function loadProducts(url) {
+        fetch(url, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.text())
+        .then(html => {
+            // Update products container
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            
+            const newProducts = doc.querySelector('.products-grid').innerHTML;
+            const newPagination = doc.querySelector('.pagination').innerHTML;
+            
+            document.querySelector('.products-grid').innerHTML = newProducts;
+            document.querySelector('.pagination').innerHTML = newPagination;
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        })
+        .catch(error => console.error('Error:', error));
+    }
+});
+&lt;/script&gt;</code></pre>
+            </div>
+
+            <h3>Infinite Scroll Implementation</h3>
+            <div class="code-block">
+                <pre><code>&lt;script&gt;
+let currentPage = 1;
+let lastPage = {{ $products->lastPage() }};
+let loading = false;
+
+window.addEventListener('scroll', function() {
+    if (loading || currentPage >= lastPage) return;
+    
+    const scrollPosition = window.innerHeight + window.scrollY;
+    const threshold = document.body.offsetHeight - 500;
+    
+    if (scrollPosition >= threshold) {
+        loadMoreProducts();
+    }
+});
+
+function loadMoreProducts() {
+    loading = true;
+    currentPage++;
+    
+    const url = new URL(window.location.href);
+    url.searchParams.set('page', currentPage);
+    
+    fetch(url, {
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        const container = document.querySelector('.products-grid');
+        
+        data.products.forEach(product => {
+            const productHtml = `
+                &lt;div class="product-card"&gt;
+                    &lt;h3&gt;${product.name}&lt;/h3&gt;
+                    &lt;p&gt;$${product.price}&lt;/p&gt;
+                &lt;/div&gt;
+            `;
+            container.insertAdjacentHTML('beforeend', productHtml);
+        });
+        
+        loading = false;
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        loading = false;
+    });
+}
+&lt;/script&gt;</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>⚡ Optimizing Large Datasets</h2>
+            
+            <h3>Cursor-Based Pagination</h3>
+            <p>For very large datasets, cursor-based pagination is more efficient than offset-based pagination.</p>
+
+            <div class="code-block">
+                <pre><code>&lt;?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Log;
+
+class LogController extends Controller
+{
+    public function index()
+    {
+        // Cursor pagination for large datasets
+        $logs = Log::orderBy('created_at', 'desc')
+                  ->cursorPaginate(50);
+        
+        return view('logs.index', compact('logs'));
+    }
+}</code></pre>
+            </div>
+
+            <h3>Optimization Techniques</h3>
+            
+            <div class="code-block">
+                <strong>Optimized Query Example:</strong>
+                <pre><code>&lt;?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Order;
+use Illuminate\Http\Request;
+
+class OrderController extends Controller
+{
+    public function index(Request $request)
+    {
+        $orders = Order::query()
+            // Select only needed columns
+            ->select('id', 'order_number', 'total', 'status', 'created_at')
+            
+            // Use eager loading to prevent N+1 queries
+            ->with(['customer:id,name,email', 'items:order_id,product_name,quantity'])
+            
+            // Add indexes on filtered columns
+            ->when($request->status, function($query, $status) {
+                $query->where('status', $status);
+            })
+            
+            // Use latest() instead of orderBy for better performance
+            ->latest()
+            
+            // Paginate results
+            ->paginate(30);
+        
+        return view('orders.index', compact('orders'));
+    }
+    
+    public function exportableListing()
+    {
+        // For exports, use chunk instead of pagination
+        Order::select('id', 'order_number', 'total', 'status')
+            ->chunk(1000, function($orders) {
+                foreach ($orders as $order) {
+                    // Process each order
+                }
+            });
+    }
+}</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Performance Tips:</strong>
+                <ul>
+                    <li>Add database indexes on columns used in WHERE and ORDER BY clauses</li>
+                    <li>Use <code>select()</code> to retrieve only needed columns</li>
+                    <li>Implement eager loading with <code>with()</code> to avoid N+1 queries</li>
+                    <li>Consider using <code>simplePaginate()</code> for large datasets</li>
+                    <li>Cache pagination counts for frequently accessed pages</li>
+                    <li>Use cursor pagination for real-time feeds and logs</li>
+                </ul>
+            </div>
+
+            <h3>Caching Pagination Results</h3>
+            <div class="code-block">
+                <pre><code>&lt;?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Post;
+use Illuminate\Support\Facades\Cache;
+
+class PostController extends Controller
+{
+    public function index()
+    {
+        $page = request('page', 1);
+        $cacheKey = "posts.page.{$page}";
+        
+        $posts = Cache::remember($cacheKey, 3600, function() {
+            return Post::with('author', 'category')
+                      ->published()
+                      ->latest()
+                      ->paginate(20);
+        });
+        
+        return view('posts.index', compact('posts'));
+    }
+}</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>🔄 Pagination with Eloquent Relationships</h2>
+            
+            <h3>Paginating Related Models</h3>
+            <div class="code-block">
+                <pre><code>&lt;?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Category;
+
+class CategoryController extends Controller
+{
+    public function show(Category $category)
+    {
+        // Paginate products within a category
+        $products = $category->products()
+                            ->where('status', 'active')
+                            ->orderBy('name')
+                            ->paginate(24);
+        
+        return view('categories.show', compact('category', 'products'));
+    }
+    
+    public function userPosts($userId)
+    {
+        $user = User::findOrFail($userId);
+        
+        // Paginate user's posts
+        $posts = $user->posts()
+                     ->with('category')
+                     ->latest()
+                     ->paginate(15);
+        
+        return view('users.posts', compact('user', 'posts'));
+    }
+}</code></pre>
+            </div>
+
+            <h3>Paginating Nested Relationships</h3>
+            <div class="code-block">
+                <pre><code>&lt;?php
+
+namespace App\Http\Controllers;
+
+use App\Models\User;
+
+class UserController extends Controller
+{
+    public function show(User $user)
+    {
+        // Load user with paginated posts
+        $user->load(['posts' => function($query) {
+            $query->latest()->take(10);
+        }]);
+        
+        // Or paginate separately
+        $posts = $user->posts()->paginate(10);
+        $comments = $user->comments()->paginate(20);
+        
+        return view('users.show', compact('user', 'posts', 'comments'));
+    }
+    
+    public function dashboard()
+    {
+        $user = auth()->user();
+        
+        // Multiple paginated relationships
+        $orders = $user->orders()->latest()->paginate(10, ['*'], 'orders_page');
+        $reviews = $user->reviews()->latest()->paginate(10, ['*'], 'reviews_page');
+        $favorites = $user->favorites()->paginate(10, ['*'], 'favorites_page');
+        
+        return view('dashboard', compact('user', 'orders', 'reviews', 'favorites'));
+    }
+}</code></pre>
+            </div>
+
+            <h3>View with Multiple Paginators</h3>
+            <div class="code-block">
+                <strong>Blade Template:</strong>
+                <pre><code>@extends('layouts.app')
+
+@section('content')
+    &lt;div class="user-dashboard"&gt;
+        &lt;h1&gt;My Dashboard&lt;/h1&gt;
+        
+        &lt;section class="orders-section"&gt;
+            &lt;h2&gt;Recent Orders&lt;/h2&gt;
+            @foreach($orders as $order)
+                &lt;div class="order-item"&gt;
+                    &lt;span&gt;Order #{{ $order->order_number }}&lt;/span&gt;
+                    &lt;span&gt;${{ $order->total }}&lt;/span&gt;
+                &lt;/div&gt;
+            @endforeach
+            {{ $orders->links() }}
+        &lt;/section&gt;
+        
+        &lt;section class="reviews-section"&gt;
+            &lt;h2&gt;My Reviews&lt;/h2&gt;
+            @foreach($reviews as $review)
+                &lt;div class="review-item"&gt;
+                    &lt;h3&gt;{{ $review->product->name }}&lt;/h3&gt;
+                    &lt;p&gt;{{ $review->comment }}&lt;/p&gt;
+                &lt;/div&gt;
+            @endforeach
+            {{ $reviews->links() }}
+        &lt;/section&gt;
+        
+        &lt;section class="favorites-section"&gt;
+            &lt;h2&gt;My Favorites&lt;/h2&gt;
+            @foreach($favorites as $favorite)
+                &lt;div class="favorite-item"&gt;
+                    &lt;h3&gt;{{ $favorite->product->name }}&lt;/h3&gt;
+                &lt;/div&gt;
+            @endforeach
+            {{ $favorites->links() }}
+        &lt;/section&gt;
+    &lt;/div&gt;
+@endsection</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>📝 Exercises</h2>
+            
+            <div class="exercise">
+                <h3>Exercise 1: Basic Pagination</h3>
+                <p><strong>Task:</strong> Create a blog system with paginated posts.</p>
+                <ol>
+                    <li>Create a <code>PostController</code> with an index method</li>
+                    <li>Paginate posts showing 12 per page</li>
+                    <li>Display posts with title, excerpt, and author</li>
+                    <li>Show pagination links at the bottom</li>
+                    <li>Display "Showing X to Y of Z results" information</li>
+                </ol>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 2: Advanced Filtering with Pagination</h3>
+                <p><strong>Task:</strong> Build a product catalog with filters.</p>
+                <ol>
+                    <li>Create filters for category, price range, and search</li>
+                    <li>Implement sorting (price, name, date)</li>
+                    <li>Add a per-page selector (10, 25, 50, 100)</li>
+                    <li>Preserve all filters in pagination links</li>
+                    <li>Show active filters with option to clear them</li>
+                    <li>Display total results count</li>
+                </ol>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 3: Custom Pagination View</h3>
+                <p><strong>Task:</strong> Create a custom pagination design.</p>
+                <ol>
+                    <li>Publish Laravel's pagination views</li>
+                    <li>Create a custom pagination template</li>
+                    <li>Style it with custom CSS matching your brand</li>
+                    <li>Add "Jump to page" functionality</li>
+                    <li>Include page size information</li>
+                </ol>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 4: AJAX Pagination</h3>
+                <p><strong>Task:</strong> Implement pagination without page reloads.</p>
+                <ol>
+                    <li>Create an endpoint that returns paginated JSON data</li>
+                    <li>Implement JavaScript to handle pagination clicks</li>
+                    <li>Update content dynamically without page reload</li>
+                    <li>Update browser URL using History API</li>
+                    <li>Add loading indicator during data fetch</li>
+                </ol>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 5: Infinite Scroll</h3>
+                <p><strong>Task:</strong> Build infinite scroll for a social media feed.</p>
+                <ol>
+                    <li>Create a posts feed with initial 20 posts</li>
+                    <li>Detect when user scrolls near bottom</li>
+                    <li>Automatically load next page of posts</li>
+                    <li>Append new posts to existing feed</li>
+                    <li>Show loading spinner while fetching</li>
+                    <li>Handle end of results gracefully</li>
+                </ol>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 6: Multiple Paginators</h3>
+                <p><strong>Task:</strong> Create a user profile with multiple paginated sections.</p>
+                <ol>
+                    <li>Display user's posts (paginated separately)</li>
+                    <li>Display user's comments (paginated separately)</li>
+                    <li>Display user's photos (paginated separately)</li>
+                    <li>Each section should have independent pagination</li>
+                    <li>Use different page parameters for each section</li>
+                </ol>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 7: Performance Optimization</h3>
+                <p><strong>Task:</strong> Optimize pagination for large datasets.</p>
+                <ol>
+                    <li>Create a table with 100,000+ records</li>
+                    <li>Implement cursor-based pagination</li>
+                    <li>Compare performance with regular pagination</li>
+                    <li>Add database indexes on relevant columns</li>
+                    <li>Implement query result caching</li>
+                    <li>Measure and document performance improvements</li>
+                </ol>
+            </div>
+        </section>
+
+        <section>
+            <h2>🎯 Deliverable</h2>
+            
+            <div class="deliverable">
+                <h3>Project: E-Commerce Product Catalog with Advanced Pagination</h3>
+                
+                <p><strong>Objective:</strong> Build a complete product catalog system with advanced pagination features.</p>
+                
+                <h4>Requirements:</h4>
+                
+                <ol>
+                    <li>
+                        <strong>Database Setup:</strong>
+                        <ul>
+                            <li>Create products table with name, description, price, category_id, stock, status</li>
+                            <li>Create categories table with name and description</li>
+                            <li>Seed database with at least 100 products across 5 categories</li>
+                            <li>Add appropriate indexes for optimization</li>
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <strong>Product Listing Page:</strong>
+                        <ul>
+                            <li>Display products in a responsive grid layout</li>
+                            <li>Show 24 products per page by default</li>
+                            <li>Implement pagination with Bootstrap or Tailwind styling</li>
+                            <li>Display pagination at top and bottom of results</li>
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <strong>Filtering System:</strong>
+                        <ul>
+                            <li>Search by product name</li>
+                            <li>Filter by category (dropdown)</li>
+                            <li>Filter by price range (min and max inputs)</li>
+                            <li>Filter by stock availability</li>
+                            <li>Show active filters with clear buttons</li>
+                            <li>Preserve all filters across pagination</li>
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <strong>Sorting Options:</strong>
+                        <ul>
+                            <li>Sort by price (low to high, high to low)</li>
+                            <li>Sort by name (A-Z, Z-A)</li>
+                            <li>Sort by newest first</li>
+                            <li>Maintain sort order in pagination links</li>
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <strong>Pagination Controls:</strong>
+                        <ul>
+                            <li>Per-page selector (12, 24, 48, 96 items)</li>
+                            <li>First, Previous, Page Numbers, Next, Last buttons</li>
+                            <li>Show current page and total pages</li>
+                            <li>Display "Showing X-Y of Z results"</li>
+                            <li>Disable appropriate buttons on first/last page</li>
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <strong>Category Page:</strong>
+                        <ul>
+                            <li>Create route for /category/{slug}</li>
+                            <li>Show category name and description</li>
+                            <li>Display paginated products in that category</li>
+                            <li>Include breadcrumbs navigation</li>
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <strong>AJAX Enhancement (Bonus):</strong>
+                        <ul>
+                            <li>Implement AJAX pagination to avoid page reloads</li>
+                            <li>Update URL using History API</li>
+                            <li>Add smooth scroll to top on page change</li>
+                            <li>Show loading indicator during fetch</li>
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <strong>Performance Optimization:</strong>
+                        <ul>
+                            <li>Eager load category relationships</li>
+                            <li>Select only needed columns in queries</li>
+                            <li>Add database indexes on filtered columns</li>
+                            <li>Implement query result caching for popular pages</li>
+                        </ul>
+                    </li>
+                </ol>
+                
+                <h4>File Structure:</h4>
+                <ul>
+                    <li><code>app/Models/Product.php</code> - Product model with relationships</li>
+                    <li><code>app/Models/Category.php</code> - Category model</li>
+                    <li><code>app/Http/Controllers/ProductController.php</code> - Main controller</li>
+                    <li><code>app/Http/Controllers/CategoryController.php</code> - Category controller</li>
+                    <li><code>database/migrations/xxxx_create_products_table.php</code> - Products migration</li>
+                    <li><code>database/migrations/xxxx_create_categories_table.php</code> - Categories migration</li>
+                    <li><code>database/seeders/ProductSeeder.php</code> - Product seeder</li>
+                    <li><code>resources/views/products/index.blade.php</code> - Product listing</li>
+                    <li><code>resources/views/categories/show.blade.php</code> - Category page</li>
+                    <li><code>resources/views/components/product-card.blade.php</code> - Product component</li>
+                    <li><code>routes/web.php</code> - Route definitions</li>
+                </ul>
+                
+                <h4>Testing Checklist:</h4>
+                <ul>
+                    <li>✅ Navigate between pages using pagination links</li>
+                    <li>✅ Apply multiple filters and verify results</li>
+                    <li>✅ Change sorting and verify order</li>
+                    <li>✅ Change items per page and verify display</li>
+                    <li>✅ Verify filters persist across page changes</li>
+                    <li>✅ Test with empty results</li>
+                    <li>✅ Test with only one page of results</li>
+                    <li>✅ Verify direct URL access with query parameters works</li>
+                    <li>✅ Test category pages show correct products</li>
+                    <li>✅ Verify performance with large datasets</li>
+                </ul>
+                
+                <h4>Submission Requirements:</h4>
+                <ul>
+                    <li>Complete Laravel application with all migrations</li>
+                    <li>Seeded database with sample data</li>
+                    <li>Screenshots showing different pagination states</li>
+                    <li>README with setup instructions</li>
+                    <li>Brief report on pagination performance optimization</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="navigation">
+            <h2>Navigation</h2>
+            <a href="../week19/day1-file-uploads.html" class="nav-button">← Previous: File Uploads</a>
+            <a href="../../index.html" class="nav-button">🏠 Home</a>
+            <a href="../week20/" class="nav-button">Next: Week 20 →</a>
+        </section>
+    </div>
+</body>
+</html>

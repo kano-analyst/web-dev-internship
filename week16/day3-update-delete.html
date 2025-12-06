@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 16 Day 3: Update, Delete & Completion</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        header { background: linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%); color: white; padding: 30px; border-radius: 15px 15px 0 0; }
+        .content { padding: 40px; }
+        h2 { color: #ff6e7f; border-bottom: 3px solid #bfe9ff; padding-bottom: 10px; margin: 30px 0 20px; }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        .info-box { background: #fff3cd; border-left: 5px solid #ff6e7f; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        .success-box { background: #d4edda; border-left: 5px solid #28a745; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border: 1px solid #ddd; }
+        th { background: #ff6e7f; color: white; }
+        .btn { background: #ff6e7f; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 10px 10px 0; }
+        footer { background: linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%); color: white; padding: 20px; text-align: center; border-radius: 0 0 15px 15px; }
+        .celebration { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 10px; text-align: center; margin: 30px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 16 - Day 3: Update, Delete & Project Completion</h1>
+            <p>Wednesday | Duration: 3 hours | Complete the CRUD System! 🎉</p>
+        </header>
+
+        <div class="content">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Implement update functionality</li>
+                <li>Add delete operations</li>
+                <li>Build enrollment system</li>
+                <li>Test complete application</li>
+                <li>Deploy and celebrate! 🎊</li>
+            </ul>
+
+            <h2>✏️ Step 1: Edit Student</h2>
+            
+            <h3>Controller - Edit Methods:</h3>
+            <div class="code-block">
+&lt;?php
+// app/Http/Controllers/StudentController.php
+
+public function edit($id)
+{
+    $student = Student::findOrFail($id);
+    return view('students.edit', compact('student'));
+}
+
+public function update(Request $request, $id)
+{
+    $student = Student::findOrFail($id);
+    
+    $validated = $request->validate([
+        'name' => 'required|string|max:100',
+        'email' => 'required|email|unique:students,email,' . $id,
+        'phone' => 'required|string|max:20',
+        'date_of_birth' => 'nullable|date',
+        'address' => 'nullable|string|max:500'
+    ]);
+    
+    $student->update($validated);
+    
+    return redirect()->route('students.index')
+                    ->with('success', 'Student updated successfully!');
+}
+?&gt;
+            </div>
+
+            <h3>Edit Form View:</h3>
+            <div class="code-block">
+&lt;!-- resources/views/students/edit.blade.php --&gt;
+@extends('layouts.app')
+
+@section('title', 'Edit Student')
+
+@section('content')
+&lt;div class="row justify-content-center"&gt;
+    &lt;div class="col-md-8"&gt;
+        &lt;div class="card"&gt;
+            &lt;div class="card-header"&gt;
+                &lt;h3&gt;Edit Student&lt;/h3&gt;
+            &lt;/div&gt;
+            &lt;div class="card-body"&gt;
+                &lt;form action="{{ route('students.update', $student->id) }}" method="POST"&gt;
+                    @csrf
+                    @method('PUT')
+                    
+                    &lt;div class="mb-3"&gt;
+                        &lt;label class="form-label"&gt;Full Name *&lt;/label&gt;
+                        &lt;input type="text" name="name" class="form-control @error('name') is-invalid @enderror" 
+                               value="{{ old('name', $student->name) }}" required&gt;
+                        @error('name')
+                            &lt;div class="invalid-feedback"&gt;{{ $message }}&lt;/div&gt;
+                        @enderror
+                    &lt;/div&gt;
+                    
+                    &lt;div class="mb-3"&gt;
+                        &lt;label class="form-label"&gt;Email Address *&lt;/label&gt;
+                        &lt;input type="email" name="email" class="form-control @error('email') is-invalid @enderror" 
+                               value="{{ old('email', $student->email) }}" required&gt;
+                        @error('email')
+                            &lt;div class="invalid-feedback"&gt;{{ $message }}&lt;/div&gt;
+                        @enderror
+                    &lt;/div&gt;
+                    
+                    &lt;div class="mb-3"&gt;
+                        &lt;label class="form-label"&gt;Phone Number *&lt;/label&gt;
+                        &lt;input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror" 
+                               value="{{ old('phone', $student->phone) }}" required&gt;
+                        @error('phone')
+                            &lt;div class="invalid-feedback"&gt;{{ $message }}&lt;/div&gt;
+                        @enderror
+                    &lt;/div&gt;
+                    
+                    &lt;div class="mb-3"&gt;
+                        &lt;label class="form-label"&gt;Date of Birth&lt;/label&gt;
+                        &lt;input type="date" name="date_of_birth" class="form-control" 
+                               value="{{ old('date_of_birth', $student->date_of_birth) }}"&gt;
+                    &lt;/div&gt;
+                    
+                    &lt;div class="mb-3"&gt;
+                        &lt;label class="form-label"&gt;Address&lt;/label&gt;
+                        &lt;textarea name="address" class="form-control" rows="3"&gt;{{ old('address', $student->address) }}&lt;/textarea&gt;
+                    &lt;/div&gt;
+                    
+                    &lt;div class="d-flex justify-content-between"&gt;
+                        &lt;a href="{{ route('students.index') }}" class="btn btn-secondary"&gt;Cancel&lt;/a&gt;
+                        &lt;button type="submit" class="btn btn-primary"&gt;Update Student&lt;/button&gt;
+                    &lt;/div&gt;
+                &lt;/form&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+@endsection
+            </div>
+
+            <h2>🗑️ Step 2: Delete Student</h2>
+            
+            <h3>Controller - Destroy Method:</h3>
+            <div class="code-block">
+&lt;?php
+// app/Http/Controllers/StudentController.php
+
+public function destroy($id)
+{
+    $student = Student::findOrFail($id);
+    $student->delete();
+    
+    return redirect()->route('students.index')
+                    ->with('success', 'Student deleted successfully!');
+}
+?&gt;
+            </div>
+
+            <h3>Delete Button with Confirmation:</h3>
+            <div class="code-block">
+&lt;!-- In students/index.blade.php, update Actions column --&gt;
+&lt;td&gt;
+    &lt;a href="{{ route('students.show', $student->id) }}" class="btn btn-sm btn-info"&gt;View&lt;/a&gt;
+    &lt;a href="{{ route('students.edit', $student->id) }}" class="btn btn-sm btn-warning"&gt;Edit&lt;/a&gt;
+    
+    &lt;form action="{{ route('students.destroy', $student->id) }}" method="POST" 
+          style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this student?')"&gt;
+        @csrf
+        @method('DELETE')
+        &lt;button type="submit" class="btn btn-sm btn-danger"&gt;Delete&lt;/button&gt;
+    &lt;/form&gt;
+&lt;/td&gt;
+            </div>
+
+            <h2>🔗 Step 3: Enrollment System</h2>
+            
+            <h3>Create Pivot Migration:</h3>
+            <div class="code-block">
+php artisan make:migration create_course_student_table
+
+&lt;?php
+// database/migrations/xxxx_create_course_student_table.php
+
+public function up(): void
+{
+    Schema::create('course_student', function (Blueprint $table) {
+        $table->id();
+        $table->foreignId('student_id')->constrained()->onDelete('cascade');
+        $table->foreignId('course_id')->constrained()->onDelete('cascade');
+        $table->timestamp('enrolled_at')->nullable();
+        $table->timestamps();
+    });
+}
+?&gt;
+            </div>
+
+            <h3>Enrollment Controller:</h3>
+            <div class="code-block">
+&lt;?php
+// app/Http/Controllers/EnrollmentController.php
+
+namespace App\Http\Controllers;
+
+use App\Models\Student;
+use App\Models\Course;
+use Illuminate\Http\Request;
+
+class EnrollmentController extends Controller
+{
+    public function index()
+    {
+        $students = Student::with('courses')->get();
+        return view('enrollments.index', compact('students'));
+    }
+    
+    public function create()
+    {
+        $students = Student::all();
+        $courses = Course::all();
+        
+        return view('enrollments.create', compact('students', 'courses'));
+    }
+    
+    public function store(Request $request)
+    {
+        $request->validate([
+            'student_id' => 'required|exists:students,id',
+            'course_id' => 'required|exists:courses,id'
+        ]);
+        
+        $student = Student::findOrFail($request->student_id);
+        
+        // Check if already enrolled
+        if ($student->courses()->where('course_id', $request->course_id)->exists()) {
+            return back()->with('error', 'Student is already enrolled in this course!');
+        }
+        
+        // Enroll student
+        $student->courses()->attach($request->course_id, [
+            'enrolled_at' => now()
+        ]);
+        
+        return redirect()->route('enrollments.index')
+                        ->with('success', 'Student enrolled successfully!');
+    }
+    
+    public function destroy($studentId, $courseId)
+    {
+        $student = Student::findOrFail($studentId);
+        $student->courses()->detach($courseId);
+        
+        return back()->with('success', 'Enrollment removed successfully!');
+    }
+}
+?&gt;
+            </div>
+
+            <h3>Enrollment Form:</h3>
+            <div class="code-block">
+&lt;!-- resources/views/enrollments/create.blade.php --&gt;
+@extends('layouts.app')
+
+@section('title', 'Enroll Student')
+
+@section('content')
+&lt;div class="row justify-content-center"&gt;
+    &lt;div class="col-md-6"&gt;
+        &lt;div class="card"&gt;
+            &lt;div class="card-header"&gt;
+                &lt;h3&gt;Enroll Student in Course&lt;/h3&gt;
+            &lt;/div&gt;
+            &lt;div class="card-body"&gt;
+                &lt;form action="{{ route('enrollments.store') }}" method="POST"&gt;
+                    @csrf
+                    
+                    &lt;div class="mb-3"&gt;
+                        &lt;label class="form-label"&gt;Select Student *&lt;/label&gt;
+                        &lt;select name="student_id" class="form-select" required&gt;
+                            &lt;option value=""&gt;Choose Student&lt;/option&gt;
+                            @foreach($students as $student)
+                            &lt;option value="{{ $student->id }}"&gt;{{ $student->name }}&lt;/option&gt;
+                            @endforeach
+                        &lt;/select&gt;
+                    &lt;/div&gt;
+                    
+                    &lt;div class="mb-3"&gt;
+                        &lt;label class="form-label"&gt;Select Course *&lt;/label&gt;
+                        &lt;select name="course_id" class="form-select" required&gt;
+                            &lt;option value=""&gt;Choose Course&lt;/option&gt;
+                            @foreach($courses as $course)
+                            &lt;option value="{{ $course->id }}"&gt;{{ $course->name }} ({{ $course->code }})&lt;/option&gt;
+                            @endforeach
+                        &lt;/select&gt;
+                    &lt;/div&gt;
+                    
+                    &lt;div class="d-flex justify-content-between"&gt;
+                        &lt;a href="{{ route('enrollments.index') }}" class="btn btn-secondary"&gt;Cancel&lt;/a&gt;
+                        &lt;button type="submit" class="btn btn-primary"&gt;Enroll&lt;/button&gt;
+                    &lt;/div&gt;
+                &lt;/form&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+@endsection
+            </div>
+
+            <h2>✅ Testing Checklist</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Test</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Create Student</td>
+                        <td>Add new student with all fields</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>Read Students</td>
+                        <td>View all students list</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>Update Student</td>
+                        <td>Edit student information</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>Delete Student</td>
+                        <td>Remove student with confirmation</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>View Details</td>
+                        <td>Show single student page</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>Validation</td>
+                        <td>Try submitting empty/invalid data</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>Enrollment</td>
+                        <td>Enroll student in course</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>Unenroll</td>
+                        <td>Remove enrollment</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>Dashboard</td>
+                        <td>View statistics correctly</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>Responsive</td>
+                        <td>Test on mobile view</td>
+                        <td>☐</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>🚀 Deployment Steps</h2>
+            <div class="code-block">
+# 1. Optimize application
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+
+# 2. Set production environment
+APP_ENV=production
+APP_DEBUG=false
+
+# 3. Generate production key
+php artisan key:generate
+
+# 4. Run migrations on production
+php artisan migrate --force
+
+# 5. Set proper permissions
+chmod -R 775 storage bootstrap/cache
+            </div>
+
+            <h2>📚 Additional Features Ideas</h2>
+            <ul>
+                <li>Add user authentication (login/logout)</li>
+                <li>Implement role-based access (admin/teacher/student)</li>
+                <li>Add course grades and GPA calculation</li>
+                <li>Generate student reports as PDF</li>
+                <li>Add attendance tracking</li>
+                <li>Implement email notifications</li>
+                <li>Add student photo upload</li>
+                <li>Create API endpoints for mobile app</li>
+            </ul>
+
+            <div class="celebration">
+                <h1>🎉 CONGRATULATIONS! 🎊</h1>
+                <h3>You've Completed the 16-Week Full Stack Web Development Bootcamp!</h3>
+                <p style="margin-top: 20px; font-size: 1.2em;">
+                    You've learned HTML, CSS, Bootstrap, JavaScript, PHP, MySQL, and Laravel!<br>
+                    You've built 4 complete projects from scratch!<br>
+                    You're now a Full Stack Web Developer! 💪
+                </p>
+            </div>
+
+            <h2>🏆 What You've Achieved</h2>
+            <div class="success-box">
+                <h4>Skills Mastered:</h4>
+                <ul>
+                    <li>✅ <strong>Frontend:</strong> HTML5, CSS3, Bootstrap 5, Responsive Design</li>
+                    <li>✅ <strong>JavaScript:</strong> ES6, DOM Manipulation, Form Validation, Events</li>
+                    <li>✅ <strong>Backend:</strong> PHP 8, MySQL, PDO, Session Management</li>
+                    <li>✅ <strong>Framework:</strong> Laravel 10, MVC, Blade, Eloquent ORM, Migrations</li>
+                    <li>✅ <strong>Tools:</strong> Git, XAMPP, Composer, Artisan CLI</li>
+                    <li>✅ <strong>Concepts:</strong> CRUD, Database Relationships, Authentication, Validation</li>
+                </ul>
+                
+                <h4 style="margin-top: 20px;">Projects Built:</h4>
+                <ol>
+                    <li><strong>Portfolio Website</strong> - HTML/CSS responsive site</li>
+                    <li><strong>Todo List Application</strong> - JavaScript interactive app</li>
+                    <li><strong>Blog System</strong> - PHP/MySQL with admin panel</li>
+                    <li><strong>Student Management System</strong> - Complete Laravel CRUD application</li>
+                </ol>
+            </div>
+
+            <h2>📈 Next Steps in Your Journey</h2>
+            <ol>
+                <li><strong>Practice Daily:</strong> Build small projects regularly</li>
+                <li><strong>Contribute to Open Source:</strong> Find Laravel projects on GitHub</li>
+                <li><strong>Learn Vue.js or React:</strong> Add modern frontend framework</li>
+                <li><strong>Master Laravel Advanced:</strong> APIs, Testing, Queues, Broadcasting</li>
+                <li><strong>Build Your Portfolio:</strong> Showcase your projects online</li>
+                <li><strong>Apply for Jobs:</strong> Junior Full Stack Developer positions</li>
+                <li><strong>Never Stop Learning:</strong> Technology evolves constantly!</li>
+            </ol>
+
+            <h2>✅ Final Deliverable</h2>
+            <ul>
+                <li>✓ Complete CRUD operations working</li>
+                <li>✓ Enrollment system functional</li>
+                <li>✓ All validations in place</li>
+                <li>✓ Beautiful Bootstrap UI</li>
+                <li>✓ Tested and bug-free</li>
+                <li>✓ Code committed to Git</li>
+                <li>✓ Ready for portfolio!</li>
+            </ul>
+
+            <div style="margin-top: 40px; text-align: center;">
+                <a href="day2-create-read.html" class="btn">← Previous</a>
+                <a href="../index.html" class="btn" style="background: #28a745;">🏠 Return to Course Home</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 16 - Day 3: Project Completion</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+            <p><strong>🎓 You are now a Full Stack Web Developer! 🎓</strong></p>
+        </footer>
+    </div>
+</body>
+</html>

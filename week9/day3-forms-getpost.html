@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 9 Day 3: Handling GET & POST Methods</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        header { background: #ff6b6b; color: white; padding: 30px; border-radius: 15px 15px 0 0; }
+        .content { padding: 40px; }
+        h2 { color: #ff6b6b; border-bottom: 3px solid #feca57; padding-bottom: 10px; margin: 30px 0 20px; }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        .info-box { background: #fff3cd; border-left: 5px solid #ff6b6b; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border: 1px solid #ddd; }
+        th { background: #ff6b6b; color: white; }
+        .btn { background: #ff6b6b; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 10px 10px 0; }
+        footer { background: #ff6b6b; color: white; padding: 20px; text-align: center; border-radius: 0 0 15px 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 9 - Day 3: Handling GET & POST Methods</h1>
+            <p>Friday | Duration: 3 hours</p>
+        </header>
+
+        <div class="content">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Understand HTTP GET and POST methods</li>
+                <li>Create HTML forms for data submission</li>
+                <li>Retrieve form data using $_GET and $_POST</li>
+                <li>Process and validate form inputs</li>
+                <li>Build interactive PHP forms</li>
+            </ul>
+
+            <h2>📨 HTTP Methods: GET vs POST</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>GET</th>
+                        <th>POST</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Visibility</td>
+                        <td>Data visible in URL</td>
+                        <td>Data hidden in request body</td>
+                    </tr>
+                    <tr>
+                        <td>Security</td>
+                        <td>Less secure</td>
+                        <td>More secure</td>
+                    </tr>
+                    <tr>
+                        <td>Data Size</td>
+                        <td>Limited (~2000 characters)</td>
+                        <td>Unlimited</td>
+                    </tr>
+                    <tr>
+                        <td>Bookmarking</td>
+                        <td>Can be bookmarked</td>
+                        <td>Cannot be bookmarked</td>
+                    </tr>
+                    <tr>
+                        <td>Use Case</td>
+                        <td>Search queries, filters</td>
+                        <td>Login forms, file uploads</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>🔤 GET Method</h2>
+            
+            <h3>HTML Form with GET</h3>
+            <div class="code-block">
+&lt;!-- search_form.html --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Search Form&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h2&gt;Search Products&lt;/h2&gt;
+    
+    &lt;form action="search.php" method="GET"&gt;
+        &lt;label&gt;Product Name:&lt;/label&gt;
+        &lt;input type="text" name="product" required&gt;
+        &lt;br&gt;&lt;br&gt;
+        
+        &lt;label&gt;Category:&lt;/label&gt;
+        &lt;select name="category"&gt;
+            &lt;option value="electronics"&gt;Electronics&lt;/option&gt;
+            &lt;option value="clothing"&gt;Clothing&lt;/option&gt;
+            &lt;option value="books"&gt;Books&lt;/option&gt;
+        &lt;/select&gt;
+        &lt;br&gt;&lt;br&gt;
+        
+        &lt;button type="submit"&gt;Search&lt;/button&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </div>
+
+            <h3>Processing GET Data in PHP</h3>
+            <div class="code-block">
+&lt;?php
+// search.php
+if (isset($_GET['product']) && isset($_GET['category'])) {
+    $product = $_GET['product'];
+    $category = $_GET['category'];
+    
+    echo "&lt;h2&gt;Search Results&lt;/h2&gt;";
+    echo "&lt;p&gt;Searching for: &lt;strong&gt;" . $product . "&lt;/strong&gt;&lt;/p&gt;";
+    echo "&lt;p&gt;Category: &lt;strong&gt;" . $category . "&lt;/strong&gt;&lt;/p&gt;";
+    
+    // URL will look like: search.php?product=laptop&category=electronics
+}
+?&gt;
+            </div>
+
+            <h2>📮 POST Method</h2>
+            
+            <h3>HTML Form with POST</h3>
+            <div class="code-block">
+&lt;!-- login_form.html --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Login Form&lt;/title&gt;
+    &lt;style&gt;
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #ff5252;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h2&gt;Login to Your Account&lt;/h2&gt;
+    
+    &lt;form action="login.php" method="POST"&gt;
+        &lt;label&gt;Username:&lt;/label&gt;
+        &lt;input type="text" name="username" required&gt;
+        
+        &lt;label&gt;Password:&lt;/label&gt;
+        &lt;input type="password" name="password" required&gt;
+        
+        &lt;button type="submit"&gt;Login&lt;/button&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </div>
+
+            <h3>Processing POST Data in PHP</h3>
+            <div class="code-block">
+&lt;?php
+// login.php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    
+    // Simple validation
+    if ($username == "admin" && $password == "password123") {
+        echo "&lt;h2&gt;Welcome, " . $username . "!&lt;/h2&gt;";
+        echo "&lt;p&gt;Login successful.&lt;/p&gt;";
+    } else {
+        echo "&lt;h2&gt;Login Failed&lt;/h2&gt;";
+        echo "&lt;p&gt;Invalid username or password.&lt;/p&gt;";
+    }
+}
+?&gt;
+            </div>
+
+            <h2>🛡️ Input Validation & Security</h2>
+            
+            <h3>Basic Validation</h3>
+            <div class="code-block">
+&lt;?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_POST['email'];
+    $age = $_POST['age'];
+    
+    // Check if email is empty
+    if (empty($email)) {
+        echo "Email is required!";
+    }
+    
+    // Validate email format
+    elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo "Invalid email format!";
+    }
+    
+    // Check if age is numeric
+    elseif (!is_numeric($age)) {
+        echo "Age must be a number!";
+    }
+    
+    // Check age range
+    elseif ($age &lt; 18 || $age &gt; 100) {
+        echo "Age must be between 18 and 100!";
+    }
+    
+    else {
+        echo "Form submitted successfully!";
+    }
+}
+?&gt;
+            </div>
+
+            <h3>Sanitizing Input</h3>
+            <div class="code-block">
+&lt;?php
+// Remove HTML tags and special characters
+$name = htmlspecialchars($_POST['name']);
+
+// Remove whitespace
+$username = trim($_POST['username']);
+
+// Convert to lowercase
+$email = strtolower($_POST['email']);
+
+// Strip tags
+$comment = strip_tags($_POST['comment']);
+?&gt;
+            </div>
+
+            <h2>💻 Complete Example: Registration Form</h2>
+            <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Registration Form&lt;/title&gt;
+    &lt;style&gt;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 50px;
+        }
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        h2 {
+            color: #667eea;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #5568d3;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #c3e6cb;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="form-container"&gt;
+        &lt;h2&gt;Student Registration&lt;/h2&gt;
+        
+        &lt;?php
+        $errors = [];
+        $success = "";
+        
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            // Get form data
+            $fullname = trim($_POST['fullname']);
+            $email = trim($_POST['email']);
+            $phone = trim($_POST['phone']);
+            $age = $_POST['age'];
+            $gender = $_POST['gender'];
+            $course = $_POST['course'];
+            
+            // Validation
+            if (empty($fullname)) {
+                $errors[] = "Full name is required";
+            } elseif (strlen($fullname) &lt; 3) {
+                $errors[] = "Name must be at least 3 characters";
+            }
+            
+            if (empty($email)) {
+                $errors[] = "Email is required";
+            } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $errors[] = "Invalid email format";
+            }
+            
+            if (empty($phone)) {
+                $errors[] = "Phone number is required";
+            } elseif (!is_numeric($phone) || strlen($phone) != 11) {
+                $errors[] = "Phone must be 11 digits";
+            }
+            
+            if (empty($age) || $age &lt; 16 || $age &gt; 60) {
+                $errors[] = "Age must be between 16 and 60";
+            }
+            
+            if (empty($gender)) {
+                $errors[] = "Please select gender";
+            }
+            
+            if (empty($course)) {
+                $errors[] = "Please select a course";
+            }
+            
+            // If no errors, show success
+            if (empty($errors)) {
+                $success = "Registration successful!&lt;br&gt;";
+                $success .= "Name: " . htmlspecialchars($fullname) . "&lt;br&gt;";
+                $success .= "Email: " . htmlspecialchars($email) . "&lt;br&gt;";
+                $success .= "Phone: " . htmlspecialchars($phone) . "&lt;br&gt;";
+                $success .= "Age: " . $age . "&lt;br&gt;";
+                $success .= "Gender: " . $gender . "&lt;br&gt;";
+                $success .= "Course: " . $course;
+            }
+        }
+        
+        // Display errors
+        if (!empty($errors)) {
+            echo "&lt;div style='background: #f8d7da; color: #721c24; padding: 15px; border-radius: 5px; margin-bottom: 20px;'&gt;";
+            foreach ($errors as $error) {
+                echo "&lt;p&gt;• " . $error . "&lt;/p&gt;";
+            }
+            echo "&lt;/div&gt;";
+        }
+        
+        // Display success
+        if (!empty($success)) {
+            echo "&lt;div class='success'&gt;" . $success . "&lt;/div&gt;";
+        }
+        ?&gt;
+        
+        &lt;form method="POST" action=""&gt;
+            &lt;div class="form-group"&gt;
+                &lt;label&gt;Full Name:&lt;/label&gt;
+                &lt;input type="text" name="fullname" placeholder="Enter full name"&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="form-group"&gt;
+                &lt;label&gt;Email:&lt;/label&gt;
+                &lt;input type="email" name="email" placeholder="Enter email"&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="form-group"&gt;
+                &lt;label&gt;Phone Number:&lt;/label&gt;
+                &lt;input type="text" name="phone" placeholder="08012345678"&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="form-group"&gt;
+                &lt;label&gt;Age:&lt;/label&gt;
+                &lt;input type="number" name="age" min="16" max="60"&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="form-group"&gt;
+                &lt;label&gt;Gender:&lt;/label&gt;
+                &lt;select name="gender"&gt;
+                    &lt;option value=""&gt;Select Gender&lt;/option&gt;
+                    &lt;option value="Male"&gt;Male&lt;/option&gt;
+                    &lt;option value="Female"&gt;Female&lt;/option&gt;
+                &lt;/select&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="form-group"&gt;
+                &lt;label&gt;Course:&lt;/label&gt;
+                &lt;select name="course"&gt;
+                    &lt;option value=""&gt;Select Course&lt;/option&gt;
+                    &lt;option value="Web Development"&gt;Web Development&lt;/option&gt;
+                    &lt;option value="Mobile Development"&gt;Mobile Development&lt;/option&gt;
+                    &lt;option value="Data Science"&gt;Data Science&lt;/option&gt;
+                &lt;/select&gt;
+            &lt;/div&gt;
+            
+            &lt;button type="submit"&gt;Register&lt;/button&gt;
+        &lt;/form&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </div>
+
+            <h2>✏️ Practice Exercises</h2>
+            <ol>
+                <li>Create a search form using GET method with 2 input fields</li>
+                <li>Build a contact form using POST with name, email, and message</li>
+                <li>Create a calculator form that adds two numbers (POST method)</li>
+                <li>Build a login form with validation for username and password</li>
+                <li>Create a feedback form with rating (1-5) and comments</li>
+            </ol>
+
+            <h2>🔒 Security Best Practices</h2>
+            <ul>
+                <li>✓ Always use POST for sensitive data (passwords, personal info)</li>
+                <li>✓ Validate all user inputs on the server side</li>
+                <li>✓ Use htmlspecialchars() to prevent XSS attacks</li>
+                <li>✓ Never trust user input - always sanitize</li>
+                <li>✓ Check if form is submitted using $_SERVER["REQUEST_METHOD"]</li>
+            </ul>
+
+            <h2>✅ Today's Deliverable</h2>
+            <ul>
+                <li>✓ Form with GET method (search/filter)</li>
+                <li>✓ Form with POST method (login/registration)</li>
+                <li>✓ Form validation implemented</li>
+                <li>✓ Error messages displayed</li>
+                <li>✓ Success messages shown</li>
+                <li>✓ Input sanitization applied</li>
+                <li>✓ Complete registration form working</li>
+            </ul>
+
+            <div style="margin-top: 40px;">
+                <a href="day2-arrays-loops.html" class="btn">← Previous</a>
+                <a href="../index.html" class="btn">Course Home</a>
+                <a href="../week10/day1-php-functions.html" class="btn">Next: Week 10 →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 9 - Day 3: Handling GET & POST Methods</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

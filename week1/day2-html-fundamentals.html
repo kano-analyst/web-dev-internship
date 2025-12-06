@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 1 Day 2: HTML Fundamentals</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        header {
+            background: #1e3c72;
+            color: white;
+            padding: 30px;
+        }
+        header h1 { margin-bottom: 10px; }
+        .nav-breadcrumb {
+            background: #f0f4ff;
+            padding: 15px 30px;
+            border-bottom: 2px solid #667eea;
+        }
+        .nav-breadcrumb a {
+            color: #667eea;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+        .content { padding: 40px; }
+        .section { margin-bottom: 40px; }
+        .section h2 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        .section h3 {
+            color: #667eea;
+            margin: 20px 0 15px 0;
+        }
+        .info-box {
+            background: #e3f2fd;
+            border-left: 5px solid #2196f3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .tip-box {
+            background: #fff3e0;
+            border-left: 5px solid #ff9800;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .activity-box {
+            background: #f1f8e9;
+            border-left: 5px solid #4caf50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+        .preview-box {
+            border: 3px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        ul, ol { margin-left: 30px; margin-top: 10px; }
+        li { margin-bottom: 10px; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th { background: #667eea; color: white; }
+        tr:nth-child(even) { background: #f9f9f9; }
+        .btn-primary {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 6px;
+            margin: 10px 10px 10px 0;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        .btn-primary:hover {
+            background: #764ba2;
+            transform: scale(1.05);
+        }
+        .checklist { list-style: none; margin-left: 0; }
+        .checklist li:before {
+            content: "✓ ";
+            color: #4caf50;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        footer {
+            background: #1e3c72;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 1 - Day 2: HTML Fundamentals</h1>
+            <p>Wednesday | Duration: 3 hours</p>
+        </header>
+
+        <div class="nav-breadcrumb">
+            <a href="../index.html">← Back to Course Home</a> / Week 1 / Day 2
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2>🎯 Learning Objectives</h2>
+                <ul class="checklist">
+                    <li>Understand the structure of HTML documents</li>
+                    <li>Master common HTML tags (headings, paragraphs, links, images, lists)</li>
+                    <li>Create a simple profile page with multiple elements</li>
+                    <li>Link multiple HTML pages together</li>
+                    <li>Apply semantic HTML principles</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>📚 Lecture Notes: HTML Document Structure</h2>
+                
+                <h3>1. Basic HTML Template</h3>
+                <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Page Title&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- Your content goes here --&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                </div>
+
+                <h3>2. Heading Tags (H1 - H6)</h3>
+                <div class="info-box">
+                    <p>HTML has six levels of headings, from &lt;h1&gt; (most important) to &lt;h6&gt; (least important).</p>
+                </div>
+                <div class="code-block">
+&lt;h1&gt;Main Heading&lt;/h1&gt;
+&lt;h2&gt;Subheading&lt;/h2&gt;
+&lt;h3&gt;Sub-subheading&lt;/h3&gt;
+&lt;h4&gt;Minor heading&lt;/h4&gt;
+&lt;h5&gt;Even smaller&lt;/h5&gt;
+&lt;h6&gt;Smallest heading&lt;/h6&gt;
+                </div>
+                <div class="preview-box">
+                    <h1>Main Heading (H1)</h1>
+                    <h2>Subheading (H2)</h2>
+                    <h3>Sub-subheading (H3)</h3>
+                    <h4>Minor heading (H4)</h4>
+                    <h5>Even smaller (H5)</h5>
+                    <h6>Smallest heading (H6)</h6>
+                </div>
+
+                <h3>3. Paragraph Tags</h3>
+                <div class="code-block">
+&lt;p&gt;This is a paragraph of text. It can contain multiple sentences.&lt;/p&gt;
+&lt;p&gt;This is another paragraph.&lt;/p&gt;
+                </div>
+
+                <h3>4. Links (Anchor Tags)</h3>
+                <div class="code-block">
+&lt;!-- External link --&gt;
+&lt;a href="https://www.google.com"&gt;Go to Google&lt;/a&gt;
+
+&lt;!-- Internal link --&gt;
+&lt;a href="about.html"&gt;About Page&lt;/a&gt;
+
+&lt;!-- Link that opens in new tab --&gt;
+&lt;a href="https://www.github.com" target="_blank"&gt;GitHub&lt;/a&gt;
+
+&lt;!-- Email link --&gt;
+&lt;a href="mailto:info@example.com"&gt;Email Us&lt;/a&gt;
+                </div>
+
+                <h3>5. Images</h3>
+                <div class="code-block">
+&lt;!-- Basic image --&gt;
+&lt;img src="photo.jpg" alt="Description of image"&gt;
+
+&lt;!-- Image with dimensions --&gt;
+&lt;img src="logo.png" alt="Company Logo" width="200" height="100"&gt;
+
+&lt;!-- Image from URL --&gt;
+&lt;img src="https://picsum.photos/300/200" alt="Random image"&gt;
+                </div>
+                <div class="tip-box">
+                    <p><strong>💡 Important:</strong> Always include the <code>alt</code> attribute for accessibility and SEO.</p>
+                </div>
+
+                <h3>6. Lists</h3>
+                <h4>Unordered Lists (Bullets)</h4>
+                <div class="code-block">
+&lt;ul&gt;
+    &lt;li&gt;First item&lt;/li&gt;
+    &lt;li&gt;Second item&lt;/li&gt;
+    &lt;li&gt;Third item&lt;/li&gt;
+&lt;/ul&gt;
+                </div>
+
+                <h4>Ordered Lists (Numbered)</h4>
+                <div class="code-block">
+&lt;ol&gt;
+    &lt;li&gt;First step&lt;/li&gt;
+    &lt;li&gt;Second step&lt;/li&gt;
+    &lt;li&gt;Third step&lt;/li&gt;
+&lt;/ol&gt;
+                </div>
+
+                <h3>7. Other Useful Tags</h3>
+                <table>
+                    <tr>
+                        <th>Tag</th>
+                        <th>Purpose</th>
+                        <th>Example</th>
+                    </tr>
+                    <tr>
+                        <td>&lt;strong&gt;</td>
+                        <td>Bold/important text</td>
+                        <td>&lt;strong&gt;Important!&lt;/strong&gt;</td>
+                    </tr>
+                    <tr>
+                        <td>&lt;em&gt;</td>
+                        <td>Italic/emphasized text</td>
+                        <td>&lt;em&gt;Emphasis&lt;/em&gt;</td>
+                    </tr>
+                    <tr>
+                        <td>&lt;br&gt;</td>
+                        <td>Line break</td>
+                        <td>Line 1&lt;br&gt;Line 2</td>
+                    </tr>
+                    <tr>
+                        <td>&lt;hr&gt;</td>
+                        <td>Horizontal rule</td>
+                        <td>&lt;hr&gt;</td>
+                    </tr>
+                    <tr>
+                        <td>&lt;div&gt;</td>
+                        <td>Container/division</td>
+                        <td>&lt;div&gt;Content&lt;/div&gt;</td>
+                    </tr>
+                    <tr>
+                        <td>&lt;span&gt;</td>
+                        <td>Inline container</td>
+                        <td>&lt;span&gt;Text&lt;/span&gt;</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="section">
+                <h2>💻 Main Activity: Build a Profile Page</h2>
+                
+                <div class="activity-box">
+                    <h3>Task: Create profile.html</h3>
+                    <p>Create a personal profile page in <code>C:\xampp\htdocs\web_basics\profile.html</code></p>
+                </div>
+
+                <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;My Profile - [Your Name]&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- Navigation --&gt;
+    &lt;nav&gt;
+        &lt;a href="index.html"&gt;Home&lt;/a&gt; | 
+        &lt;a href="profile.html"&gt;Profile&lt;/a&gt; | 
+        &lt;a href="contact.html"&gt;Contact&lt;/a&gt;
+    &lt;/nav&gt;
+
+    &lt;hr&gt;
+
+    &lt;!-- Main Heading --&gt;
+    &lt;h1&gt;About Me&lt;/h1&gt;
+    
+    &lt;!-- Profile Image --&gt;
+    &lt;img src="https://via.placeholder.com/200" alt="My Photo" width="200"&gt;
+    
+    &lt;!-- Introduction --&gt;
+    &lt;h2&gt;Introduction&lt;/h2&gt;
+    &lt;p&gt;
+        Hello! My name is &lt;strong&gt;[Your Full Name]&lt;/strong&gt;. 
+        I am a student at &lt;em&gt;Next-Step Technology&lt;/em&gt; learning web development.
+    &lt;/p&gt;
+    &lt;p&gt;
+        I am passionate about technology and building websites. 
+        This is my first profile page!
+    &lt;/p&gt;
+
+    &lt;!-- Education --&gt;
+    &lt;h2&gt;Education&lt;/h2&gt;
+    &lt;ul&gt;
+        &lt;li&gt;Bayero University Kano&lt;/li&gt;
+        &lt;li&gt;Department: [Your Department]&lt;/li&gt;
+        &lt;li&gt;Level: [Your Level]&lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;!-- Skills --&gt;
+    &lt;h2&gt;Skills I'm Learning&lt;/h2&gt;
+    &lt;ol&gt;
+        &lt;li&gt;HTML&lt;/li&gt;
+        &lt;li&gt;CSS&lt;/li&gt;
+        &lt;li&gt;JavaScript (coming soon)&lt;/li&gt;
+        &lt;li&gt;Git and GitHub&lt;/li&gt;
+    &lt;/ol&gt;
+
+    &lt;!-- Hobbies --&gt;
+    &lt;h2&gt;My Hobbies&lt;/h2&gt;
+    &lt;ul&gt;
+        &lt;li&gt;Reading&lt;/li&gt;
+        &lt;li&gt;Coding&lt;/li&gt;
+        &lt;li&gt;Gaming&lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;!-- Social Links --&gt;
+    &lt;h2&gt;Connect With Me&lt;/h2&gt;
+    &lt;p&gt;
+        &lt;a href="https://github.com/yourusername" target="_blank"&gt;GitHub&lt;/a&gt; | 
+        &lt;a href="https://linkedin.com/in/yourusername" target="_blank"&gt;LinkedIn&lt;/a&gt; | 
+        &lt;a href="mailto:your.email@example.com"&gt;Email&lt;/a&gt;
+    &lt;/p&gt;
+
+    &lt;hr&gt;
+
+    &lt;!-- Footer --&gt;
+    &lt;p&gt;&lt;small&gt;&copy; 2025 [Your Name]. All rights reserved.&lt;/small&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>✏️ Practice Exercises</h2>
+                
+                <div class="activity-box">
+                    <h3>Exercise 1: Create a Contact Page</h3>
+                    <p>Create <code>contact.html</code> with:</p>
+                    <ul>
+                        <li>A heading "Contact Me"</li>
+                        <li>Your email address as a clickable link</li>
+                        <li>Your phone number</li>
+                        <li>Links to your social media (use placeholder if you don't have)</li>
+                        <li>Navigation links to home and profile pages</li>
+                    </ul>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Exercise 2: Update Your Index Page</h3>
+                    <p>Add navigation links at the top of your index.html that link to:</p>
+                    <ul>
+                        <li>profile.html</li>
+                        <li>contact.html</li>
+                    </ul>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Exercise 3: Image Gallery</h3>
+                    <p>Create a new page called <code>gallery.html</code> with:</p>
+                    <ul>
+                        <li>At least 4 images (use placeholder images from https://picsum.photos/)</li>
+                        <li>Each image should have a caption using a paragraph below it</li>
+                        <li>Organize images in an unordered list</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📝 Quick Quiz</h2>
+                <div class="info-box">
+                    <ol>
+                        <li>What is the difference between &lt;strong&gt; and &lt;b&gt;?</li>
+                        <li>Why is the alt attribute important in img tags?</li>
+                        <li>What's the difference between &lt;ul&gt; and &lt;ol&gt;?</li>
+                        <li>How do you create a link that opens in a new tab?</li>
+                        <li>What tag is used for the most important heading?</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>✅ Today's Deliverable</h2>
+                <div class="activity-box">
+                    <h3>Submit:</h3>
+                    <ul class="checklist">
+                        <li>profile.html (completed profile page)</li>
+                        <li>contact.html (contact page)</li>
+                        <li>gallery.html (image gallery)</li>
+                        <li>Updated index.html with navigation links</li>
+                        <li>Screenshot of all pages working in browser</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📚 Additional Resources</h2>
+                <ul>
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element" target="_blank">MDN: HTML Elements Reference</a></li>
+                    <li><a href="https://www.w3schools.com/tags/" target="_blank">W3Schools: HTML Tag Reference</a></li>
+                    <li><a href="https://htmlreference.io/" target="_blank">HTML Reference - Visual Guide</a></li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <a href="day1-intro-to-web.html" class="btn-primary">← Previous: Day 1</a>
+                <a href="../index.html" class="btn-primary">Back to Course Home</a>
+                <a href="day3-forms-tables-git.html" class="btn-primary">Next: Day 3 →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 1 - Day 2: HTML Fundamentals</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 1: Capstone Orientation & Project Selection | Week 21</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%);
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #ff6e7f;
+            border-bottom: 3px solid #bfe9ff;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        h2 {
+            color: #ff6e7f;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        h3 {
+            color: #5a9fd4;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .objectives, .key-concept, .example, .exercise, .deliverable {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #ff6e7f;
+            border-radius: 8px;
+        }
+        .key-concept {
+            border-left-color: #5a9fd4;
+            background: #e7f3ff;
+        }
+        .example {
+            border-left-color: #28a745;
+            background: #d4edda;
+        }
+        .exercise {
+            border-left-color: #ffc107;
+            background: #fff3cd;
+        }
+        .deliverable {
+            border-left-color: #17a2b8;
+            background: #d1ecf1;
+        }
+        code {
+            background: #272822;
+            color: #f8f8f2;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        pre {
+            background: #272822;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #ff6e7f;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+        li {
+            margin: 8px 0;
+        }
+        .navigation {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+        .nav-button {
+            padding: 10px 20px;
+            background: #ff6e7f;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .nav-button:hover {
+            background: #e55d6e;
+        }
+        .tip {
+            background: #fff9e6;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📅 Week 21, Day 1: Capstone Orientation & Project Selection</h1>
+        
+        <div class="objectives">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Understand capstone project expectations and grading criteria</li>
+                <li>Learn about successful project examples and best practices</li>
+                <li>Form effective project teams and define roles</li>
+                <li>Select appropriate project ideas and get approval</li>
+                <li>Understand the complete project timeline and milestones</li>
+            </ul>
+        </div>
+
+        <h2>🏆 What is a Capstone Project?</h2>
+        <p>A capstone project is your opportunity to demonstrate everything you've learned throughout this bootcamp. It's a comprehensive, real-world web application that showcases your skills in:</p>
+        <ul>
+            <li>Frontend Development (HTML, CSS, Bootstrap, JavaScript)</li>
+            <li>Backend Development (PHP, Laravel)</li>
+            <li>Database Design (MySQL, Eloquent ORM)</li>
+            <li>Authentication & Authorization (Laravel Breeze)</li>
+            <li>API Development (Laravel Sanctum)</li>
+            <li>Deployment & Version Control (Git, cPanel/Laravel Forge)</li>
+        </ul>
+
+        <div class="key-concept">
+            <h3>📋 Grading Rubric (100 Points Total)</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Points</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Project Proposal</td>
+                        <td>10</td>
+                        <td>Clear problem statement, scope, and requirements</td>
+                    </tr>
+                    <tr>
+                        <td>Database Design</td>
+                        <td>15</td>
+                        <td>Well-structured schema, relationships, migrations</td>
+                    </tr>
+                    <tr>
+                        <td>Backend Implementation</td>
+                        <td>20</td>
+                        <td>Functional CRUD, authentication, validation</td>
+                    </tr>
+                    <tr>
+                        <td>Frontend Design</td>
+                        <td>15</td>
+                        <td>Responsive, user-friendly interface</td>
+                    </tr>
+                    <tr>
+                        <td>Features & Functionality</td>
+                        <td>15</td>
+                        <td>Complete features, API integration, file uploads</td>
+                    </tr>
+                    <tr>
+                        <td>Testing & Debugging</td>
+                        <td>5</td>
+                        <td>Bug-free, tested application</td>
+                    </tr>
+                    <tr>
+                        <td>Documentation</td>
+                        <td>5</td>
+                        <td>Technical docs, user manual, README</td>
+                    </tr>
+                    <tr>
+                        <td>Deployment</td>
+                        <td>5</td>
+                        <td>Live, accessible application</td>
+                    </tr>
+                    <tr>
+                        <td>Presentation</td>
+                        <td>10</td>
+                        <td>Professional, clear demonstration</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>💡 Project Ideas & Examples</h2>
+        
+        <div class="example">
+            <h3>Recommended Project Categories</h3>
+            
+            <h4>1. E-Commerce & Marketplace</h4>
+            <ul>
+                <li>Online Store with product catalog, cart, and checkout</li>
+                <li>Auction platform with bidding system</li>
+                <li>Marketplace connecting buyers and sellers</li>
+            </ul>
+
+            <h4>2. Management Systems</h4>
+            <ul>
+                <li>Student Management System (grades, attendance, courses)</li>
+                <li>Hospital Management System (appointments, patient records)</li>
+                <li>Library Management System (books, borrowing, returns)</li>
+                <li>Inventory Management System (stock tracking, orders)</li>
+                <li>Hotel Booking System (reservations, rooms, payments)</li>
+            </ul>
+
+            <h4>3. Social & Communication</h4>
+            <ul>
+                <li>Social Media Platform (posts, comments, likes, followers)</li>
+                <li>Discussion Forum with categories and threads</li>
+                <li>Event Management Platform (registration, tickets)</li>
+            </ul>
+
+            <h4>4. Learning & Education</h4>
+            <ul>
+                <li>Online Learning Platform (courses, videos, quizzes)</li>
+                <li>Quiz/Examination System with timer and grading</li>
+                <li>Assignment Submission & Grading Portal</li>
+            </ul>
+
+            <h4>5. Business & Finance</h4>
+            <ul>
+                <li>Expense Tracker with reports and charts</li>
+                <li>Invoice Management System</li>
+                <li>Real Estate Listing Platform</li>
+                <li>Job Board with applications and resume uploads</li>
+            </ul>
+        </div>
+
+        <div class="tip">
+            <strong>💡 Tip:</strong> Choose a project that solves a real problem you've experienced or observed in your community!
+        </div>
+
+        <h2>👥 Team Formation Guidelines</h2>
+        
+        <div class="key-concept">
+            <h3>Team Structure (3-4 Members Recommended)</h3>
+            
+            <h4>Suggested Roles:</h4>
+            <ol>
+                <li><strong>Team Lead / Project Manager:</strong>
+                    <ul>
+                        <li>Coordinates team meetings and tasks</li>
+                        <li>Manages GitHub repository and version control</li>
+                        <li>Ensures deadlines are met</li>
+                    </ul>
+                </li>
+                <li><strong>Backend Developer:</strong>
+                    <ul>
+                        <li>Database design and migrations</li>
+                        <li>Laravel controllers and models</li>
+                        <li>API development and authentication</li>
+                    </ul>
+                </li>
+                <li><strong>Frontend Developer:</strong>
+                    <ul>
+                        <li>UI/UX design and Blade templates</li>
+                        <li>Responsive design with Bootstrap</li>
+                        <li>JavaScript interactivity</li>
+                    </ul>
+                </li>
+                <li><strong>Tester / Documentation Lead:</strong>
+                    <ul>
+                        <li>Testing and quality assurance</li>
+                        <li>Writing documentation and user manuals</li>
+                        <li>Deployment assistance</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <p><strong>Note:</strong> In 3-member teams, members can combine roles (e.g., Frontend + Testing).</p>
+        </div>
+
+        <h2>📝 Project Selection Criteria</h2>
+        
+        <div class="key-concept">
+            <h3>Your project MUST include:</h3>
+            <ul>
+                <li>✅ User authentication (login, registration, logout)</li>
+                <li>✅ Complete CRUD operations (Create, Read, Update, Delete)</li>
+                <li>✅ Database with at least 4 related tables</li>
+                <li>✅ Form validation and error handling</li>
+                <li>✅ Responsive design (mobile and desktop)</li>
+                <li>✅ At least one file upload feature</li>
+                <li>✅ Search and filtering functionality</li>
+            </ul>
+
+            <h3>Bonus Features (Optional but Impressive):</h3>
+            <ul>
+                <li>🌟 RESTful API with Sanctum authentication</li>
+                <li>🌟 Email notifications (welcome email, notifications)</li>
+                <li>🌟 Pagination for large datasets</li>
+                <li>🌟 Role-based access control (Admin/User)</li>
+                <li>🌟 Data visualization (charts/graphs)</li>
+                <li>🌟 Payment integration (optional)</li>
+            </ul>
+        </div>
+
+        <h2>⏰ Project Timeline</h2>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Week</th>
+                    <th>Milestone</th>
+                    <th>Deliverable</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Week 21</td>
+                    <td>Planning & Proposal</td>
+                    <td>Approved project proposal</td>
+                </tr>
+                <tr>
+                    <td>Week 22</td>
+                    <td>Development</td>
+                    <td>Integrated application</td>
+                </tr>
+                <tr>
+                    <td>Week 23</td>
+                    <td>Testing & Deployment</td>
+                    <td>Live application + documentation</td>
+                </tr>
+                <tr>
+                    <td>Week 24</td>
+                    <td>Presentation & Evaluation</td>
+                    <td>Final presentation + report</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="exercise">
+            <h2>✏️ Today's Tasks</h2>
+            
+            <h3>Task 1: Form Your Team (30 minutes)</h3>
+            <ol>
+                <li>Discuss interests and strengths with classmates</li>
+                <li>Form a team of 3-4 members</li>
+                <li>Assign preliminary roles</li>
+                <li>Exchange contact information (WhatsApp, email)</li>
+            </ol>
+
+            <h3>Task 2: Brainstorm Project Ideas (45 minutes)</h3>
+            <ol>
+                <li>Each team member proposes 2-3 project ideas</li>
+                <li>Discuss feasibility and required features</li>
+                <li>Vote on top 3 ideas</li>
+                <li>Create a shortlist for instructor review</li>
+            </ol>
+
+            <h3>Task 3: Preliminary Research (30 minutes)</h3>
+            <ol>
+                <li>Research similar projects online</li>
+                <li>Identify key features and user flows</li>
+                <li>List potential challenges</li>
+                <li>Prepare questions for instructor</li>
+            </ol>
+
+            <h3>Task 4: Get Approval (15 minutes)</h3>
+            <ol>
+                <li>Present your top idea to the instructor</li>
+                <li>Discuss scope and requirements</li>
+                <li>Get feedback and approval</li>
+                <li>Finalize project selection</li>
+            </ol>
+        </div>
+
+        <div class="deliverable">
+            <h2>📦 Deliverables</h2>
+            <h3>Submit by end of class:</h3>
+            <ol>
+                <li><strong>Team Formation Document:</strong>
+                    <ul>
+                        <li>Team name</li>
+                        <li>Member names and roles</li>
+                        <li>Contact information</li>
+                    </ul>
+                </li>
+                <li><strong>Project Selection Form:</strong>
+                    <ul>
+                        <li>Project title</li>
+                        <li>Brief description (2-3 sentences)</li>
+                        <li>Target users</li>
+                        <li>Key features (list 5-7 main features)</li>
+                    </ul>
+                </li>
+                <li><strong>Instructor approval signature</strong></li>
+            </ol>
+        </div>
+
+        <div class="tip">
+            <strong>🎯 Success Tips:</strong>
+            <ul>
+                <li>Choose a project you're passionate about</li>
+                <li>Start with a clear scope—avoid feature creep</li>
+                <li>Communicate regularly with your team</li>
+                <li>Don't be afraid to ask for help</li>
+                <li>Use version control from day one</li>
+            </ul>
+        </div>
+
+        <div class="navigation">
+            <a href="../index.html" class="nav-button">← Back to Home</a>
+            <a href="day2-system-analysis.html" class="nav-button">Next: System Analysis →</a>
+        </div>
+    </div>
+</body>
+</html>

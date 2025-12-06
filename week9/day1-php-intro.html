@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 9 Day 1: Introduction to PHP & Environment Setup</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        header { background: #ff6b6b; color: white; padding: 30px; border-radius: 15px 15px 0 0; }
+        .content { padding: 40px; }
+        h2 { color: #ff6b6b; border-bottom: 3px solid #feca57; padding-bottom: 10px; margin: 30px 0 20px; }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+        .info-box { background: #fff3cd; border-left: 5px solid #ff6b6b; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border: 1px solid #ddd; }
+        th { background: #ff6b6b; color: white; }
+        .btn { background: #ff6b6b; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 10px 10px 0; }
+        footer { background: #ff6b6b; color: white; padding: 20px; text-align: center; border-radius: 0 0 15px 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 9 - Day 1: Introduction to PHP & Environment Setup</h1>
+            <p>Monday | Duration: 3 hours</p>
+        </header>
+
+        <div class="content">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Understand what PHP is and how it works</li>
+                <li>Install XAMPP server environment</li>
+                <li>Learn PHP syntax and basic tags</li>
+                <li>Work with PHP variables and data types</li>
+                <li>Write your first PHP script</li>
+            </ul>
+
+            <h2>🌐 What is PHP?</h2>
+            <div class="info-box">
+                <p><strong>PHP (Hypertext Preprocessor)</strong> is a server-side scripting language used to create dynamic web pages. Unlike HTML/CSS/JavaScript which run in the browser, PHP runs on the server and generates HTML that is sent to the browser.</p>
+            </div>
+
+            <h3>Why Learn PHP?</h3>
+            <ul>
+                <li>✅ Powers 77% of websites (WordPress, Facebook, Wikipedia)</li>
+                <li>✅ Easy to learn for beginners</li>
+                <li>✅ Connects to databases (MySQL, PostgreSQL)</li>
+                <li>✅ Free and open-source</li>
+                <li>✅ Large community and resources</li>
+            </ul>
+
+            <h2>💻 Installing XAMPP</h2>
+            
+            <h3>Step 1: Download XAMPP</h3>
+            <ol>
+                <li>Visit <a href="https://www.apachefriends.org" target="_blank">apachefriends.org</a></li>
+                <li>Download XAMPP for your operating system (Windows/Mac/Linux)</li>
+                <li>Choose the latest PHP version (PHP 8.x)</li>
+            </ol>
+
+            <h3>Step 2: Install XAMPP</h3>
+            <ol>
+                <li>Run the installer</li>
+                <li>Select components: Apache, MySQL, PHP, phpMyAdmin</li>
+                <li>Choose installation directory (default: C:\xampp)</li>
+                <li>Complete installation</li>
+            </ol>
+
+            <h3>Step 3: Start Apache Server</h3>
+            <ol>
+                <li>Open XAMPP Control Panel</li>
+                <li>Click "Start" next to Apache</li>
+                <li>Apache should turn green</li>
+                <li>Open browser and go to: <code>http://localhost</code></li>
+                <li>You should see XAMPP welcome page</li>
+            </ol>
+
+            <h2>📂 Project Folder Structure</h2>
+            <div class="code-block">
+C:\xampp\htdocs\
+    └── php-practice\
+        ├── day1-intro.php
+        ├── day2-arrays.php
+        ├── day3-forms.php
+        └── ...
+            </div>
+
+            <div class="info-box">
+                <strong>Important:</strong> All PHP files must be placed in <code>C:\xampp\htdocs\</code> folder to run on localhost.
+            </div>
+
+            <h2>🔤 PHP Syntax Basics</h2>
+            
+            <h3>PHP Tags</h3>
+            <div class="code-block">
+&lt;?php
+    // PHP code goes here
+    echo "Hello, World!";
+?&gt;
+            </div>
+
+            <h3>Embedding PHP in HTML</h3>
+            <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;My First PHP Page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Welcome to PHP&lt;/h1&gt;
+    
+    &lt;?php
+        echo "&lt;p&gt;This paragraph was generated by PHP!&lt;/p&gt;";
+        echo "&lt;p&gt;Current date: " . date("Y-m-d") . "&lt;/p&gt;";
+    ?&gt;
+    
+&lt;/body&gt;
+&lt;/html&gt;
+            </div>
+
+            <h2>📝 PHP Variables</h2>
+            
+            <h3>Variable Declaration</h3>
+            <div class="code-block">
+&lt;?php
+// Variables start with $ sign
+$name = "Ahmad";
+$age = 25;
+$price = 99.99;
+$isStudent = true;
+
+// Display variables
+echo "Name: " . $name;
+echo "&lt;br&gt;";
+echo "Age: " . $age;
+?&gt;
+            </div>
+
+            <h3>Variable Rules</h3>
+            <ul>
+                <li>Must start with $ sign</li>
+                <li>Variable name must start with letter or underscore</li>
+                <li>Can only contain letters, numbers, and underscores</li>
+                <li>Case-sensitive ($name ≠ $Name)</li>
+            </ul>
+
+            <h2>🔢 PHP Data Types</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Data Type</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>String</td>
+                        <td>Text data</td>
+                        <td>$name = "John";</td>
+                    </tr>
+                    <tr>
+                        <td>Integer</td>
+                        <td>Whole numbers</td>
+                        <td>$age = 25;</td>
+                    </tr>
+                    <tr>
+                        <td>Float</td>
+                        <td>Decimal numbers</td>
+                        <td>$price = 99.99;</td>
+                    </tr>
+                    <tr>
+                        <td>Boolean</td>
+                        <td>True or False</td>
+                        <td>$isActive = true;</td>
+                    </tr>
+                    <tr>
+                        <td>Array</td>
+                        <td>Multiple values</td>
+                        <td>$colors = ["red", "blue"];</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>🖨️ Echo and Print</h2>
+            <div class="code-block">
+&lt;?php
+// Using echo
+echo "Hello, World!";
+echo "&lt;br&gt;";
+
+// Multiple values with echo
+echo "Name: ", $name, " Age: ", $age;
+
+// Using print
+print "Hello again!";
+
+// Concatenation with dot (.)
+echo "My name is " . $name . " and I am " . $age . " years old.";
+?&gt;
+            </div>
+
+            <h2>💬 PHP Comments</h2>
+            <div class="code-block">
+&lt;?php
+// Single line comment
+
+# Another single line comment
+
+/*
+Multi-line comment
+Useful for longer explanations
+*/
+
+echo "Comments help document code";
+?&gt;
+            </div>
+
+            <h2>🧮 Basic Arithmetic in PHP</h2>
+            <div class="code-block">
+&lt;?php
+$num1 = 10;
+$num2 = 5;
+
+$sum = $num1 + $num2;
+$difference = $num1 - $num2;
+$product = $num1 * $num2;
+$quotient = $num1 / $num2;
+$remainder = $num1 % $num2;
+
+echo "Sum: " . $sum . "&lt;br&gt;";
+echo "Difference: " . $difference . "&lt;br&gt;";
+echo "Product: " . $product . "&lt;br&gt;";
+echo "Quotient: " . $quotient . "&lt;br&gt;";
+echo "Remainder: " . $remainder . "&lt;br&gt;";
+?&gt;
+            </div>
+
+            <h2>💻 Complete Example: First PHP Page</h2>
+            <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;My First PHP Page&lt;/title&gt;
+    &lt;style&gt;
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        h1 { color: #ff6b6b; }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="card"&gt;
+        &lt;h1&gt;Welcome to PHP Programming!&lt;/h1&gt;
+        
+        &lt;?php
+            // Personal Information
+            $firstName = "Ahmad";
+            $lastName = "Garba";
+            $age = 25;
+            $city = "Kano";
+            $occupation = "Web Developer";
+            
+            // Display information
+            echo "&lt;h2&gt;Personal Information&lt;/h2&gt;";
+            echo "&lt;p&gt;&lt;strong&gt;Full Name:&lt;/strong&gt; " . $firstName . " " . $lastName . "&lt;/p&gt;";
+            echo "&lt;p&gt;&lt;strong&gt;Age:&lt;/strong&gt; " . $age . " years old&lt;/p&gt;";
+            echo "&lt;p&gt;&lt;strong&gt;City:&lt;/strong&gt; " . $city . "&lt;/p&gt;";
+            echo "&lt;p&gt;&lt;strong&gt;Occupation:&lt;/strong&gt; " . $occupation . "&lt;/p&gt;";
+            
+            // Calculations
+            $yearBorn = 2025 - $age;
+            echo "&lt;p&gt;&lt;strong&gt;Year Born:&lt;/strong&gt; " . $yearBorn . "&lt;/p&gt;";
+            
+            // Current date and time
+            echo "&lt;hr&gt;";
+            echo "&lt;p&gt;&lt;strong&gt;Today's Date:&lt;/strong&gt; " . date("l, F j, Y") . "&lt;/p&gt;";
+            echo "&lt;p&gt;&lt;strong&gt;Current Time:&lt;/strong&gt; " . date("h:i:s A") . "&lt;/p&gt;";
+        ?&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </div>
+
+            <h2>🧪 Testing Your PHP Script</h2>
+            <ol>
+                <li>Save file as <code>first.php</code> in <code>C:\xampp\htdocs\php-practice\</code></li>
+                <li>Make sure Apache is running in XAMPP</li>
+                <li>Open browser and go to: <code>http://localhost/php-practice/first.php</code></li>
+                <li>You should see your PHP output</li>
+            </ol>
+
+            <h2>✏️ Practice Exercises</h2>
+            <ol>
+                <li>Create a PHP file that displays your name, age, and favorite color</li>
+                <li>Calculate and display the area of a rectangle (length × width)</li>
+                <li>Display current year, month, and day using PHP</li>
+                <li>Create variables for 3 products with prices and calculate total</li>
+                <li>Display a greeting message based on your name variable</li>
+            </ol>
+
+            <h2>🐛 Common Errors & Solutions</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Error</th>
+                        <th>Solution</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Parse error: syntax error</td>
+                        <td>Check for missing semicolons (;) at end of statements</td>
+                    </tr>
+                    <tr>
+                        <td>Undefined variable</td>
+                        <td>Make sure variable is declared before using it</td>
+                    </tr>
+                    <tr>
+                        <td>Page shows PHP code</td>
+                        <td>Apache not running, or file doesn't have .php extension</td>
+                    </tr>
+                    <tr>
+                        <td>localhost not working</td>
+                        <td>Start Apache in XAMPP Control Panel</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>✅ Today's Deliverable</h2>
+            <ul>
+                <li>✓ XAMPP installed and Apache running</li>
+                <li>✓ Project folder created in htdocs</li>
+                <li>✓ first.php file with personal information</li>
+                <li>✓ At least 5 variables declared</li>
+                <li>✓ Display information using echo</li>
+                <li>✓ Include date/time display</li>
+                <li>✓ Screenshot of working PHP page in browser</li>
+            </ul>
+
+            <div style="margin-top: 40px;">
+                <a href="../week8/day3-deployment.html" class="btn">← Previous</a>
+                <a href="../index.html" class="btn">Course Home</a>
+                <a href="day2-arrays-loops.html" class="btn">Next: Day 2 →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 9 - Day 1: Introduction to PHP & Environment Setup</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

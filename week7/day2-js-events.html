@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 7 Day 2: JavaScript Events</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        header { background: #43e97b; color: white; padding: 30px; border-radius: 15px 15px 0 0; }
+        .content { padding: 40px; }
+        h2 { color: #43e97b; border-bottom: 3px solid #38f9d7; padding-bottom: 10px; margin: 30px 0 20px; }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+        .demo { background: #f5f5f5; padding: 20px; margin: 20px 0; border: 2px solid #43e97b; border-radius: 8px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border: 1px solid #ddd; }
+        th { background: #43e97b; color: white; }
+        .btn { background: #43e97b; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 10px 10px 0; }
+        footer { background: #43e97b; color: white; padding: 20px; text-align: center; border-radius: 0 0 15px 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 7 - Day 2: JavaScript Events</h1>
+            <p>Wednesday | Duration: 3 hours</p>
+        </header>
+
+        <div class="content">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Understand JavaScript events</li>
+                <li>Handle click events</li>
+                <li>Use addEventListener()</li>
+                <li>Work with keyboard and form events</li>
+                <li>Build interactive applications</li>
+            </ul>
+
+            <h2>⚡ What are Events?</h2>
+            <p>Events are actions that happen in the browser: clicks, keypresses, mouse movements, form submissions, etc. JavaScript can "listen" for these events and respond to them.</p>
+
+            <h2>🖱️ Common Event Types</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Event</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>click</td>
+                        <td>User clicks an element</td>
+                        <td>Button click</td>
+                    </tr>
+                    <tr>
+                        <td>dblclick</td>
+                        <td>User double-clicks</td>
+                        <td>Double-click image</td>
+                    </tr>
+                    <tr>
+                        <td>mouseover</td>
+                        <td>Mouse enters element</td>
+                        <td>Hover effect</td>
+                    </tr>
+                    <tr>
+                        <td>mouseout</td>
+                        <td>Mouse leaves element</td>
+                        <td>Remove hover</td>
+                    </tr>
+                    <tr>
+                        <td>keydown</td>
+                        <td>Key is pressed</td>
+                        <td>Type in input</td>
+                    </tr>
+                    <tr>
+                        <td>keyup</td>
+                        <td>Key is released</td>
+                        <td>After typing</td>
+                    </tr>
+                    <tr>
+                        <td>submit</td>
+                        <td>Form is submitted</td>
+                        <td>Submit button clicked</td>
+                    </tr>
+                    <tr>
+                        <td>change</td>
+                        <td>Input value changes</td>
+                        <td>Select dropdown</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>🔘 Click Events</h2>
+            
+            <h3>Method 1: Inline onclick</h3>
+            <div class="code-block">
+&lt;button onclick="alert('Button clicked!')"&gt;Click Me&lt;/button&gt;
+
+&lt;button onclick="changeText()"&gt;Change Text&lt;/button&gt;
+
+&lt;script&gt;
+    function changeText() {
+        document.getElementById("demo").textContent = "Text changed!";
+    }
+&lt;/script&gt;
+            </div>
+
+            <h3>Method 2: addEventListener() (Recommended)</h3>
+            <div class="code-block">
+// HTML
+&lt;button id="myButton"&gt;Click Me&lt;/button&gt;
+
+// JavaScript
+let button = document.getElementById("myButton");
+
+button.addEventListener("click", function() {
+    alert("Button was clicked!");
+});
+            </div>
+
+            <h2>🎨 Practical Examples</h2>
+            
+            <h3>1. Counter App</h3>
+            <div class="code-block">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Counter App</title>
+    <style>
+        body { font-family: Arial; text-align: center; padding: 50px; }
+        #counter { font-size: 48px; margin: 20px; }
+        button { padding: 15px 30px; font-size: 18px; margin: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Counter App</h1>
+    <div id="counter">0</div>
+    <button id="increment">+</button>
+    <button id="decrement">-</button>
+    <button id="reset">Reset</button>
+
+    <script>
+        let count = 0;
+        let counterDisplay = document.getElementById("counter");
+
+        document.getElementById("increment").addEventListener("click", function() {
+            count++;
+            counterDisplay.textContent = count;
+        });
+
+        document.getElementById("decrement").addEventListener("click", function() {
+            count--;
+            counterDisplay.textContent = count;
+        });
+
+        document.getElementById("reset").addEventListener("click", function() {
+            count = 0;
+            counterDisplay.textContent = count;
+        });
+    </script>
+</body>
+</html>
+            </div>
+
+            <h3>2. Color Changer</h3>
+            <div class="code-block">
+&lt;div id="box" style="width: 200px; height: 200px; background: lightblue;"&gt;&lt;/div&gt;
+&lt;button id="changeColor"&gt;Change Color&lt;/button&gt;
+
+&lt;script&gt;
+    let box = document.getElementById("box");
+    let button = document.getElementById("changeColor");
+
+    button.addEventListener("click", function() {
+        let colors = ["lightcoral", "lightgreen", "lightyellow", "lightpink"];
+        let randomColor = colors[Math.floor(Math.random() * colors.length)];
+        box.style.backgroundColor = randomColor;
+    });
+&lt;/script&gt;
+            </div>
+
+            <h2>⌨️ Keyboard Events</h2>
+            <div class="code-block">
+&lt;input type="text" id="nameInput" placeholder="Type your name"&gt;
+&lt;p id="output"&gt;&lt;/p&gt;
+
+&lt;script&gt;
+    let input = document.getElementById("nameInput");
+    let output = document.getElementById("output");
+
+    input.addEventListener("keyup", function() {
+        output.textContent = "Hello, " + input.value;
+    });
+&lt;/script&gt;
+            </div>
+
+            <h2>🖱️ Mouse Events</h2>
+            <div class="code-block">
+&lt;div id="hoverBox" style="padding: 50px; background: lightblue;"&gt;
+    Hover over me!
+&lt;/div&gt;
+
+&lt;script&gt;
+    let hoverBox = document.getElementById("hoverBox");
+
+    hoverBox.addEventListener("mouseover", function() {
+        hoverBox.style.backgroundColor = "lightcoral";
+        hoverBox.textContent = "Mouse is over!";
+    });
+
+    hoverBox.addEventListener("mouseout", function() {
+        hoverBox.style.backgroundColor = "lightblue";
+        hoverBox.textContent = "Hover over me!";
+    });
+&lt;/script&gt;
+            </div>
+
+            <h2>🧪 Live Demo on This Page</h2>
+            <div class="demo">
+                <h3>Interactive Counter</h3>
+                <div id="liveCounter" style="font-size: 36px; margin: 20px; font-weight: bold;">0</div>
+                <button onclick="incrementCounter()" style="padding: 10px 20px; margin: 5px; cursor: pointer; background: #43e97b; color: white; border: none; border-radius: 5px;">+1</button>
+                <button onclick="decrementCounter()" style="padding: 10px 20px; margin: 5px; cursor: pointer; background: #ff6b6b; color: white; border: none; border-radius: 5px;">-1</button>
+                <button onclick="resetCounter()" style="padding: 10px 20px; margin: 5px; cursor: pointer; background: #4facfe; color: white; border: none; border-radius: 5px;">Reset</button>
+            </div>
+
+            <script>
+                let liveCount = 0;
+
+                function incrementCounter() {
+                    liveCount++;
+                    document.getElementById("liveCounter").textContent = liveCount;
+                }
+
+                function decrementCounter() {
+                    liveCount--;
+                    document.getElementById("liveCounter").textContent = liveCount;
+                }
+
+                function resetCounter() {
+                    liveCount = 0;
+                    document.getElementById("liveCounter").textContent = liveCount;
+                }
+            </script>
+
+            <h2>💻 Complete Practice Example</h2>
+            <div class="code-block">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Event Practice</title>
+    <style>
+        body { font-family: Arial; padding: 40px; }
+        .box {
+            width: 300px;
+            padding: 30px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        button {
+            padding: 12px 24px;
+            margin: 5px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .btn-primary { background: #43e97b; color: white; }
+        .btn-danger { background: #ff6b6b; color: white; }
+        input { padding: 10px; font-size: 16px; width: 100%; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>JavaScript Events Practice</h1>
+
+    <!-- Click Event Example -->
+    <div class="box">
+        <h3>Click Event</h3>
+        <p id="clickText">Click the button!</p>
+        <button class="btn-primary" id="clickBtn">Click Me</button>
+    </div>
+
+    <!-- Toggle Visibility -->
+    <div class="box">
+        <h3>Toggle Visibility</h3>
+        <p id="toggleText">This text can be hidden</p>
+        <button class="btn-primary" id="toggleBtn">Toggle</button>
+    </div>
+
+    <!-- Input Event -->
+    <div class="box">
+        <h3>Live Input</h3>
+        <input type="text" id="liveInput" placeholder="Type something...">
+        <p>You typed: <span id="liveOutput"></span></p>
+    </div>
+
+    <!-- Color Picker -->
+    <div class="box" id="colorBox">
+        <h3>Color Changer</h3>
+        <p>Click buttons to change background</p>
+        <button onclick="changeBoxColor('lightcoral')">Red</button>
+        <button onclick="changeBoxColor('lightgreen')">Green</button>
+        <button onclick="changeBoxColor('lightblue')">Blue</button>
+    </div>
+
+    <script>
+        // Click Event
+        document.getElementById("clickBtn").addEventListener("click", function() {
+            document.getElementById("clickText").textContent = "Button was clicked!";
+        });
+
+        // Toggle Visibility
+        document.getElementById("toggleBtn").addEventListener("click", function() {
+            let text = document.getElementById("toggleText");
+            if (text.style.display === "none") {
+                text.style.display = "block";
+            } else {
+                text.style.display = "none";
+            }
+        });
+
+        // Live Input
+        document.getElementById("liveInput").addEventListener("keyup", function() {
+            let value = document.getElementById("liveInput").value;
+            document.getElementById("liveOutput").textContent = value;
+        });
+
+        // Color Changer
+        function changeBoxColor(color) {
+            document.getElementById("colorBox").style.backgroundColor = color;
+        }
+    </script>
+</body>
+</html>
+            </div>
+
+            <h2>✏️ Practice Exercises</h2>
+            <ol>
+                <li>Create a button that changes its own text when clicked</li>
+                <li>Build a light/dark mode toggle button</li>
+                <li>Create an input that displays character count as you type</li>
+                <li>Make a div that changes color on mouseover and mouseout</li>
+                <li>Build a simple calculator with click events</li>
+            </ol>
+
+            <h2>✅ Today's Deliverable</h2>
+            <ul>
+                <li>✓ events-practice.html with interactive features</li>
+                <li>✓ Counter app with increment/decrement/reset</li>
+                <li>✓ At least 3 different event types used</li>
+                <li>✓ addEventListener() implemented</li>
+                <li>✓ Click, keyboard, and mouse events</li>
+                <li>✓ Toggle visibility feature</li>
+                <li>✓ Working demo screenshots</li>
+            </ul>
+
+            <div style="margin-top: 40px;">
+                <a href="day1-js-functions.html" class="btn">← Previous</a>
+                <a href="../index.html" class="btn">Course Home</a>
+                <a href="day3-form-validation.html" class="btn">Next: Day 3 →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 7 - Day 2: JavaScript Events</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

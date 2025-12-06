@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 4 Day 1: Project Planning & Wireframing</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        header { background: #512da8; color: white; padding: 30px; }
+        .nav-breadcrumb {
+            background: #ede7f6;
+            padding: 15px 30px;
+            border-bottom: 2px solid #673ab7;
+        }
+        .nav-breadcrumb a { color: #512da8; text-decoration: none; margin-right: 10px; }
+        .content { padding: 40px; }
+        .section { margin-bottom: 40px; }
+        .section h2 {
+            color: #512da8;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #673ab7;
+        }
+        .section h3 { color: #673ab7; margin: 20px 0 15px 0; }
+        .info-box {
+            background: #ede7f6;
+            border-left: 5px solid #512da8;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .activity-box {
+            background: #e8f5e9;
+            border-left: 5px solid #4caf50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+        .wireframe {
+            border: 2px solid #ddd;
+            padding: 20px;
+            margin: 20px 0;
+            background: #fafafa;
+            border-radius: 8px;
+        }
+        .wireframe-box {
+            border: 2px dashed #999;
+            padding: 15px;
+            margin: 10px 0;
+            text-align: center;
+            background: white;
+            font-family: monospace;
+        }
+        ul, ol { margin-left: 30px; margin-top: 10px; }
+        li { margin-bottom: 10px; }
+        .checklist { list-style: none; margin-left: 0; }
+        .checklist li:before {
+            content: "✓ ";
+            color: #4caf50;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background: #512da8;
+            color: white;
+        }
+        tr:nth-child(even) { background: #f9f9f9; }
+        footer { background: #512da8; color: white; padding: 20px; text-align: center; }
+        .btn-primary {
+            background: #512da8;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin: 10px 10px 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 4 - Day 1: Project Planning & Wireframing</h1>
+            <p>Monday | Duration: 3 hours</p>
+            <p style="margin-top: 10px;">🎯 Final Project: Personal Portfolio Website</p>
+        </header>
+
+        <div class="nav-breadcrumb">
+            <a href="../index.html">← Back to Course Home</a> / Week 4 / Day 1
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2>🎯 Learning Objectives</h2>
+                <ul class="checklist">
+                    <li>Plan a complete web project from scratch</li>
+                    <li>Create wireframes for website layouts</li>
+                    <li>Define project structure and content</li>
+                    <li>Set up project folder and Git repository</li>
+                    <li>Understand user experience (UX) basics</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>🚀 Final Project Overview</h2>
+                
+                <div class="info-box">
+                    <h3>Project: Personal Portfolio Website</h3>
+                    <p>Build a professional portfolio website to showcase your skills, projects, and contact information.</p>
+                </div>
+
+                <h3>Required Pages/Sections</h3>
+                <ol>
+                    <li><strong>Home/Hero Section:</strong> Eye-catching introduction with your name and tagline</li>
+                    <li><strong>About Section:</strong> Your background, education, and interests</li>
+                    <li><strong>Skills Section:</strong> Technical skills with visual elements</li>
+                    <li><strong>Projects Section:</strong> Showcase 3-4 projects you've built</li>
+                    <li><strong>Contact Section:</strong> Contact form and social media links</li>
+                </ol>
+
+                <h3>Technical Requirements</h3>
+                <ul>
+                    <li>✅ Semantic HTML5 structure</li>
+                    <li>✅ Custom CSS styling (no frameworks required)</li>
+                    <li>✅ Fully responsive design (mobile, tablet, desktop)</li>
+                    <li>✅ Navigation menu</li>
+                    <li>✅ Interactive elements (hover effects, transitions)</li>
+                    <li>✅ Form validation</li>
+                    <li>✅ Proper Git version control</li>
+                    <li>✅ Deployed on GitHub Pages</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>📐 What is Wireframing?</h2>
+                
+                <div class="info-box">
+                    <p><strong>Wireframe:</strong> A visual blueprint showing the structure and layout of a website before coding.</p>
+                </div>
+
+                <h3>Why Wireframe?</h3>
+                <ul>
+                    <li><strong>Plan layout:</strong> Decide where elements go before coding</li>
+                    <li><strong>Save time:</strong> Catch issues early in design phase</li>
+                    <li><strong>Focus on structure:</strong> Without worrying about colors/fonts</li>
+                    <li><strong>Client communication:</strong> Show ideas before building</li>
+                    <li><strong>User experience:</strong> Test navigation flow</li>
+                </ul>
+
+                <h3>Wireframe Types</h3>
+                <ul>
+                    <li><strong>Low-fidelity:</strong> Simple sketches, boxes and lines (we'll use this)</li>
+                    <li><strong>Mid-fidelity:</strong> More detail, basic styling</li>
+                    <li><strong>High-fidelity:</strong> Detailed mockups with colors and images</li>
+                </ul>
+
+                <h3>Wireframing Tools</h3>
+                <ul>
+                    <li>📝 Paper and pen (fastest for brainstorming)</li>
+                    <li>🖼️ Figma (free, professional)</li>
+                    <li>🎨 Balsamiq (specialized for wireframes)</li>
+                    <li>✏️ Excalidraw (simple, web-based)</li>
+                    <li>📱 Whimsical</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>🎨 Portfolio Wireframe Examples</h2>
+                
+                <h3>Desktop Layout</h3>
+                <div class="wireframe">
+                    <h4 style="text-align: center; margin-bottom: 20px;">Desktop View (1200px+)</h4>
+                    
+                    <div class="wireframe-box" style="background: #512da8; color: white;">
+                        NAVIGATION BAR<br>
+                        [Logo] [Home] [About] [Skills] [Projects] [Contact]
+                    </div>
+                    
+                    <div class="wireframe-box" style="min-height: 150px;">
+                        HERO SECTION<br>
+                        [Large Heading: Your Name]<br>
+                        [Subheading: Web Developer]<br>
+                        [Call-to-Action Button]
+                    </div>
+                    
+                    <div class="wireframe-box">
+                        ABOUT SECTION<br>
+                        [Profile Photo] | [About Text]
+                    </div>
+                    
+                    <div class="wireframe-box">
+                        SKILLS SECTION<br>
+                        [HTML] [CSS] [JavaScript] [Git] [Responsive Design]
+                    </div>
+                    
+                    <div class="wireframe-box">
+                        PROJECTS SECTION<br>
+                        [Project 1] [Project 2] [Project 3]
+                    </div>
+                    
+                    <div class="wireframe-box">
+                        CONTACT SECTION<br>
+                        [Contact Form] | [Social Links]
+                    </div>
+                    
+                    <div class="wireframe-box" style="background: #512da8; color: white;">
+                        FOOTER<br>
+                        © 2025 Your Name | [Social Icons]
+                    </div>
+                </div>
+
+                <h3>Mobile Layout</h3>
+                <div class="wireframe" style="max-width: 400px; margin: 20px auto;">
+                    <h4 style="text-align: center; margin-bottom: 20px;">Mobile View (< 768px)</h4>
+                    
+                    <div class="wireframe-box" style="background: #512da8; color: white;">
+                        NAV<br>[☰ Menu]
+                    </div>
+                    
+                    <div class="wireframe-box" style="min-height: 100px;">
+                        HERO<br>[Your Name]<br>[Tagline]<br>[Button]
+                    </div>
+                    
+                    <div class="wireframe-box">
+                        ABOUT<br>[Photo]<br>[Text]
+                    </div>
+                    
+                    <div class="wireframe-box">
+                        SKILLS<br>[HTML]<br>[CSS]<br>[JS]
+                    </div>
+                    
+                    <div class="wireframe-box">
+                        PROJECTS<br>[Project 1]<br>[Project 2]<br>[Project 3]
+                    </div>
+                    
+                    <div class="wireframe-box">
+                        CONTACT<br>[Form]<br>[Social]
+                    </div>
+                    
+                    <div class="wireframe-box" style="background: #512da8; color: white;">
+                        FOOTER
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📝 Content Planning</h2>
+                
+                <h3>Gather Your Content</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Section</th>
+                            <th>Content Needed</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Hero</td>
+                            <td>Name, professional title, tagline, call-to-action</td>
+                        </tr>
+                        <tr>
+                            <td>About</td>
+                            <td>Bio (2-3 paragraphs), photo, education, interests</td>
+                        </tr>
+                        <tr>
+                            <td>Skills</td>
+                            <td>List of technical skills (HTML, CSS, Git, etc.)</td>
+                        </tr>
+                        <tr>
+                            <td>Projects</td>
+                            <td>3-4 projects with descriptions, images, links</td>
+                        </tr>
+                        <tr>
+                            <td>Contact</td>
+                            <td>Email, phone (optional), social media links</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Example Content Structure</h3>
+                <div class="code-block">
+<!-- Hero Section -->
+Name: John Doe
+Title: Junior Web Developer
+Tagline: Building beautiful and responsive websites
+CTA: View My Work
+
+<!-- About Section -->
+Heading: About Me
+Bio: Passionate web developer with strong foundation in HTML, CSS, 
+and JavaScript. Completed intensive web development bootcamp at 
+Next-Step Technology...
+Education: Bachelor in Computer Science
+Location: City, Country
+
+<!-- Skills Section -->
+- HTML5 & Semantic Markup
+- CSS3 & Responsive Design
+- Git & GitHub
+- Web Performance Optimization
+- Problem Solving
+
+<!-- Projects Section -->
+Project 1: Student Registration Form
+Description: Responsive form with validation and styling
+Tech: HTML, CSS
+Link: GitHub repository
+
+Project 2: Portfolio Website
+Description: Personal portfolio showcasing my work
+Tech: HTML, CSS, Responsive Design
+Link: Live demo
+
+Project 3: Restaurant Landing Page
+Description: Modern landing page for local restaurant
+Tech: HTML, CSS, CSS Grid
+Link: GitHub repository
+
+<!-- Contact -->
+Email: johndoe@email.com
+GitHub: github.com/johndoe
+LinkedIn: linkedin.com/in/johndoe
+Twitter: @johndoe
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📁 Project Setup</h2>
+                
+                <h3>Folder Structure</h3>
+                <div class="code-block">
+portfolio/
+│
+├── index.html           # Main HTML file
+├── style.css            # Main stylesheet
+├── README.md            # Project documentation
+│
+├── images/              # Image folder
+│   ├── profile.jpg
+│   ├── project1.png
+│   ├── project2.png
+│   └── project3.png
+│
+└── assets/              # Other assets (optional)
+    ├── icons/
+    └── documents/
+        └── resume.pdf
+                </div>
+
+                <h3>Setup Commands</h3>
+                <div class="code-block">
+# 1. Create project folder
+mkdir portfolio
+cd portfolio
+
+# 2. Initialize Git
+git init
+
+# 3. Create files
+New-Item index.html
+New-Item style.css
+New-Item README.md
+
+# 4. Create folders
+mkdir images
+mkdir assets
+
+# 5. Create .gitignore
+@"
+.DS_Store
+Thumbs.db
+*.log
+"@ | Out-File -FilePath .gitignore
+
+# 6. Initial commit
+git add .
+git commit -m "Initial commit: Project setup"
+
+# 7. Create GitHub repository (on GitHub.com)
+# Then connect local to remote
+git remote add origin https://github.com/yourusername/portfolio.git
+git branch -M main
+git push -u origin main
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📋 README Template</h2>
+                <div class="code-block">
+# Personal Portfolio Website
+
+## Overview
+This is my personal portfolio website showcasing my web development 
+skills and projects.
+
+## Features
+- Responsive design (mobile-first approach)
+- Semantic HTML5
+- Custom CSS styling
+- Interactive contact form
+- Project showcase
+- Smooth scrolling navigation
+
+## Technologies Used
+- HTML5
+- CSS3
+- Git & GitHub
+- GitHub Pages (deployment)
+
+## Sections
+1. **Hero** - Introduction and call-to-action
+2. **About** - Background and education
+3. **Skills** - Technical skills showcase
+4. **Projects** - Portfolio of work
+5. **Contact** - Contact form and social links
+
+## Installation
+```bash
+git clone https://github.com/yourusername/portfolio.git
+cd portfolio
+# Open index.html in browser
+```
+
+## Live Demo
+[View Live Site](https://yourusername.github.io/portfolio/)
+
+## Author
+Your Name
+- GitHub: [@yourusername](https://github.com/yourusername)
+- LinkedIn: [Your Name](https://linkedin.com/in/yourprofile)
+
+## License
+MIT License
+
+## Acknowledgments
+- Next-Step Technology Web Development Bootcamp
+- Inspiration from [list any sites that inspired you]
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>💻 Main Activity: Create Your Wireframe</h2>
+                
+                <div class="activity-box">
+                    <h3>Task: Design Your Portfolio Wireframes</h3>
+                    <p>Create wireframes for your portfolio on paper or using a digital tool</p>
+                </div>
+
+                <h3>Steps to Complete</h3>
+                <ol>
+                    <li>
+                        <strong>Choose Your Tool:</strong>
+                        <ul>
+                            <li>Paper and pen (recommended for beginners)</li>
+                            <li>Figma (free account at figma.com)</li>
+                            <li>Excalidraw (excalidraw.com)</li>
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <strong>Create Desktop Wireframe:</strong>
+                        <ul>
+                            <li>Draw header with navigation</li>
+                            <li>Hero section with name and CTA</li>
+                            <li>About section with photo and text</li>
+                            <li>Skills section with skill cards</li>
+                            <li>Projects section (grid layout)</li>
+                            <li>Contact section with form</li>
+                            <li>Footer</li>
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <strong>Create Mobile Wireframe:</strong>
+                        <ul>
+                            <li>Hamburger menu navigation</li>
+                            <li>Stacked sections</li>
+                            <li>Single column layout</li>
+                            <li>Optimized for touch</li>
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <strong>Gather Content:</strong>
+                        <ul>
+                            <li>Write your bio</li>
+                            <li>List your skills</li>
+                            <li>Describe 3-4 projects</li>
+                            <li>Prepare images (or use placeholders)</li>
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <strong>Set Up Project:</strong>
+                        <ul>
+                            <li>Create portfolio folder</li>
+                            <li>Initialize Git repository</li>
+                            <li>Create file structure</li>
+                            <li>Write README.md</li>
+                            <li>Create GitHub repository</li>
+                            <li>Push initial commit</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="section">
+                <h2>🎨 Design Tips</h2>
+                
+                <h3>Color Scheme Ideas</h3>
+                <ul>
+                    <li><strong>Professional Blue:</strong> #2c3e50, #3498db, #ecf0f1</li>
+                    <li><strong>Modern Purple:</strong> #512da8, #673ab7, #9c27b0</li>
+                    <li><strong>Tech Green:</strong> #1b5e20, #4caf50, #81c784</li>
+                    <li><strong>Elegant Gray:</strong> #424242, #757575, #e0e0e0</li>
+                    <li><strong>Creative Orange:</strong> #e65100, #ff6f00, #ffab91</li>
+                </ul>
+
+                <h3>Typography Suggestions</h3>
+                <ul>
+                    <li><strong>Headings:</strong> Montserrat, Raleway, Poppins</li>
+                    <li><strong>Body Text:</strong> Open Sans, Roboto, Lato</li>
+                    <li><strong>Code:</strong> Fira Code, Source Code Pro, Monaco</li>
+                </ul>
+
+                <h3>UX Best Practices</h3>
+                <ul>
+                    <li>✅ Clear navigation visible at all times</li>
+                    <li>✅ Strong visual hierarchy</li>
+                    <li>✅ Plenty of white space</li>
+                    <li>✅ Fast loading times</li>
+                    <li>✅ Accessible to all users</li>
+                    <li>✅ Mobile-friendly from the start</li>
+                    <li>✅ Clear call-to-action buttons</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>✅ Today's Deliverable</h2>
+                <div class="activity-box">
+                    <ul class="checklist">
+                        <li>Wireframes for desktop layout (photo or digital file)</li>
+                        <li>Wireframes for mobile layout</li>
+                        <li>Content document with all text prepared</li>
+                        <li>Project folder structure created</li>
+                        <li>Git repository initialized</li>
+                        <li>GitHub repository created and connected</li>
+                        <li>README.md file written</li>
+                        <li>Initial commit pushed to GitHub</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📚 Additional Resources</h2>
+                <ul>
+                    <li><a href="https://www.figma.com/" target="_blank">Figma - Free Design Tool</a></li>
+                    <li><a href="https://excalidraw.com/" target="_blank">Excalidraw - Simple Wireframing</a></li>
+                    <li><a href="https://www.awwwards.com/websites/portfolio/" target="_blank">Awwwards - Portfolio Inspiration</a></li>
+                    <li><a href="https://dribbble.com/search/portfolio" target="_blank">Dribbble - Portfolio Designs</a></li>
+                    <li><a href="https://coolors.co/" target="_blank">Coolors - Color Palette Generator</a></li>
+                    <li><a href="https://fonts.google.com/" target="_blank">Google Fonts</a></li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <a href="../week3/day3-git-advanced.html" class="btn-primary">← Previous: Week 3 Day 3</a>
+                <a href="../index.html" class="btn-primary">Back to Course Home</a>
+                <a href="day2-portfolio-development.html" class="btn-primary">Next: Day 2 →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 4 - Day 1: Project Planning & Wireframing</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

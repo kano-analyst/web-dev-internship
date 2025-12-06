@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 17 Day 2 - Login & Registration System | Laravel Bootcamp</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: #764ba2;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+
+        h3 {
+            color: #667eea;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .highlight {
+            background: #f0f0ff;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            position: relative;
+        }
+
+        .code-block code {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .comment {
+            color: #6a9955;
+        }
+
+        .keyword {
+            color: #569cd6;
+        }
+
+        .string {
+            color: #ce9178;
+        }
+
+        .function {
+            color: #dcdcaa;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .exercise {
+            background: #fff3cd;
+            padding: 20px;
+            border-left: 4px solid #ffc107;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .tip {
+            background: #d1ecf1;
+            padding: 15px;
+            border-left: 4px solid #17a2b8;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔑 Week 17, Day 2: Login & Registration System</h1>
+            <p>Customize Authentication Forms & Add Features</p>
+        </header>
+
+        <section>
+            <h2>📖 Learning Objectives</h2>
+            <ul>
+                <li>Understand the registration process flow</li>
+                <li>Customize registration forms with additional fields</li>
+                <li>Implement login with "Remember Me" functionality</li>
+                <li>Add password reset features</li>
+                <li>Validate user input properly</li>
+                <li>Customize authentication controllers</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>🔐 Registration System Deep Dive</h2>
+
+            <h3>Registration Flow:</h3>
+            <ol>
+                <li>User visits /register page</li>
+                <li>User fills out registration form</li>
+                <li>Form data is validated</li>
+                <li>Password is hashed</li>
+                <li>User record is created in database</li>
+                <li>User is automatically logged in</li>
+                <li>User is redirected to dashboard</li>
+            </ol>
+
+            <h3>RegisteredUserController (app/Http/Controllers/Auth/RegisteredUserController.php):</h3>
+            <div class="code-block">
+<code><span class="keyword">namespace</span> App\Http\Controllers\Auth;
+
+<span class="keyword">use</span> App\Http\Controllers\Controller;
+<span class="keyword">use</span> App\Models\User;
+<span class="keyword">use</span> Illuminate\Auth\Events\Registered;
+<span class="keyword">use</span> Illuminate\Http\Request;
+<span class="keyword">use</span> Illuminate\Support\Facades\Auth;
+<span class="keyword">use</span> Illuminate\Support\Facades\Hash;
+<span class="keyword">use</span> Illuminate\Validation\Rules;
+
+<span class="keyword">class</span> <span class="function">RegisteredUserController</span> <span class="keyword">extends</span> Controller
+{
+    <span class="comment">// Show registration form</span>
+    <span class="keyword">public function</span> <span class="function">create</span>()
+    {
+        <span class="keyword">return</span> <span class="function">view</span>(<span class="string">'auth.register'</span>);
+    }
+
+    <span class="comment">// Handle registration</span>
+    <span class="keyword">public function</span> <span class="function">store</span>(Request $request)
+    {
+        <span class="comment">// Validate input</span>
+        $request-><span class="function">validate</span>([
+            <span class="string">'name'</span> => [<span class="string">'required'</span>, <span class="string">'string'</span>, <span class="string">'max:255'</span>],
+            <span class="string">'email'</span> => [<span class="string">'required'</span>, <span class="string">'string'</span>, <span class="string">'email'</span>, <span class="string">'max:255'</span>, <span class="string">'unique:users'</span>],
+            <span class="string">'password'</span> => [<span class="string">'required'</span>, <span class="string">'confirmed'</span>, Rules\Password::<span class="function">defaults</span>()],
+        ]);
+
+        <span class="comment">// Create user</span>
+        $user = User::<span class="function">create</span>([
+            <span class="string">'name'</span> => $request->name,
+            <span class="string">'email'</span> => $request->email,
+            <span class="string">'password'</span> => Hash::<span class="function">make</span>($request->password),
+        ]);
+
+        <span class="comment">// Fire registered event</span>
+        <span class="function">event</span>(<span class="keyword">new</span> <span class="function">Registered</span>($user));
+
+        <span class="comment">// Log in the user</span>
+        Auth::<span class="function">login</span>($user);
+
+        <span class="comment">// Redirect to dashboard</span>
+        <span class="keyword">return</span> <span class="function">redirect</span>(RouteServiceProvider::HOME);
+    }
+}</code>
+            </div>
+        </section>
+
+        <section>
+            <h2>➕ Adding Custom Fields to Registration</h2>
+
+            <h3>Step 1: Add Phone Field to Migration</h3>
+            <div class="code-block">
+<code><span class="comment">// Create migration</span>
+php artisan make:migration add_phone_to_users_table --table=users
+
+<span class="comment">// In the migration file:</span>
+<span class="keyword">public function</span> <span class="function">up</span>(): <span class="keyword">void</span>
+{
+    Schema::<span class="function">table</span>(<span class="string">'users'</span>, <span class="keyword">function</span> (Blueprint $table) {
+        $table-><span class="function">string</span>(<span class="string">'phone'</span>, 20)-><span class="function">nullable</span>()-><span class="function">after</span>(<span class="string">'email'</span>);
+    });
+}
+
+<span class="keyword">public function</span> <span class="function">down</span>(): <span class="keyword">void</span>
+{
+    Schema::<span class="function">table</span>(<span class="string">'users'</span>, <span class="keyword">function</span> (Blueprint $table) {
+        $table-><span class="function">dropColumn</span>(<span class="string">'phone'</span>);
+    });
+}
+
+<span class="comment">// Run migration</span>
+php artisan migrate</code>
+            </div>
+
+            <h3>Step 2: Update User Model</h3>
+            <div class="code-block">
+<code><span class="comment">// app/Models/User.php</span>
+<span class="keyword">protected</span> $fillable = [
+    <span class="string">'name'</span>,
+    <span class="string">'email'</span>,
+    <span class="string">'phone'</span>, <span class="comment">// Add phone</span>
+    <span class="string">'password'</span>,
+];</code>
+            </div>
+
+            <h3>Step 3: Update Registration View</h3>
+            <div class="code-block">
+<code><span class="comment">&lt;!-- resources/views/auth/register.blade.php --&gt;</span>
+<span class="keyword">&lt;div</span> class=<span class="string">"mt-4"</span><span class="keyword">&gt;</span>
+    <span class="keyword">&lt;x-input-label</span> for=<span class="string">"phone"</span> :value=<span class="string">"__('Phone Number')"</span> <span class="keyword">/&gt;</span>
+    <span class="keyword">&lt;x-text-input</span> id=<span class="string">"phone"</span> class=<span class="string">"block mt-1 w-full"</span>
+        type=<span class="string">"tel"</span>
+        name=<span class="string">"phone"</span>
+        :value=<span class="string">"old('phone')"</span> <span class="keyword">/&gt;</span>
+    <span class="keyword">&lt;x-input-error</span> :messages=<span class="string">"$errors->get('phone')"</span> class=<span class="string">"mt-2"</span> <span class="keyword">/&gt;</span>
+<span class="keyword">&lt;/div&gt;</span></code>
+            </div>
+
+            <h3>Step 4: Update Controller Validation</h3>
+            <div class="code-block">
+<code><span class="comment">// app/Http/Controllers/Auth/RegisteredUserController.php</span>
+$request-><span class="function">validate</span>([
+    <span class="string">'name'</span> => [<span class="string">'required'</span>, <span class="string">'string'</span>, <span class="string">'max:255'</span>],
+    <span class="string">'email'</span> => [<span class="string">'required'</span>, <span class="string">'string'</span>, <span class="string">'email'</span>, <span class="string">'max:255'</span>, <span class="string">'unique:users'</span>],
+    <span class="string">'phone'</span> => [<span class="string">'nullable'</span>, <span class="string">'string'</span>, <span class="string">'max:20'</span>], <span class="comment">// Add phone validation</span>
+    <span class="string">'password'</span> => [<span class="string">'required'</span>, <span class="string">'confirmed'</span>, Rules\Password::<span class="function">defaults</span>()],
+]);
+
+<span class="comment">// Create user with phone</span>
+$user = User::<span class="function">create</span>([
+    <span class="string">'name'</span> => $request->name,
+    <span class="string">'email'</span> => $request->email,
+    <span class="string">'phone'</span> => $request->phone, <span class="comment">// Add phone</span>
+    <span class="string">'password'</span> => Hash::<span class="function">make</span>($request->password),
+]);</code>
+            </div>
+
+            <div class="tip">
+                <strong>💡 Tip:</strong> Always update the migration, model, view, and controller when adding new fields.
+            </div>
+        </section>
+
+        <section>
+            <h2>🔓 Login System Deep Dive</h2>
+
+            <h3>Login Flow:</h3>
+            <ol>
+                <li>User visits /login page</li>
+                <li>User enters email and password</li>
+                <li>Credentials are validated</li>
+                <li>Password hash is compared</li>
+                <li>Session is created</li>
+                <li>User is redirected to dashboard</li>
+            </ol>
+
+            <h3>AuthenticatedSessionController (Login Logic):</h3>
+            <div class="code-block">
+<code><span class="keyword">namespace</span> App\Http\Controllers\Auth;
+
+<span class="keyword">use</span> App\Http\Controllers\Controller;
+<span class="keyword">use</span> App\Http\Requests\Auth\LoginRequest;
+<span class="keyword">use</span> Illuminate\Http\Request;
+<span class="keyword">use</span> Illuminate\Support\Facades\Auth;
+
+<span class="keyword">class</span> <span class="function">AuthenticatedSessionController</span> <span class="keyword">extends</span> Controller
+{
+    <span class="comment">// Show login form</span>
+    <span class="keyword">public function</span> <span class="function">create</span>()
+    {
+        <span class="keyword">return</span> <span class="function">view</span>(<span class="string">'auth.login'</span>);
+    }
+
+    <span class="comment">// Handle login attempt</span>
+    <span class="keyword">public function</span> <span class="function">store</span>(LoginRequest $request)
+    {
+        <span class="comment">// Authenticate user</span>
+        $request-><span class="function">authenticate</span>();
+
+        <span class="comment">// Regenerate session (security)</span>
+        $request-><span class="function">session</span>()-><span class="function">regenerate</span>();
+
+        <span class="comment">// Redirect to intended page or dashboard</span>
+        <span class="keyword">return</span> <span class="function">redirect</span>()-><span class="function">intended</span>(RouteServiceProvider::HOME);
+    }
+
+    <span class="comment">// Handle logout</span>
+    <span class="keyword">public function</span> <span class="function">destroy</span>(Request $request)
+    {
+        <span class="comment">// Logout user</span>
+        Auth::<span class="function">guard</span>(<span class="string">'web'</span>)-><span class="function">logout</span>();
+
+        <span class="comment">// Invalidate session</span>
+        $request-><span class="function">session</span>()-><span class="function">invalidate</span>();
+
+        <span class="comment">// Regenerate CSRF token</span>
+        $request-><span class="function">session</span>()-><span class="function">regenerateToken</span>();
+
+        <span class="comment">// Redirect to home</span>
+        <span class="keyword">return</span> <span class="function">redirect</span>(<span class="string">'/'</span>);
+    }
+}</code>
+            </div>
+        </section>
+
+        <section>
+            <h2>🔄 "Remember Me" Functionality</h2>
+
+            <div class="highlight">
+                <p>"Remember Me" allows users to stay logged in even after closing the browser. Laravel creates a persistent login token.</p>
+            </div>
+
+            <h3>How It Works:</h3>
+            <ol>
+                <li>User checks "Remember Me" checkbox</li>
+                <li>Laravel creates a remember_token</li>
+                <li>Token is stored in users table</li>
+                <li>Token is saved as a cookie in browser</li>
+                <li>On next visit, Laravel validates token</li>
+                <li>User is automatically logged in</li>
+            </ol>
+
+            <h3>Implementation (Already in Breeze):</h3>
+            <div class="code-block">
+<code><span class="comment">&lt;!-- Login form checkbox --&gt;</span>
+<span class="keyword">&lt;div</span> class=<span class="string">"block mt-4"</span><span class="keyword">&gt;</span>
+    <span class="keyword">&lt;label</span> for=<span class="string">"remember_me"</span><span class="keyword">&gt;</span>
+        <span class="keyword">&lt;input</span> id=<span class="string">"remember_me"</span> type=<span class="string">"checkbox"</span>
+            name=<span class="string">"remember"</span><span class="keyword">&gt;</span>
+        <span class="keyword">&lt;span&gt;</span>Remember me<span class="keyword">&lt;/span&gt;</span>
+    <span class="keyword">&lt;/label&gt;</span>
+<span class="keyword">&lt;/div&gt;</span>
+
+<span class="comment">// Controller handles remember automatically</span>
+<span class="keyword">if</span> (Auth::<span class="function">attempt</span>($credentials, $remember)) {
+    <span class="comment">// User is logged in with remember token</span>
+}</code>
+            </div>
+        </section>
+
+        <section>
+            <h2>🔑 Password Reset System</h2>
+
+            <h3>Password Reset Flow:</h3>
+            <ol>
+                <li>User clicks "Forgot Password?"</li>
+                <li>User enters email address</li>
+                <li>Laravel generates reset token</li>
+                <li>Email with reset link is sent</li>
+                <li>User clicks link in email</li>
+                <li>User enters new password</li>
+                <li>Password is updated</li>
+            </ol>
+
+            <h3>Routes for Password Reset:</h3>
+            <div class="code-block">
+<code><span class="keyword">use</span> App\Http\Controllers\Auth\PasswordResetLinkController;
+<span class="keyword">use</span> App\Http\Controllers\Auth\NewPasswordController;
+
+<span class="comment">// Request reset link</span>
+Route::<span class="function">get</span>(<span class="string">'/forgot-password'</span>, [PasswordResetLinkController::<span class="keyword">class</span>, <span class="string">'create'</span>])
+    -><span class="function">name</span>(<span class="string">'password.request'</span>);
+
+Route::<span class="function">post</span>(<span class="string">'/forgot-password'</span>, [PasswordResetLinkController::<span class="keyword">class</span>, <span class="string">'store'</span>])
+    -><span class="function">name</span>(<span class="string">'password.email'</span>);
+
+<span class="comment">// Reset password</span>
+Route::<span class="function">get</span>(<span class="string">'/reset-password/{token}'</span>, [NewPasswordController::<span class="keyword">class</span>, <span class="string">'create'</span>])
+    -><span class="function">name</span>(<span class="string">'password.reset'</span>);
+
+Route::<span class="function">post</span>(<span class="string">'/reset-password'</span>, [NewPasswordController::<span class="keyword">class</span>, <span class="string">'store'</span>])
+    -><span class="function">name</span>(<span class="string">'password.store'</span>);</code>
+            </div>
+
+            <h3>Password Reset Controller Logic:</h3>
+            <div class="code-block">
+<code><span class="comment">// Send reset link</span>
+<span class="keyword">public function</span> <span class="function">store</span>(Request $request)
+{
+    $request-><span class="function">validate</span>([<span class="string">'email'</span> => <span class="string">'required|email'</span>]);
+
+    <span class="comment">// Send reset link via email</span>
+    $status = Password::<span class="function">sendResetLink</span>(
+        $request-><span class="function">only</span>(<span class="string">'email'</span>)
+    );
+
+    <span class="keyword">return</span> $status === Password::RESET_LINK_SENT
+        ? <span class="function">back</span>()-><span class="function">with</span>(<span class="string">'status'</span>, __($status))
+        : <span class="function">back</span>()-><span class="function">withErrors</span>([<span class="string">'email'</span> => __($status)]);
+}</code>
+            </div>
+
+            <div class="tip">
+                <strong>💡 Tip:</strong> For password reset emails to work, you need to configure SMTP settings in .env file.
+            </div>
+
+            <h3>Email Configuration (.env):</h3>
+            <div class="code-block">
+<code>MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=your-email@gmail.com
+MAIL_PASSWORD=your-app-password
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=your-email@gmail.com
+MAIL_FROM_NAME="${APP_NAME}"</code>
+            </div>
+
+            <div class="highlight">
+                <p><strong>For Gmail:</strong> You need to enable "Less secure app access" or generate an "App Password" from Google Account settings.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>✅ Form Validation Rules</h2>
+
+            <h3>Common Validation Rules for Authentication:</h3>
+            <table>
+                <tr>
+                    <th>Rule</th>
+                    <th>Description</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td>required</td>
+                    <td>Field must have a value</td>
+                    <td>'name' => 'required'</td>
+                </tr>
+                <tr>
+                    <td>email</td>
+                    <td>Must be valid email format</td>
+                    <td>'email' => 'required|email'</td>
+                </tr>
+                <tr>
+                    <td>unique:table</td>
+                    <td>Value must be unique in table</td>
+                    <td>'email' => 'unique:users'</td>
+                </tr>
+                <tr>
+                    <td>confirmed</td>
+                    <td>Must match _confirmation field</td>
+                    <td>'password' => 'confirmed'</td>
+                </tr>
+                <tr>
+                    <td>min:length</td>
+                    <td>Minimum length</td>
+                    <td>'password' => 'min:8'</td>
+                </tr>
+                <tr>
+                    <td>max:length</td>
+                    <td>Maximum length</td>
+                    <td>'name' => 'max:255'</td>
+                </tr>
+            </table>
+
+            <h3>Custom Password Validation:</h3>
+            <div class="code-block">
+<code><span class="keyword">use</span> Illuminate\Validation\Rules\Password;
+
+<span class="comment">// Require 8+ characters</span>
+Password::<span class="function">min</span>(8)
+
+<span class="comment">// Require letters</span>
+Password::<span class="function">min</span>(8)-><span class="function">letters</span>()
+
+<span class="comment">// Require mixed case</span>
+Password::<span class="function">min</span>(8)-><span class="function">mixedCase</span>()
+
+<span class="comment">// Require numbers</span>
+Password::<span class="function">min</span>(8)-><span class="function">numbers</span>()
+
+<span class="comment">// Require symbols</span>
+Password::<span class="function">min</span>(8)-><span class="function">symbols</span>()
+
+<span class="comment">// Check against common passwords</span>
+Password::<span class="function">min</span>(8)-><span class="function">uncompromised</span>()
+
+<span class="comment">// Combine multiple rules</span>
+Password::<span class="function">min</span>(8)
+    -><span class="function">letters</span>()
+    -><span class="function">mixedCase</span>()
+    -><span class="function">numbers</span>()
+    -><span class="function">symbols</span>()
+    -><span class="function">uncompromised</span>()</code>
+            </div>
+        </section>
+
+        <section>
+            <h2>🎨 Customizing Login/Register Views</h2>
+
+            <h3>Custom Login Page:</h3>
+            <div class="code-block">
+<code><span class="comment">&lt;!-- resources/views/auth/login.blade.php --&gt;</span>
+<span class="keyword">&lt;x-guest-layout&gt;</span>
+    <span class="keyword">&lt;div</span> class=<span class="string">"mb-4 text-center"</span><span class="keyword">&gt;</span>
+        <span class="keyword">&lt;h2</span> class=<span class="string">"text-2xl font-bold"</span><span class="keyword">&gt;</span>Welcome Back!<span class="keyword">&lt;/h2&gt;</span>
+        <span class="keyword">&lt;p</span> class=<span class="string">"text-gray-600"</span><span class="keyword">&gt;</span>Login to continue to your dashboard<span class="keyword">&lt;/p&gt;</span>
+    <span class="keyword">&lt;/div&gt;</span>
+
+    <span class="comment">&lt;!-- Session Status --&gt;</span>
+    <span class="keyword">&lt;x-auth-session-status</span> class=<span class="string">"mb-4"</span> :status=<span class="string">"session('status')"</span> <span class="keyword">/&gt;</span>
+
+    <span class="keyword">&lt;form</span> method=<span class="string">"POST"</span> action=<span class="string">"{{ route('login') }}"</span><span class="keyword">&gt;</span>
+        @csrf
+
+        <span class="comment">&lt;!-- Email --&gt;</span>
+        <span class="keyword">&lt;div&gt;</span>
+            <span class="keyword">&lt;x-input-label</span> for=<span class="string">"email"</span> :value=<span class="string">"__('Email')"</span> <span class="keyword">/&gt;</span>
+            <span class="keyword">&lt;x-text-input</span> id=<span class="string">"email"</span> class=<span class="string">"block mt-1 w-full"</span>
+                type=<span class="string">"email"</span> name=<span class="string">"email"</span> :value=<span class="string">"old('email')"</span>
+                required autofocus placeholder=<span class="string">"Enter your email"</span> <span class="keyword">/&gt;</span>
+            <span class="keyword">&lt;x-input-error</span> :messages=<span class="string">"$errors->get('email')"</span> class=<span class="string">"mt-2"</span> <span class="keyword">/&gt;</span>
+        <span class="keyword">&lt;/div&gt;</span>
+
+        <span class="comment">&lt;!-- Password --&gt;</span>
+        <span class="keyword">&lt;div</span> class=<span class="string">"mt-4"</span><span class="keyword">&gt;</span>
+            <span class="keyword">&lt;x-input-label</span> for=<span class="string">"password"</span> :value=<span class="string">"__('Password')"</span> <span class="keyword">/&gt;</span>
+            <span class="keyword">&lt;x-text-input</span> id=<span class="string">"password"</span> class=<span class="string">"block mt-1 w-full"</span>
+                type=<span class="string">"password"</span> name=<span class="string">"password"</span>
+                required placeholder=<span class="string">"Enter your password"</span> <span class="keyword">/&gt;</span>
+            <span class="keyword">&lt;x-input-error</span> :messages=<span class="string">"$errors->get('password')"</span> class=<span class="string">"mt-2"</span> <span class="keyword">/&gt;</span>
+        <span class="keyword">&lt;/div&gt;</span>
+
+        <span class="comment">&lt;!-- Remember Me --&gt;</span>
+        <span class="keyword">&lt;div</span> class=<span class="string">"flex items-center justify-between mt-4"</span><span class="keyword">&gt;</span>
+            <span class="keyword">&lt;label</span> class=<span class="string">"inline-flex items-center"</span><span class="keyword">&gt;</span>
+                <span class="keyword">&lt;input</span> type=<span class="string">"checkbox"</span> name=<span class="string">"remember"</span><span class="keyword">&gt;</span>
+                <span class="keyword">&lt;span</span> class=<span class="string">"ml-2"</span><span class="keyword">&gt;</span>Remember me<span class="keyword">&lt;/span&gt;</span>
+            <span class="keyword">&lt;/label&gt;</span>
+
+            @if (Route::has(<span class="string">'password.request'</span>))
+                <span class="keyword">&lt;a</span> href=<span class="string">"{{ route('password.request') }}"</span><span class="keyword">&gt;</span>
+                    Forgot password?
+                <span class="keyword">&lt;/a&gt;</span>
+            @endif
+        <span class="keyword">&lt;/div&gt;</span>
+
+        <span class="keyword">&lt;div</span> class=<span class="string">"mt-4"</span><span class="keyword">&gt;</span>
+            <span class="keyword">&lt;x-primary-button</span> class=<span class="string">"w-full justify-center"</span><span class="keyword">&gt;</span>
+                Log in
+            <span class="keyword">&lt;/x-primary-button&gt;</span>
+        <span class="keyword">&lt;/div&gt;</span>
+
+        <span class="keyword">&lt;div</span> class=<span class="string">"mt-4 text-center"</span><span class="keyword">&gt;</span>
+            <span class="keyword">&lt;span&gt;</span>Don't have an account?<span class="keyword">&lt;/span&gt;</span>
+            <span class="keyword">&lt;a</span> href=<span class="string">"{{ route('register') }}"</span><span class="keyword">&gt;</span>Register<span class="keyword">&lt;/a&gt;</span>
+        <span class="keyword">&lt;/div&gt;</span>
+    <span class="keyword">&lt;/form&gt;</span>
+<span class="keyword">&lt;/x-guest-layout&gt;</span></code>
+            </div>
+        </section>
+
+        <section>
+            <h2>✍️ Practice Exercises</h2>
+
+            <div class="exercise">
+                <h3>Exercise 1: Add Phone Number to Registration</h3>
+                <ol>
+                    <li>Create migration to add phone field</li>
+                    <li>Update User model fillable array</li>
+                    <li>Add phone input to register view</li>
+                    <li>Update controller validation</li>
+                    <li>Test registration with phone number</li>
+                </ol>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 2: Customize Login Page</h3>
+                <ol>
+                    <li>Open login.blade.php</li>
+                    <li>Add custom welcome message</li>
+                    <li>Change button text to "Sign In"</li>
+                    <li>Add placeholder text to inputs</li>
+                    <li>Test the updated login page</li>
+                </ol>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 3: Test Password Validation</h3>
+                <ol>
+                    <li>Try registering with weak passwords</li>
+                    <li>Add strong password rules in controller</li>
+                    <li>Test with various password combinations</li>
+                    <li>Verify error messages display correctly</li>
+                </ol>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 4: Test Remember Me</h3>
+                <ol>
+                    <li>Login with "Remember Me" checked</li>
+                    <li>Close browser completely</li>
+                    <li>Open browser and visit site</li>
+                    <li>Verify you're still logged in</li>
+                    <li>Check remember_token in database</li>
+                </ol>
+            </div>
+        </section>
+
+        <section>
+            <h2>🎯 Today's Deliverable</h2>
+            <div class="highlight">
+                <h3>✅ Enhanced Registration & Login System</h3>
+                <p><strong>Requirements:</strong></p>
+                <ul>
+                    <li>Registration form with phone number field</li>
+                    <li>Customized login page with welcome message</li>
+                    <li>Working "Remember Me" functionality</li>
+                    <li>Strong password validation rules</li>
+                    <li>At least 3 test users registered</li>
+                    <li>Screenshots of customized views</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>📚 Summary</h2>
+            <ul>
+                <li>Registration creates new user accounts with hashed passwords</li>
+                <li>Custom fields can be added to registration forms</li>
+                <li>Login validates credentials and creates sessions</li>
+                <li>"Remember Me" creates persistent login tokens</li>
+                <li>Password reset uses email tokens for security</li>
+                <li>Validation rules ensure data integrity</li>
+                <li>Views are fully customizable</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>🔜 What's Next?</h2>
+            <p>In Day 3, we'll learn about:</p>
+            <ul>
+                <li>Middleware concepts and usage</li>
+                <li>Protecting routes with auth middleware</li>
+                <li>Creating custom middleware</li>
+                <li>Role-based access control</li>
+                <li>Route groups and middleware</li>
+            </ul>
+        </section>
+
+        <div class="nav-buttons">
+            <a href="day1-authentication-intro.html" class="btn">← Previous: Auth Setup</a>
+            <a href="day3-middleware-protection.html" class="btn">Next: Middleware →</a>
+        </div>
+    </div>
+</body>
+</html>

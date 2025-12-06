@@ -1,81 +1,1853 @@
-<html>
-    <head>
-        <title>Homepage</title>
-    </head>
-    <body>
-        <!-- Header Tag-->
-         <h1>Heading 1</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Development Internship - 24-Week Bootcamp with Capstone Project</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 50px 30px;
+            text-align: center;
+        }
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+        }
+        header p {
+            font-size: 1.3em;
+            opacity: 0.95;
+            margin-bottom: 20px;
+        }
+        .program-goal {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .program-goal h3 {
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        .content {
+            padding: 40px 30px;
+        }
+        .week-section {
+            margin-bottom: 60px;
+        }
+        .week-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px 30px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+        .week-header h2 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        .week-header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+        .days-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+        .day-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s;
+            border-left: 5px solid #667eea;
+            position: relative;
+        }
+        .day-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+        }
+        .day-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+        .day-card h3 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+            padding-right: 80px;
+        }
+        .day-card h4 {
+            color: #667eea;
+            margin: 15px 0 10px 0;
+            font-size: 1.1em;
+        }
+        .day-card ul {
+            margin-left: 20px;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        .day-card ul li {
+            margin-bottom: 8px;
+        }
+        .deliverable {
+            background: #e3f2fd;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 3px solid #2196f3;
+        }
+        .deliverable strong {
+            color: #1565c0;
+        }
+        .lesson-link {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+        .lesson-link:hover {
+            background: #764ba2;
+            transform: scale(1.05);
+        }
+        .project-highlight {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 40px 0;
+        }
+        .project-highlight h2 {
+            font-size: 2.2em;
+            margin-bottom: 15px;
+        }
+        .project-highlight p {
+            font-size: 1.2em;
+            margin-bottom: 25px;
+        }
+        .quick-nav {
+            background: #f0f4ff;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+        }
+        .quick-nav h3 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .nav-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        .nav-item:hover {
+            border-color: #667eea;
+            transform: scale(1.05);
+        }
+        .nav-item a {
+            color: #1e3c72;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        footer {
+            background: #1e3c72;
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+        footer p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 Web Development Internship</h1>
+            <p>24-Week Intensive Bootcamp - Full Stack Development with Capstone Project</p>
+            <div class="program-goal">
+                <h3>🎯 Program Goal</h3>
+                <p><strong>Month 1:</strong> Master HTML5, CSS3, Responsive Design, and Git version control.<br>
+                <strong>Month 2:</strong> Build dynamic, interactive web applications with Bootstrap and JavaScript.<br>
+                <strong>Month 3:</strong> Learn PHP, MySQL, and backend development with database integration.<br>
+                <strong>Month 4:</strong> Master Laravel framework and MVC architecture for modern web development.<br>
+                <strong>Month 5:</strong> Build secure, scalable web applications with Authentication, APIs, and File Management.<br>
+                <strong>Month 6:</strong> Complete a real-world capstone project, deploy it live, and present your work professionally.</p>
+            </div>
+        </header>
 
-         <!--Paragraph Tag-->
-        <p>Lorem Ipsum Paragram ......</p>
+        <div class="content">
+            <div class="quick-nav">
+                <h3>📚 Quick Navigation</h3>
+                <h4 style="color: #667eea; margin-bottom: 10px;">Month 1: HTML & CSS Fundamentals</h4>
+                <div class="nav-grid">
+                    <div class="nav-item"><a href="#week1">Week 1</a></div>
+                    <div class="nav-item"><a href="#week2">Week 2</a></div>
+                    <div class="nav-item"><a href="#week3">Week 3</a></div>
+                    <div class="nav-item"><a href="#week4">Week 4</a></div>
+                </div>
+                <h4 style="color: #f093fb; margin: 20px 0 10px 0;">Month 2: Bootstrap & JavaScript</h4>
+                <div class="nav-grid">
+                    <div class="nav-item"><a href="#week5">Week 5</a></div>
+                    <div class="nav-item"><a href="#week6">Week 6</a></div>
+                    <div class="nav-item"><a href="#week7">Week 7</a></div>
+                    <div class="nav-item"><a href="#week8">Week 8</a></div>
+                </div>
+                <h4 style="color: #ff6b6b; margin: 20px 0 10px 0;">Month 3: PHP & MySQL Backend</h4>
+                <div class="nav-grid">
+                    <div class="nav-item"><a href="#week9">Week 9</a></div>
+                    <div class="nav-item"><a href="#week10">Week 10</a></div>
+                    <div class="nav-item"><a href="#week11">Week 11</a></div>
+                    <div class="nav-item"><a href="#week12">Week 12</a></div>
+                </div>
+                <h4 style="color: #fa709a; margin: 20px 0 10px 0;">Month 4: Laravel Framework</h4>
+                <div class="nav-grid">
+                    <div class="nav-item"><a href="#week13">Week 13</a></div>
+                    <div class="nav-item"><a href="#week14">Week 14</a></div>
+                    <div class="nav-item"><a href="#week15">Week 15</a></div>
+                    <div class="nav-item"><a href="#week16">Week 16</a></div>
+                </div>
+                <h4 style="color: #00d2ff; margin: 20px 0 10px 0;">Month 5: Advanced Laravel + APIs</h4>
+                <div class="nav-grid">
+                    <div class="nav-item"><a href="#week17">Week 17</a></div>
+                    <div class="nav-item"><a href="#week18">Week 18</a></div>
+                    <div class="nav-item"><a href="#week19">Week 19</a></div>
+                    <div class="nav-item"><a href="#week20">Week 20</a></div>
+                </div>
+                <h4 style="color: #ff6e7f; margin: 20px 0 10px 0;">Month 6: Capstone Project</h4>
+                <div class="nav-grid">
+                    <div class="nav-item"><a href="#week21">Week 21</a></div>
+                    <div class="nav-item"><a href="#week22">Week 22</a></div>
+                    <div class="nav-item"><a href="#week23">Week 23</a></div>
+                    <div class="nav-item"><a href="#week24">Week 24</a></div>
+                </div>
+            </div>
 
-        <!-- Link Tag-->
-         <a href="https://www.google.com/">Click Here</a>
+            <!-- WEEK 1 -->
+            <div class="week-section" id="week1">
+                <div class="week-header">
+                    <h2>📅 Week 1: Introduction to the Web, Tools Setup, and HTML Basics</h2>
+                    <p>Learn the foundations of web development, set up your development environment, and start building with HTML.</p>
+                </div>
+                <div class="days-grid">
+                    <div class="day-card">
+                        <span class="day-badge">Day 1 - Mon</span>
+                        <h3>Introduction to Web Technologies</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Understand how the Internet & Web work</li>
+                            <li>Learn about clients, servers, and HTTP</li>
+                            <li>Setup development environment</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Install VS Code, XAMPP, and Git</li>
+                            <li>Create project folder structure</li>
+                            <li>Run your first "Hello World" HTML file</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Installed environment and working first HTML file
+                        </div>
+                        <a href="week1/day1-intro-to-web.html" class="lesson-link">Start Day 1 Lesson →</a>
+                    </div>
 
-         <!--Images Tag-->
-         <img src="buklogo.jpg" />
+                    <div class="day-card">
+                        <span class="day-badge">Day 2 - Wed</span>
+                        <h3>HTML Fundamentals</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Understand HTML document structure</li>
+                            <li>Learn common tags (headings, paragraphs, links, images, lists)</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Build a simple profile page</li>
+                            <li>Add headings, paragraphs, images, and hyperlinks</li>
+                            <li>Create navigation between pages</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Functional simple HTML profile page
+                        </div>
+                        <a href="week1/day2-html-fundamentals.html" class="lesson-link">Start Day 2 Lesson →</a>
+                    </div>
 
-         <!-- Lists in HTML-->
-          <h3>Ordered List (Shopping List)</h3>
-          <ol type="I">
-            <li>Milk</li>
-            <li>Tea</li>
-            <li>Sugar</li>
-            <li>Honey</li>
-          </ol>
-               <h3>Intern List (List of Interns at Next-Step)</h3>
-          <ul style="list-style-type:square">
-            <li>Abdullahi Haruna Yahaya</li>
-            <li>Muhammad Nasir Hassan</li>
-            <li>Ashiru Auwal Lawal</li>
-            <li>Bashir Ibrahim</li>
-          </ul>
+                    <div class="day-card">
+                        <span class="day-badge">Day 3 - Fri</span>
+                        <h3>HTML Forms, Tables & Git Basics</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Learn forms, inputs, and tables</li>
+                            <li>Introduce Git version control (init, add, commit, push)</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Create a Student Registration Form</li>
+                            <li>Initialize Git repository</li>
+                            <li>Make first commit and push to GitHub</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> GitHub repo with working HTML form and table
+                        </div>
+                        <a href="week1/day3-forms-tables-git.html" class="lesson-link">Start Day 3 Lesson →</a>
+                    </div>
+                </div>
+            </div>
 
-          <!-- Tables in HTML-->
-           <table border="1">
-            <!--Table Header-->
-           <tr>
-            <th>S/N</th>
-            <th>Name</th>
-            <th>Department</th>
-            <th>Level</th>
-           </tr>
+            <!-- WEEK 2 -->
+            <div class="week-section" id="week2">
+                <div class="week-header">
+                    <h2>📅 Week 2: Semantic HTML, Multimedia, and Introduction to CSS</h2>
+                    <p>Master semantic HTML5 elements, embed multimedia, and start styling with CSS.</p>
+                </div>
+                <div class="days-grid">
+                    <div class="day-card">
+                        <span class="day-badge">Day 1 - Mon</span>
+                        <h3>Semantic HTML & Multimedia</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Understand semantic tags</li>
+                            <li>Structure pages with &lt;header&gt;, &lt;main&gt;, &lt;footer&gt;</li>
+                            <li>Embed audio and video</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Build a "News Article Page"</li>
+                            <li>Use semantic HTML5 elements</li>
+                            <li>Embed multimedia content</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Completed semantic HTML page with audio/video
+                        </div>
+                        <a href="week2/day1-semantic-html.html" class="lesson-link">Start Day 1 Lesson →</a>
+                    </div>
 
-        <!--Table Data-->
-           <tr>
-            <td>1</td>
-            <td>Ahmad Tijjani Garba</td>
-            <td>Information Technology</td>
-            <td>900</td>
-           </tr>
+                    <div class="day-card">
+                        <span class="day-badge">Day 2 - Wed</span>
+                        <h3>Introduction to CSS</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Learn CSS syntax, selectors, properties</li>
+                            <li>Apply inline, internal, and external CSS</li>
+                            <li>Use Chrome DevTools</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Style the News Page</li>
+                            <li>Experiment with colors, fonts, margins</li>
+                            <li>Link external CSS file</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Styled webpage with CSS applied
+                        </div>
+                        <a href="week2/day2-intro-to-css.html" class="lesson-link">Start Day 2 Lesson →</a>
+                    </div>
 
-            <tr>
-            <td>2</td>
-            <td>Abdullahi Haruna Yahaya</td>
-            <td>Computer Science</td>
-            <td>400</td>
-           </tr>
+                    <div class="day-card">
+                        <span class="day-badge">Day 3 - Fri</span>
+                        <h3>The Box Model & Layout Fundamentals</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Understand margin, padding, and borders</li>
+                            <li>Basic layout using display, width, height</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Create a 2-column layout</li>
+                            <li>Build "Profile + Bio" page</li>
+                            <li>Practice box model properties</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Properly aligned 2-column webpage
+                        </div>
+                        <a href="week2/day3-box-model-layout.html" class="lesson-link">Start Day 3 Lesson →</a>
+                    </div>
+                </div>
+            </div>
 
-            <tr>
-            <td>3</td>
-            <td>Muhammad Nasir Hassan</td>
-            <td>Computer Science</td>
-            <td>300</td>
-           </tr>
+            <!-- WEEK 3 -->
+            <div class="week-section" id="week3">
+                <div class="week-header">
+                    <h2>📅 Week 3: Responsive Design and Version Control Practice</h2>
+                    <p>Make your websites work on all devices and master Git workflows.</p>
+                </div>
+                <div class="days-grid">
+                    <div class="day-card">
+                        <span class="day-badge">Day 1 - Mon</span>
+                        <h3>Responsive Design Basics</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Learn about viewport and media queries</li>
+                            <li>Design for different screen sizes</li>
+                            <li>Mobile-first approach</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Convert profile page to responsive design</li>
+                            <li>Test on browser developer tools</li>
+                            <li>Apply media queries</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Responsive HTML/CSS layout
+                        </div>
+                        <a href="week3/day1-responsive-design.html" class="lesson-link">Start Day 1 Lesson →</a>
+                    </div>
 
-            <tr>
-            <td>4</td>
-            <td>Ashiru Auwal Lawal</td>
-            <td>Computer Science</td>
-            <td>200</td>
-           </tr>
-         
-             <tr>
-            <td>5</td>
-            <td>Bashir Ibrahim</td>
-            <td>Computer Science</td>
-            <td>200</td>
-           </tr>
-           </table>
-    </body>
+                    <div class="day-card">
+                        <span class="day-badge">Day 2 - Wed</span>
+                        <h3>Practical CSS: Styling Forms & Buttons</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Apply consistent styling using classes and IDs</li>
+                            <li>Style interactive elements</li>
+                            <li>Add hover effects and transitions</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Style the Student Registration Form</li>
+                            <li>Add CSS transitions and hover effects</li>
+                            <li>Create custom button styles</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Well-styled form with interactive buttons
+                        </div>
+                        <a href="week3/day2-styling-forms.html" class="lesson-link">Start Day 2 Lesson →</a>
+                    </div>
+
+                    <div class="day-card">
+                        <span class="day-badge">Day 3 - Fri</span>
+                        <h3>Git Advanced: Branching & Merging</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Branching, merging, and collaboration</li>
+                            <li>Upload multiple projects to GitHub</li>
+                            <li>Collaboration workflow</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Create new branch for styling updates</li>
+                            <li>Merge back into main branch</li>
+                            <li>Push all changes to GitHub</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Git repo with multiple commits and branches
+                        </div>
+                        <a href="week3/day3-git-advanced.html" class="lesson-link">Start Day 3 Lesson →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WEEK 4 -->
+            <div class="week-section" id="week4">
+                <div class="project-highlight">
+                    <h2>🏆 Week 4: Mini Project - Personal Portfolio Website</h2>
+                    <p>Apply everything you've learned to build your own professional portfolio website!</p>
+                </div>
+                <div class="days-grid">
+                    <div class="day-card">
+                        <span class="day-badge">Day 1 - Mon</span>
+                        <h3>Project Planning & Wireframing</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Design portfolio layout</li>
+                            <li>Plan sections: Home, About, Skills, Projects, Contact</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Draft wireframe of personal portfolio</li>
+                            <li>Set up project folder and Git repo</li>
+                            <li>Get wireframe approved</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Approved wireframe and repo created
+                        </div>
+                        <a href="week4/day1-project-planning.html" class="lesson-link">Start Day 1 Lesson →</a>
+                    </div>
+
+                    <div class="day-card">
+                        <span class="day-badge">Day 2 - Wed</span>
+                        <h3>Portfolio Development</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Build site structure with HTML</li>
+                            <li>Style with CSS</li>
+                            <li>Ensure responsive design</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Develop HTML and CSS files</li>
+                            <li>Implement navigation bar</li>
+                            <li>Create all content sections</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Functional homepage and subpages
+                        </div>
+                        <a href="week4/day2-portfolio-development.html" class="lesson-link">Start Day 2 Lesson →</a>
+                    </div>
+
+                    <div class="day-card">
+                        <span class="day-badge">Day 3 - Fri</span>
+                        <h3>Project Review & Presentation</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Submit and review portfolio</li>
+                            <li>Host on GitHub Pages</li>
+                            <li>Present your work</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Final testing and debugging</li>
+                            <li>Deploy via GitHub Pages</li>
+                            <li>Submit repository link</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Final Deliverable:</strong> Published responsive Personal Portfolio Website
+                        </div>
+                        <a href="week4/day3-project-review.html" class="lesson-link">Start Day 3 Lesson →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MONTH 2 DIVIDER -->
+            <div class="project-highlight" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); margin: 60px 0 40px 0;">
+                <h2>🎉 Month 2: Advanced Frontend Development</h2>
+                <p>Master Bootstrap framework and JavaScript to create dynamic, interactive web applications!</p>
+            </div>
+
+            <!-- WEEK 5 -->
+            <div class="week-section" id="week5">
+                <div class="week-header" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                    <h2>📅 Week 5: Introduction to Bootstrap</h2>
+                    <p>Learn to build responsive, mobile-friendly websites faster with Bootstrap framework.</p>
+                </div>
+                <div class="days-grid">
+                    <div class="day-card" style="border-left-color: #fa709a;">
+                        <span class="day-badge" style="background: #fa709a;">Day 1 - Mon</span>
+                        <h3>Introduction to Bootstrap & Setup</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Understand what Bootstrap is and why use it</li>
+                            <li>Learn CDN and installation methods</li>
+                            <li>Link Bootstrap to HTML project</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Install Bootstrap via CDN</li>
+                            <li>Link Bootstrap CSS and JS to sample HTML</li>
+                            <li>Test Bootstrap with a simple button</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Sample page with Bootstrap properly linked
+                        </div>
+                        <a href="week5/day1-bootstrap-intro.html" class="lesson-link" style="background: #fa709a;">Start Day 1 Lesson →</a>
+                    </div>
+
+                    <div class="day-card" style="border-left-color: #fa709a;">
+                        <span class="day-badge" style="background: #fa709a;">Day 2 - Wed</span>
+                        <h3>Bootstrap Grid System</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Master rows and columns</li>
+                            <li>Understand responsive grid breakpoints</li>
+                            <li>Create flexible layouts</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Create 2-column layout</li>
+                            <li>Create 3-column layout</li>
+                            <li>Build responsive grid that changes on mobile</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Responsive grid layout page
+                        </div>
+                        <a href="week5/day2-bootstrap-grid.html" class="lesson-link" style="background: #fa709a;">Start Day 2 Lesson →</a>
+                    </div>
+
+                    <div class="day-card" style="border-left-color: #fa709a;">
+                        <span class="day-badge" style="background: #fa709a;">Day 3 - Fri</span>
+                        <h3>Bootstrap Components & Utilities</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Learn Bootstrap cards, buttons, and alerts</li>
+                            <li>Use spacing utilities (margin, padding)</li>
+                            <li>Apply Bootstrap to existing project</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Redesign personal portfolio using Bootstrap</li>
+                            <li>Add navbar, cards, and buttons</li>
+                            <li>Apply utility classes for spacing</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Bootstrap-powered portfolio website
+                        </div>
+                        <a href="week5/day3-bootstrap-components.html" class="lesson-link" style="background: #fa709a;">Start Day 3 Lesson →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WEEK 6 -->
+            <div class="week-section" id="week6">
+                <div class="week-header" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                    <h2>📅 Week 6: JavaScript Basics & DOM Manipulation</h2>
+                    <p>Start your JavaScript journey and learn to make web pages interactive.</p>
+                </div>
+                <div class="days-grid">
+                    <div class="day-card" style="border-left-color: #4facfe;">
+                        <span class="day-badge" style="background: #4facfe;">Day 1 - Mon</span>
+                        <h3>JavaScript Variables & Data Types</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Understand var, let, and const</li>
+                            <li>Learn strings, numbers, booleans, and arrays</li>
+                            <li>Practice variable declaration and usage</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Write JS scripts with different data types</li>
+                            <li>Create and manipulate arrays</li>
+                            <li>Console.log variable values</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Simple JavaScript script file
+                        </div>
+                        <a href="week6/day1-js-variables.html" class="lesson-link" style="background: #4facfe;">Start Day 1 Lesson →</a>
+                    </div>
+
+                    <div class="day-card" style="border-left-color: #4facfe;">
+                        <span class="day-badge" style="background: #4facfe;">Day 2 - Wed</span>
+                        <h3>JavaScript Operators</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Learn arithmetic operators (+, -, *, /, %)</li>
+                            <li>Understand comparison operators (==, ===, !=, <, >)</li>
+                            <li>Practice logical operators (&&, ||, !)</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Solve operator-based exercises</li>
+                            <li>Build a simple calculator logic</li>
+                            <li>Practice conditional statements</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Operator practice solutions file
+                        </div>
+                        <a href="week6/day2-js-operators.html" class="lesson-link" style="background: #4facfe;">Start Day 2 Lesson →</a>
+                    </div>
+
+                    <div class="day-card" style="border-left-color: #4facfe;">
+                        <span class="day-badge" style="background: #4facfe;">Day 3 - Fri</span>
+                        <h3>DOM Manipulation</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Understand the Document Object Model</li>
+                            <li>Use getElementById and querySelector</li>
+                            <li>Change HTML content with JavaScript</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Select elements from HTML</li>
+                            <li>Change text content dynamically</li>
+                            <li>Modify element styles with JS</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> DOM manipulation demo page
+                        </div>
+                        <a href="week6/day3-dom-manipulation.html" class="lesson-link" style="background: #4facfe;">Start Day 3 Lesson →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WEEK 7 -->
+            <div class="week-section" id="week7">
+                <div class="week-header" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                    <h2>📅 Week 7: Events, Functions & Form Validation</h2>
+                    <p>Master JavaScript functions and create interactive, validated forms.</p>
+                </div>
+                <div class="days-grid">
+                    <div class="day-card" style="border-left-color: #43e97b;">
+                        <span class="day-badge" style="background: #43e97b;">Day 1 - Mon</span>
+                        <h3>JavaScript Functions</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Learn function declaration and invocation</li>
+                            <li>Understand parameters and return values</li>
+                            <li>Write reusable functions</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Create functions for common tasks</li>
+                            <li>Build calculator functions</li>
+                            <li>Practice function composition</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Function practice script with 5+ functions
+                        </div>
+                        <a href="week7/day1-js-functions.html" class="lesson-link" style="background: #43e97b;">Start Day 1 Lesson →</a>
+                    </div>
+
+                    <div class="day-card" style="border-left-color: #43e97b;">
+                        <span class="day-badge" style="background: #43e97b;">Day 2 - Wed</span>
+                        <h3>JavaScript Events</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Understand event handling</li>
+                            <li>Learn click, submit, and keyboard events</li>
+                            <li>Add interactivity to web pages</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Add click events to buttons</li>
+                            <li>Handle form submit events</li>
+                            <li>Create interactive button counter</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Event-driven interactive web page
+                        </div>
+                        <a href="week7/day2-js-events.html" class="lesson-link" style="background: #43e97b;">Start Day 2 Lesson →</a>
+                    </div>
+
+                    <div class="day-card" style="border-left-color: #43e97b;">
+                        <span class="day-badge" style="background: #43e97b;">Day 3 - Fri</span>
+                        <h3>Form Validation with JavaScript</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Implement client-side form validation</li>
+                            <li>Check required fields and data formats</li>
+                            <li>Display error messages dynamically</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Validate registration form with JS</li>
+                            <li>Check email format and password strength</li>
+                            <li>Show success/error messages</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Fully validated registration form
+                        </div>
+                        <a href="week7/day3-form-validation.html" class="lesson-link" style="background: #43e97b;">Start Day 3 Lesson →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WEEK 8 -->
+            <div class="week-section" id="week8">
+                <div class="project-highlight" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                    <h2>🏆 Week 8: Final Project - Interactive To-Do List App</h2>
+                    <p>Build a complete web application using HTML, CSS, Bootstrap, and JavaScript!</p>
+                </div>
+                <div class="days-grid">
+                    <div class="day-card" style="border-left-color: #f5576c;">
+                        <span class="day-badge" style="background: #f5576c;">Day 1 - Mon</span>
+                        <h3>Project Planning & UI Design</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Understand project requirements</li>
+                            <li>Plan app features (add, delete, mark complete)</li>
+                            <li>Design user interface layout</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Create project wireframe</li>
+                            <li>Set up project folder structure</li>
+                            <li>Design UI with Bootstrap components</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Project wireframe and folder structure
+                        </div>
+                        <a href="week8/day1-todo-planning.html" class="lesson-link" style="background: #f5576c;">Start Day 1 Lesson →</a>
+                    </div>
+
+                    <div class="day-card" style="border-left-color: #f5576c;">
+                        <span class="day-badge" style="background: #f5576c;">Day 2 - Wed</span>
+                        <h3>App Development</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Build HTML structure with Bootstrap</li>
+                            <li>Style with CSS</li>
+                            <li>Implement JavaScript functionality</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Create input form for new tasks</li>
+                            <li>Add tasks to list dynamically</li>
+                            <li>Implement delete and complete features</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Fully functional To-Do List App
+                        </div>
+                        <a href="week8/day2-todo-development.html" class="lesson-link" style="background: #f5576c;">Start Day 2 Lesson →</a>
+                    </div>
+
+                    <div class="day-card" style="border-left-color: #f5576c;">
+                        <span class="day-badge" style="background: #f5576c;">Day 3 - Fri</span>
+                        <h3>Testing, Hosting & Presentation</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Test all app features</li>
+                            <li>Debug and optimize code</li>
+                            <li>Deploy to GitHub Pages</li>
+                            <li>Present your project</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Test on different browsers and devices</li>
+                            <li>Upload to GitHub repository</li>
+                            <li>Enable GitHub Pages hosting</li>
+                            <li>Prepare and deliver presentation</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Final Deliverable:</strong> Live To-Do List App on GitHub Pages
+                        </div>
+                        <a href="week8/day3-deployment.html" class="lesson-link" style="background: #f5576c;">Start Day 3 Lesson →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WEEK 9 -->
+            <div class="week-section" id="week9" style="background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%); color: white;">
+                <div class="week-header">
+                    <h2>📅 Week 9: PHP Setup, Syntax & Form Data (GET & POST)</h2>
+                    <p>Learn PHP fundamentals, server-side scripting, and form handling with GET and POST methods.</p>
+                </div>
+                <div class="days-grid">
+                    <div class="day-card">
+                        <span class="day-badge">Day 1 - Mon</span>
+                        <h3>Introduction to PHP & Environment Setup</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Install XAMPP/WAMP server</li>
+                            <li>Understand PHP tags and syntax</li>
+                            <li>Learn PHP variables and data types</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Install server environment</li>
+                            <li>Write first PHP script with variables</li>
+                            <li>Create "Hello World" PHP program</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> PHP setup completed, working "Hello World" script
+                        </div>
+                        <a href="week9/day1-php-intro.html" class="lesson-link" style="background: #ff6b6b;">Start Day 1 Lesson →</a>
+                    </div>
+
+                    <div class="day-card">
+                        <span class="day-badge">Day 2 - Wed</span>
+                        <h3>Arrays, Conditionals & Loops</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Master indexed and associative arrays</li>
+                            <li>Learn if/else conditionals</li>
+                            <li>Practice for and while loops</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Create array manipulation scripts</li>
+                            <li>Build loop-based programs</li>
+                            <li>Practice control structures</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Loop and array practice scripts
+                        </div>
+                        <a href="week9/day2-arrays-loops.html" class="lesson-link" style="background: #ff6b6b;">Start Day 2 Lesson →</a>
+                    </div>
+
+                    <div class="day-card">
+                        <span class="day-badge">Day 3 - Fri</span>
+                        <h3>Handling GET & POST Methods</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Understand form methods (GET & POST)</li>
+                            <li>Retrieve form data in PHP</li>
+                            <li>Build interactive forms</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Create login form with GET method</li>
+                            <li>Build secure POST form</li>
+                            <li>Process and display form data</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Functional PHP form handling
+                        </div>
+                        <a href="week9/day3-forms-getpost.html" class="lesson-link" style="background: #ff6b6b;">Start Day 3 Lesson →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WEEK 10 -->
+            <div class="week-section" id="week10">
+                <div class="week-header" style="background: linear-gradient(135deg, #ee5a6f 0%, #f29263 100%);">
+                    <h2>📅 Week 10: PHP Functions, Includes & File Handling</h2>
+                    <p>Master PHP functions, modular code structure, and file operations.</p>
+                </div>
+                <div class="days-grid">
+                    <div class="day-card">
+                        <span class="day-badge">Day 1 - Mon</span>
+                        <h3>PHP Functions (Built-in & User-defined)</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Learn built-in PHP functions</li>
+                            <li>Create custom functions</li>
+                            <li>Understand parameters and return values</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Write calculation functions</li>
+                            <li>Build validation functions</li>
+                            <li>Practice function scope</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Function-based PHP scripts
+                        </div>
+                        <a href="week10/day1-php-functions.html" class="lesson-link" style="background: #ee5a6f;">Start Day 1 Lesson →</a>
+                    </div>
+
+                    <div class="day-card">
+                        <span class="day-badge">Day 2 - Wed</span>
+                        <h3>Includes & File Structure</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Learn include and require statements</li>
+                            <li>Build modular PHP applications</li>
+                            <li>Create reusable components</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Split project into header/footer files</li>
+                            <li>Create navigation component</li>
+                            <li>Build multi-page PHP site</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Modular PHP file structure
+                        </div>
+                        <a href="week10/day2-includes.html" class="lesson-link" style="background: #ee5a6f;">Start Day 2 Lesson →</a>
+                    </div>
+
+                    <div class="day-card">
+                        <span class="day-badge">Day 3 - Fri</span>
+                        <h3>File Handling & Form Processing</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Read and write files with PHP</li>
+                            <li>Process form data and save to files</li>
+                            <li>Validate form inputs</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Create file reading scripts</li>
+                            <li>Build contact form with file storage</li>
+                            <li>Implement form validation</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> File-based form processing system
+                        </div>
+                        <a href="week10/day3-file-handling.html" class="lesson-link" style="background: #ee5a6f;">Start Day 3 Lesson →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WEEK 11 -->
+            <div class="week-section" id="week11" style="background: linear-gradient(135deg, #da22ff 0%, #9733ee 100%); color: white;">
+                <div class="week-header">
+                    <h2>📅 Week 11: Databases & CRUD with PHP</h2>
+                    <p>Connect PHP to MySQL database and perform Create, Read, Update, Delete operations.</p>
+                </div>
+                <div class="days-grid">
+                    <div class="day-card">
+                        <span class="day-badge">Day 1 - Mon</span>
+                        <h3>Introduction to MySQL & Database Concepts</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Understand database concepts</li>
+                            <li>Learn SQL basics (CREATE, INSERT, SELECT)</li>
+                            <li>Use phpMyAdmin interface</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Create database and tables</li>
+                            <li>Define primary keys and data types</li>
+                            <li>Insert sample records</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Functional MySQL database
+                        </div>
+                        <a href="week11/day1-mysql-intro.html" class="lesson-link" style="background: #da22ff;">Start Day 1 Lesson →</a>
+                    </div>
+
+                    <div class="day-card">
+                        <span class="day-badge">Day 2 - Wed</span>
+                        <h3>PHP–MySQL Connection & Data Insertion</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Connect PHP to MySQL using mysqli/PDO</li>
+                            <li>Execute INSERT queries</li>
+                            <li>Handle database errors</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Create database connection script</li>
+                            <li>Build form to insert records</li>
+                            <li>Display success/error messages</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> PHP–DB connection script
+                        </div>
+                        <a href="week11/day2-php-mysql-connect.html" class="lesson-link" style="background: #da22ff;">Start Day 2 Lesson →</a>
+                    </div>
+
+                    <div class="day-card">
+                        <span class="day-badge">Day 3 - Fri</span>
+                        <h3>CRUD Operations (Read, Update, Delete)</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Read data with SELECT queries</li>
+                            <li>Update records with UPDATE queries</li>
+                            <li>Delete records with DELETE queries</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Display database records in HTML table</li>
+                            <li>Create update form</li>
+                            <li>Implement delete functionality</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Fully working CRUD prototype
+                        </div>
+                        <a href="week11/day3-crud-operations.html" class="lesson-link" style="background: #da22ff;">Start Day 3 Lesson →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WEEK 12 -->
+            <div class="week-section" id="week12">
+                <div class="week-header" style="background: linear-gradient(135deg, #fc466b 0%, #3f5efb 100%);">
+                    <h2>📅 Week 12: Mini Project – Simple Blog with PHP & MySQL</h2>
+                    <p>Build a complete CRUD blog application integrating all PHP and MySQL skills learned.</p>
+                </div>
+                <div class="days-grid">
+                    <div class="day-card">
+                        <span class="day-badge">Day 1 - Mon</span>
+                        <h3>Blog Project Overview & Database Design</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Plan blog structure and features</li>
+                            <li>Design database schema</li>
+                            <li>Create project folder structure</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Design blog posts table</li>
+                            <li>Create database and tables</li>
+                            <li>Set up project files</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Blog database schema
+                        </div>
+                        <a href="week12/day1-blog-planning.html" class="lesson-link" style="background: #fc466b;">Start Day 1 Lesson →</a>
+                    </div>
+
+                    <div class="day-card">
+                        <span class="day-badge">Day 2 - Wed</span>
+                        <h3>Implement Create & Read Functionalities</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Create blog post submission form</li>
+                            <li>Save posts to database</li>
+                            <li>Display posts on homepage</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Build post creation form</li>
+                            <li>Insert posts into database</li>
+                            <li>Fetch and display all posts</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Working blog post system
+                        </div>
+                        <a href="week12/day2-blog-development.html" class="lesson-link" style="background: #fc466b;">Start Day 2 Lesson →</a>
+                    </div>
+
+                    <div class="day-card">
+                        <span class="day-badge">Day 3 - Fri</span>
+                        <h3>Implement Update, Delete & Project Review</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Add edit post functionality</li>
+                            <li>Implement delete post feature</li>
+                            <li>Review security and validation</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Create edit form with pre-filled data</li>
+                            <li>Add delete confirmation</li>
+                            <li>Test and debug complete system</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Complete CRUD Blog Application
+                        </div>
+                        <a href="week12/day3-blog-finalization.html" class="lesson-link" style="background: #fc466b;">Start Day 3 Lesson →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WEEK 13 -->
+            <div class="week-section" id="week13">
+                <div class="week-header" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                    <h2>📅 Week 13: Laravel Introduction & MVC Basics</h2>
+                    <p>Get started with Laravel framework and understand MVC architecture.</p>
+                </div>
+                <div class="days-grid">
+                    <div class="day-card">
+                        <span class="day-badge">Day 1 - Mon</span>
+                        <h3>Laravel Installation & Setup</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Install Composer and Laravel</li>
+                            <li>Understand Laravel features</li>
+                            <li>Learn MVC architecture</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Install Composer on local system</li>
+                            <li>Create first Laravel project</li>
+                            <li>Run Laravel development server</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Working Laravel installation
+                        </div>
+                        <a href="week13/day1-laravel-installation.html" class="lesson-link" style="background: #fa709a;">Start Day 1 Lesson →</a>
+                    </div>
+
+                    <div class="day-card">
+                        <span class="day-badge">Day 2 - Wed</span>
+                        <h3>Folder Structure & Configuration</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Explore Laravel directory structure</li>
+                            <li>Understand configuration files</li>
+                            <li>Configure .env file</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Navigate Laravel folders</li>
+                            <li>Configure database connection</li>
+                            <li>Set up environment variables</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Configured Laravel project
+                        </div>
+                        <a href="week13/day2-folder-structure.html" class="lesson-link" style="background: #fa709a;">Start Day 2 Lesson →</a>
+                    </div>
+
+                    <div class="day-card">
+                        <span class="day-badge">Day 3 - Fri</span>
+                        <h3>Routes, Controllers & Views</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Create web routes</li>
+                            <li>Build controllers</li>
+                            <li>Render views</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Define routes in web.php</li>
+                            <li>Create HomeController</li>
+                            <li>Build MVC Laravel page</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> First MVC Laravel page
+                        </div>
+                        <a href="week13/day3-routes-controllers-views.html" class="lesson-link" style="background: #fa709a;">Start Day 3 Lesson →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WEEK 14 -->
+            <div class="week-section" id="week14">
+                <div class="week-header" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">
+                    <h2>📅 Week 14: Blade Templates & Form Validation</h2>
+                    <p>Master Laravel's templating engine and form handling.</p>
+                </div>
+                <div class="days-grid">
+                    <div class="day-card">
+                        <span class="day-badge">Day 1 - Mon</span>
+                        <h3>Blade Templates & Syntax</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Learn Blade directives</li>
+                            <li>Use loops and conditions</li>
+                            <li>Convert HTML to Blade</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Practice @if, @foreach directives</li>
+                            <li>Convert static pages to Blade</li>
+                            <li>Use Blade variables</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Blade-based web pages
+                        </div>
+                        <a href="week14/day1-blade-templates.html" class="lesson-link" style="background: #fcb69f;">Start Day 1 Lesson →</a>
+                    </div>
+
+                    <div class="day-card">
+                        <span class="day-badge">Day 2 - Wed</span>
+                        <h3>Layouts & Partials</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Create master layouts</li>
+                            <li>Use @extends and @section</li>
+                            <li>Build reusable partials</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Create app.blade.php layout</li>
+                            <li>Build header and footer partials</li>
+                            <li>Extend layout in pages</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Master layout with partials
+                        </div>
+                        <a href="week14/day2-layouts-partials.html" class="lesson-link" style="background: #fcb69f;">Start Day 2 Lesson →</a>
+                    </div>
+
+                    <div class="day-card">
+                        <span class="day-badge">Day 3 - Fri</span>
+                        <h3>Laravel Forms & Validation</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Build Laravel forms</li>
+                            <li>Implement validation rules</li>
+                            <li>Handle form errors</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Create registration form</li>
+                            <li>Add validation rules</li>
+                            <li>Display error messages</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Validated Laravel form
+                        </div>
+                        <a href="week14/day3-forms-validation.html" class="lesson-link" style="background: #fcb69f;">Start Day 3 Lesson →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WEEK 15 -->
+            <div class="week-section" id="week15">
+                <div class="week-header" style="background: linear-gradient(135deg, #ff9a56 0%, #ff6a00 100%);">
+                    <h2>📅 Week 15: Eloquent ORM & Database Relationships</h2>
+                    <p>Master Laravel's powerful database abstraction layer.</p>
+                </div>
+                <div class="days-grid">
+                    <div class="day-card">
+                        <span class="day-badge">Day 1 - Mon</span>
+                        <h3>Database Migrations & Models</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Create database migrations</li>
+                            <li>Build Eloquent models</li>
+                            <li>Run migrations</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Create users and courses tables</li>
+                            <li>Generate models</li>
+                            <li>Execute php artisan migrate</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Functional migration files
+                        </div>
+                        <a href="week15/day1-migrations-models.html" class="lesson-link" style="background: #ff9a56;">Start Day 1 Lesson →</a>
+                    </div>
+
+                    <div class="day-card">
+                        <span class="day-badge">Day 2 - Wed</span>
+                        <h3>Eloquent CRUD Operations</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Insert data with Eloquent</li>
+                            <li>Fetch and update records</li>
+                            <li>Delete records</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Use Model::create()</li>
+                            <li>Query data with Model::all()</li>
+                            <li>Implement CRUD operations</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Working Eloquent CRUD
+                        </div>
+                        <a href="week15/day2-eloquent-crud.html" class="lesson-link" style="background: #ff9a56;">Start Day 2 Lesson →</a>
+                    </div>
+
+                    <div class="day-card">
+                        <span class="day-badge">Day 3 - Fri</span>
+                        <h3>Database Relationships</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Define one-to-one relationships</li>
+                            <li>Implement one-to-many</li>
+                            <li>Create many-to-many</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>User-Profile relationship</li>
+                            <li>User-Posts relationship</li>
+                            <li>Students-Courses pivot table</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Functional relationships
+                        </div>
+                        <a href="week15/day3-relationships.html" class="lesson-link" style="background: #ff9a56;">Start Day 3 Lesson →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WEEK 16 -->
+            <div class="week-section" id="week16">
+                <div class="week-header" style="background: linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%);">
+                    <h2>📅 Week 16: Student Management System (Laravel Project)</h2>
+                    <p>Build a complete CRUD application with Laravel!</p>
+                </div>
+                <div class="days-grid">
+                    <div class="day-card">
+                        <span class="day-badge">Day 1 - Mon</span>
+                        <h3>Project Planning & Database Design</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Plan system features</li>
+                            <li>Design database schema</li>
+                            <li>Set up project structure</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Define student entities</li>
+                            <li>Create migrations for students</li>
+                            <li>Design system architecture</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Approved system design
+                        </div>
+                        <a href="week16/day1-project-planning.html" class="lesson-link" style="background: #ff6e7f;">Start Day 1 Lesson →</a>
+                    </div>
+
+                    <div class="day-card">
+                        <span class="day-badge">Day 2 - Wed</span>
+                        <h3>Implement Create & Read Features</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Build registration form</li>
+                            <li>Save students to database</li>
+                            <li>Display student list</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Create StudentController</li>
+                            <li>Build registration view</li>
+                            <li>Implement student listing</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Functional student listing
+                        </div>
+                        <a href="week16/day2-create-read.html" class="lesson-link" style="background: #ff6e7f;">Start Day 2 Lesson →</a>
+                    </div>
+
+                    <div class="day-card">
+                        <span class="day-badge">Day 3 - Fri</span>
+                        <h3>Update, Delete & Project Testing</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Add edit functionality</li>
+                            <li>Implement delete feature</li>
+                            <li>Test complete system</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Build edit form</li>
+                            <li>Add delete with confirmation</li>
+                            <li>Debug and test CRUD operations</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Complete Laravel CRUD App
+                        </div>
+                        <a href="week16/day3-update-delete.html" class="lesson-link" style="background: #ff6e7f;">Start Day 3 Lesson →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WEEK 17: LARAVEL AUTHENTICATION & MIDDLEWARE -->
+            <div class="week-section" id="week17">
+                <div class="week-header" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <h2>📅 Week 17: Laravel Authentication & Middleware</h2>
+                    <p>Secure your apps with login, registration & middleware!</p>
+                </div>
+                <div class="days-grid">
+                    <div class="day-card">
+                        <span class="day-badge">Day 1 - Mon</span>
+                        <h3>Authentication Introduction & Setup</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Understand authentication concepts</li>
+                            <li>Install Laravel Breeze/UI</li>
+                            <li>Set up auth scaffolding</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Install Laravel Breeze package</li>
+                            <li>Run auth migrations</li>
+                            <li>Explore authentication views</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Auth system configured
+                        </div>
+                        <a href="week17/day1-authentication-intro.html" class="lesson-link" style="background: #667eea;">Start Day 1 Lesson →</a>
+                    </div>
+
+                    <div class="day-card">
+                        <span class="day-badge">Day 2 - Wed</span>
+                        <h3>Login & Registration System</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Build login functionality</li>
+                            <li>Create registration forms</li>
+                            <li>Implement password reset</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Customize login view</li>
+                            <li>Add registration validation</li>
+                            <li>Test user authentication flow</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Working login/register
+                        </div>
+                        <a href="week17/day2-login-registration.html" class="lesson-link" style="background: #667eea;">Start Day 2 Lesson →</a>
+                    </div>
+
+                    <div class="day-card">
+                        <span class="day-badge">Day 3 - Fri</span>
+                        <h3>Middleware & Route Protection</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Learn middleware concepts</li>
+                            <li>Protect dashboard routes</li>
+                            <li>Implement role-based access</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Apply auth middleware</li>
+                            <li>Create protected routes</li>
+                            <li>Test authentication security</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Secured dashboard routes
+                        </div>
+                        <a href="week17/day3-middleware-protection.html" class="lesson-link" style="background: #667eea;">Start Day 3 Lesson →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WEEK 18: RESTFUL APIs IN LARAVEL -->
+            <div class="week-section" id="week18">
+                <div class="week-header" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                    <h2>📅 Week 18: RESTful APIs in Laravel</h2>
+                    <p>Build powerful REST APIs with authentication!</p>
+                </div>
+                <div class="days-grid">
+                    <div class="day-card">
+                        <span class="day-badge">Day 1 - Mon</span>
+                        <h3>REST API Concepts & Setup</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Understand REST principles</li>
+                            <li>Create API routes</li>
+                            <li>Return JSON responses</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Configure routes/api.php</li>
+                            <li>Build sample API endpoints</li>
+                            <li>Test APIs with Postman</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Working API endpoints
+                        </div>
+                        <a href="week18/day1-rest-apis-intro.html" class="lesson-link" style="background: #f093fb;">Start Day 1 Lesson →</a>
+                    </div>
+
+                    <div class="day-card">
+                        <span class="day-badge">Day 2 - Wed</span>
+                        <h3>API Controllers & Resources</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Create API controllers</li>
+                            <li>Implement resource routing</li>
+                            <li>Build CRUD API endpoints</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Generate API controllers</li>
+                            <li>Define resource routes</li>
+                            <li>Test with Postman collection</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Complete CRUD API
+                        </div>
+                        <a href="week18/day2-api-controllers.html" class="lesson-link" style="background: #f093fb;">Start Day 2 Lesson →</a>
+                    </div>
+
+                    <div class="day-card">
+                        <span class="day-badge">Day 3 - Fri</span>
+                        <h3>API Authentication with Sanctum</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Install Laravel Sanctum</li>
+                            <li>Generate API tokens</li>
+                            <li>Secure API endpoints</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Configure Sanctum</li>
+                            <li>Create token authentication</li>
+                            <li>Test protected API routes</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Secured API with tokens
+                        </div>
+                        <a href="week18/day3-api-authentication.html" class="lesson-link" style="background: #f093fb;">Start Day 3 Lesson →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WEEK 19: FILE UPLOADS, PAGINATION & NOTIFICATIONS -->
+            <div class="week-section" id="week19">
+                <div class="week-header" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                    <h2>📅 Week 19: File Uploads, Pagination & Notifications</h2>
+                    <p>Add advanced features to your Laravel applications!</p>
+                </div>
+                <div class="days-grid">
+                    <div class="day-card">
+                        <span class="day-badge">Day 1 - Mon</span>
+                        <h3>File Uploads & Storage</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Implement file validation</li>
+                            <li>Configure storage paths</li>
+                            <li>Handle image uploads</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Create upload forms</li>
+                            <li>Store files securely</li>
+                            <li>Display uploaded images</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> File upload feature
+                        </div>
+                        <a href="week19/day1-file-uploads.html" class="lesson-link" style="background: #4facfe;">Start Day 1 Lesson →</a>
+                    </div>
+
+                    <div class="day-card">
+                        <span class="day-badge">Day 2 - Wed</span>
+                        <h3>Pagination with Eloquent</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Understand pagination concepts</li>
+                            <li>Use paginate() method</li>
+                            <li>Optimize large datasets</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Implement paginated lists</li>
+                            <li>Customize pagination links</li>
+                            <li>Test with large data</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Paginated data views
+                        </div>
+                        <a href="week19/day2-pagination.html" class="lesson-link" style="background: #4facfe;">Start Day 2 Lesson →</a>
+                    </div>
+
+                    <div class="day-card">
+                        <span class="day-badge">Day 3 - Fri</span>
+                        <h3>Email Notifications</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Configure email settings</li>
+                            <li>Create notification classes</li>
+                            <li>Send email alerts</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Set up SMTP configuration</li>
+                            <li>Build notification system</li>
+                            <li>Test email delivery</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Email notification system
+                        </div>
+                        <a href="week19/day3-notifications.html" class="lesson-link" style="background: #4facfe;">Start Day 3 Lesson →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WEEK 20: TASK MANAGEMENT SYSTEM PROJECT -->
+            <div class="week-section" id="week20">
+                <div class="week-header" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                    <h2>📅 Week 20: Task Management System (Final Project)</h2>
+                    <p>Build a complete app with Auth, APIs & Advanced Features!</p>
+                </div>
+                <div class="days-grid">
+                    <div class="day-card">
+                        <span class="day-badge">Day 1 - Mon</span>
+                        <h3>Project Planning & Architecture</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Define system features</li>
+                            <li>Design database schema</li>
+                            <li>Plan authentication flow</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Create ER diagram</li>
+                            <li>Define user roles</li>
+                            <li>Set up project structure</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Approved project plan
+                        </div>
+                        <a href="week20/day1-project-planning.html" class="lesson-link" style="background: #fa709a;">Start Day 1 Lesson →</a>
+                    </div>
+
+                    <div class="day-card">
+                        <span class="day-badge">Day 2 - Wed</span>
+                        <h3>Authentication & CRUD Implementation</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Integrate authentication</li>
+                            <li>Build task CRUD operations</li>
+                            <li>Implement user authorization</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Create task controllers</li>
+                            <li>Build task forms & views</li>
+                            <li>Add file upload for attachments</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Working task system
+                        </div>
+                        <a href="week20/day2-auth-crud.html" class="lesson-link" style="background: #fa709a;">Start Day 2 Lesson →</a>
+                    </div>
+
+                    <div class="day-card">
+                        <span class="day-badge">Day 3 - Fri</span>
+                        <h3>API Integration & Deployment</h3>
+                        <h4>📖 Objectives:</h4>
+                        <ul>
+                            <li>Complete API endpoints</li>
+                            <li>Test system security</li>
+                            <li>Deploy final project</li>
+                        </ul>
+                        <h4>💻 Activities:</h4>
+                        <ul>
+                            <li>Build task API routes</li>
+                            <li>Debug and optimize</li>
+                            <li>Deploy to production</li>
+                        </ul>
+                        <div class="deliverable">
+                            <strong>✅ Deliverable:</strong> Complete Task Manager App
+                        </div>
+                        <a href="week20/day3-api-deployment.html" class="lesson-link" style="background: #fa709a;">Start Day 3 Lesson →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MONTH 6: CAPSTONE PROJECT + DEPLOYMENT + PRESENTATION -->
+            <section id="week21" class="week-section">
+                <h2 style="background: linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%); padding: 20px; border-radius: 10px; color: white;">📅 Month 6: Capstone Project + Deployment + Presentation</h2>
+                <p style="font-size: 1.1rem; margin: 20px 0;"><strong>Objective:</strong> Build a complete, real-world web application and deploy it professionally.</p>
+
+                <h3 style="color: #ff6e7f;">Week 21: Group Project Planning & Proposal</h3>
+                <div class="day-grid">
+                    <div class="day-card">
+                        <h4>Day 1: Capstone Orientation & Project Selection</h4>
+                        <p><strong>Topics:</strong> Capstone expectations, grading rubric, project examples, team formation</p>
+                        <p><strong>Deliverable:</strong> Approved project group & topic</p>
+                        <a href="week21/day1-capstone-orientation.html" class="button">📖 View Lesson</a>
+                    </div>
+                    <div class="day-card">
+                        <h4>Day 2: Project Requirements & System Analysis</h4>
+                        <p><strong>Topics:</strong> Problem definition, system requirements, project scope</p>
+                        <p><strong>Deliverable:</strong> Project problem definition & scope</p>
+                        <a href="week21/day2-system-analysis.html" class="button">📖 View Lesson</a>
+                    </div>
+                    <div class="day-card">
+                        <h4>Day 3: Proposal Writing & Approval</h4>
+                        <p><strong>Topics:</strong> Proposal structure, documentation standards, approval process</p>
+                        <p><strong>Deliverable:</strong> Approved project proposal</p>
+                        <a href="week21/day3-proposal-writing.html" class="button">📖 View Lesson</a>
+                    </div>
+                </div>
+            </section>
+
+            <section id="week22" class="week-section">
+                <h3 style="color: #ff6e7f;">Week 22: Backend & Frontend Development</h3>
+                <div class="day-grid">
+                    <div class="day-card">
+                        <h4>Day 1: Backend Development Kickoff</h4>
+                        <p><strong>Topics:</strong> Backend task assignment, database design review, migrations & models</p>
+                        <p><strong>Deliverable:</strong> Functional database schema</p>
+                        <a href="week22/day1-backend-development.html" class="button">📖 View Lesson</a>
+                    </div>
+                    <div class="day-card">
+                        <h4>Day 2: Frontend Development Integration</h4>
+                        <p><strong>Topics:</strong> UI components, responsiveness, dashboard views</p>
+                        <p><strong>Deliverable:</strong> Responsive frontend interface</p>
+                        <a href="week22/day2-frontend-integration.html" class="button">📖 View Lesson</a>
+                    </div>
+                    <div class="day-card">
+                        <h4>Day 3: Feature Integration & Bug Fixing</h4>
+                        <p><strong>Topics:</strong> Merging features, debugging, testing integration</p>
+                        <p><strong>Deliverable:</strong> Integrated application modules</p>
+                        <a href="week22/day3-integration-debugging.html" class="button">📖 View Lesson</a>
+                    </div>
+                </div>
+            </section>
+
+            <section id="week23" class="week-section">
+                <h3 style="color: #ff6e7f;">Week 23: Testing, Documentation & Deployment</h3>
+                <div class="day-grid">
+                    <div class="day-card">
+                        <h4>Day 1: System Testing & Debugging</h4>
+                        <p><strong>Topics:</strong> Unit testing, system testing, bug fixing procedures</p>
+                        <p><strong>Deliverable:</strong> Tested and stable application</p>
+                        <a href="week23/day1-testing-debugging.html" class="button">📖 View Lesson</a>
+                    </div>
+                    <div class="day-card">
+                        <h4>Day 2: Technical Documentation & User Manuals</h4>
+                        <p><strong>Topics:</strong> Documentation standards, system documentation, user guides</p>
+                        <p><strong>Deliverable:</strong> Complete project documentation</p>
+                        <a href="week23/day2-documentation.html" class="button">📖 View Lesson</a>
+                    </div>
+                    <div class="day-card">
+                        <h4>Day 3: Deployment (cPanel / Laravel Forge)</h4>
+                        <p><strong>Topics:</strong> Live deployment process, server configuration, domain setup</p>
+                        <p><strong>Deliverable:</strong> Live hosted application URL</p>
+                        <a href="week23/day3-deployment.html" class="button">📖 View Lesson</a>
+                    </div>
+                </div>
+            </section>
+
+            <section id="week24" class="week-section">
+                <h3 style="color: #ff6e7f;">Week 24: Final Project Presentation & Evaluation</h3>
+                <div class="day-grid">
+                    <div class="day-card">
+                        <h4>Day 1: Presentation Preparation & Rehearsal</h4>
+                        <p><strong>Topics:</strong> Presentation format, defense techniques, slide preparation</p>
+                        <p><strong>Deliverable:</strong> Final presentation slides</p>
+                        <a href="week24/day1-presentation-prep.html" class="button">📖 View Lesson</a>
+                    </div>
+                    <div class="day-card">
+                        <h4>Day 2: Final Project Presentation</h4>
+                        <p><strong>Topics:</strong> System demonstration, project defense, assessment panel</p>
+                        <p><strong>Deliverable:</strong> Assessed project presentation</p>
+                        <a href="week24/day2-final-presentation.html" class="button">📖 View Lesson</a>
+                    </div>
+                    <div class="day-card">
+                        <h4>Day 3: Project Evaluation, Feedback & Certification</h4>
+                        <p><strong>Topics:</strong> Final feedback, performance evaluation, certificates</p>
+                        <p><strong>Deliverable:</strong> Final project report, GitHub repo & certificates</p>
+                        <a href="week24/day3-evaluation-certification.html" class="button">📖 View Lesson</a>
+                    </div>
+                </div>
+            </section>
+
+            <div class="project-highlight" style="background: linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%); margin: 40px 0;">
+                <h2>🏆 Final Capstone Project Deliverables</h2>
+                <p><strong>Milestone:</strong> Full web application completed and deployed</p>
+                <ul style="text-align: left; max-width: 700px; margin: 20px auto;">
+                    <li>✅ Live hosted system (publicly accessible URL)</li>
+                    <li>✅ GitHub repository with complete source code</li>
+                    <li>✅ Technical documentation & user manual</li>
+                    <li>✅ Professional project presentation</li>
+                    <li>✅ Final project report & evaluation</li>
+                </ul>
+            </div>
+
+            <!-- COMPLETION BANNER -->
+            <div class="project-highlight" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); margin-top: 60px;">
+                <h2>🎓 Bootcamp Complete!</h2>
+                <p>Congratulations on completing the 24-week Full Stack Web Development Internship!</p>
+                <p style="font-size: 1rem; margin-top: 15px;">
+                    ✅ Month 1: HTML, CSS, Git Mastered<br>
+                    ✅ Month 2: Bootstrap & JavaScript Mastered<br>
+                    ✅ Month 3: PHP & MySQL Backend Mastered<br>
+                    ✅ Month 4: Laravel Framework Mastered<br>
+                    ✅ Month 5: Authentication, APIs & Advanced Features<br>
+                    ✅ Month 6: Capstone Project Completed & Deployed<br>
+                    ✅ Six Complete Projects Built & Deployed
+                </p>
+            </div>
+
+        </div>
+
+        <footer>
+            <p>&copy; 2025 Web Development Internship | Next-Step Technology</p>
+            <p>24-Week Full Stack Bootcamp - Frontend, Backend, Laravel & Capstone</p>
+            <p>Instructor: Ahmad Tijjani Garba</p>
+        </footer>
+    </div>
+</body>
 </html>

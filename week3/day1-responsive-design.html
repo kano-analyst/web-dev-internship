@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 3 Day 1: Responsive Design Basics</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        header { background: #c2185b; color: white; padding: 30px; }
+        .nav-breadcrumb {
+            background: #fce4ec;
+            padding: 15px 30px;
+            border-bottom: 2px solid #e91e63;
+        }
+        .nav-breadcrumb a { color: #c2185b; text-decoration: none; margin-right: 10px; }
+        .content { padding: 40px; }
+        .section { margin-bottom: 40px; }
+        .section h2 {
+            color: #c2185b;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #e91e63;
+        }
+        .section h3 { color: #e91e63; margin: 20px 0 15px 0; }
+        .info-box {
+            background: #fce4ec;
+            border-left: 5px solid #c2185b;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .activity-box {
+            background: #f1f8e9;
+            border-left: 5px solid #4caf50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+        .device-demo {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .device {
+            text-align: center;
+        }
+        .device-screen {
+            border: 3px solid #333;
+            border-radius: 10px;
+            background: white;
+            margin: 10px auto;
+        }
+        .mobile { width: 100px; height: 180px; }
+        .tablet { width: 150px; height: 200px; }
+        .desktop { width: 250px; height: 180px; }
+        .btn-primary {
+            display: inline-block;
+            background: #e91e63;
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 6px;
+            margin: 10px 10px 10px 0;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        .btn-primary:hover { background: #c2185b; }
+        ul, ol { margin-left: 30px; margin-top: 10px; }
+        li { margin-bottom: 10px; }
+        .checklist { list-style: none; margin-left: 0; }
+        .checklist li:before {
+            content: "✓ ";
+            color: #4caf50;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th { background: #e91e63; color: white; }
+        footer { background: #c2185b; color: white; padding: 20px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 3 - Day 1: Responsive Design Basics</h1>
+            <p>Monday | Duration: 3 hours</p>
+        </header>
+
+        <div class="nav-breadcrumb">
+            <a href="../index.html">← Back to Course Home</a> / Week 3 / Day 1
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2>🎯 Learning Objectives</h2>
+                <ul class="checklist">
+                    <li>Understand responsive web design principles</li>
+                    <li>Learn about viewport and meta tags</li>
+                    <li>Master CSS media queries</li>
+                    <li>Implement mobile-first approach</li>
+                    <li>Convert profile page to responsive design</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>📱 What is Responsive Web Design?</h2>
+                <div class="info-box">
+                    <p><strong>Responsive Web Design (RWD)</strong> is an approach that makes web pages render well on all devices and screen sizes.</p>
+                    <p><strong>Key principles:</strong></p>
+                    <ul>
+                        <li>Fluid grids (flexible layouts)</li>
+                        <li>Flexible images</li>
+                        <li>Media queries</li>
+                        <li>Mobile-first mindset</li>
+                    </ul>
+                </div>
+
+                <div class="device-demo">
+                    <div class="device">
+                        <h4>📱 Mobile</h4>
+                        <div class="device-screen mobile"></div>
+                        <p>320px - 480px</p>
+                    </div>
+                    <div class="device">
+                        <h4>📱 Tablet</h4>
+                        <div class="device-screen tablet"></div>
+                        <p>481px - 768px</p>
+                    </div>
+                    <div class="device">
+                        <h4>💻 Desktop</h4>
+                        <div class="device-screen desktop"></div>
+                        <p>769px+</p>
+                    </div>
+                </div>
+
+                <h3>Why Responsive Design?</h3>
+                <ul>
+                    <li><strong>Mobile traffic:</strong> Over 60% of web traffic is mobile</li>
+                    <li><strong>SEO:</strong> Google prioritizes mobile-friendly sites</li>
+                    <li><strong>User experience:</strong> Users expect sites to work on any device</li>
+                    <li><strong>Cost-effective:</strong> One site for all devices</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>🔧 Viewport Meta Tag</h2>
+                <div class="info-box">
+                    <p>The viewport meta tag tells browsers how to control the page's dimensions and scaling.</p>
+                </div>
+
+                <div class="code-block">
+&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+                </div>
+
+                <ul>
+                    <li><strong>width=device-width:</strong> Sets width to device screen width</li>
+                    <li><strong>initial-scale=1.0:</strong> Sets initial zoom level to 100%</li>
+                </ul>
+
+                <div class="activity-box">
+                    <p><strong>⚠️ Always include this in your &lt;head&gt; section!</strong></p>
+                    <p>Without it, mobile browsers display desktop version zoomed out.</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📐 Media Queries</h2>
+                <div class="info-box">
+                    <p><strong>Media queries</strong> apply different CSS styles based on device characteristics (usually screen width).</p>
+                </div>
+
+                <h3>Basic Syntax</h3>
+                <div class="code-block">
+@media (condition) {
+    /* CSS rules */
+}
+                </div>
+
+                <h3>Common Breakpoints</h3>
+                <table>
+                    <tr>
+                        <th>Device</th>
+                        <th>Breakpoint</th>
+                        <th>Media Query</th>
+                    </tr>
+                    <tr>
+                        <td>Mobile</td>
+                        <td>< 768px</td>
+                        <td>@media (max-width: 767px)</td>
+                    </tr>
+                    <tr>
+                        <td>Tablet</td>
+                        <td>768px - 1024px</td>
+                        <td>@media (min-width: 768px) and (max-width: 1024px)</td>
+                    </tr>
+                    <tr>
+                        <td>Desktop</td>
+                        <td>> 1024px</td>
+                        <td>@media (min-width: 1025px)</td>
+                    </tr>
+                </table>
+
+                <h3>Media Query Examples</h3>
+                <div class="code-block">
+/* Default styles for mobile (mobile-first) */
+body {
+    font-size: 16px;
+}
+
+.container {
+    width: 100%;
+    padding: 10px;
+}
+
+/* Tablet and above */
+@media (min-width: 768px) {
+    body {
+        font-size: 18px;
+    }
+    
+    .container {
+        width: 750px;
+        margin: 0 auto;
+    }
+}
+
+/* Desktop and above */
+@media (min-width: 1024px) {
+    body {
+        font-size: 20px;
+    }
+    
+    .container {
+        width: 1000px;
+    }
+}
+
+/* Large desktop */
+@media (min-width: 1200px) {
+    .container {
+        width: 1140px;
+    }
+}
+                </div>
+
+                <h3>Max-Width vs Min-Width</h3>
+                <div class="code-block">
+/* Max-width: Desktop-first (styles for smaller screens) */
+@media (max-width: 768px) {
+    /* Applies when screen is 768px or less */
+}
+
+/* Min-width: Mobile-first (styles for larger screens) ✅ Recommended */
+@media (min-width: 768px) {
+    /* Applies when screen is 768px or more */
+}
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📲 Mobile-First Approach</h2>
+                <div class="info-box">
+                    <p><strong>Mobile-first</strong> means writing CSS for mobile devices first, then adding styles for larger screens.</p>
+                </div>
+
+                <h3>Why Mobile-First?</h3>
+                <ul>
+                    <li>Forces you to prioritize content</li>
+                    <li>Better performance on mobile</li>
+                    <li>Easier to scale up than down</li>
+                    <li>Most traffic comes from mobile</li>
+                </ul>
+
+                <h3>Example: Mobile-First Navigation</h3>
+                <div class="code-block">
+/* Mobile styles (default) */
+nav {
+    display: flex;
+    flex-direction: column;
+}
+
+nav a {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Tablet and up: horizontal navigation */
+@media (min-width: 768px) {
+    nav {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    
+    nav a {
+        border-bottom: none;
+        border-right: 1px solid #ddd;
+    }
+}
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🖼️ Responsive Images</h2>
+                <div class="code-block">
+/* Make images responsive */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+                </div>
+
+                <h3>Responsive Background Images</h3>
+                <div class="code-block">
+.hero {
+    background-image: url('mobile-bg.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+@media (min-width: 768px) {
+    .hero {
+        background-image: url('desktop-bg.jpg');
+    }
+}
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>💻 Main Activity: Responsive Profile Page</h2>
+                
+                <div class="activity-box">
+                    <h3>Task: Convert profile-bio.html to Responsive Design</h3>
+                    <p>Update your 2-column layout to stack on mobile devices.</p>
+                </div>
+
+                <h3>Updated HTML (add viewport)</h3>
+                <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Responsive Profile&lt;/title&gt;
+    &lt;link rel="stylesheet" href="css/responsive.css"&gt;
+&lt;/head&gt;
+&lt;!-- Rest of HTML stays the same --&gt;
+                </div>
+
+                <h3>Responsive CSS (responsive.css)</h3>
+                <div class="code-block">
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Base styles (Mobile-first) */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+}
+
+/* Header */
+header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 1.8em;
+}
+
+/* Container: Stacked on mobile */
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 15px;
+}
+
+/* Columns: Full width on mobile */
+.profile-column,
+.bio-column {
+    width: 100%;
+    background: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.profile-column img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 5px solid #667eea;
+    margin: 0 auto 20px;
+    display: block;
+}
+
+.profile-column h2 {
+    color: #667eea;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.profile-column > p {
+    text-align: center;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.profile-column h3,
+.bio-column h3 {
+    color: #555;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 5px;
+}
+
+.profile-column ul {
+    list-style: none;
+}
+
+.profile-column li {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.bio-column h2 {
+    color: #667eea;
+    font-size: 1.8em;
+    margin-bottom: 15px;
+}
+
+.bio-column p {
+    margin-bottom: 15px;
+}
+
+.bio-column ul {
+    margin-left: 25px;
+    margin-bottom: 15px;
+}
+
+/* Footer */
+footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+/* ========== TABLET (768px and up) ========== */
+@media (min-width: 768px) {
+    header h1 {
+        font-size: 2.5em;
+    }
+    
+    .container {
+        padding: 0 20px;
+    }
+    
+    .profile-column img {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .profile-column h2 {
+        font-size: 1.8em;
+    }
+    
+    .bio-column h2 {
+        font-size: 2.2em;
+    }
+}
+
+/* ========== DESKTOP (1024px and up) ========== */
+@media (min-width: 1024px) {
+    header {
+        padding: 30px;
+    }
+    
+    /* Side-by-side columns */
+    .container {
+        display: flex;
+        gap: 30px;
+        margin: 30px auto;
+    }
+    
+    .profile-column {
+        width: 30%;
+        margin-bottom: 0;
+    }
+    
+    .bio-column {
+        width: 70%;
+        margin-bottom: 0;
+    }
+}
+
+/* ========== LARGE DESKTOP (1200px and up) ========== */
+@media (min-width: 1200px) {
+    header h1 {
+        font-size: 3em;
+    }
+    
+    .profile-column,
+    .bio-column {
+        padding: 30px;
+    }
+}
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🧪 Testing Responsive Design</h2>
+                <div class="activity-box">
+                    <h3>Using Chrome DevTools:</h3>
+                    <ol>
+                        <li>Open your page in Chrome</li>
+                        <li>Press <strong>F12</strong> or <strong>Ctrl+Shift+I</strong></li>
+                        <li>Click the device icon (Toggle device toolbar) or press <strong>Ctrl+Shift+M</strong></li>
+                        <li>Select different devices from the dropdown</li>
+                        <li>Or drag to manually resize</li>
+                    </ol>
+                </div>
+
+                <h3>Test These Breakpoints:</h3>
+                <ul>
+                    <li>320px (iPhone SE)</li>
+                    <li>375px (iPhone X/11)</li>
+                    <li>768px (iPad)</li>
+                    <li>1024px (iPad Pro)</li>
+                    <li>1920px (Desktop)</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>✏️ Practice Exercises</h2>
+                
+                <div class="activity-box">
+                    <h3>Exercise 1: Responsive Navigation</h3>
+                    <p>Create a navigation that:</p>
+                    <ul>
+                        <li>Stacks vertically on mobile</li>
+                        <li>Displays horizontally on desktop</li>
+                        <li>Has hover effects</li>
+                    </ul>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Exercise 2: Responsive Grid</h3>
+                    <p>Create a product grid that shows:</p>
+                    <ul>
+                        <li>1 column on mobile (< 768px)</li>
+                        <li>2 columns on tablet (768px - 1024px)</li>
+                        <li>3 columns on desktop (> 1024px)</li>
+                    </ul>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Exercise 3: Hide/Show Content</h3>
+                    <p>Use media queries to hide sidebar on mobile:</p>
+                    <div class="code-block">
+/* Mobile: hide sidebar */
+.sidebar {
+    display: none;
+}
+
+/* Desktop: show sidebar */
+@media (min-width: 1024px) {
+    .sidebar {
+        display: block;
+    }
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>✅ Today's Deliverable</h2>
+                <div class="activity-box">
+                    <ul class="checklist">
+                        <li>Responsive profile-bio.html page</li>
+                        <li>responsive.css with media queries</li>
+                        <li>Screenshots at 3 different screen sizes (mobile, tablet, desktop)</li>
+                        <li>Committed to GitHub with message: "Add responsive design"</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📚 Additional Resources</h2>
+                <ul>
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design" target="_blank">MDN: Responsive Design</a></li>
+                    <li><a href="https://www.w3schools.com/css/css_rwd_intro.asp" target="_blank">W3Schools: Responsive Web Design</a></li>
+                    <li><a href="https://mediaqueri.es/" target="_blank">Media Queries Examples</a></li>
+                    <li><a href="https://responsivedesign.is/" target="_blank">Responsive Design Resources</a></li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <a href="../week2/day3-box-model-layout.html" class="btn-primary">← Previous: Week 2 Day 3</a>
+                <a href="../index.html" class="btn-primary">Back to Course Home</a>
+                <a href="day2-styling-forms.html" class="btn-primary">Next: Day 2 →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 3 - Day 1: Responsive Design Basics</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

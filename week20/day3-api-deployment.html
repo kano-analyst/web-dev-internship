@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 20 Day 3 - API & Deployment | Laravel Bootcamp</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #fa709a;
+        }
+        h1 { color: #fa709a; font-size: 2.5rem; margin-bottom: 10px; }
+        h2 { color: #fe8c00; margin-top: 30px; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #eee; }
+        h3 { color: #fa709a; margin-top: 25px; margin-bottom: 15px; }
+        .highlight {
+            background: #fff5e6;
+            padding: 15px;
+            border-left: 4px solid #fa709a;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+        .code-block code { font-size: 14px; line-height: 1.5; }
+        .comment { color: #6a9955; }
+        .keyword { color: #569cd6; }
+        .string { color: #ce9178; }
+        .function { color: #dcdcaa; }
+        ul, ol { margin-left: 30px; margin-bottom: 20px; }
+        li { margin-bottom: 10px; }
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: transform 0.3s ease;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .exercise {
+            background: #fff3cd;
+            padding: 20px;
+            border-left: 4px solid #ffc107;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .tip {
+            background: #d1ecf1;
+            padding: 15px;
+            border-left: 4px solid #17a2b8;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .success {
+            background: #d4edda;
+            padding: 20px;
+            border-left: 4px solid #28a745;
+            margin: 20px 0;
+            border-radius: 5px;
+            font-size: 1.1rem;
+        }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background: #fa709a; color: white; }
+        tr:nth-child(even) { background: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 Week 20, Day 3: API Development & Deployment</h1>
+            <p>Complete Your Final Laravel Project!</p>
+        </header>
+
+        <section>
+            <h2>📖 Learning Objectives</h2>
+            <ul>
+                <li>Build RESTful API endpoints for tasks</li>
+                <li>Implement API authentication with Sanctum</li>
+                <li>Test APIs with Postman</li>
+                <li>Debug and optimize application</li>
+                <li>Prepare for deployment</li>
+                <li>Deploy Laravel application</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>🔌 API Development</h2>
+
+            <h3>1. API Authentication Controller:</h3>
+            <div class="code-block">
+<code><span class="comment">// app/Http/Controllers/Api/AuthController.php</span>
+<span class="keyword">namespace</span> App\Http\Controllers\Api;
+
+<span class="keyword">use</span> App\Http\Controllers\Controller;
+<span class="keyword">use</span> App\Models\User;
+<span class="keyword">use</span> Illuminate\Http\Request;
+<span class="keyword">use</span> Illuminate\Support\Facades\Hash;
+
+<span class="keyword">class</span> <span class="function">AuthController</span> <span class="keyword">extends</span> Controller
+{
+    <span class="comment">// Register new user</span>
+    <span class="keyword">public function</span> <span class="function">register</span>(Request $request)
+    {
+        $request-><span class="function">validate</span>([
+            <span class="string">'name'</span> => <span class="string">'required|string|max:255'</span>,
+            <span class="string">'email'</span> => <span class="string">'required|string|email|unique:users'</span>,
+            <span class="string">'password'</span> => <span class="string">'required|string|min:8|confirmed'</span>,
+        ]);
+
+        $user = User::<span class="function">create</span>([
+            <span class="string">'name'</span> => $request->name,
+            <span class="string">'email'</span> => $request->email,
+            <span class="string">'password'</span> => Hash::<span class="function">make</span>($request->password),
+        ]);
+
+        $token = $user-><span class="function">createToken</span>(<span class="string">'auth-token'</span>)-><span class="function">plainTextToken</span>;
+
+        <span class="keyword">return</span> <span class="function">response</span>()-><span class="function">json</span>([
+            <span class="string">'user'</span> => $user,
+            <span class="string">'token'</span> => $token
+        ], 201);
+    }
+
+    <span class="comment">// Login user</span>
+    <span class="keyword">public function</span> <span class="function">login</span>(Request $request)
+    {
+        $request-><span class="function">validate</span>([
+            <span class="string">'email'</span> => <span class="string">'required|email'</span>,
+            <span class="string">'password'</span> => <span class="string">'required'</span>,
+        ]);
+
+        $user = User::<span class="function">where</span>(<span class="string">'email'</span>, $request->email)-><span class="function">first</span>();
+
+        <span class="keyword">if</span> (!$user || !Hash::<span class="function">check</span>($request->password, $user->password)) {
+            <span class="keyword">return</span> <span class="function">response</span>()-><span class="function">json</span>([
+                <span class="string">'message'</span> => <span class="string">'Invalid credentials'</span>
+            ], 401);
+        }
+
+        $token = $user-><span class="function">createToken</span>(<span class="string">'auth-token'</span>)-><span class="function">plainTextToken</span>;
+
+        <span class="keyword">return</span> <span class="function">response</span>()-><span class="function">json</span>([
+            <span class="string">'user'</span> => $user,
+            <span class="string">'token'</span> => $token
+        ]);
+    }
+
+    <span class="comment">// Logout user</span>
+    <span class="keyword">public function</span> <span class="function">logout</span>(Request $request)
+    {
+        $request-><span class="function">user</span>()-><span class="function">currentAccessToken</span>()-><span class="function">delete</span>();
+
+        <span class="keyword">return</span> <span class="function">response</span>()-><span class="function">json</span>([
+            <span class="string">'message'</span> => <span class="string">'Logged out successfully'</span>
+        ]);
+    }
+}</code>
+            </div>
+
+            <h3>2. Task API Controller:</h3>
+            <div class="code-block">
+<code><span class="comment">// app/Http/Controllers/Api/TaskController.php</span>
+<span class="keyword">namespace</span> App\Http\Controllers\Api;
+
+<span class="keyword">use</span> App\Http\Controllers\Controller;
+<span class="keyword">use</span> App\Models\Task;
+<span class="keyword">use</span> Illuminate\Http\Request;
+
+<span class="keyword">class</span> <span class="function">TaskController</span> <span class="keyword">extends</span> Controller
+{
+    <span class="comment">// Get all user tasks</span>
+    <span class="keyword">public function</span> <span class="function">index</span>()
+    {
+        $tasks = <span class="function">auth</span>()-><span class="function">user</span>()-><span class="function">tasks</span>()-><span class="function">with</span>(<span class="string">'category'</span>)-><span class="function">get</span>();
+        <span class="keyword">return</span> <span class="function">response</span>()-><span class="function">json</span>($tasks);
+    }
+
+    <span class="comment">// Create new task</span>
+    <span class="keyword">public function</span> <span class="function">store</span>(Request $request)
+    {
+        $validated = $request-><span class="function">validate</span>([
+            <span class="string">'category_id'</span> => <span class="string">'required|exists:categories,id'</span>,
+            <span class="string">'title'</span> => <span class="string">'required|string|max:255'</span>,
+            <span class="string">'description'</span> => <span class="string">'nullable|string'</span>,
+            <span class="string">'priority'</span> => <span class="string">'required|in:low,medium,high'</span>,
+            <span class="string">'due_date'</span> => <span class="string">'nullable|date'</span>,
+        ]);
+
+        $task = <span class="function">auth</span>()-><span class="function">user</span>()-><span class="function">tasks</span>()-><span class="function">create</span>($validated);
+
+        <span class="keyword">return</span> <span class="function">response</span>()-><span class="function">json</span>($task, 201);
+    }
+
+    <span class="comment">// Get single task</span>
+    <span class="keyword">public function</span> <span class="function">show</span>(Task $task)
+    {
+        <span class="keyword">if</span> ($task->user_id !== <span class="function">auth</span>()-><span class="function">id</span>()) {
+            <span class="keyword">return</span> <span class="function">response</span>()-><span class="function">json</span>([<span class="string">'error'</span> => <span class="string">'Unauthorized'</span>], 403);
+        }
+
+        <span class="keyword">return</span> <span class="function">response</span>()-><span class="function">json</span>($task-><span class="function">load</span>(<span class="string">'category'</span>, <span class="string">'attachments'</span>));
+    }
+
+    <span class="comment">// Update task</span>
+    <span class="keyword">public function</span> <span class="function">update</span>(Request $request, Task $task)
+    {
+        <span class="keyword">if</span> ($task->user_id !== <span class="function">auth</span>()-><span class="function">id</span>()) {
+            <span class="keyword">return</span> <span class="function">response</span>()-><span class="function">json</span>([<span class="string">'error'</span> => <span class="string">'Unauthorized'</span>], 403);
+        }
+
+        $validated = $request-><span class="function">validate</span>([
+            <span class="string">'title'</span> => <span class="string">'required|string|max:255'</span>,
+            <span class="string">'status'</span> => <span class="string">'required|in:pending,in_progress,completed'</span>,
+            <span class="string">'priority'</span> => <span class="string">'required|in:low,medium,high'</span>,
+        ]);
+
+        $task-><span class="function">update</span>($validated);
+
+        <span class="keyword">return</span> <span class="function">response</span>()-><span class="function">json</span>($task);
+    }
+
+    <span class="comment">// Delete task</span>
+    <span class="keyword">public function</span> <span class="function">destroy</span>(Task $task)
+    {
+        <span class="keyword">if</span> ($task->user_id !== <span class="function">auth</span>()-><span class="function">id</span>()) {
+            <span class="keyword">return</span> <span class="function">response</span>()-><span class="function">json</span>([<span class="string">'error'</span> => <span class="string">'Unauthorized'</span>], 403);
+        }
+
+        $task-><span class="function">delete</span>();
+
+        <span class="keyword">return</span> <span class="function">response</span>()-><span class="function">json</span>([<span class="string">'message'</span> => <span class="string">'Task deleted'</span>], 200);
+    }
+}</code>
+            </div>
+
+            <h3>3. API Routes:</h3>
+            <div class="code-block">
+<code><span class="comment">// routes/api.php</span>
+<span class="keyword">use</span> App\Http\Controllers\Api\AuthController;
+<span class="keyword">use</span> App\Http\Controllers\Api\TaskController;
+<span class="keyword">use</span> Illuminate\Support\Facades\Route;
+
+<span class="comment">// Public routes</span>
+Route::<span class="function">post</span>(<span class="string">'/register'</span>, [AuthController::<span class="keyword">class</span>, <span class="string">'register'</span>]);
+Route::<span class="function">post</span>(<span class="string">'/login'</span>, [AuthController::<span class="keyword">class</span>, <span class="string">'login'</span>]);
+
+<span class="comment">// Protected routes</span>
+Route::<span class="function">middleware</span>(<span class="string">'auth:sanctum'</span>)-><span class="function">group</span>(<span class="keyword">function</span> () {
+    Route::<span class="function">post</span>(<span class="string">'/logout'</span>, [AuthController::<span class="keyword">class</span>, <span class="string">'logout'</span>]);
+    Route::<span class="function">apiResource</span>(<span class="string">'tasks'</span>, TaskController::<span class="keyword">class</span>);
+});</code>
+            </div>
+        </section>
+
+        <section>
+            <h2>🧪 Testing APIs with Postman</h2>
+
+            <h3>Test Sequence:</h3>
+
+            <h4>1. Register User (POST /api/register):</h4>
+            <div class="code-block">
+<code><span class="comment">// Request Body (JSON)</span>
+{
+    <span class="string">"name"</span>: <span class="string">"John Doe"</span>,
+    <span class="string">"email"</span>: <span class="string">"john@example.com"</span>,
+    <span class="string">"password"</span>: <span class="string">"password123"</span>,
+    <span class="string">"password_confirmation"</span>: <span class="string">"password123"</span>
+}
+
+<span class="comment">// Response (201 Created)</span>
+{
+    <span class="string">"user"</span>: { <span class="comment">/* user data */</span> },
+    <span class="string">"token"</span>: <span class="string">"1|abcdef123456..."</span>
+}</code>
+            </div>
+
+            <h4>2. Login (POST /api/login):</h4>
+            <div class="code-block">
+<code><span class="comment">// Request Body</span>
+{
+    <span class="string">"email"</span>: <span class="string">"john@example.com"</span>,
+    <span class="string">"password"</span>: <span class="string">"password123"</span>
+}
+
+<span class="comment">// Response</span>
+{
+    <span class="string">"user"</span>: { <span class="comment">/* user data */</span> },
+    <span class="string">"token"</span>: <span class="string">"2|xyz789..."</span>
+}</code>
+            </div>
+
+            <h4>3. Create Task (POST /api/tasks):</h4>
+            <div class="code-block">
+<code><span class="comment">// Headers</span>
+Authorization: Bearer YOUR_TOKEN_HERE
+Content-Type: application/json
+
+<span class="comment">// Request Body</span>
+{
+    <span class="string">"category_id"</span>: 1,
+    <span class="string">"title"</span>: <span class="string">"Complete Project"</span>,
+    <span class="string">"description"</span>: <span class="string">"Finish Laravel bootcamp project"</span>,
+    <span class="string">"priority"</span>: <span class="string">"high"</span>,
+    <span class="string">"due_date"</span>: <span class="string">"2025-12-31"</span>
+}
+
+<span class="comment">// Response (201 Created)</span>
+{
+    <span class="string">"id"</span>: 1,
+    <span class="string">"user_id"</span>: 1,
+    <span class="string">"category_id"</span>: 1,
+    <span class="string">"title"</span>: <span class="string">"Complete Project"</span>,
+    <span class="comment">/* other fields */</span>
+}</code>
+            </div>
+
+            <div class="tip">
+                <strong>💡 Tip:</strong> Save the token from login/register response and add it to Authorization header for all protected routes.
+            </div>
+        </section>
+
+        <section>
+            <h2>🐛 Debugging & Optimization</h2>
+
+            <h3>Common Issues & Solutions:</h3>
+            <table>
+                <tr>
+                    <th>Issue</th>
+                    <th>Solution</th>
+                </tr>
+                <tr>
+                    <td>CORS errors in API</td>
+                    <td>Configure config/cors.php properly</td>
+                </tr>
+                <tr>
+                    <td>Token not working</td>
+                    <td>Check auth:sanctum middleware, verify token format</td>
+                </tr>
+                <tr>
+                    <td>File upload fails</td>
+                    <td>Check storage/app/public permissions, run storage:link</td>
+                </tr>
+                <tr>
+                    <td>Slow queries</td>
+                    <td>Add eager loading with with(), use pagination</td>
+                </tr>
+            </table>
+
+            <h3>Performance Optimization:</h3>
+            <div class="code-block">
+<code><span class="comment"># Cache configuration</span>
+php artisan config:cache
+
+<span class="comment"># Cache routes</span>
+php artisan route:cache
+
+<span class="comment"># Optimize autoloader</span>
+composer dump-autoload --optimize
+
+<span class="comment"># Clear all caches</span>
+php artisan optimize:clear</code>
+            </div>
+        </section>
+
+        <section>
+            <h2>🚀 Deployment Preparation</h2>
+
+            <h3>Pre-Deployment Checklist:</h3>
+            <ul>
+                <li>✅ Set APP_ENV=production in .env</li>
+                <li>✅ Set APP_DEBUG=false</li>
+                <li>✅ Generate APP_KEY: php artisan key:generate</li>
+                <li>✅ Configure production database</li>
+                <li>✅ Run migrations on production: php artisan migrate --force</li>
+                <li>✅ Clear and cache config: php artisan config:cache</li>
+                <li>✅ Optimize routes: php artisan route:cache</li>
+                <li>✅ Build assets: npm run build</li>
+                <li>✅ Set proper file permissions</li>
+            </ul>
+
+            <h3>Environment Configuration (.env):</h3>
+            <div class="code-block">
+<code>APP_NAME="Task Manager"
+APP_ENV=production
+APP_DEBUG=false
+APP_URL=https://yourdomain.com
+
+DB_CONNECTION=mysql
+DB_HOST=your-production-host
+DB_PORT=3306
+DB_DATABASE=your_database
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=your-email@gmail.com
+MAIL_PASSWORD=your-app-password</code>
+            </div>
+        </section>
+
+        <section>
+            <h2>📦 Deployment Options</h2>
+
+            <h3>1. Shared Hosting (Easy):</h3>
+            <ol>
+                <li>Upload files via FTP/cPanel</li>
+                <li>Point public_html to Laravel's public folder</li>
+                <li>Update .env with hosting database</li>
+                <li>Run migrations through terminal/SSH</li>
+            </ol>
+
+            <h3>2. Heroku (Free Tier):</h3>
+            <div class="code-block">
+<code><span class="comment"># Install Heroku CLI</span>
+heroku login
+
+<span class="comment"># Create new app</span>
+heroku create your-app-name
+
+<span class="comment"># Add MySQL addon</span>
+heroku addons:create cleardb:ignite
+
+<span class="comment"># Deploy</span>
+git push heroku main
+
+<span class="comment"># Run migrations</span>
+heroku run php artisan migrate --force</code>
+            </div>
+
+            <h3>3. DigitalOcean/AWS (Professional):</h3>
+            <ul>
+                <li>Set up Linux server (Ubuntu)</li>
+                <li>Install LAMP/LEMP stack</li>
+                <li>Configure Nginx/Apache</li>
+                <li>Set up SSL certificate (Let's Encrypt)</li>
+                <li>Deploy with Git</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>✍️ Final Exercises</h2>
+
+            <div class="exercise">
+                <h3>Exercise 1: Complete API Testing</h3>
+                <ol>
+                    <li>Test all API endpoints in Postman</li>
+                    <li>Create Postman collection</li>
+                    <li>Test with different users</li>
+                    <li>Verify authorization works</li>
+                    <li>Export Postman collection</li>
+                </ol>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 2: Add Extra Features</h3>
+                <ol>
+                    <li>Add task search functionality</li>
+                    <li>Implement task filtering by status</li>
+                    <li>Add due date reminders</li>
+                    <li>Create task statistics charts</li>
+                </ol>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 3: Deploy Project</h3>
+                <ol>
+                    <li>Choose deployment platform</li>
+                    <li>Configure production environment</li>
+                    <li>Deploy application</li>
+                    <li>Test live application</li>
+                    <li>Share project URL</li>
+                </ol>
+            </div>
+        </section>
+
+        <section>
+            <h2>🎯 Final Deliverable</h2>
+            <div class="success">
+                <h3>🎉 Complete Task Management System</h3>
+                <p><strong>Final Project Requirements:</strong></p>
+                <ul>
+                    <li>✅ User authentication (register, login, logout)</li>
+                    <li>✅ Complete task CRUD operations</li>
+                    <li>✅ Task categories and priorities</li>
+                    <li>✅ File attachments for tasks</li>
+                    <li>✅ Task pagination</li>
+                    <li>✅ RESTful API with Sanctum authentication</li>
+                    <li>✅ Postman collection for API testing</li>
+                    <li>✅ Deployed and accessible online</li>
+                    <li>✅ README with project documentation</li>
+                    <li>✅ Screenshots/video demo</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>🎓 Congratulations!</h2>
+            <div class="success">
+                <h3>🏆 You've Completed the 20-Week Full Stack Bootcamp!</h3>
+                <p><strong>What You've Learned:</strong></p>
+                <ul>
+                    <li>✨ HTML5, CSS3, and Responsive Design</li>
+                    <li>✨ JavaScript and DOM Manipulation</li>
+                    <li>✨ Bootstrap Framework</li>
+                    <li>✨ PHP Programming</li>
+                    <li>✨ MySQL Database</li>
+                    <li>✨ Laravel Framework</li>
+                    <li>✨ Authentication & Authorization</li>
+                    <li>✨ RESTful API Development</li>
+                    <li>✨ File Management</li>
+                    <li>✨ Deployment</li>
+                </ul>
+                <p style="margin-top: 20px; font-size: 1.2rem; text-align: center;">
+                    <strong>You're now a Full Stack Web Developer! 🚀</strong>
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>📚 Next Steps</h2>
+            <ul>
+                <li>Build your own projects to strengthen skills</li>
+                <li>Contribute to open-source Laravel projects</li>
+                <li>Learn Vue.js or React for frontend</li>
+                <li>Explore Laravel advanced topics (Broadcasting, Queues)</li>
+                <li>Study software architecture and design patterns</li>
+                <li>Build your portfolio website</li>
+                <li>Apply for junior developer positions</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>🌟 Resources for Continued Learning</h2>
+            <ul>
+                <li><strong>Laravel Documentation:</strong> https://laravel.com/docs</li>
+                <li><strong>Laracasts:</strong> https://laracasts.com</li>
+                <li><strong>PHP.net:</strong> https://www.php.net</li>
+                <li><strong>Stack Overflow:</strong> https://stackoverflow.com</li>
+                <li><strong>GitHub:</strong> Explore Laravel projects</li>
+                <li><strong>Laravel News:</strong> https://laravel-news.com</li>
+            </ul>
+        </section>
+
+        <div class="nav-buttons">
+            <a href="day2-auth-crud.html" class="btn">← Previous: CRUD Implementation</a>
+            <a href="../index.html" class="btn">🏠 Back to Home</a>
+        </div>
+    </div>
+</body>
+</html>

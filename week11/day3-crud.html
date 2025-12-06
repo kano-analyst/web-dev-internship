@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 11 Day 3: CRUD Operations</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        header { background: #667eea; color: white; padding: 30px; border-radius: 15px 15px 0 0; }
+        .content { padding: 40px; }
+        h2 { color: #667eea; border-bottom: 3px solid #764ba2; padding-bottom: 10px; margin: 30px 0 20px; }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        .info-box { background: #e8eaf6; border-left: 5px solid #667eea; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border: 1px solid #ddd; }
+        th { background: #667eea; color: white; }
+        .btn { background: #667eea; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 10px 10px 0; }
+        footer { background: #667eea; color: white; padding: 20px; text-align: center; border-radius: 0 0 15px 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 11 - Day 3: CRUD Operations</h1>
+            <p>Friday | Duration: 3 hours</p>
+        </header>
+
+        <div class="content">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Implement complete CRUD operations (Create, Read, Update, Delete)</li>
+                <li>Build student management system</li>
+                <li>Handle UPDATE and DELETE SQL queries</li>
+                <li>Create edit and delete functionality</li>
+                <li>Implement search and filtering</li>
+            </ul>
+
+            <h2>🔄 What is CRUD?</h2>
+            <div class="info-box">
+                <p><strong>CRUD</strong> stands for the four basic operations for persistent storage:</p>
+                <ul style="margin-top: 10px;">
+                    <li><strong>C</strong>reate - Add new records (INSERT)</li>
+                    <li><strong>R</strong>ead - View existing records (SELECT)</li>
+                    <li><strong>U</strong>pdate - Modify existing records (UPDATE)</li>
+                    <li><strong>D</strong>elete - Remove records (DELETE)</li>
+                </ul>
+            </div>
+
+            <h2>🔄 UPDATE Query</h2>
+            
+            <h3>Basic Syntax:</h3>
+            <div class="code-block">
+UPDATE table_name
+SET column1 = value1, column2 = value2
+WHERE condition;
+            </div>
+
+            <h3>Update Examples:</h3>
+            <div class="code-block">
+-- Update one field
+UPDATE students 
+SET age = 21 
+WHERE id = 1;
+
+-- Update multiple fields
+UPDATE students 
+SET name = 'Ahmad Ibrahim', age = 21, course = 'Data Science' 
+WHERE id = 1;
+
+-- Update based on condition
+UPDATE students 
+SET grade = 'A' 
+WHERE age >= 21;
+            </div>
+
+            <h3>Update with PHP:</h3>
+            <div class="code-block">
+&lt;?php
+require_once 'config.php';
+
+$id = 1;
+$name = "Ahmad Ibrahim Updated";
+$email = "ahmad.new@email.com";
+$age = 21;
+$course = "Data Science";
+
+// Prepare UPDATE statement
+$stmt = mysqli_prepare($conn, "UPDATE students SET name = ?, email = ?, age = ?, course = ? WHERE id = ?");
+mysqli_stmt_bind_param($stmt, "ssisi", $name, $email, $age, $course, $id);
+
+if (mysqli_stmt_execute($stmt)) {
+    echo "Student updated successfully!";
+} else {
+    echo "Error: " . mysqli_error($conn);
+}
+
+mysqli_stmt_close($stmt);
+mysqli_close($conn);
+?&gt;
+            </div>
+
+            <h2>❌ DELETE Query</h2>
+            
+            <h3>Basic Syntax:</h3>
+            <div class="code-block">
+DELETE FROM table_name
+WHERE condition;
+            </div>
+
+            <h3>Delete Examples:</h3>
+            <div class="code-block">
+-- Delete specific record
+DELETE FROM students WHERE id = 1;
+
+-- Delete based on condition
+DELETE FROM students WHERE age < 18;
+
+-- ⚠️ Delete all records (BE CAREFUL!)
+DELETE FROM students;
+            </div>
+
+            <h3>Delete with PHP:</h3>
+            <div class="code-block">
+&lt;?php
+require_once 'config.php';
+
+$id = 5;
+
+// Prepare DELETE statement
+$stmt = mysqli_prepare($conn, "DELETE FROM students WHERE id = ?");
+mysqli_stmt_bind_param($stmt, "i", $id);
+
+if (mysqli_stmt_execute($stmt)) {
+    if (mysqli_stmt_affected_rows($stmt) > 0) {
+        echo "Student deleted successfully!";
+    } else {
+        echo "No student found with that ID.";
+    }
+} else {
+    echo "Error: " . mysqli_error($conn);
+}
+
+mysqli_stmt_close($stmt);
+mysqli_close($conn);
+?&gt;
+            </div>
+
+            <h2>💻 Complete CRUD Student Management System</h2>
+            
+            <h3>1. View All Students (index.php)</h3>
+            <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Student Management System&lt;/title&gt;
+    &lt;style&gt;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+        h1 { color: #667eea; margin-bottom: 30px; }
+        .btn {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        .btn-danger { background: #dc3545; }
+        .btn-success { background: #28a745; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background: #667eea;
+            color: white;
+        }
+        tr:hover { background: #f5f5f5; }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="container"&gt;
+        &lt;h1&gt;Student Management System&lt;/h1&gt;
+        
+        &lt;a href="add.php" class="btn"&gt;+ Add New Student&lt;/a&gt;
+        
+        &lt;?php
+        require_once 'config.php';
+        
+        $sql = "SELECT * FROM students ORDER BY id DESC";
+        $result = mysqli_query($conn, $sql);
+        
+        if (mysqli_num_rows($result) > 0) {
+            echo "&lt;table&gt;";
+            echo "&lt;thead&gt;";
+            echo "&lt;tr&gt;";
+            echo "&lt;th&gt;ID&lt;/th&gt;";
+            echo "&lt;th&gt;Name&lt;/th&gt;";
+            echo "&lt;th&gt;Email&lt;/th&gt;";
+            echo "&lt;th&gt;Age&lt;/th&gt;";
+            echo "&lt;th&gt;Course&lt;/th&gt;";
+            echo "&lt;th&gt;Actions&lt;/th&gt;";
+            echo "&lt;/tr&gt;";
+            echo "&lt;/thead&gt;";
+            echo "&lt;tbody&gt;";
+            
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo "&lt;tr&gt;";
+                echo "&lt;td&gt;" . $row['id'] . "&lt;/td&gt;";
+                echo "&lt;td&gt;" . htmlspecialchars($row['name']) . "&lt;/td&gt;";
+                echo "&lt;td&gt;" . htmlspecialchars($row['email']) . "&lt;/td&gt;";
+                echo "&lt;td&gt;" . $row['age'] . "&lt;/td&gt;";
+                echo "&lt;td&gt;" . htmlspecialchars($row['course']) . "&lt;/td&gt;";
+                echo "&lt;td&gt;";
+                echo "&lt;a href='edit.php?id=" . $row['id'] . "' class='btn btn-success' style='font-size: 12px;'&gt;Edit&lt;/a&gt; ";
+                echo "&lt;a href='delete.php?id=" . $row['id'] . "' class='btn btn-danger' style='font-size: 12px;' onclick='return confirm(\"Are you sure?\");'&gt;Delete&lt;/a&gt;";
+                echo "&lt;/td&gt;";
+                echo "&lt;/tr&gt;";
+            }
+            
+            echo "&lt;/tbody&gt;";
+            echo "&lt;/table&gt;";
+        } else {
+            echo "&lt;p&gt;No students found. Add your first student!&lt;/p&gt;";
+        }
+        
+        mysqli_close($conn);
+        ?&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </div>
+
+            <h3>2. Edit Student (edit.php)</h3>
+            <div class="code-block">
+&lt;?php
+require_once 'config.php';
+
+// Get student ID from URL
+$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+
+// Fetch current student data
+$stmt = mysqli_prepare($conn, "SELECT * FROM students WHERE id = ?");
+mysqli_stmt_bind_param($stmt, "i", $id);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+$student = mysqli_fetch_assoc($result);
+
+if (!$student) {
+    die("Student not found!");
+}
+
+$errors = [];
+$success = "";
+
+// Handle form submission
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name = trim($_POST['name']);
+    $email = trim($_POST['email']);
+    $age = $_POST['age'];
+    $course = $_POST['course'];
+
+    // Validation
+    if (empty($name)) $errors[] = "Name is required";
+    if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors[] = "Valid email is required";
+    }
+    if (empty($age) || $age < 16) $errors[] = "Valid age required";
+
+    // Check if email exists for other students
+    $checkStmt = mysqli_prepare($conn, "SELECT id FROM students WHERE email = ? AND id != ?");
+    mysqli_stmt_bind_param($checkStmt, "si", $email, $id);
+    mysqli_stmt_execute($checkStmt);
+    mysqli_stmt_store_result($checkStmt);
+    
+    if (mysqli_stmt_num_rows($checkStmt) > 0) {
+        $errors[] = "Email already in use by another student";
+    }
+    mysqli_stmt_close($checkStmt);
+
+    // If no errors, update
+    if (empty($errors)) {
+        $updateStmt = mysqli_prepare($conn, "UPDATE students SET name = ?, email = ?, age = ?, course = ? WHERE id = ?");
+        mysqli_stmt_bind_param($updateStmt, "ssisi", $name, $email, $age, $course, $id);
+        
+        if (mysqli_stmt_execute($updateStmt)) {
+            $success = "Student updated successfully!";
+            // Refresh data
+            $student['name'] = $name;
+            $student['email'] = $email;
+            $student['age'] = $age;
+            $student['course'] = $course;
+        } else {
+            $errors[] = "Update failed!";
+        }
+        mysqli_stmt_close($updateStmt);
+    }
+}
+
+mysqli_close($conn);
+?&gt;
+
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Edit Student&lt;/title&gt;
+    &lt;style&gt;
+        /* Same styles as registration form */
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="form-container"&gt;
+        &lt;h2&gt;Edit Student&lt;/h2&gt;
+        
+        &lt;?php if ($success): ?&gt;
+            &lt;div class="success"&gt;&lt;?php echo $success; ?&gt;&lt;/div&gt;
+        &lt;?php endif; ?&gt;
+        
+        &lt;?php if (!empty($errors)): ?&gt;
+            &lt;div class="error"&gt;
+                &lt;ul&gt;
+                    &lt;?php foreach ($errors as $error): ?&gt;
+                        &lt;li&gt;&lt;?php echo htmlspecialchars($error); ?&gt;&lt;/li&gt;
+                    &lt;?php endforeach; ?&gt;
+                &lt;/ul&gt;
+            &lt;/div&gt;
+        &lt;?php endif; ?&gt;
+        
+        &lt;form method="POST"&gt;
+            &lt;div class="form-group"&gt;
+                &lt;label&gt;Name:&lt;/label&gt;
+                &lt;input type="text" name="name" value="&lt;?php echo htmlspecialchars($student['name']); ?&gt;" required&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="form-group"&gt;
+                &lt;label&gt;Email:&lt;/label&gt;
+                &lt;input type="email" name="email" value="&lt;?php echo htmlspecialchars($student['email']); ?&gt;" required&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="form-group"&gt;
+                &lt;label&gt;Age:&lt;/label&gt;
+                &lt;input type="number" name="age" value="&lt;?php echo $student['age']; ?&gt;" required&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="form-group"&gt;
+                &lt;label&gt;Course:&lt;/label&gt;
+                &lt;select name="course" required&gt;
+                    &lt;option value="Web Development" &lt;?php echo $student['course'] == 'Web Development' ? 'selected' : ''; ?&gt;&gt;Web Development&lt;/option&gt;
+                    &lt;option value="Data Science" &lt;?php echo $student['course'] == 'Data Science' ? 'selected' : ''; ?&gt;&gt;Data Science&lt;/option&gt;
+                    &lt;option value="UI/UX Design" &lt;?php echo $student['course'] == 'UI/UX Design' ? 'selected' : ''; ?&gt;&gt;UI/UX Design&lt;/option&gt;
+                &lt;/select&gt;
+            &lt;/div&gt;
+            
+            &lt;button type="submit"&gt;Update Student&lt;/button&gt;
+            &lt;a href="index.php" style="display: block; text-align: center; margin-top: 15px;"&gt;Back to List&lt;/a&gt;
+        &lt;/form&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </div>
+
+            <h3>3. Delete Student (delete.php)</h3>
+            <div class="code-block">
+&lt;?php
+require_once 'config.php';
+
+// Get ID from URL
+$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+
+if ($id > 0) {
+    // Prepare DELETE statement
+    $stmt = mysqli_prepare($conn, "DELETE FROM students WHERE id = ?");
+    mysqli_stmt_bind_param($stmt, "i", $id);
+    
+    if (mysqli_stmt_execute($stmt)) {
+        if (mysqli_stmt_affected_rows($stmt) > 0) {
+            $message = "Student deleted successfully!";
+        } else {
+            $message = "Student not found.";
+        }
+    } else {
+        $message = "Error deleting student.";
+    }
+    
+    mysqli_stmt_close($stmt);
+} else {
+    $message = "Invalid student ID.";
+}
+
+mysqli_close($conn);
+
+// Redirect back to index with message
+header("Location: index.php?message=" . urlencode($message));
+exit();
+?&gt;
+            </div>
+
+            <h2>✏️ Practice Exercises</h2>
+            <ol>
+                <li>Complete the CRUD student management system</li>
+                <li>Add search functionality by name or course</li>
+                <li>Implement sorting (by name, age, course)</li>
+                <li>Add pagination (10 students per page)</li>
+                <li>Create a "View Details" page for each student</li>
+            </ol>
+
+            <h2>✅ CRUD Best Practices</h2>
+            <ul>
+                <li>✓ Always use WHERE clause with UPDATE and DELETE</li>
+                <li>✓ Confirm before deleting (JavaScript confirm dialog)</li>
+                <li>✓ Validate data before updating</li>
+                <li>✓ Check if record exists before operations</li>
+                <li>✓ Use prepared statements to prevent SQL injection</li>
+                <li>✓ Display success/error messages to users</li>
+                <li>✓ Redirect after successful operations</li>
+            </ul>
+
+            <h2>✅ Today's Deliverable</h2>
+            <ul>
+                <li>✓ Complete CRUD system with all 4 operations</li>
+                <li>✓ View all students page</li>
+                <li>✓ Add student functionality</li>
+                <li>✓ Edit student with pre-filled form</li>
+                <li>✓ Delete with confirmation</li>
+                <li>✓ All validation working properly</li>
+            </ul>
+
+            <div style="margin-top: 40px;">
+                <a href="day2-php-mysql.html" class="btn">← Previous</a>
+                <a href="../index.html" class="btn">Course Home</a>
+                <a href="../week12/day1-blog-planning.html" class="btn">Next Week →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 11 - Day 3: CRUD Operations</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

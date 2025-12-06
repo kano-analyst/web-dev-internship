@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 20 Day 2 - Authentication & CRUD | Laravel Bootcamp</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #fa709a;
+        }
+        h1 { color: #fa709a; font-size: 2.5rem; margin-bottom: 10px; }
+        h2 { color: #fe8c00; margin-top: 30px; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #eee; }
+        h3 { color: #fa709a; margin-top: 25px; margin-bottom: 15px; }
+        .highlight {
+            background: #fff5e6;
+            padding: 15px;
+            border-left: 4px solid #fa709a;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+        .code-block code { font-size: 14px; line-height: 1.5; }
+        .comment { color: #6a9955; }
+        .keyword { color: #569cd6; }
+        .string { color: #ce9178; }
+        .function { color: #dcdcaa; }
+        ul, ol { margin-left: 30px; margin-bottom: 20px; }
+        li { margin-bottom: 10px; }
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: transform 0.3s ease;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .exercise {
+            background: #fff3cd;
+            padding: 20px;
+            border-left: 4px solid #ffc107;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .tip {
+            background: #d1ecf1;
+            padding: 15px;
+            border-left: 4px solid #17a2b8;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background: #fa709a; color: white; }
+        tr:nth-child(even) { background: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚙️ Week 20, Day 2: Authentication & CRUD Implementation</h1>
+            <p>Build Complete Task Management Features</p>
+        </header>
+
+        <section>
+            <h2>📖 Learning Objectives</h2>
+            <ul>
+                <li>Create database migrations for all tables</li>
+                <li>Define Eloquent models with relationships</li>
+                <li>Implement task CRUD operations</li>
+                <li>Add file attachment functionality</li>
+                <li>Integrate user authentication</li>
+                <li>Create dashboard with task summary</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>🗄️ Database Migrations</h2>
+
+            <h3>1. Categories Migration:</h3>
+            <div class="code-block">
+<code><span class="comment">// database/migrations/xxxx_create_categories_table.php</span>
+<span class="keyword">public function</span> <span class="function">up</span>()
+{
+    Schema::<span class="function">create</span>(<span class="string">'categories'</span>, <span class="keyword">function</span> (Blueprint $table) {
+        $table-><span class="function">id</span>();
+        $table-><span class="function">string</span>(<span class="string">'name'</span>);
+        $table-><span class="function">string</span>(<span class="string">'color'</span>, 7)-><span class="function">default</span>(<span class="string">'#3b82f6'</span>);
+        $table-><span class="function">timestamps</span>();
+    });
+}</code>
+            </div>
+
+            <h3>2. Tasks Migration:</h3>
+            <div class="code-block">
+<code><span class="comment">// database/migrations/xxxx_create_tasks_table.php</span>
+<span class="keyword">public function</span> <span class="function">up</span>()
+{
+    Schema::<span class="function">create</span>(<span class="string">'tasks'</span>, <span class="keyword">function</span> (Blueprint $table) {
+        $table-><span class="function">id</span>();
+        $table-><span class="function">foreignId</span>(<span class="string">'user_id'</span>)-><span class="function">constrained</span>()-><span class="function">onDelete</span>(<span class="string">'cascade'</span>);
+        $table-><span class="function">foreignId</span>(<span class="string">'category_id'</span>)-><span class="function">constrained</span>()-><span class="function">onDelete</span>(<span class="string">'cascade'</span>);
+        $table-><span class="function">string</span>(<span class="string">'title'</span>);
+        $table-><span class="function">text</span>(<span class="string">'description'</span>)-><span class="function">nullable</span>();
+        $table-><span class="function">enum</span>(<span class="string">'status'</span>, [<span class="string">'pending'</span>, <span class="string">'in_progress'</span>, <span class="string">'completed'</span>])
+              -><span class="function">default</span>(<span class="string">'pending'</span>);
+        $table-><span class="function">enum</span>(<span class="string">'priority'</span>, [<span class="string">'low'</span>, <span class="string">'medium'</span>, <span class="string">'high'</span>])-><span class="function">default</span>(<span class="string">'medium'</span>);
+        $table-><span class="function">date</span>(<span class="string">'due_date'</span>)-><span class="function">nullable</span>();
+        $table-><span class="function">timestamp</span>(<span class="string">'completed_at'</span>)-><span class="function">nullable</span>();
+        $table-><span class="function">timestamps</span>();
+    });
+}</code>
+            </div>
+
+            <h3>3. Attachments Migration:</h3>
+            <div class="code-block">
+<code><span class="comment">// database/migrations/xxxx_create_attachments_table.php</span>
+<span class="keyword">public function</span> <span class="function">up</span>()
+{
+    Schema::<span class="function">create</span>(<span class="string">'attachments'</span>, <span class="keyword">function</span> (Blueprint $table) {
+        $table-><span class="function">id</span>();
+        $table-><span class="function">foreignId</span>(<span class="string">'task_id'</span>)-><span class="function">constrained</span>()-><span class="function">onDelete</span>(<span class="string">'cascade'</span>);
+        $table-><span class="function">string</span>(<span class="string">'file_name'</span>);
+        $table-><span class="function">string</span>(<span class="string">'file_path'</span>);
+        $table-><span class="function">integer</span>(<span class="string">'file_size'</span>);
+        $table-><span class="function">string</span>(<span class="string">'mime_type'</span>);
+        $table-><span class="function">timestamps</span>();
+    });
+}
+
+<span class="comment">// Run migrations</span>
+php artisan migrate</code>
+            </div>
+        </section>
+
+        <section>
+            <h2>📦 Eloquent Models</h2>
+
+            <h3>1. Category Model:</h3>
+            <div class="code-block">
+<code><span class="comment">// app/Models/Category.php</span>
+<span class="keyword">namespace</span> App\Models;
+
+<span class="keyword">use</span> Illuminate\Database\Eloquent\Model;
+
+<span class="keyword">class</span> <span class="function">Category</span> <span class="keyword">extends</span> Model
+{
+    <span class="keyword">protected</span> $fillable = [<span class="string">'name'</span>, <span class="string">'color'</span>];
+
+    <span class="comment">// Relationship: Category has many tasks</span>
+    <span class="keyword">public function</span> <span class="function">tasks</span>()
+    {
+        <span class="keyword">return</span> $this-><span class="function">hasMany</span>(Task::<span class="keyword">class</span>);
+    }
+}</code>
+            </div>
+
+            <h3>2. Task Model:</h3>
+            <div class="code-block">
+<code><span class="comment">// app/Models/Task.php</span>
+<span class="keyword">namespace</span> App\Models;
+
+<span class="keyword">use</span> Illuminate\Database\Eloquent\Model;
+
+<span class="keyword">class</span> <span class="function">Task</span> <span class="keyword">extends</span> Model
+{
+    <span class="keyword">protected</span> $fillable = [
+        <span class="string">'user_id'</span>, <span class="string">'category_id'</span>, <span class="string">'title'</span>, <span class="string">'description'</span>,
+        <span class="string">'status'</span>, <span class="string">'priority'</span>, <span class="string">'due_date'</span>, <span class="string">'completed_at'</span>
+    ];
+
+    <span class="keyword">protected</span> $casts = [
+        <span class="string">'due_date'</span> => <span class="string">'date'</span>,
+        <span class="string">'completed_at'</span> => <span class="string">'datetime'</span>,
+    ];
+
+    <span class="comment">// Relationship: Task belongs to user</span>
+    <span class="keyword">public function</span> <span class="function">user</span>()
+    {
+        <span class="keyword">return</span> $this-><span class="function">belongsTo</span>(User::<span class="keyword">class</span>);
+    }
+
+    <span class="comment">// Relationship: Task belongs to category</span>
+    <span class="keyword">public function</span> <span class="function">category</span>()
+    {
+        <span class="keyword">return</span> $this-><span class="function">belongsTo</span>(Category::<span class="keyword">class</span>);
+    }
+
+    <span class="comment">// Relationship: Task has many attachments</span>
+    <span class="keyword">public function</span> <span class="function">attachments</span>()
+    {
+        <span class="keyword">return</span> $this-><span class="function">hasMany</span>(Attachment::<span class="keyword">class</span>);
+    }
+}</code>
+            </div>
+
+            <h3>3. Attachment Model:</h3>
+            <div class="code-block">
+<code><span class="comment">// app/Models/Attachment.php</span>
+<span class="keyword">namespace</span> App\Models;
+
+<span class="keyword">use</span> Illuminate\Database\Eloquent\Model;
+
+<span class="keyword">class</span> <span class="function">Attachment</span> <span class="keyword">extends</span> Model
+{
+    <span class="keyword">protected</span> $fillable = [
+        <span class="string">'task_id'</span>, <span class="string">'file_name'</span>, <span class="string">'file_path'</span>,
+        <span class="string">'file_size'</span>, <span class="string">'mime_type'</span>
+    ];
+
+    <span class="comment">// Relationship: Attachment belongs to task</span>
+    <span class="keyword">public function</span> <span class="function">task</span>()
+    {
+        <span class="keyword">return</span> $this-><span class="function">belongsTo</span>(Task::<span class="keyword">class</span>);
+    }
+}</code>
+            </div>
+        </section>
+
+        <section>
+            <h2>🎨 Dashboard Controller</h2>
+
+            <div class="code-block">
+<code><span class="comment">// app/Http/Controllers/DashboardController.php</span>
+<span class="keyword">namespace</span> App\Http\Controllers;
+
+<span class="keyword">use</span> App\Models\Task;
+<span class="keyword">use</span> Illuminate\Http\Request;
+
+<span class="keyword">class</span> <span class="function">DashboardController</span> <span class="keyword">extends</span> Controller
+{
+    <span class="keyword">public function</span> <span class="function">index</span>()
+    {
+        $user = <span class="function">auth</span>()-><span class="function">user</span>();
+
+        <span class="comment">// Get task statistics</span>
+        $totalTasks = $user-><span class="function">tasks</span>()-><span class="function">count</span>();
+        $pendingTasks = $user-><span class="function">tasks</span>()-><span class="function">where</span>(<span class="string">'status'</span>, <span class="string">'pending'</span>)-><span class="function">count</span>();
+        $completedTasks = $user-><span class="function">tasks</span>()-><span class="function">where</span>(<span class="string">'status'</span>, <span class="string">'completed'</span>)-><span class="function">count</span>();
+
+        <span class="comment">// Get recent tasks</span>
+        $recentTasks = $user-><span class="function">tasks</span>()
+            -><span class="function">with</span>(<span class="string">'category'</span>)
+            -><span class="function">latest</span>()
+            -><span class="function">take</span>(5)
+            -><span class="function">get</span>();
+
+        <span class="keyword">return</span> <span class="function">view</span>(<span class="string">'dashboard'</span>, <span class="function">compact</span>(
+            <span class="string">'totalTasks'</span>, <span class="string">'pendingTasks'</span>, <span class="string">'completedTasks'</span>, <span class="string">'recentTasks'</span>
+        ));
+    }
+}</code>
+            </div>
+        </section>
+
+        <section>
+            <h2>⚙️ Task Controller (CRUD)</h2>
+
+            <h3>Complete TaskController:</h3>
+            <div class="code-block">
+<code><span class="comment">// app/Http/Controllers/TaskController.php</span>
+<span class="keyword">namespace</span> App\Http\Controllers;
+
+<span class="keyword">use</span> App\Models\Task;
+<span class="keyword">use</span> App\Models\Category;
+<span class="keyword">use</span> Illuminate\Http\Request;
+
+<span class="keyword">class</span> <span class="function">TaskController</span> <span class="keyword">extends</span> Controller
+{
+    <span class="comment">// Display all tasks</span>
+    <span class="keyword">public function</span> <span class="function">index</span>()
+    {
+        $tasks = <span class="function">auth</span>()-><span class="function">user</span>()-><span class="function">tasks</span>()
+            -><span class="function">with</span>(<span class="string">'category'</span>)
+            -><span class="function">latest</span>()
+            -><span class="function">paginate</span>(10);
+
+        <span class="keyword">return</span> <span class="function">view</span>(<span class="string">'tasks.index'</span>, <span class="function">compact</span>(<span class="string">'tasks'</span>));
+    }
+
+    <span class="comment">// Show create form</span>
+    <span class="keyword">public function</span> <span class="function">create</span>()
+    {
+        $categories = Category::<span class="function">all</span>();
+        <span class="keyword">return</span> <span class="function">view</span>(<span class="string">'tasks.create'</span>, <span class="function">compact</span>(<span class="string">'categories'</span>));
+    }
+
+    <span class="comment">// Store new task</span>
+    <span class="keyword">public function</span> <span class="function">store</span>(Request $request)
+    {
+        $validated = $request-><span class="function">validate</span>([
+            <span class="string">'category_id'</span> => <span class="string">'required|exists:categories,id'</span>,
+            <span class="string">'title'</span> => <span class="string">'required|string|max:255'</span>,
+            <span class="string">'description'</span> => <span class="string">'nullable|string'</span>,
+            <span class="string">'priority'</span> => <span class="string">'required|in:low,medium,high'</span>,
+            <span class="string">'due_date'</span> => <span class="string">'nullable|date'</span>,
+            <span class="string">'attachment'</span> => <span class="string">'nullable|file|max:2048'</span>,
+        ]);
+
+        <span class="comment">// Create task</span>
+        $task = <span class="function">auth</span>()-><span class="function">user</span>()-><span class="function">tasks</span>()-><span class="function">create</span>($validated);
+
+        <span class="comment">// Handle file upload</span>
+        <span class="keyword">if</span> ($request-><span class="function">hasFile</span>(<span class="string">'attachment'</span>)) {
+            $file = $request-><span class="function">file</span>(<span class="string">'attachment'</span>);
+            $path = $file-><span class="function">store</span>(<span class="string">'attachments'</span>, <span class="string">'public'</span>);
+
+            $task-><span class="function">attachments</span>()-><span class="function">create</span>([
+                <span class="string">'file_name'</span> => $file-><span class="function">getClientOriginalName</span>(),
+                <span class="string">'file_path'</span> => $path,
+                <span class="string">'file_size'</span> => $file-><span class="function">getSize</span>(),
+                <span class="string">'mime_type'</span> => $file-><span class="function">getMimeType</span>(),
+            ]);
+        }
+
+        <span class="keyword">return</span> <span class="function">redirect</span>()-><span class="function">route</span>(<span class="string">'tasks.index'</span>)
+            -><span class="function">with</span>(<span class="string">'success'</span>, <span class="string">'Task created successfully!'</span>);
+    }
+
+    <span class="comment">// Show single task</span>
+    <span class="keyword">public function</span> <span class="function">show</span>(Task $task)
+    {
+        <span class="comment">// Authorize: only owner can view</span>
+        <span class="keyword">if</span> ($task->user_id !== <span class="function">auth</span>()-><span class="function">id</span>()) {
+            <span class="function">abort</span>(403);
+        }
+
+        $task-><span class="function">load</span>(<span class="string">'category'</span>, <span class="string">'attachments'</span>);
+        <span class="keyword">return</span> <span class="function">view</span>(<span class="string">'tasks.show'</span>, <span class="function">compact</span>(<span class="string">'task'</span>));
+    }
+
+    <span class="comment">// Show edit form</span>
+    <span class="keyword">public function</span> <span class="function">edit</span>(Task $task)
+    {
+        <span class="keyword">if</span> ($task->user_id !== <span class="function">auth</span>()-><span class="function">id</span>()) {
+            <span class="function">abort</span>(403);
+        }
+
+        $categories = Category::<span class="function">all</span>();
+        <span class="keyword">return</span> <span class="function">view</span>(<span class="string">'tasks.edit'</span>, <span class="function">compact</span>(<span class="string">'task'</span>, <span class="string">'categories'</span>));
+    }
+
+    <span class="comment">// Update task</span>
+    <span class="keyword">public function</span> <span class="function">update</span>(Request $request, Task $task)
+    {
+        <span class="keyword">if</span> ($task->user_id !== <span class="function">auth</span>()-><span class="function">id</span>()) {
+            <span class="function">abort</span>(403);
+        }
+
+        $validated = $request-><span class="function">validate</span>([
+            <span class="string">'category_id'</span> => <span class="string">'required|exists:categories,id'</span>,
+            <span class="string">'title'</span> => <span class="string">'required|string|max:255'</span>,
+            <span class="string">'description'</span> => <span class="string">'nullable|string'</span>,
+            <span class="string">'status'</span> => <span class="string">'required|in:pending,in_progress,completed'</span>,
+            <span class="string">'priority'</span> => <span class="string">'required|in:low,medium,high'</span>,
+            <span class="string">'due_date'</span> => <span class="string">'nullable|date'</span>,
+        ]);
+
+        $task-><span class="function">update</span>($validated);
+
+        <span class="keyword">return</span> <span class="function">redirect</span>()-><span class="function">route</span>(<span class="string">'tasks.show'</span>, $task)
+            -><span class="function">with</span>(<span class="string">'success'</span>, <span class="string">'Task updated successfully!'</span>);
+    }
+
+    <span class="comment">// Delete task</span>
+    <span class="keyword">public function</span> <span class="function">destroy</span>(Task $task)
+    {
+        <span class="keyword">if</span> ($task->user_id !== <span class="function">auth</span>()-><span class="function">id</span>()) {
+            <span class="function">abort</span>(403);
+        }
+
+        $task-><span class="function">delete</span>();
+
+        <span class="keyword">return</span> <span class="function">redirect</span>()-><span class="function">route</span>(<span class="string">'tasks.index'</span>)
+            -><span class="function">with</span>(<span class="string">'success'</span>, <span class="string">'Task deleted successfully!'</span>);
+    }
+}</code>
+            </div>
+        </section>
+
+        <section>
+            <h2>🛣️ Routes Configuration</h2>
+
+            <div class="code-block">
+<code><span class="comment">// routes/web.php</span>
+<span class="keyword">use</span> App\Http\Controllers\DashboardController;
+<span class="keyword">use</span> App\Http\Controllers\TaskController;
+<span class="keyword">use</span> App\Http\Controllers\CategoryController;
+
+Route::<span class="function">middleware</span>([<span class="string">'auth'</span>])-><span class="function">group</span>(<span class="keyword">function</span> () {
+    <span class="comment">// Dashboard</span>
+    Route::<span class="function">get</span>(<span class="string">'/dashboard'</span>, [DashboardController::<span class="keyword">class</span>, <span class="string">'index'</span>])
+        -><span class="function">name</span>(<span class="string">'dashboard'</span>);
+
+    <span class="comment">// Task CRUD</span>
+    Route::<span class="function">resource</span>(<span class="string">'tasks'</span>, TaskController::<span class="keyword">class</span>);
+
+    <span class="comment">// Categories</span>
+    Route::<span class="function">resource</span>(<span class="string">'categories'</span>, CategoryController::<span class="keyword">class</span>);
+});</code>
+            </div>
+        </section>
+
+        <section>
+            <h2>🌱 Database Seeder</h2>
+
+            <div class="code-block">
+<code><span class="comment">// database/seeders/CategorySeeder.php</span>
+<span class="keyword">namespace</span> Database\Seeders;
+
+<span class="keyword">use</span> App\Models\Category;
+<span class="keyword">use</span> Illuminate\Database\Seeder;
+
+<span class="keyword">class</span> <span class="function">CategorySeeder</span> <span class="keyword">extends</span> Seeder
+{
+    <span class="keyword">public function</span> <span class="function">run</span>()
+    {
+        $categories = [
+            [<span class="string">'name'</span> => <span class="string">'Work'</span>, <span class="string">'color'</span> => <span class="string">'#3b82f6'</span>],
+            [<span class="string">'name'</span> => <span class="string">'Personal'</span>, <span class="string">'color'</span> => <span class="string">'#10b981'</span>],
+            [<span class="string">'name'</span> => <span class="string">'Shopping'</span>, <span class="string">'color'</span> => <span class="string">'#f59e0b'</span>],
+            [<span class="string">'name'</span> => <span class="string">'Health'</span>, <span class="string">'color'</span> => <span class="string">'#ef4444'</span>],
+            [<span class="string">'name'</span> => <span class="string">'Education'</span>, <span class="string">'color'</span> => <span class="string">'#8b5cf6'</span>],
+        ];
+
+        <span class="keyword">foreach</span> ($categories <span class="keyword">as</span> $category) {
+            Category::<span class="function">create</span>($category);
+        }
+    }
+}
+
+<span class="comment">// Run seeder</span>
+php artisan db:seed --class=CategorySeeder</code>
+            </div>
+        </section>
+
+        <section>
+            <h2>✍️ Practice Exercises</h2>
+
+            <div class="exercise">
+                <h3>Exercise 1: Complete Migrations</h3>
+                <ol>
+                    <li>Create all three migrations</li>
+                    <li>Define foreign key constraints</li>
+                    <li>Run migrations</li>
+                    <li>Verify tables in phpMyAdmin</li>
+                </ol>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 2: Implement Models</h3>
+                <ol>
+                    <li>Create all three models</li>
+                    <li>Define relationships</li>
+                    <li>Test relationships in tinker</li>
+                    <li>Seed categories</li>
+                </ol>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 3: Build Task CRUD</h3>
+                <ol>
+                    <li>Implement TaskController</li>
+                    <li>Create task forms (create/edit)</li>
+                    <li>Add file upload functionality</li>
+                    <li>Test all CRUD operations</li>
+                </ol>
+            </div>
+        </section>
+
+        <section>
+            <h2>🎯 Today's Deliverable</h2>
+            <div class="highlight">
+                <h3>✅ Working Task Management System</h3>
+                <p><strong>Requirements:</strong></p>
+                <ul>
+                    <li>All migrations created and executed</li>
+                    <li>Models with relationships defined</li>
+                    <li>Complete task CRUD functionality</li>
+                    <li>File attachment feature working</li>
+                    <li>Dashboard showing task statistics</li>
+                    <li>Categories seeded in database</li>
+                    <li>At least 5 test tasks created</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>📚 Summary</h2>
+            <ul>
+                <li>Migrations create database structure with foreign keys</li>
+                <li>Eloquent models define relationships between tables</li>
+                <li>Task CRUD operations follow Laravel conventions</li>
+                <li>File uploads use Laravel Storage system</li>
+                <li>Authorization ensures users access only their tasks</li>
+                <li>Pagination improves performance with large datasets</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>🔜 What's Next?</h2>
+            <p>In Day 3, we'll complete:</p>
+            <ul>
+                <li>RESTful API endpoints for tasks</li>
+                <li>API authentication with Sanctum</li>
+                <li>Testing APIs with Postman</li>
+                <li>Deployment preparation</li>
+                <li>Final project celebration!</li>
+            </ul>
+        </section>
+
+        <div class="nav-buttons">
+            <a href="day1-project-planning.html" class="btn">← Previous: Planning</a>
+            <a href="day3-api-deployment.html" class="btn">Next: API & Deployment →</a>
+        </div>
+    </div>
+</body>
+</html>

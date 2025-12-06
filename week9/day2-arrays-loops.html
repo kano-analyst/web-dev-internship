@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 9 Day 2: Arrays, Conditionals & Loops</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        header { background: #ff6b6b; color: white; padding: 30px; border-radius: 15px 15px 0 0; }
+        .content { padding: 40px; }
+        h2 { color: #ff6b6b; border-bottom: 3px solid #feca57; padding-bottom: 10px; margin: 30px 0 20px; }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+        .info-box { background: #fff3cd; border-left: 5px solid #ff6b6b; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border: 1px solid #ddd; }
+        th { background: #ff6b6b; color: white; }
+        .btn { background: #ff6b6b; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 10px 10px 0; }
+        footer { background: #ff6b6b; color: white; padding: 20px; text-align: center; border-radius: 0 0 15px 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 9 - Day 2: Arrays, Conditionals & Loops</h1>
+            <p>Wednesday | Duration: 3 hours</p>
+        </header>
+
+        <div class="content">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Master PHP indexed arrays</li>
+                <li>Work with associative arrays</li>
+                <li>Use if/else conditional statements</li>
+                <li>Implement for and while loops</li>
+                <li>Loop through arrays</li>
+            </ul>
+
+            <h2>📦 PHP Arrays</h2>
+            <div class="info-box">
+                <p><strong>Arrays</strong> are variables that can store multiple values. PHP supports indexed arrays (with numeric keys) and associative arrays (with named keys).</p>
+            </div>
+
+            <h3>1. Indexed Arrays</h3>
+            <div class="code-block">
+&lt;?php
+// Creating indexed array
+$fruits = array("Apple", "Banana", "Orange");
+
+// Or using short syntax
+$colors = ["Red", "Green", "Blue"];
+
+// Accessing array elements (index starts at 0)
+echo $fruits[0];  // Apple
+echo $fruits[1];  // Banana
+echo $fruits[2];  // Orange
+
+// Array length
+echo count($fruits);  // 3
+
+// Adding elements
+$fruits[] = "Mango";  // Add to end
+$colors[3] = "Yellow";  // Add at specific index
+?&gt;
+            </div>
+
+            <h3>2. Associative Arrays</h3>
+            <div class="code-block">
+&lt;?php
+// Array with named keys
+$student = array(
+    "name" =&gt; "Ahmad Garba",
+    "age" =&gt; 25,
+    "city" =&gt; "Kano",
+    "course" =&gt; "Web Development"
+);
+
+// Or using short syntax
+$product = [
+    "name" =&gt; "Laptop",
+    "price" =&gt; 50000,
+    "brand" =&gt; "HP"
+];
+
+// Accessing values
+echo $student["name"];   // Ahmad Garba
+echo $product["price"];  // 50000
+
+// Adding new key-value pair
+$student["email"] = "ahmad@example.com";
+?&gt;
+            </div>
+
+            <h3>3. Multidimensional Arrays</h3>
+            <div class="code-block">
+&lt;?php
+$students = [
+    ["name" =&gt; "Ahmad", "age" =&gt; 25],
+    ["name" =&gt; "Fatima", "age" =&gt; 23],
+    ["name" =&gt; "Ibrahim", "age" =&gt; 27]
+];
+
+// Access nested arrays
+echo $students[0]["name"];  // Ahmad
+echo $students[1]["age"];   // 23
+?&gt;
+            </div>
+
+            <h2>🔀 Conditional Statements</h2>
+            
+            <h3>if Statement</h3>
+            <div class="code-block">
+&lt;?php
+$age = 20;
+
+if ($age >= 18) {
+    echo "You are an adult";
+}
+?&gt;
+            </div>
+
+            <h3>if...else Statement</h3>
+            <div class="code-block">
+&lt;?php
+$score = 75;
+
+if ($score >= 50) {
+    echo "You passed!";
+} else {
+    echo "You failed.";
+}
+?&gt;
+            </div>
+
+            <h3>if...elseif...else Statement</h3>
+            <div class="code-block">
+&lt;?php
+$grade = 85;
+
+if ($grade >= 90) {
+    echo "Grade: A";
+} elseif ($grade >= 80) {
+    echo "Grade: B";
+} elseif ($grade >= 70) {
+    echo "Grade: C";
+} elseif ($grade >= 60) {
+    echo "Grade: D";
+} else {
+    echo "Grade: F";
+}
+?&gt;
+            </div>
+
+            <h3>Comparison Operators</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Operator</th>
+                        <th>Meaning</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>==</td><td>Equal to</td><td>$a == $b</td></tr>
+                    <tr><td>===</td><td>Identical (value & type)</td><td>$a === $b</td></tr>
+                    <tr><td>!=</td><td>Not equal</td><td>$a != $b</td></tr>
+                    <tr><td>&lt;</td><td>Less than</td><td>$a &lt; $b</td></tr>
+                    <tr><td>&gt;</td><td>Greater than</td><td>$a &gt; $b</td></tr>
+                    <tr><td>&lt;=</td><td>Less than or equal</td><td>$a &lt;= $b</td></tr>
+                    <tr><td>&gt;=</td><td>Greater than or equal</td><td>$a &gt;= $b</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Logical Operators</h3>
+            <div class="code-block">
+&lt;?php
+$age = 25;
+$hasLicense = true;
+
+// AND operator
+if ($age >= 18 && $hasLicense) {
+    echo "You can drive";
+}
+
+// OR operator
+if ($age < 18 || !$hasLicense) {
+    echo "You cannot drive";
+}
+
+// NOT operator
+if (!$hasLicense) {
+    echo "No license";
+}
+?&gt;
+            </div>
+
+            <h2>🔁 Loops</h2>
+            
+            <h3>1. for Loop</h3>
+            <div class="code-block">
+&lt;?php
+// Print numbers 1 to 10
+for ($i = 1; $i &lt;= 10; $i++) {
+    echo $i . " ";
+}
+
+// Loop through indexed array
+$fruits = ["Apple", "Banana", "Orange", "Mango"];
+for ($i = 0; $i &lt; count($fruits); $i++) {
+    echo $fruits[$i] . "&lt;br&gt;";
+}
+?&gt;
+            </div>
+
+            <h3>2. while Loop</h3>
+            <div class="code-block">
+&lt;?php
+$count = 1;
+
+while ($count &lt;= 5) {
+    echo "Count: " . $count . "&lt;br&gt;";
+    $count++;
+}
+?&gt;
+            </div>
+
+            <h3>3. foreach Loop (for Arrays)</h3>
+            <div class="code-block">
+&lt;?php
+// Loop through indexed array
+$colors = ["Red", "Green", "Blue"];
+
+foreach ($colors as $color) {
+    echo $color . "&lt;br&gt;";
+}
+
+// Loop through associative array
+$student = [
+    "name" =&gt; "Ahmad",
+    "age" =&gt; 25,
+    "city" =&gt; "Kano"
+];
+
+foreach ($student as $key =&gt; $value) {
+    echo $key . ": " . $value . "&lt;br&gt;";
+}
+?&gt;
+            </div>
+
+            <h2>💻 Complete Example: Student Grade System</h2>
+            <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Student Grade System&lt;/title&gt;
+    &lt;style&gt;
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        table {
+            width: 100%;
+            background: white;
+            border-collapse: collapse;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #ff6b6b;
+            color: white;
+        }
+        .pass { color: green; font-weight: bold; }
+        .fail { color: red; font-weight: bold; }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Student Grade Report&lt;/h1&gt;
+    
+    &lt;?php
+    // Array of students with scores
+    $students = [
+        ["name" =&gt; "Ahmad Garba", "score" =&gt; 85],
+        ["name" =&gt; "Fatima Yusuf", "score" =&gt; 92],
+        ["name" =&gt; "Ibrahim Musa", "score" =&gt; 67],
+        ["name" =&gt; "Aisha Mohammed", "score" =&gt; 78],
+        ["name" =&gt; "Usman Ali", "score" =&gt; 45]
+    ];
+    
+    echo "&lt;table&gt;";
+    echo "&lt;tr&gt;";
+    echo "&lt;th&gt;Student Name&lt;/th&gt;";
+    echo "&lt;th&gt;Score&lt;/th&gt;";
+    echo "&lt;th&gt;Grade&lt;/th&gt;";
+    echo "&lt;th&gt;Status&lt;/th&gt;";
+    echo "&lt;/tr&gt;";
+    
+    foreach ($students as $student) {
+        $name = $student["name"];
+        $score = $student["score"];
+        
+        // Determine grade
+        if ($score >= 90) {
+            $grade = "A";
+        } elseif ($score >= 80) {
+            $grade = "B";
+        } elseif ($score >= 70) {
+            $grade = "C";
+        } elseif ($score >= 60) {
+            $grade = "D";
+        } else {
+            $grade = "F";
+        }
+        
+        // Determine pass/fail
+        if ($score >= 50) {
+            $status = "PASS";
+            $statusClass = "pass";
+        } else {
+            $status = "FAIL";
+            $statusClass = "fail";
+        }
+        
+        echo "&lt;tr&gt;";
+        echo "&lt;td&gt;" . $name . "&lt;/td&gt;";
+        echo "&lt;td&gt;" . $score . "&lt;/td&gt;";
+        echo "&lt;td&gt;" . $grade . "&lt;/td&gt;";
+        echo "&lt;td class='" . $statusClass . "'&gt;" . $status . "&lt;/td&gt;";
+        echo "&lt;/tr&gt;";
+    }
+    
+    echo "&lt;/table&gt;";
+    
+    // Calculate statistics
+    $totalScore = 0;
+    $passCount = 0;
+    
+    foreach ($students as $student) {
+        $totalScore += $student["score"];
+        if ($student["score"] >= 50) {
+            $passCount++;
+        }
+    }
+    
+    $average = $totalScore / count($students);
+    $passPercentage = ($passCount / count($students)) * 100;
+    
+    echo "&lt;h2&gt;Statistics&lt;/h2&gt;";
+    echo "&lt;p&gt;Total Students: " . count($students) . "&lt;/p&gt;";
+    echo "&lt;p&gt;Average Score: " . round($average, 2) . "&lt;/p&gt;";
+    echo "&lt;p&gt;Students Passed: " . $passCount . "&lt;/p&gt;";
+    echo "&lt;p&gt;Pass Rate: " . round($passPercentage, 2) . "%&lt;/p&gt;";
+    ?&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </div>
+
+            <h2>✏️ Practice Exercises</h2>
+            <ol>
+                <li>Create an array of 5 favorite foods and display them in an HTML list</li>
+                <li>Build an associative array of 3 products with name and price, display in table</li>
+                <li>Write a script that checks if a number is even or odd</li>
+                <li>Use a for loop to print multiplication table (1-10)</li>
+                <li>Create an array of temperatures and find the highest using a loop</li>
+            </ol>
+
+            <h2>✅ Today's Deliverable</h2>
+            <ul>
+                <li>✓ Script with at least 3 indexed arrays</li>
+                <li>✓ Script with at least 2 associative arrays</li>
+                <li>✓ if/else conditional examples</li>
+                <li>✓ for loop displaying array elements</li>
+                <li>✓ foreach loop example</li>
+                <li>✓ Student grade system or similar project</li>
+                <li>✓ All scripts tested and working</li>
+            </ul>
+
+            <div style="margin-top: 40px;">
+                <a href="day1-php-intro.html" class="btn">← Previous</a>
+                <a href="../index.html" class="btn">Course Home</a>
+                <a href="day3-forms-getpost.html" class="btn">Next: Day 3 →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 9 - Day 2: Arrays, Conditionals & Loops</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

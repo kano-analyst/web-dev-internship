@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 11 Day 2: PHP-MySQL Connection</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        header { background: #667eea; color: white; padding: 30px; border-radius: 15px 15px 0 0; }
+        .content { padding: 40px; }
+        h2 { color: #667eea; border-bottom: 3px solid #764ba2; padding-bottom: 10px; margin: 30px 0 20px; }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        .info-box { background: #e8eaf6; border-left: 5px solid #667eea; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border: 1px solid #ddd; }
+        th { background: #667eea; color: white; }
+        .btn { background: #667eea; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 10px 10px 0; }
+        footer { background: #667eea; color: white; padding: 20px; text-align: center; border-radius: 0 0 15px 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 11 - Day 2: PHP-MySQL Connection</h1>
+            <p>Wednesday | Duration: 3 hours</p>
+        </header>
+
+        <div class="content">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Connect PHP to MySQL database</li>
+                <li>Execute SQL queries from PHP</li>
+                <li>Handle database errors</li>
+                <li>Use prepared statements for security</li>
+                <li>Build registration form with database storage</li>
+            </ul>
+
+            <h2>🔗 Database Connection Methods</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Description</th>
+                        <th>Recommended?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>MySQLi</td>
+                        <td>MySQL Improved extension</td>
+                        <td>✅ Yes (procedural or OOP)</td>
+                    </tr>
+                    <tr>
+                        <td>PDO</td>
+                        <td>PHP Data Objects (works with multiple databases)</td>
+                        <td>✅ Yes (most flexible)</td>
+                    </tr>
+                    <tr>
+                        <td>mysql_*</td>
+                        <td>Old MySQL extension</td>
+                        <td>❌ No (deprecated, removed in PHP 7)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>🔌 MySQLi Connection (Procedural)</h2>
+            <div class="code-block">
+&lt;?php
+// Database credentials
+$host = "localhost";
+$username = "root";
+$password = "";
+$database = "school_db";
+
+// Create connection
+$conn = mysqli_connect($host, $username, $password, $database);
+
+// Check connection
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+echo "Connected successfully!";
+
+// Close connection when done
+mysqli_close($conn);
+?&gt;
+            </div>
+
+            <h2>📁 Database Configuration File</h2>
+            <div class="code-block">
+&lt;?php
+// config.php - Save database connection settings
+
+$host = "localhost";
+$username = "root";
+$password = "";
+$database = "school_db";
+
+// Create connection
+$conn = mysqli_connect($host, $username, $password, $database);
+
+// Check connection
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+// Optional: Set charset to UTF-8
+mysqli_set_charset($conn, "utf8mb4");
+?&gt;
+            </div>
+
+            <h2>📥 Inserting Data from PHP</h2>
+            
+            <h3>Method 1: Simple Query (Not Secure)</h3>
+            <div class="code-block">
+&lt;?php
+require_once 'config.php';
+
+$name = "Ahmad Ibrahim";
+$email = "ahmad@email.com";
+$age = 20;
+$course = "Web Development";
+
+// Create SQL query
+$sql = "INSERT INTO students (name, email, age, course) 
+        VALUES ('$name', '$email', $age, '$course')";
+
+// Execute query
+if (mysqli_query($conn, $sql)) {
+    echo "New student added successfully!";
+} else {
+    echo "Error: " . mysqli_error($conn);
+}
+
+mysqli_close($conn);
+?&gt;
+            </div>
+
+            <h3>Method 2: Prepared Statements (Secure ✅)</h3>
+            <div class="code-block">
+&lt;?php
+require_once 'config.php';
+
+$name = "Ahmad Ibrahim";
+$email = "ahmad@email.com";
+$age = 20;
+$course = "Web Development";
+
+// Prepare statement
+$stmt = mysqli_prepare($conn, "INSERT INTO students (name, email, age, course) VALUES (?, ?, ?, ?)");
+
+// Bind parameters (s = string, i = integer)
+mysqli_stmt_bind_param($stmt, "ssis", $name, $email, $age, $course);
+
+// Execute
+if (mysqli_stmt_execute($stmt)) {
+    echo "New student added successfully!";
+    echo "New ID: " . mysqli_insert_id($conn);
+} else {
+    echo "Error: " . mysqli_error($conn);
+}
+
+mysqli_stmt_close($stmt);
+mysqli_close($conn);
+?&gt;
+            </div>
+
+            <div class="info-box">
+                <strong>Parameter Types in bind_param:</strong>
+                <ul>
+                    <li><code>s</code> - String</li>
+                    <li><code>i</code> - Integer</li>
+                    <li><code>d</code> - Double/Float</li>
+                    <li><code>b</code> - Blob (binary)</li>
+                </ul>
+            </div>
+
+            <h2>📤 Selecting Data from PHP</h2>
+            
+            <h3>Fetch All Records:</h3>
+            <div class="code-block">
+&lt;?php
+require_once 'config.php';
+
+$sql = "SELECT * FROM students";
+$result = mysqli_query($conn, $sql);
+
+if (mysqli_num_rows($result) > 0) {
+    echo "&lt;table border='1'&gt;";
+    echo "&lt;tr&gt;&lt;th&gt;ID&lt;/th&gt;&lt;th&gt;Name&lt;/th&gt;&lt;th&gt;Email&lt;/th&gt;&lt;th&gt;Age&lt;/th&gt;&lt;th&gt;Course&lt;/th&gt;&lt;/tr&gt;";
+    
+    // Loop through results
+    while ($row = mysqli_fetch_assoc($result)) {
+        echo "&lt;tr&gt;";
+        echo "&lt;td&gt;" . $row['id'] . "&lt;/td&gt;";
+        echo "&lt;td&gt;" . $row['name'] . "&lt;/td&gt;";
+        echo "&lt;td&gt;" . $row['email'] . "&lt;/td&gt;";
+        echo "&lt;td&gt;" . $row['age'] . "&lt;/td&gt;";
+        echo "&lt;td&gt;" . $row['course'] . "&lt;/td&gt;";
+        echo "&lt;/tr&gt;";
+    }
+    
+    echo "&lt;/table&gt;";
+} else {
+    echo "No students found.";
+}
+
+mysqli_close($conn);
+?&gt;
+            </div>
+
+            <h2>💻 Complete Registration Form with Database</h2>
+            <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Student Registration&lt;/title&gt;
+    &lt;style&gt;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        .form-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        h2 { color: #667eea; margin-bottom: 30px; }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #5568d3;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="form-container"&gt;
+        &lt;h2&gt;Student Registration&lt;/h2&gt;
+        
+        &lt;?php
+        require_once 'config.php';
+        
+        $errors = [];
+        $success = "";
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            // Get and validate inputs
+            $name = trim($_POST['name']);
+            $email = trim($_POST['email']);
+            $age = $_POST['age'];
+            $course = $_POST['course'];
+
+            // Validation
+            if (empty($name) || strlen($name) < 3) {
+                $errors[] = "Name must be at least 3 characters";
+            }
+            if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $errors[] = "Valid email is required";
+            }
+            if (empty($age) || $age < 16 || $age > 100) {
+                $errors[] = "Age must be between 16 and 100";
+            }
+            if (empty($course)) {
+                $errors[] = "Please select a course";
+            }
+
+            // Check if email already exists
+            if (empty($errors)) {
+                $checkEmail = mysqli_prepare($conn, "SELECT id FROM students WHERE email = ?");
+                mysqli_stmt_bind_param($checkEmail, "s", $email);
+                mysqli_stmt_execute($checkEmail);
+                mysqli_stmt_store_result($checkEmail);
+                
+                if (mysqli_stmt_num_rows($checkEmail) > 0) {
+                    $errors[] = "Email already registered!";
+                }
+                mysqli_stmt_close($checkEmail);
+            }
+
+            // If no errors, insert into database
+            if (empty($errors)) {
+                $stmt = mysqli_prepare($conn, "INSERT INTO students (name, email, age, course) VALUES (?, ?, ?, ?)");
+                mysqli_stmt_bind_param($stmt, "ssis", $name, $email, $age, $course);
+                
+                if (mysqli_stmt_execute($stmt)) {
+                    $success = "Registration successful! Student ID: " . mysqli_insert_id($conn);
+                    $_POST = []; // Clear form
+                } else {
+                    $errors[] = "Registration failed: " . mysqli_error($conn);
+                }
+                
+                mysqli_stmt_close($stmt);
+            }
+        }
+        
+        mysqli_close($conn);
+        ?&gt;
+
+        &lt;?php if (!empty($errors)): ?&gt;
+            &lt;div class="error"&gt;
+                &lt;ul&gt;
+                    &lt;?php foreach ($errors as $error): ?&gt;
+                        &lt;li&gt;&lt;?php echo htmlspecialchars($error); ?&gt;&lt;/li&gt;
+                    &lt;?php endforeach; ?&gt;
+                &lt;/ul&gt;
+            &lt;/div&gt;
+        &lt;?php endif; ?&gt;
+
+        &lt;?php if ($success): ?&gt;
+            &lt;div class="success"&gt;
+                &lt;?php echo htmlspecialchars($success); ?&gt;
+            &lt;/div&gt;
+        &lt;?php endif; ?&gt;
+
+        &lt;form method="POST" action=""&gt;
+            &lt;div class="form-group"&gt;
+                &lt;label&gt;Full Name:&lt;/label&gt;
+                &lt;input type="text" name="name" 
+                       value="&lt;?php echo isset($_POST['name']) ? htmlspecialchars($_POST['name']) : ''; ?&gt;" required&gt;
+            &lt;/div&gt;
+
+            &lt;div class="form-group"&gt;
+                &lt;label&gt;Email:&lt;/label&gt;
+                &lt;input type="email" name="email"
+                       value="&lt;?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?&gt;" required&gt;
+            &lt;/div&gt;
+
+            &lt;div class="form-group"&gt;
+                &lt;label&gt;Age:&lt;/label&gt;
+                &lt;input type="number" name="age" min="16" max="100"
+                       value="&lt;?php echo isset($_POST['age']) ? htmlspecialchars($_POST['age']) : ''; ?&gt;" required&gt;
+            &lt;/div&gt;
+
+            &lt;div class="form-group"&gt;
+                &lt;label&gt;Course:&lt;/label&gt;
+                &lt;select name="course" required&gt;
+                    &lt;option value=""&gt;-- Select Course --&lt;/option&gt;
+                    &lt;option value="Web Development"&gt;Web Development&lt;/option&gt;
+                    &lt;option value="Data Science"&gt;Data Science&lt;/option&gt;
+                    &lt;option value="UI/UX Design"&gt;UI/UX Design&lt;/option&gt;
+                    &lt;option value="Mobile Development"&gt;Mobile Development&lt;/option&gt;
+                &lt;/select&gt;
+            &lt;/div&gt;
+
+            &lt;button type="submit"&gt;Register Student&lt;/button&gt;
+        &lt;/form&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </div>
+
+            <h2>✏️ Practice Exercises</h2>
+            <ol>
+                <li>Create config.php with database connection</li>
+                <li>Build registration form that saves to database</li>
+                <li>Create a page to display all registered students</li>
+                <li>Add email uniqueness validation</li>
+                <li>Display success/error messages properly</li>
+            </ol>
+
+            <h2>✅ Security Best Practices</h2>
+            <ul>
+                <li>✓ Always use prepared statements (prevents SQL injection)</li>
+                <li>✓ Validate all user inputs</li>
+                <li>✓ Use htmlspecialchars() when displaying data</li>
+                <li>✓ Never display database errors to users in production</li>
+                <li>✓ Store database credentials in separate config file</li>
+                <li>✓ Close database connections when done</li>
+            </ul>
+
+            <h2>✅ Today's Deliverable</h2>
+            <ul>
+                <li>✓ config.php with working database connection</li>
+                <li>✓ Student registration form connected to database</li>
+                <li>✓ Data validation implemented</li>
+                <li>✓ Email uniqueness check working</li>
+                <li>✓ Success/error messages displaying</li>
+                <li>✓ View students page showing all records</li>
+            </ul>
+
+            <div style="margin-top: 40px;">
+                <a href="day1-mysql-intro.html" class="btn">← Previous</a>
+                <a href="../index.html" class="btn">Course Home</a>
+                <a href="day3-crud.html" class="btn">Next: Day 3 →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 11 - Day 2: PHP-MySQL Connection</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

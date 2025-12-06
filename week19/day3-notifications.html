@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 19 Day 3 - Email Notifications | Laravel Bootcamp</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #4facfe;
+        }
+        h1 { color: #4facfe; font-size: 2.5rem; margin-bottom: 10px; }
+        h2 { color: #00d2ff; margin-top: 30px; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #eee; }
+        h3 { color: #4facfe; margin-top: 25px; margin-bottom: 15px; }
+        .highlight {
+            background: #e3f7ff;
+            padding: 15px;
+            border-left: 4px solid #4facfe;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+        .code-block code { font-size: 14px; line-height: 1.5; }
+        .comment { color: #6a9955; }
+        .keyword { color: #569cd6; }
+        .string { color: #ce9178; }
+        .function { color: #dcdcaa; }
+        ul, ol { margin-left: 30px; margin-bottom: 20px; }
+        li { margin-bottom: 10px; }
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: transform 0.3s ease;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .exercise {
+            background: #fff3cd;
+            padding: 20px;
+            border-left: 4px solid #ffc107;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .tip {
+            background: #d1ecf1;
+            padding: 15px;
+            border-left: 4px solid #17a2b8;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background: #4facfe; color: white; }
+        tr:nth-child(even) { background: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📧 Week 19, Day 3: Email Notifications</h1>
+            <p>Send Email Alerts with Laravel Notifications</p>
+        </header>
+
+        <section>
+            <h2>📖 Learning Objectives</h2>
+            <ul>
+                <li>Understand Laravel notification system</li>
+                <li>Configure email settings with SMTP</li>
+                <li>Create notification classes</li>
+                <li>Send email notifications to users</li>
+                <li>Customize email templates</li>
+                <li>Use notification channels (mail, database, SMS)</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>🎯 What are Laravel Notifications?</h2>
+            <div class="highlight">
+                <p><strong>Notifications</strong> provide a simple API for sending transactional messages across multiple channels like email, SMS, Slack, and database.</p>
+            </div>
+
+            <h3>Notification Channels:</h3>
+            <table>
+                <tr>
+                    <th>Channel</th>
+                    <th>Description</th>
+                    <th>Use Case</th>
+                </tr>
+                <tr>
+                    <td>Mail</td>
+                    <td>Send emails via SMTP</td>
+                    <td>Welcome emails, password resets</td>
+                </tr>
+                <tr>
+                    <td>Database</td>
+                    <td>Store in notifications table</td>
+                    <td>In-app notifications</td>
+                </tr>
+                <tr>
+                    <td>SMS</td>
+                    <td>Send text messages</td>
+                    <td>2FA codes, alerts</td>
+                </tr>
+                <tr>
+                    <td>Slack</td>
+                    <td>Post to Slack channels</td>
+                    <td>Team alerts</td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <h2>📧 Email Configuration</h2>
+
+            <h3>Step 1: Configure SMTP Settings (.env)</h3>
+            <div class="code-block">
+<code><span class="comment"># For Gmail</span>
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=your-email@gmail.com
+MAIL_PASSWORD=your-app-password
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=your-email@gmail.com
+MAIL_FROM_NAME="${APP_NAME}"
+
+<span class="comment"># For Mailtrap (Testing)</span>
+MAIL_MAILER=smtp
+MAIL_HOST=sandbox.smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=your-mailtrap-username
+MAIL_PASSWORD=your-mailtrap-password
+MAIL_ENCRYPTION=tls</code>
+            </div>
+
+            <div class="tip">
+                <strong>💡 Tip:</strong> For Gmail, enable 2-Step Verification and generate an "App Password" from Google Account settings.
+            </div>
+
+            <h3>Step 2: Test Email Configuration</h3>
+            <div class="code-block">
+<code><span class="comment">// routes/web.php</span>
+<span class="keyword">use</span> Illuminate\Support\Facades\Mail;
+
+Route::<span class="function">get</span>(<span class="string">'/test-email'</span>, <span class="keyword">function</span> () {
+    Mail::<span class="function">raw</span>(<span class="string">'Test email from Laravel!'</span>, <span class="keyword">function</span> ($message) {
+        $message-><span class="function">to</span>(<span class="string">'test@example.com'</span>)
+                -><span class="function">subject</span>(<span class="string">'Test Email'</span>);
+    });
+
+    <span class="keyword">return</span> <span class="string">'Email sent!'</span>;
+});</code>
+            </div>
+        </section>
+
+        <section>
+            <h2>🔔 Creating Notification Classes</h2>
+
+            <h3>Generate Notification:</h3>
+            <div class="code-block">
+<code><span class="comment"># Create a notification</span>
+php artisan make:notification WelcomeNotification
+
+<span class="comment"># Creates: app/Notifications/WelcomeNotification.php</span></code>
+            </div>
+
+            <h3>Basic Notification Structure:</h3>
+            <div class="code-block">
+<code><span class="keyword">namespace</span> App\Notifications;
+
+<span class="keyword">use</span> Illuminate\Notifications\Notification;
+<span class="keyword">use</span> Illuminate\Notifications\Messages\MailMessage;
+
+<span class="keyword">class</span> <span class="function">WelcomeNotification</span> <span class="keyword">extends</span> Notification
+{
+    <span class="comment">// Define notification channels</span>
+    <span class="keyword">public function</span> <span class="function">via</span>($notifiable)
+    {
+        <span class="keyword">return</span> [<span class="string">'mail'</span>];
+    }
+
+    <span class="comment">// Define email content</span>
+    <span class="keyword">public function</span> <span class="function">toMail</span>($notifiable)
+    {
+        <span class="keyword">return</span> (<span class="keyword">new</span> <span class="function">MailMessage</span>)
+            -><span class="function">subject</span>(<span class="string">'Welcome to Our Platform!'</span>)
+            -><span class="function">greeting</span>(<span class="string">'Hello '</span> . $notifiable->name . <span class="string">'!'</span>)
+            -><span class="function">line</span>(<span class="string">'Thank you for registering.'</span>)
+            -><span class="function">action</span>(<span class="string">'Visit Dashboard'</span>, <span class="function">url</span>(<span class="string">'/dashboard'</span>))
+            -><span class="function">line</span>(<span class="string">'We hope you enjoy our service!'</span>);
+    }
+}</code>
+            </div>
+        </section>
+
+        <section>
+            <h2>📨 Sending Notifications</h2>
+
+            <h3>Method 1: Using Notifiable Trait</h3>
+            <div class="code-block">
+<code><span class="keyword">use</span> App\Notifications\WelcomeNotification;
+
+<span class="comment">// Send to single user</span>
+$user = User::<span class="function">find</span>(1);
+$user-><span class="function">notify</span>(<span class="keyword">new</span> <span class="function">WelcomeNotification</span>());
+
+<span class="comment">// Send after user registration</span>
+<span class="keyword">public function</span> <span class="function">store</span>(Request $request)
+{
+    $user = User::<span class="function">create</span>([
+        <span class="string">'name'</span> => $request->name,
+        <span class="string">'email'</span> => $request->email,
+        <span class="string">'password'</span> => Hash::<span class="function">make</span>($request->password),
+    ]);
+
+    <span class="comment">// Send welcome email</span>
+    $user-><span class="function">notify</span>(<span class="keyword">new</span> <span class="function">WelcomeNotification</span>());
+
+    <span class="keyword">return</span> <span class="function">redirect</span>(<span class="string">'/dashboard'</span>);
+}</code>
+            </div>
+
+            <h3>Method 2: Using Notification Facade</h3>
+            <div class="code-block">
+<code><span class="keyword">use</span> Illuminate\Support\Facades\Notification;
+
+<span class="comment">// Send to multiple users</span>
+$users = User::<span class="function">where</span>(<span class="string">'active'</span>, <span class="keyword">true</span>)-><span class="function">get</span>();
+Notification::<span class="function">send</span>($users, <span class="keyword">new</span> <span class="function">WelcomeNotification</span>());
+
+<span class="comment">// Send to specific email (on-demand)</span>
+Notification::<span class="function">route</span>(<span class="string">'mail'</span>, <span class="string">'admin@example.com'</span>)
+    -><span class="function">notify</span>(<span class="keyword">new</span> <span class="function">WelcomeNotification</span>());</code>
+            </div>
+        </section>
+
+        <section>
+            <h2>🎨 Customizing Email Templates</h2>
+
+            <h3>Rich Email Content:</h3>
+            <div class="code-block">
+<code><span class="keyword">public function</span> <span class="function">toMail</span>($notifiable)
+{
+    <span class="keyword">return</span> (<span class="keyword">new</span> <span class="function">MailMessage</span>)
+        -><span class="function">subject</span>(<span class="string">'Order Confirmation'</span>)
+        -><span class="function">greeting</span>(<span class="string">'Hello '</span> . $notifiable->name)
+        -><span class="function">line</span>(<span class="string">'Your order has been confirmed!'</span>)
+        -><span class="function">line</span>(<span class="string">'Order #: '</span> . $this->orderId)
+        -><span class="function">action</span>(<span class="string">'View Order'</span>, <span class="function">url</span>(<span class="string">'/orders/'</span> . $this->orderId))
+        -><span class="function">line</span>(<span class="string">'Thank you for shopping with us!'</span>)
+        -><span class="function">salutation</span>(<span class="string">'Best regards, Our Team'</span>);
+}</code>
+            </div>
+
+            <h3>Passing Data to Notifications:</h3>
+            <div class="code-block">
+<code><span class="keyword">class</span> <span class="function">OrderShipped</span> <span class="keyword">extends</span> Notification
+{
+    <span class="keyword">public</span> $orderId;
+    <span class="keyword">public</span> $trackingNumber;
+
+    <span class="keyword">public function</span> <span class="function">__construct</span>($orderId, $trackingNumber)
+    {
+        $this->orderId = $orderId;
+        $this->trackingNumber = $trackingNumber;
+    }
+
+    <span class="keyword">public function</span> <span class="function">toMail</span>($notifiable)
+    {
+        <span class="keyword">return</span> (<span class="keyword">new</span> <span class="function">MailMessage</span>)
+            -><span class="function">subject</span>(<span class="string">'Order Shipped!'</span>)
+            -><span class="function">line</span>(<span class="string">'Order #'</span> . $this->orderId . <span class="string">' has shipped.'</span>)
+            -><span class="function">line</span>(<span class="string">'Tracking: '</span> . $this->trackingNumber);
+    }
+}
+
+<span class="comment">// Usage</span>
+$user-><span class="function">notify</span>(<span class="keyword">new</span> <span class="function">OrderShipped</span>(123, <span class="string">'ABC123XYZ'</span>));</code>
+            </div>
+        </section>
+
+        <section>
+            <h2>💾 Database Notifications</h2>
+
+            <h3>Step 1: Create Notifications Table</h3>
+            <div class="code-block">
+<code><span class="comment"># Generate migration</span>
+php artisan notifications:table
+
+<span class="comment"># Run migration</span>
+php artisan migrate</code>
+            </div>
+
+            <h3>Step 2: Add Database Channel</h3>
+            <div class="code-block">
+<code><span class="keyword">public function</span> <span class="function">via</span>($notifiable)
+{
+    <span class="keyword">return</span> [<span class="string">'mail'</span>, <span class="string">'database'</span>]; <span class="comment">// Both channels</span>
+}
+
+<span class="keyword">public function</span> <span class="function">toDatabase</span>($notifiable)
+{
+    <span class="keyword">return</span> [
+        <span class="string">'title'</span> => <span class="string">'New Comment'</span>,
+        <span class="string">'message'</span> => <span class="string">'Someone commented on your post'</span>,
+        <span class="string">'post_id'</span> => $this->postId,
+    ];
+}</code>
+            </div>
+
+            <h3>Step 3: Retrieve Notifications</h3>
+            <div class="code-block">
+<code><span class="comment">// Get all notifications</span>
+$notifications = auth()-><span class="function">user</span>()-><span class="function">notifications</span>;
+
+<span class="comment">// Get unread notifications</span>
+$unread = auth()-><span class="function">user</span>()-><span class="function">unreadNotifications</span>;
+
+<span class="comment">// Mark as read</span>
+auth()-><span class="function">user</span>()-><span class="function">unreadNotifications</span>-><span class="function">markAsRead</span>();
+
+<span class="comment">// Mark single notification as read</span>
+$notification = auth()-><span class="function">user</span>()-><span class="function">notifications</span>()-><span class="function">find</span>($id);
+$notification-><span class="function">markAsRead</span>();</code>
+            </div>
+        </section>
+
+        <section>
+            <h2>⚡ Queuing Notifications</h2>
+
+            <div class="highlight">
+                <p>For better performance, queue notifications to send in the background.</p>
+            </div>
+
+            <h3>Make Notification Queueable:</h3>
+            <div class="code-block">
+<code><span class="keyword">use</span> Illuminate\Bus\Queueable;
+<span class="keyword">use</span> Illuminate\Contracts\Queue\ShouldQueue;
+
+<span class="keyword">class</span> <span class="function">WelcomeNotification</span> <span class="keyword">extends</span> Notification <span class="keyword">implements</span> ShouldQueue
+{
+    <span class="keyword">use</span> Queueable;
+
+    <span class="comment">// Rest of notification code...</span>
+}</code>
+            </div>
+
+            <h3>Process Queue:</h3>
+            <div class="code-block">
+<code><span class="comment"># Start queue worker</span>
+php artisan queue:work
+
+<span class="comment"># Or use database driver in .env</span>
+QUEUE_CONNECTION=database
+
+<span class="comment"># Create jobs table</span>
+php artisan queue:table
+php artisan migrate</code>
+            </div>
+        </section>
+
+        <section>
+            <h2>✍️ Practice Exercises</h2>
+
+            <div class="exercise">
+                <h3>Exercise 1: Welcome Email</h3>
+                <ol>
+                    <li>Configure SMTP with Mailtrap</li>
+                    <li>Create WelcomeNotification</li>
+                    <li>Send notification after user registration</li>
+                    <li>Test email delivery</li>
+                </ol>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 2: Order Confirmation</h3>
+                <ol>
+                    <li>Create OrderConfirmation notification</li>
+                    <li>Pass order ID and total amount</li>
+                    <li>Include "View Order" button</li>
+                    <li>Send after order creation</li>
+                </ol>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 3: Database Notifications</h3>
+                <ol>
+                    <li>Create notifications table</li>
+                    <li>Add database channel to notification</li>
+                    <li>Display notifications in dashboard</li>
+                    <li>Add mark as read functionality</li>
+                </ol>
+            </div>
+        </section>
+
+        <section>
+            <h2>🎯 Today's Deliverable</h2>
+            <div class="highlight">
+                <h3>✅ Complete Notification System</h3>
+                <p><strong>Requirements:</strong></p>
+                <ul>
+                    <li>SMTP configured and working</li>
+                    <li>Welcome notification on registration</li>
+                    <li>Order confirmation notification</li>
+                    <li>Database notifications table created</li>
+                    <li>Notification list page in dashboard</li>
+                    <li>Mark as read functionality</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>📚 Summary</h2>
+            <ul>
+                <li>Laravel Notifications support multiple channels (mail, database, SMS)</li>
+                <li>SMTP configuration in .env enables email sending</li>
+                <li>Notification classes define email content and styling</li>
+                <li>Database notifications store alerts in the database</li>
+                <li>Queuing notifications improves application performance</li>
+                <li>Customize email templates with MailMessage methods</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>🔜 What's Next?</h2>
+            <p>In Week 20, we'll build the final project:</p>
+            <ul>
+                <li>Task Management System planning</li>
+                <li>Authentication and CRUD implementation</li>
+                <li>API development and deployment</li>
+                <li>Complete full-stack Laravel application</li>
+            </ul>
+        </section>
+
+        <div class="nav-buttons">
+            <a href="day2-pagination.html" class="btn">← Previous: Pagination</a>
+            <a href="../week20/day1-project-planning.html" class="btn">Next: Final Project →</a>
+        </div>
+    </div>
+</body>
+</html>

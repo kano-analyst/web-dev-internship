@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 5 Day 2: Bootstrap Grid System</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        header { background: #fa709a; color: white; padding: 30px; }
+        .nav-breadcrumb {
+            background: #fff0f5;
+            padding: 15px 30px;
+            border-bottom: 2px solid #fa709a;
+        }
+        .nav-breadcrumb a { color: #fa709a; text-decoration: none; margin-right: 10px; }
+        .content { padding: 40px; }
+        .section { margin-bottom: 40px; }
+        .section h2 {
+            color: #fa709a;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #fee140;
+        }
+        .section h3 { color: #fa709a; margin: 20px 0 15px 0; }
+        .info-box {
+            background: #fff0f5;
+            border-left: 5px solid #fa709a;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .activity-box {
+            background: #fff8e1;
+            border-left: 5px solid #fee140;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+        ul, ol { margin-left: 30px; margin-top: 10px; }
+        li { margin-bottom: 10px; }
+        .checklist { list-style: none; margin-left: 0; }
+        .checklist li:before {
+            content: "✓ ";
+            color: #4caf50;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background: #fa709a;
+            color: white;
+        }
+        tr:nth-child(even) { background: #f9f9f9; }
+        footer { background: #fa709a; color: white; padding: 20px; text-align: center; }
+        .btn-primary {
+            background: #fa709a;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin: 10px 10px 10px 0;
+        }
+        .grid-demo {
+            background: #f0f0f0;
+            border: 2px solid #ddd;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .grid-item {
+            background: #fa709a;
+            color: white;
+            padding: 15px;
+            margin: 5px 0;
+            border-radius: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 5 - Day 2: Bootstrap Grid System</h1>
+            <p>Wednesday | Duration: 3 hours</p>
+            <p style="margin-top: 10px;">📐 Master Responsive Layouts with Bootstrap Grid</p>
+        </header>
+
+        <div class="nav-breadcrumb">
+            <a href="../index.html">← Back to Course Home</a> / Week 5 / Day 2
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2>🎯 Learning Objectives</h2>
+                <ul class="checklist">
+                    <li>Understand the 12-column grid system</li>
+                    <li>Master rows and columns</li>
+                    <li>Learn responsive breakpoints</li>
+                    <li>Create 2-column and 3-column layouts</li>
+                    <li>Build flexible, responsive layouts</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>📐 Understanding the Bootstrap Grid System</h2>
+                
+                <div class="info-box">
+                    <p><strong>Bootstrap Grid System</strong> is a powerful 12-column layout system that helps create responsive, flexible layouts.</p>
+                </div>
+
+                <h3>Key Concepts</h3>
+                <ul>
+                    <li><strong>Container:</strong> Wraps grid content (<code>.container</code> or <code>.container-fluid</code>)</li>
+                    <li><strong>Row:</strong> Horizontal group of columns (<code>.row</code>)</li>
+                    <li><strong>Column:</strong> Content blocks (<code>.col-*</code>)</li>
+                    <li><strong>12-Column System:</strong> Each row divided into 12 equal parts</li>
+                </ul>
+
+                <h3>Grid Structure</h3>
+                <div class="code-block">
+&lt;div class="container"&gt;
+    &lt;div class="row"&gt;
+        &lt;div class="col"&gt;Column 1&lt;/div&gt;
+        &lt;div class="col"&gt;Column 2&lt;/div&gt;
+        &lt;div class="col"&gt;Column 3&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📱 Responsive Breakpoints</h2>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Breakpoint</th>
+                            <th>Class Infix</th>
+                            <th>Screen Width</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Extra Small</td>
+                            <td><code>col-</code></td>
+                            <td>&lt; 576px (phones)</td>
+                        </tr>
+                        <tr>
+                            <td>Small</td>
+                            <td><code>col-sm-</code></td>
+                            <td>≥ 576px (landscape phones)</td>
+                        </tr>
+                        <tr>
+                            <td>Medium</td>
+                            <td><code>col-md-</code></td>
+                            <td>≥ 768px (tablets)</td>
+                        </tr>
+                        <tr>
+                            <td>Large</td>
+                            <td><code>col-lg-</code></td>
+                            <td>≥ 992px (desktops)</td>
+                        </tr>
+                        <tr>
+                            <td>Extra Large</td>
+                            <td><code>col-xl-</code></td>
+                            <td>≥ 1200px (large desktops)</td>
+                        </tr>
+                        <tr>
+                            <td>Extra Extra Large</td>
+                            <td><code>col-xxl-</code></td>
+                            <td>≥ 1400px (larger desktops)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="section">
+                <h2>📊 2-Column Layout</h2>
+                
+                <h3>Equal Width Columns</h3>
+                <div class="code-block">
+&lt;div class="container"&gt;
+    &lt;div class="row"&gt;
+        &lt;div class="col"&gt;
+            Column 1 - Equal Width
+        &lt;/div&gt;
+        &lt;div class="col"&gt;
+            Column 2 - Equal Width
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+                </div>
+
+                <h3>Fixed Width Columns (6/6 Split)</h3>
+                <div class="code-block">
+&lt;div class="container"&gt;
+    &lt;div class="row"&gt;
+        &lt;div class="col-6"&gt;
+            Column 1 - 50% Width
+        &lt;/div&gt;
+        &lt;div class="col-6"&gt;
+            Column 2 - 50% Width
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+                </div>
+
+                <h3>Different Width Columns (8/4 Split)</h3>
+                <div class="code-block">
+&lt;div class="container"&gt;
+    &lt;div class="row"&gt;
+        &lt;div class="col-8"&gt;
+            Main Content - 66.67% Width
+        &lt;/div&gt;
+        &lt;div class="col-4"&gt;
+            Sidebar - 33.33% Width
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+                </div>
+
+                <h3>Responsive 2-Column Layout</h3>
+                <div class="code-block">
+&lt;div class="container"&gt;
+    &lt;div class="row"&gt;
+        &lt;div class="col-md-6"&gt;
+            Stacks on mobile, side-by-side on tablets+
+        &lt;/div&gt;
+        &lt;div class="col-md-6"&gt;
+            Stacks on mobile, side-by-side on tablets+
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📊 3-Column Layout</h2>
+                
+                <h3>Equal Width Columns</h3>
+                <div class="code-block">
+&lt;div class="container"&gt;
+    &lt;div class="row"&gt;
+        &lt;div class="col"&gt;Column 1&lt;/div&gt;
+        &lt;div class="col"&gt;Column 2&lt;/div&gt;
+        &lt;div class="col"&gt;Column 3&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+                </div>
+
+                <h3>Fixed Width (4/4/4 Split)</h3>
+                <div class="code-block">
+&lt;div class="container"&gt;
+    &lt;div class="row"&gt;
+        &lt;div class="col-4"&gt;Column 1 - 33.33%&lt;/div&gt;
+        &lt;div class="col-4"&gt;Column 2 - 33.33%&lt;/div&gt;
+        &lt;div class="col-4"&gt;Column 3 - 33.33%&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+                </div>
+
+                <h3>Responsive 3-Column Layout</h3>
+                <div class="code-block">
+&lt;div class="container"&gt;
+    &lt;div class="row"&gt;
+        &lt;div class="col-md-4"&gt;
+            &lt;!-- Stacks on mobile, 3 columns on tablets+ --&gt;
+            Column 1
+        &lt;/div&gt;
+        &lt;div class="col-md-4"&gt;
+            Column 2
+        &lt;/div&gt;
+        &lt;div class="col-md-4"&gt;
+            Column 3
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>💻 Complete Grid Layout Example</h2>
+                
+                <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Bootstrap Grid Practice&lt;/title&gt;
+    &lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
+          rel="stylesheet"&gt;
+    &lt;style&gt;
+        .grid-demo {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            text-align: center;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="container mt-5"&gt;
+        &lt;h1 class="text-center mb-4"&gt;Bootstrap Grid Examples&lt;/h1&gt;
+
+        &lt;!-- 2-Column Layout --&gt;
+        &lt;h2 class="mt-5"&gt;2-Column Layout&lt;/h2&gt;
+        &lt;div class="row"&gt;
+            &lt;div class="col-md-6"&gt;
+                &lt;div class="grid-demo"&gt;Column 1 (50%)&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class="col-md-6"&gt;
+                &lt;div class="grid-demo"&gt;Column 2 (50%)&lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;!-- 3-Column Layout --&gt;
+        &lt;h2 class="mt-5"&gt;3-Column Layout&lt;/h2&gt;
+        &lt;div class="row"&gt;
+            &lt;div class="col-md-4"&gt;
+                &lt;div class="grid-demo"&gt;Column 1 (33%)&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class="col-md-4"&gt;
+                &lt;div class="grid-demo"&gt;Column 2 (33%)&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class="col-md-4"&gt;
+                &lt;div class="grid-demo"&gt;Column 3 (33%)&lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;!-- 4-Column Layout --&gt;
+        &lt;h2 class="mt-5"&gt;4-Column Layout&lt;/h2&gt;
+        &lt;div class="row"&gt;
+            &lt;div class="col-lg-3 col-md-6"&gt;
+                &lt;div class="grid-demo"&gt;Column 1&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class="col-lg-3 col-md-6"&gt;
+                &lt;div class="grid-demo"&gt;Column 2&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class="col-lg-3 col-md-6"&gt;
+                &lt;div class="grid-demo"&gt;Column 3&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class="col-lg-3 col-md-6"&gt;
+                &lt;div class="grid-demo"&gt;Column 4&lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;!-- Mixed Column Widths --&gt;
+        &lt;h2 class="mt-5"&gt;Mixed Column Widths&lt;/h2&gt;
+        &lt;div class="row"&gt;
+            &lt;div class="col-md-8"&gt;
+                &lt;div class="grid-demo"&gt;Main Content (66%)&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class="col-md-4"&gt;
+                &lt;div class="grid-demo"&gt;Sidebar (33%)&lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🎨 Practical Activity: Create Product Cards Layout</h2>
+                
+                <div class="activity-box">
+                    <h3>Task: Build a 3-Column Product Card Layout</h3>
+                    <p>Create <code>grid-practice.html</code> with product cards in a responsive grid</p>
+                </div>
+
+                <div class="code-block">
+&lt;div class="container mt-5"&gt;
+    &lt;h1 class="text-center mb-4"&gt;Our Products&lt;/h1&gt;
+    
+    &lt;div class="row"&gt;
+        &lt;!-- Product 1 --&gt;
+        &lt;div class="col-md-4 mb-4"&gt;
+            &lt;div class="card"&gt;
+                &lt;img src="https://via.placeholder.com/300x200" 
+                     class="card-img-top" 
+                     alt="Product 1"&gt;
+                &lt;div class="card-body"&gt;
+                    &lt;h5 class="card-title"&gt;Product 1&lt;/h5&gt;
+                    &lt;p class="card-text"&gt;
+                        Description of product 1 goes here.
+                    &lt;/p&gt;
+                    &lt;p class="h4 text-primary"&gt;$99.99&lt;/p&gt;
+                    &lt;a href="#" class="btn btn-primary"&gt;Buy Now&lt;/a&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;!-- Product 2 --&gt;
+        &lt;div class="col-md-4 mb-4"&gt;
+            &lt;div class="card"&gt;
+                &lt;img src="https://via.placeholder.com/300x200" 
+                     class="card-img-top" 
+                     alt="Product 2"&gt;
+                &lt;div class="card-body"&gt;
+                    &lt;h5 class="card-title"&gt;Product 2&lt;/h5&gt;
+                    &lt;p class="card-text"&gt;
+                        Description of product 2 goes here.
+                    &lt;/p&gt;
+                    &lt;p class="h4 text-primary"&gt;$149.99&lt;/p&gt;
+                    &lt;a href="#" class="btn btn-primary"&gt;Buy Now&lt;/a&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;!-- Product 3 --&gt;
+        &lt;div class="col-md-4 mb-4"&gt;
+            &lt;div class="card"&gt;
+                &lt;img src="https://via.placeholder.com/300x200" 
+                     class="card-img-top" 
+                     alt="Product 3"&gt;
+                &lt;div class="card-body"&gt;
+                    &lt;h5 class="card-title"&gt;Product 3&lt;/h5&gt;
+                    &lt;p class="card-text"&gt;
+                        Description of product 3 goes here.
+                    &lt;/p&gt;
+                    &lt;p class="h4 text-primary"&gt;$199.99&lt;/p&gt;
+                    &lt;a href="#" class="btn btn-primary"&gt;Buy Now&lt;/a&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>✏️ Practice Exercises</h2>
+                
+                <div class="activity-box">
+                    <h3>Exercise 1: Blog Layout</h3>
+                    <p>Create a 2-column blog layout:</p>
+                    <ul>
+                        <li>Left: Main content area (col-md-8)</li>
+                        <li>Right: Sidebar with recent posts (col-md-4)</li>
+                        <li>Should stack on mobile</li>
+                    </ul>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Exercise 2: Service Cards</h3>
+                    <p>Create a 3-column services section:</p>
+                    <ul>
+                        <li>3 equal columns (col-md-4)</li>
+                        <li>Each with icon, heading, and description</li>
+                        <li>Use Bootstrap cards</li>
+                    </ul>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Exercise 3: Photo Gallery</h3>
+                    <p>Create a responsive photo gallery:</p>
+                    <ul>
+                        <li>4 columns on large screens (col-lg-3)</li>
+                        <li>2 columns on tablets (col-md-6)</li>
+                        <li>1 column on mobile (col-12)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>✅ Today's Deliverable</h2>
+                <div class="activity-box">
+                    <ul class="checklist">
+                        <li>grid-practice.html with working grid layouts</li>
+                        <li>2-column layout (equal and mixed widths)</li>
+                        <li>3-column layout with cards</li>
+                        <li>Responsive design tested on different screen sizes</li>
+                        <li>At least 6 grid examples created</li>
+                        <li>Screenshots showing responsive behavior</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📚 Additional Resources</h2>
+                <ul>
+                    <li><a href="https://getbootstrap.com/docs/5.3/layout/grid/" target="_blank">Bootstrap Grid Documentation</a></li>
+                    <li><a href="https://getbootstrap.com/docs/5.3/layout/breakpoints/" target="_blank">Bootstrap Breakpoints</a></li>
+                    <li><a href="https://www.w3schools.com/bootstrap5/bootstrap_grid_basic.php" target="_blank">W3Schools Grid Tutorial</a></li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <a href="day1-bootstrap-intro.html" class="btn-primary">← Previous: Day 1</a>
+                <a href="../index.html" class="btn-primary">Back to Course Home</a>
+                <a href="day3-bootstrap-components.html" class="btn-primary">Next: Day 3 →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 5 - Day 2: Bootstrap Grid System</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

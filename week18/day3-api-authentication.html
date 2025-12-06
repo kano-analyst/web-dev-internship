@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 3: API Authentication with Laravel Sanctum - Week 18</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        header {
+            background: #f093fb;
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: #f5576c;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #f093fb;
+        }
+
+        h3 {
+            color: #f093fb;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #f093fb15 0%, #f5576c15 100%);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 5px solid #f093fb;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 5px solid #ffc107;
+        }
+
+        .success-box {
+            background: #d4edda;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 5px solid #28a745;
+        }
+
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            border-left: 5px solid #f093fb;
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95em;
+        }
+
+        .inline-code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #f5576c;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        .exercise {
+            background: #e7f3ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 5px solid #2196F3;
+        }
+
+        .deliverable {
+            background: #f0f8f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 5px solid #4caf50;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .key-concept {
+            background: #fff9e6;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #ffd700;
+        }
+
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #666;
+            padding: 20px;
+            border-top: 2px solid #f093fb;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            transition: transform 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .endpoint-box {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 5px solid #f5576c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📱 Day 3: API Authentication with Laravel Sanctum</h1>
+            <p class="subtitle">Week 18: Secure Your APIs with Token-Based Authentication</p>
+        </header>
+
+        <section>
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Understand API authentication concepts and why they matter</li>
+                <li>Install and configure Laravel Sanctum</li>
+                <li>Generate and manage API tokens</li>
+                <li>Implement token-based authentication in APIs</li>
+                <li>Test authenticated endpoints with Postman</li>
+                <li>Handle token revocation and security best practices</li>
+                <li>Build a complete secure API with authentication</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>📚 What is API Authentication?</h2>
+            
+            <div class="info-box">
+                <h3>🔐 Understanding API Authentication</h3>
+                <p><strong>API Authentication</strong> is the process of verifying the identity of a user or application trying to access your API. Unlike web applications where users log in via forms and sessions, APIs typically use tokens for authentication.</p>
+            </div>
+
+            <h3>Why API Authentication Matters</h3>
+            <ul>
+                <li><strong>Security:</strong> Protect sensitive data from unauthorized access</li>
+                <li><strong>User Identification:</strong> Know who is making each request</li>
+                <li><strong>Rate Limiting:</strong> Control how often users can access resources</li>
+                <li><strong>Access Control:</strong> Restrict what different users can do</li>
+                <li><strong>Audit Trail:</strong> Track who did what and when</li>
+            </ul>
+
+            <h3>Authentication Methods</h3>
+            <table>
+                <tr>
+                    <th>Method</th>
+                    <th>Description</th>
+                    <th>Use Case</th>
+                </tr>
+                <tr>
+                    <td><strong>Basic Auth</strong></td>
+                    <td>Username and password in headers</td>
+                    <td>Simple APIs, internal tools</td>
+                </tr>
+                <tr>
+                    <td><strong>API Tokens</strong></td>
+                    <td>Long-lived tokens for authentication</td>
+                    <td>Mobile apps, SPAs</td>
+                </tr>
+                <tr>
+                    <td><strong>OAuth 2.0</strong></td>
+                    <td>Delegated authorization protocol</td>
+                    <td>Third-party integrations</td>
+                </tr>
+                <tr>
+                    <td><strong>JWT</strong></td>
+                    <td>Self-contained tokens with claims</td>
+                    <td>Stateless authentication</td>
+                </tr>
+            </table>
+
+            <div class="key-concept">
+                <h3>💡 Bearer Token Authentication</h3>
+                <p>Bearer tokens are the most common way to authenticate API requests. The client includes the token in the Authorization header:</p>
+                <p><span class="inline-code">Authorization: Bearer YOUR_TOKEN_HERE</span></p>
+                <p>This tells the server "I am the bearer (holder) of this token, please authenticate me."</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>🚀 Laravel Sanctum Overview</h2>
+            
+            <div class="info-box">
+                <h3>What is Laravel Sanctum?</h3>
+                <p><strong>Laravel Sanctum</strong> provides a lightweight authentication system for SPAs (Single Page Applications), mobile applications, and simple token-based APIs. It's simpler than OAuth but more secure than basic authentication.</p>
+            </div>
+
+            <h3>Sanctum Features</h3>
+            <ul>
+                <li><strong>API Token Authentication:</strong> Issue tokens to users for API access</li>
+                <li><strong>SPA Authentication:</strong> Cookie-based authentication for SPAs</li>
+                <li><strong>Mobile Authentication:</strong> Token-based auth for mobile apps</li>
+                <li><strong>Token Abilities:</strong> Assign permissions to specific tokens</li>
+                <li><strong>Multiple Tokens:</strong> Users can have multiple tokens (web, mobile, etc.)</li>
+                <li><strong>Token Expiration:</strong> Set expiration dates for tokens</li>
+            </ul>
+
+            <div class="warning-box">
+                <h3>⚠️ Sanctum vs Passport</h3>
+                <p><strong>Use Sanctum when:</strong> You're building a first-party SPA or mobile app that needs simple authentication.</p>
+                <p><strong>Use Passport when:</strong> You need full OAuth 2.0 implementation for third-party API access or complex authorization scenarios.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>📦 Installing Laravel Sanctum</h2>
+
+            <h3>Step 1: Install Sanctum via Composer</h3>
+            <pre><code># Install Sanctum package
+composer require laravel/sanctum
+
+# Publish Sanctum configuration and migrations
+php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"</code></pre>
+
+            <div class="info-box">
+                <p>This command installs Sanctum and publishes its configuration file to <span class="inline-code">config/sanctum.php</span> and migration files to <span class="inline-code">database/migrations/</span></p>
+            </div>
+
+            <h3>Step 2: Run Migrations</h3>
+            <pre><code># Create the personal_access_tokens table
+php artisan migrate</code></pre>
+
+            <p>This creates a table to store API tokens:</p>
+            <pre><code>// Migration: create_personal_access_tokens_table.php
+Schema::create('personal_access_tokens', function (Blueprint $table) {
+    $table->id();
+    $table->morphs('tokenable'); // User who owns the token
+    $table->string('name'); // Token name/description
+    $table->string('token', 64)->unique(); // The actual token
+    $table->text('abilities')->nullable(); // Token permissions
+    $table->timestamp('last_used_at')->nullable();
+    $table->timestamp('expires_at')->nullable();
+    $table->timestamps();
+});</code></pre>
+
+            <h3>Step 3: Configure API Middleware</h3>
+            <p>Open <span class="inline-code">app/Http/Kernel.php</span> and ensure Sanctum middleware is in the <span class="inline-code">api</span> middleware group:</p>
+            <pre><code>// app/Http/Kernel.php
+'api' => [
+    \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+    'throttle:api',
+    \Illuminate\Routing\Middleware\SubstituteBindings::class,
+],</code></pre>
+
+            <h3>Step 4: Add Sanctum Trait to User Model</h3>
+            <pre><code>// app/Models/User.php
+namespace App\Models;
+
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Sanctum\HasApiTokens;
+
+class User extends Authenticatable
+{
+    use HasApiTokens; // Add this trait
+
+    protected $fillable = [
+        'name', 'email', 'password',
+    ];
+
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
+}</code></pre>
+
+            <div class="success-box">
+                <h3>✅ Installation Complete!</h3>
+                <p>Sanctum is now installed and configured. You can start generating API tokens for users.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>🔑 Generating API Tokens</h2>
+
+            <h3>Creating Login Endpoint for Token Generation</h3>
+            <pre><code>// routes/api.php
+use App\Http\Controllers\Api\AuthController;
+
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
+
+// Protected routes
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/user', [AuthController::class, 'user']);
+});</code></pre>
+
+            <h3>Auth Controller Implementation</h3>
+            <pre><code>// app/Http/Controllers/Api/AuthController.php
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
+
+class AuthController extends Controller
+{
+    /**
+     * Register a new user and generate token
+     */
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:8|confirmed',
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        // Generate token with name
+        $token = $user->createToken('mobile-app')->plainTextToken;
+
+        return response()->json([
+            'message' => 'User registered successfully',
+            'user' => $user,
+            'token' => $token,
+        ], 201);
+    }
+
+    /**
+     * Login user and generate token
+     */
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            throw ValidationException::withMessages([
+                'email' => ['The provided credentials are incorrect.'],
+            ]);
+        }
+
+        // Delete old tokens (optional)
+        $user->tokens()->delete();
+
+        // Create new token
+        $token = $user->createToken('api-token')->plainTextToken;
+
+        return response()->json([
+            'message' => 'Login successful',
+            'user' => $user,
+            'token' => $token,
+        ]);
+    }
+
+    /**
+     * Get authenticated user
+     */
+    public function user(Request $request)
+    {
+        return response()->json([
+            'user' => $request->user(),
+        ]);
+    }
+
+    /**
+     * Logout user (revoke token)
+     */
+    public function logout(Request $request)
+    {
+        // Revoke current token
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json([
+            'message' => 'Logged out successfully',
+        ]);
+    }
+}</code></pre>
+
+            <div class="key-concept">
+                <h3>💡 Token Creation Methods</h3>
+                <ul>
+                    <li><span class="inline-code">createToken('name')</span> - Create a token with a name</li>
+                    <li><span class="inline-code">createToken('name', ['ability1', 'ability2'])</span> - Token with specific abilities</li>
+                    <li><span class="inline-code">createToken('name')->plainTextToken</span> - Get the actual token string</li>
+                </ul>
+            </div>
+
+            <h3>Token Abilities (Permissions)</h3>
+            <pre><code>// Create token with specific abilities
+$token = $user->createToken('mobile-app', [
+    'posts:read',
+    'posts:create',
+    'comments:create'
+])->plainTextToken;
+
+// In your controller, check abilities
+if ($request->user()->tokenCan('posts:create')) {
+    // User can create posts
+}
+
+// Protect routes by abilities
+Route::middleware(['auth:sanctum', 'ability:posts:create'])
+    ->post('/posts', [PostController::class, 'store']);</code></pre>
+        </section>
+
+        <section>
+            <h2>🔒 Using auth:sanctum Middleware</h2>
+
+            <h3>Protecting API Routes</h3>
+            <pre><code>// routes/api.php
+use App\Http\Controllers\Api\PostController;
+
+// Public routes (no authentication required)
+Route::get('/posts', [PostController::class, 'index']);
+Route::get('/posts/{id}', [PostController::class, 'show']);
+
+// Protected routes (authentication required)
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/posts', [PostController::class, 'store']);
+    Route::put('/posts/{id}', [PostController::class, 'update']);
+    Route::delete('/posts/{id}', [PostController::class, 'destroy']);
+    
+    Route::post('/posts/{id}/like', [PostController::class, 'like']);
+    Route::post('/comments', [CommentController::class, 'store']);
+});</code></pre>
+
+            <h3>Accessing Authenticated User</h3>
+            <pre><code>// In your controller
+public function store(Request $request)
+{
+    // Get authenticated user
+    $user = $request->user();
+    
+    // Or using auth() helper
+    $user = auth()->user();
+    
+    $post = Post::create([
+        'user_id' => $user->id,
+        'title' => $request->title,
+        'content' => $request->content,
+    ]);
+    
+    return response()->json($post, 201);
+}</code></pre>
+
+            <h3>Custom Middleware for Token Validation</h3>
+            <pre><code>// app/Http/Middleware/ValidateTokenAbility.php
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+
+class ValidateTokenAbility
+{
+    public function handle(Request $request, Closure $next, $ability)
+    {
+        if (!$request->user()->tokenCan($ability)) {
+            return response()->json([
+                'message' => 'Unauthorized. Token lacks required ability.'
+            ], 403);
+        }
+
+        return $next($request);
+    }
+}
+
+// Register in Kernel.php
+protected $routeMiddleware = [
+    'ability' => \App\Http\Middleware\ValidateTokenAbility::class,
+];
+
+// Use in routes
+Route::middleware(['auth:sanctum', 'ability:posts:create'])
+    ->post('/posts', [PostController::class, 'store']);</code></pre>
+        </section>
+
+        <section>
+            <h2>🧪 Testing with Postman</h2>
+
+            <div class="endpoint-box">
+                <h3>1. Register a New User</h3>
+                <p><strong>Method:</strong> POST</p>
+                <p><strong>URL:</strong> <span class="inline-code">http://localhost:8000/api/register</span></p>
+                <p><strong>Body (JSON):</strong></p>
+                <pre><code>{
+    "name": "John Doe",
+    "email": "john@example.com",
+    "password": "password123",
+    "password_confirmation": "password123"
+}</code></pre>
+                <p><strong>Response:</strong></p>
+                <pre><code>{
+    "message": "User registered successfully",
+    "user": {
+        "id": 1,
+        "name": "John Doe",
+        "email": "john@example.com"
+    },
+    "token": "1|abcdef123456..."
+}</code></pre>
+            </div>
+
+            <div class="endpoint-box">
+                <h3>2. Login (Get Token)</h3>
+                <p><strong>Method:</strong> POST</p>
+                <p><strong>URL:</strong> <span class="inline-code">http://localhost:8000/api/login</span></p>
+                <p><strong>Body (JSON):</strong></p>
+                <pre><code>{
+    "email": "john@example.com",
+    "password": "password123"
+}</code></pre>
+                <p><strong>Response:</strong></p>
+                <pre><code>{
+    "message": "Login successful",
+    "token": "2|xyz789abc456..."
+}</code></pre>
+            </div>
+
+            <div class="endpoint-box">
+                <h3>3. Access Protected Route</h3>
+                <p><strong>Method:</strong> GET</p>
+                <p><strong>URL:</strong> <span class="inline-code">http://localhost:8000/api/user</span></p>
+                <p><strong>Headers:</strong></p>
+                <pre><code>Authorization: Bearer 2|xyz789abc456...
+Accept: application/json</code></pre>
+                <p><strong>Response:</strong></p>
+                <pre><code>{
+    "user": {
+        "id": 1,
+        "name": "John Doe",
+        "email": "john@example.com"
+    }
+}</code></pre>
+            </div>
+
+            <h3>Setting Up Postman Authentication</h3>
+            <div class="info-box">
+                <h3>Method 1: Manual Header</h3>
+                <ol>
+                    <li>In Postman, go to the Headers tab</li>
+                    <li>Add key: <span class="inline-code">Authorization</span></li>
+                    <li>Add value: <span class="inline-code">Bearer YOUR_TOKEN_HERE</span></li>
+                </ol>
+
+                <h3>Method 2: Postman Variables</h3>
+                <ol>
+                    <li>Create a collection variable: <span class="inline-code">auth_token</span></li>
+                    <li>After login, save token: <span class="inline-code">pm.environment.set("auth_token", pm.response.json().token)</span></li>
+                    <li>Use in headers: <span class="inline-code">Bearer {{auth_token}}</span></li>
+                </ol>
+
+                <h3>Method 3: Bearer Token Type</h3>
+                <ol>
+                    <li>Go to Authorization tab</li>
+                    <li>Select Type: "Bearer Token"</li>
+                    <li>Paste your token</li>
+                </ol>
+            </div>
+
+            <h3>Testing Complete CRUD with Authentication</h3>
+            <pre><code>// Create Post (Authenticated)
+POST /api/posts
+Authorization: Bearer {token}
+Content-Type: application/json
+
+{
+    "title": "My First Post",
+    "content": "This is the content"
+}
+
+// Update Post (Authenticated)
+PUT /api/posts/1
+Authorization: Bearer {token}
+Content-Type: application/json
+
+{
+    "title": "Updated Title"
+}
+
+// Delete Post (Authenticated)
+DELETE /api/posts/1
+Authorization: Bearer {token}</code></pre>
+        </section>
+
+        <section>
+            <h2>🗑️ Token Revocation</h2>
+
+            <h3>Revoking Tokens</h3>
+            <pre><code>// Revoke current token (logout)
+$request->user()->currentAccessToken()->delete();
+
+// Revoke specific token by ID
+$request->user()->tokens()->where('id', $tokenId)->delete();
+
+// Revoke all tokens for user
+$request->user()->tokens()->delete();
+
+// Revoke all tokens except current
+$request->user()->tokens()
+    ->where('id', '!=', $request->user()->currentAccessToken()->id)
+    ->delete();</code></pre>
+
+            <h3>Token Management Endpoints</h3>
+            <pre><code>// routes/api.php
+Route::middleware('auth:sanctum')->group(function () {
+    // List all tokens
+    Route::get('/tokens', [TokenController::class, 'index']);
+    
+    // Revoke specific token
+    Route::delete('/tokens/{id}', [TokenController::class, 'destroy']);
+    
+    // Revoke all tokens
+    Route::post('/tokens/revoke-all', [TokenController::class, 'revokeAll']);
+});</code></pre>
+
+            <pre><code>// app/Http/Controllers/Api/TokenController.php
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+class TokenController extends Controller
+{
+    /**
+     * List all tokens for authenticated user
+     */
+    public function index(Request $request)
+    {
+        $tokens = $request->user()->tokens;
+        
+        return response()->json([
+            'tokens' => $tokens->map(function ($token) {
+                return [
+                    'id' => $token->id,
+                    'name' => $token->name,
+                    'abilities' => $token->abilities,
+                    'last_used_at' => $token->last_used_at,
+                    'created_at' => $token->created_at,
+                ];
+            }),
+        ]);
+    }
+
+    /**
+     * Revoke specific token
+     */
+    public function destroy(Request $request, $tokenId)
+    {
+        $token = $request->user()->tokens()->find($tokenId);
+        
+        if (!$token) {
+            return response()->json([
+                'message' => 'Token not found'
+            ], 404);
+        }
+        
+        $token->delete();
+        
+        return response()->json([
+            'message' => 'Token revoked successfully'
+        ]);
+    }
+
+    /**
+     * Revoke all tokens except current
+     */
+    public function revokeAll(Request $request)
+    {
+        $currentTokenId = $request->user()->currentAccessToken()->id;
+        
+        $request->user()->tokens()
+            ->where('id', '!=', $currentTokenId)
+            ->delete();
+        
+        return response()->json([
+            'message' => 'All other tokens revoked successfully'
+        ]);
+    }
+}</code></pre>
+
+            <h3>Token Expiration</h3>
+            <pre><code>// Create token that expires in 7 days
+$token = $user->createToken('mobile-app', ['*'], now()->addDays(7));
+
+// Check if token is expired (in middleware)
+if ($token->expires_at && $token->expires_at->isPast()) {
+    return response()->json(['message' => 'Token expired'], 401);
+}
+
+// Set default expiration in config/sanctum.php
+'expiration' => 60 * 24 * 7, // 7 days in minutes</code></pre>
+        </section>
+
+        <section>
+            <h2>🛡️ Security Best Practices</h2>
+
+            <div class="warning-box">
+                <h3>⚠️ Critical Security Rules</h3>
+                <ul>
+                    <li><strong>NEVER</strong> store plain text tokens in your database</li>
+                    <li><strong>ALWAYS</strong> use HTTPS in production to encrypt token transmission</li>
+                    <li><strong>NEVER</strong> expose tokens in URLs (use headers only)</li>
+                    <li><strong>ALWAYS</strong> implement rate limiting to prevent brute force attacks</li>
+                    <li><strong>NEVER</strong> share tokens between users or applications</li>
+                </ul>
+            </div>
+
+            <h3>1. Rate Limiting</h3>
+            <pre><code>// app/Providers/RouteServiceProvider.php
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Support\Facades\RateLimiter;
+
+protected function configureRateLimiting()
+{
+    RateLimiter::for('api', function (Request $request) {
+        return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
+    });
+    
+    // Stricter limit for auth endpoints
+    RateLimiter::for('auth', function (Request $request) {
+        return Limit::perMinute(5)->by($request->ip());
+    });
+}
+
+// Apply in routes
+Route::middleware('throttle:auth')->group(function () {
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/register', [AuthController::class, 'register']);
+});</code></pre>
+
+            <h3>2. Token Rotation</h3>
+            <pre><code>// Implement token rotation on sensitive actions
+public function changePassword(Request $request)
+{
+    $request->validate([
+        'current_password' => 'required',
+        'new_password' => 'required|min:8|confirmed',
+    ]);
+    
+    // Verify current password
+    if (!Hash::check($request->current_password, $request->user()->password)) {
+        return response()->json(['message' => 'Invalid password'], 401);
+    }
+    
+    // Update password
+    $request->user()->update([
+        'password' => Hash::make($request->new_password)
+    ]);
+    
+    // Revoke all tokens (force re-login)
+    $request->user()->tokens()->delete();
+    
+    return response()->json([
+        'message' => 'Password changed. Please login again.'
+    ]);
+}</code></pre>
+
+            <h3>3. IP Whitelisting (Optional)</h3>
+            <pre><code>// Create middleware for IP restriction
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+
+class RestrictIpAddress
+{
+    protected $allowedIps = [
+        '192.168.1.1',
+        '10.0.0.1',
+    ];
+    
+    public function handle(Request $request, Closure $next)
+    {
+        if (!in_array($request->ip(), $this->allowedIps)) {
+            return response()->json([
+                'message' => 'Access denied from this IP'
+            ], 403);
+        }
+        
+        return $next($request);
+    }
+}</code></pre>
+
+            <h3>4. Token Scope Validation</h3>
+            <pre><code>// Always validate token abilities
+public function store(Request $request)
+{
+    if (!$request->user()->tokenCan('posts:create')) {
+        return response()->json([
+            'message' => 'This token does not have permission to create posts'
+        ], 403);
+    }
+    
+    // Proceed with creating post
+}</code></pre>
+
+            <h3>5. Secure Token Storage (Client-Side)</h3>
+            <div class="info-box">
+                <h3>Best Practices for Mobile/Web Apps</h3>
+                <ul>
+                    <li><strong>Mobile:</strong> Use secure storage (Keychain for iOS, Keystore for Android)</li>
+                    <li><strong>Web:</strong> Store in httpOnly cookies (for SPAs) or localStorage with proper precautions</li>
+                    <li><strong>Never:</strong> Store tokens in plaintext files or insecure locations</li>
+                    <li><strong>Encrypt:</strong> Consider encrypting tokens before storing</li>
+                </ul>
+            </div>
+
+            <h3>6. Monitoring and Logging</h3>
+            <pre><code>// Log authentication attempts
+use Illuminate\Support\Facades\Log;
+
+public function login(Request $request)
+{
+    $user = User::where('email', $request->email)->first();
+    
+    if (!$user || !Hash::check($request->password, $user->password)) {
+        Log::warning('Failed login attempt', [
+            'email' => $request->email,
+            'ip' => $request->ip(),
+        ]);
+        
+        throw ValidationException::withMessages([
+            'email' => ['The provided credentials are incorrect.'],
+        ]);
+    }
+    
+    Log::info('Successful login', [
+        'user_id' => $user->id,
+        'ip' => $request->ip(),
+    ]);
+    
+    // Generate token...
+}</code></pre>
+
+            <h3>7. CORS Configuration</h3>
+            <pre><code>// config/cors.php
+return [
+    'paths' => ['api/*'],
+    'allowed_methods' => ['*'],
+    'allowed_origins' => [
+        'https://yourdomain.com',
+        // Don't use '*' in production
+    ],
+    'allowed_headers' => ['*'],
+    'exposed_headers' => [],
+    'max_age' => 0,
+    'supports_credentials' => false,
+];</code></pre>
+        </section>
+
+        <section>
+            <h2>🎯 Complete Example: Blog API with Authentication</h2>
+
+            <pre><code>// routes/api.php
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\PostController;
+
+// Public routes
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::get('/posts', [PostController::class, 'index']);
+Route::get('/posts/{id}', [PostController::class, 'show']);
+
+// Protected routes
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/user', [AuthController::class, 'user']);
+    
+    // Post management
+    Route::post('/posts', [PostController::class, 'store']);
+    Route::put('/posts/{id}', [PostController::class, 'update']);
+    Route::delete('/posts/{id}', [PostController::class, 'destroy']);
+});</code></pre>
+
+            <pre><code>// app/Http/Controllers/Api/PostController.php
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Models\Post;
+use Illuminate\Http\Request;
+
+class PostController extends Controller
+{
+    public function index()
+    {
+        $posts = Post::with('user:id,name')->latest()->paginate(15);
+        return response()->json($posts);
+    }
+
+    public function show($id)
+    {
+        $post = Post::with('user:id,name')->findOrFail($id);
+        return response()->json($post);
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|max:255',
+            'content' => 'required',
+        ]);
+
+        $post = $request->user()->posts()->create([
+            'title' => $request->title,
+            'content' => $request->content,
+        ]);
+
+        return response()->json($post, 201);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $post = Post::findOrFail($id);
+
+        // Check if user owns the post
+        if ($post->user_id !== $request->user()->id) {
+            return response()->json([
+                'message' => 'Unauthorized'
+            ], 403);
+        }
+
+        $request->validate([
+            'title' => 'sometimes|required|max:255',
+            'content' => 'sometimes|required',
+        ]);
+
+        $post->update($request->only(['title', 'content']));
+
+        return response()->json($post);
+    }
+
+    public function destroy(Request $request, $id)
+    {
+        $post = Post::findOrFail($id);
+
+        if ($post->user_id !== $request->user()->id) {
+            return response()->json([
+                'message' => 'Unauthorized'
+            ], 403);
+        }
+
+        $post->delete();
+
+        return response()->json([
+            'message' => 'Post deleted successfully'
+        ]);
+    }
+}</code></pre>
+        </section>
+
+        <section>
+            <h2>💪 Practical Exercises</h2>
+
+            <div class="exercise">
+                <h3>Exercise 1: Install and Configure Sanctum</h3>
+                <ol>
+                    <li>Install Laravel Sanctum in your Laravel project</li>
+                    <li>Run migrations to create the personal_access_tokens table</li>
+                    <li>Add HasApiTokens trait to your User model</li>
+                    <li>Verify the installation by checking the database</li>
+                </ol>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 2: Create Authentication Endpoints</h3>
+                <ol>
+                    <li>Create an AuthController with register, login, and logout methods</li>
+                    <li>Implement token generation on successful login</li>
+                    <li>Add validation for email and password</li>
+                    <li>Test registration and login with Postman</li>
+                    <li>Save the returned token for subsequent requests</li>
+                </ol>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 3: Protect API Routes</h3>
+                <ol>
+                    <li>Create a PostController with CRUD methods</li>
+                    <li>Protect store, update, and destroy methods with auth:sanctum middleware</li>
+                    <li>Leave index and show methods public</li>
+                    <li>Test accessing protected routes without a token (should fail)</li>
+                    <li>Test with a valid Bearer token (should succeed)</li>
+                </ol>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 4: Implement Token Abilities</h3>
+                <ol>
+                    <li>Create tokens with different abilities (read, write, delete)</li>
+                    <li>Implement middleware to check token abilities</li>
+                    <li>Create a token with only 'posts:read' ability</li>
+                    <li>Try to create a post with this token (should fail)</li>
+                    <li>Create a token with 'posts:create' ability and try again</li>
+                </ol>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 5: Token Management</h3>
+                <ol>
+                    <li>Create a TokenController for managing user tokens</li>
+                    <li>Implement an endpoint to list all user tokens</li>
+                    <li>Add functionality to revoke specific tokens</li>
+                    <li>Create a "revoke all tokens" endpoint</li>
+                    <li>Test token revocation in Postman</li>
+                </ol>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 6: Implement Rate Limiting</h3>
+                <ol>
+                    <li>Configure rate limiting for authentication endpoints</li>
+                    <li>Set a limit of 5 attempts per minute for login</li>
+                    <li>Test by making multiple login requests</li>
+                    <li>Observe the 429 Too Many Requests response</li>
+                    <li>Implement custom rate limit messages</li>
+                </ol>
+            </div>
+
+            <div class="exercise">
+                <h3>Bonus Challenge: Complete Blog API</h3>
+                <ol>
+                    <li>Build a complete authenticated blog API</li>
+                    <li>Implement user registration and login</li>
+                    <li>Add post CRUD operations with ownership validation</li>
+                    <li>Create comment functionality with authentication</li>
+                    <li>Add like/unlike features</li>
+                    <li>Implement user profile updates</li>
+                    <li>Add token rotation on password change</li>
+                    <li>Document all endpoints with example requests/responses</li>
+                </ol>
+            </div>
+        </section>
+
+        <section>
+            <h2>📦 Deliverable</h2>
+            <div class="deliverable">
+                <h3>Create a Secure Task Management API</h3>
+                <p><strong>Requirements:</strong></p>
+                <ul>
+                    <li><strong>Authentication System:</strong>
+                        <ul>
+                            <li>User registration endpoint with validation</li>
+                            <li>Login endpoint that returns API token</li>
+                            <li>Logout endpoint that revokes current token</li>
+                            <li>Get current user profile endpoint</li>
+                        </ul>
+                    </li>
+                    <li><strong>Task Management:</strong>
+                        <ul>
+                            <li>GET /api/tasks - List all tasks for authenticated user</li>
+                            <li>POST /api/tasks - Create new task (authenticated)</li>
+                            <li>GET /api/tasks/{id} - Get specific task</li>
+                            <li>PUT /api/tasks/{id} - Update task (owner only)</li>
+                            <li>DELETE /api/tasks/{id} - Delete task (owner only)</li>
+                            <li>PATCH /api/tasks/{id}/complete - Mark task complete</li>
+                        </ul>
+                    </li>
+                    <li><strong>Security Features:</strong>
+                        <ul>
+                            <li>All task operations require authentication</li>
+                            <li>Users can only access their own tasks</li>
+                            <li>Rate limiting on authentication endpoints</li>
+                            <li>Proper error handling and responses</li>
+                        </ul>
+                    </li>
+                    <li><strong>Database Schema:</strong>
+                        <ul>
+                            <li>users table (id, name, email, password)</li>
+                            <li>tasks table (id, user_id, title, description, completed, due_date)</li>
+                            <li>personal_access_tokens table (Sanctum)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Testing:</strong>
+                        <ul>
+                            <li>Test all endpoints in Postman</li>
+                            <li>Create a Postman collection with example requests</li>
+                            <li>Document expected responses</li>
+                            <li>Test error scenarios (wrong token, missing fields, etc.)</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>Submission Guidelines:</h3>
+                <ol>
+                    <li>Push your code to GitHub repository</li>
+                    <li>Include a README.md with:
+                        <ul>
+                            <li>Installation instructions</li>
+                            <li>API documentation (endpoints, methods, parameters)</li>
+                            <li>Authentication flow explanation</li>
+                            <li>Example requests and responses</li>
+                        </ul>
+                    </li>
+                    <li>Export and include your Postman collection</li>
+                    <li>Include screenshots of successful API calls</li>
+                    <li>Add comments explaining security measures implemented</li>
+                </ol>
+
+                <h3>Evaluation Criteria:</h3>
+                <ul>
+                    <li>✅ Sanctum properly installed and configured</li>
+                    <li>✅ Authentication endpoints working correctly</li>
+                    <li>✅ Token generation and validation functional</li>
+                    <li>✅ Protected routes using auth:sanctum middleware</li>
+                    <li>✅ Proper ownership validation for tasks</li>
+                    <li>✅ Rate limiting implemented</li>
+                    <li>✅ Clean code with proper structure</li>
+                    <li>✅ Comprehensive testing in Postman</li>
+                    <li>✅ Clear documentation</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>📚 Additional Resources</h2>
+            <ul>
+                <li><a href="https://laravel.com/docs/sanctum" target="_blank">Laravel Sanctum Official Documentation</a></li>
+                <li><a href="https://www.postman.com/api-platform/api-testing-basics/" target="_blank">Postman API Testing Guide</a></li>
+                <li><a href="https://jwt.io/introduction" target="_blank">Understanding JWT Tokens</a></li>
+                <li><a href="https://owasp.org/www-project-api-security/" target="_blank">OWASP API Security Top 10</a></li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>🎓 Summary</h2>
+            <div class="success-box">
+                <h3>What You Learned Today:</h3>
+                <ul>
+                    <li>✅ Understanding API authentication concepts and methods</li>
+                    <li>✅ Installing and configuring Laravel Sanctum</li>
+                    <li>✅ Generating API tokens for users</li>
+                    <li>✅ Protecting routes with auth:sanctum middleware</li>
+                    <li>✅ Testing authenticated APIs with Postman</li>
+                    <li>✅ Implementing token revocation and management</li>
+                    <li>✅ Following security best practices for API authentication</li>
+                    <li>✅ Building complete secure APIs with token authentication</li>
+                </ul>
+                <p><strong>Next:</strong> You'll explore advanced API topics like API resources, pagination, filtering, and versioning!</p>
+            </div>
+        </section>
+
+        <div class="nav-buttons">
+            <a href="day2-api-controllers.html" class="btn">← Previous: API Controllers</a>
+            <a href="../week19/day1-api-resources.html" class="btn">Next: API Resources →</a>
+        </div>
+
+        <footer>
+            <p>Day 3: API Authentication with Laravel Sanctum | Week 18: REST APIs</p>
+            <p>&copy; 2024 Web Development Internship Program. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

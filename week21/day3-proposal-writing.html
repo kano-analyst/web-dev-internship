@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 3: Proposal Writing & Approval | Week 21</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%);
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        h1 { color: #ff6e7f; border-bottom: 3px solid #bfe9ff; padding-bottom: 15px; margin-bottom: 25px; }
+        h2 { color: #ff6e7f; margin-top: 30px; margin-bottom: 15px; }
+        h3 { color: #5a9fd4; margin-top: 20px; margin-bottom: 10px; }
+        .objectives, .key-concept, .example, .exercise, .deliverable {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #ff6e7f;
+            border-radius: 8px;
+        }
+        .key-concept { border-left-color: #5a9fd4; background: #e7f3ff; }
+        .example { border-left-color: #28a745; background: #d4edda; }
+        .exercise { border-left-color: #ffc107; background: #fff3cd; }
+        .deliverable { border-left-color: #17a2b8; background: #d1ecf1; }
+        code {
+            background: #272822;
+            color: #f8f8f2;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        pre {
+            background: #272822;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th { background: #ff6e7f; color: white; }
+        tr:nth-child(even) { background: #f8f9fa; }
+        ul, ol { margin: 15px 0; padding-left: 30px; }
+        li { margin: 8px 0; }
+        .navigation {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+        .nav-button {
+            padding: 10px 20px;
+            background: #ff6e7f;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .nav-button:hover { background: #e55d6e; }
+        .tip {
+            background: #fff9e6;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📝 Week 21, Day 3: Proposal Writing & Approval Process</h1>
+        
+        <div class="objectives">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Learn the structure of a professional project proposal</li>
+                <li>Write a comprehensive project proposal document</li>
+                <li>Present your proposal to the instructor</li>
+                <li>Receive and incorporate feedback</li>
+                <li>Get official project approval</li>
+            </ul>
+        </div>
+
+        <h2>📄 Project Proposal Structure</h2>
+        
+        <div class="key-concept">
+            <h3>Standard Proposal Format</h3>
+            <p>Your proposal should include the following sections:</p>
+            
+            <ol>
+                <li><strong>Cover Page</strong> - Project title, team details, date</li>
+                <li><strong>Executive Summary</strong> - Brief overview (1 paragraph)</li>
+                <li><strong>Problem Statement</strong> - What problem are you solving?</li>
+                <li><strong>Objectives</strong> - What will the system achieve?</li>
+                <li><strong>Target Users</strong> - Who will use the system?</li>
+                <li><strong>Scope</strong> - What's included and excluded</li>
+                <li><strong>Features & Functionality</strong> - List of main features</li>
+                <li><strong>System Requirements</strong> - Functional and non-functional</li>
+                <li><strong>Database Design</strong> - ER diagram and table descriptions</li>
+                <li><strong>Technology Stack</strong> - Tools and frameworks to use</li>
+                <li><strong>Project Timeline</strong> - Development schedule</li>
+                <li><strong>Team Roles</strong> - Who does what</li>
+                <li><strong>Expected Outcomes</strong> - Final deliverables</li>
+            </ol>
+        </div>
+
+        <div class="example">
+            <h3>Sample Proposal: Library Management System</h3>
+            
+            <h4>1. Cover Page</h4>
+            <pre><code>================================================
+    CAPSTONE PROJECT PROPOSAL
+    Library Management System
+================================================
+
+Team Name: BookKeepers
+Team Members:
+- Ahmed Ibrahim (Team Lead / Backend Developer)
+- Fatima Yusuf (Frontend Developer)
+- Musa Abdullahi (Database Designer / Tester)
+
+Instructor: Ahmad Tijjani Garba
+Institution: Next-Step Technology
+Date: January 15, 2025</code></pre>
+
+            <h4>2. Executive Summary</h4>
+            <p>"The Library Management System is a web-based application designed to automate book borrowing and return processes for university libraries. The system will allow students to search for books, check availability, and receive email notifications for due dates. Librarians will be able to manage book inventory, track borrowings, and generate reports. Built with Laravel 10 and MySQL, the system will improve efficiency and reduce manual errors in library operations."</p>
+
+            <h4>3. Problem Statement</h4>
+            <p>"University students and library staff currently face challenges with the manual book tracking system. Students cannot check book availability from home, often forget return dates, and face disputes over fines. Librarians spend excessive time manually recording borrowings and tracking overdue books. This inefficiency leads to lost books, revenue loss from unpaid fines, and student dissatisfaction. Our Library Management System will automate these processes, provide real-time availability information, and send automated reminders to improve the overall library experience."</p>
+
+            <h4>4. Objectives</h4>
+            <ul>
+                <li>Digitize the library book catalog with searchable database</li>
+                <li>Automate book borrowing and return processes</li>
+                <li>Provide real-time book availability information</li>
+                <li>Send automated email notifications for due dates and overdue books</li>
+                <li>Track and manage fines for overdue returns</li>
+                <li>Generate reports on borrowing statistics and popular books</li>
+                <li>Reduce manual workload for library staff by 60%</li>
+            </ul>
+
+            <h4>5. Target Users</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>User Type</th>
+                        <th>Description</th>
+                        <th>Main Functions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Students</td>
+                        <td>University students borrowing books</td>
+                        <td>Search books, view borrowing history, receive notifications</td>
+                    </tr>
+                    <tr>
+                        <td>Librarians</td>
+                        <td>Library staff managing daily operations</td>
+                        <td>Issue/return books, manage fines, scan barcodes</td>
+                    </tr>
+                    <tr>
+                        <td>Administrators</td>
+                        <td>Library managers</td>
+                        <td>Add/edit books, manage users, generate reports</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>6. Scope</h4>
+            <p><strong>In Scope:</strong></p>
+            <ul>
+                <li>✅ User registration and authentication</li>
+                <li>✅ Book catalog with search, filter, and categories</li>
+                <li>✅ Borrowing and return management</li>
+                <li>✅ Email notifications (due dates, overdue)</li>
+                <li>✅ Fine calculation and tracking</li>
+                <li>✅ Admin dashboard with reports</li>
+                <li>✅ Barcode scanning for books</li>
+                <li>✅ Borrowing history</li>
+            </ul>
+
+            <p><strong>Out of Scope:</strong></p>
+            <ul>
+                <li>❌ Mobile app development</li>
+                <li>❌ Online payment gateway</li>
+                <li>❌ E-book/PDF hosting</li>
+                <li>❌ Integration with external library systems</li>
+            </ul>
+
+            <h4>7. Main Features</h4>
+            <ol>
+                <li><strong>Authentication Module</strong>
+                    <ul>
+                        <li>User registration with email verification</li>
+                        <li>Login with email/password</li>
+                        <li>Password reset functionality</li>
+                        <li>Role-based access (Student/Librarian/Admin)</li>
+                    </ul>
+                </li>
+                <li><strong>Book Catalog</strong>
+                    <ul>
+                        <li>Display all books with cover images</li>
+                        <li>Search by title, author, ISBN</li>
+                        <li>Filter by category, availability</li>
+                        <li>View book details (author, description, quantity)</li>
+                    </ul>
+                </li>
+                <li><strong>Borrowing System</strong>
+                    <ul>
+                        <li>Librarians can issue books to students</li>
+                        <li>Barcode scanning for quick processing</li>
+                        <li>Automatic due date calculation (14 days)</li>
+                        <li>Track borrowing status (borrowed/returned/overdue)</li>
+                    </ul>
+                </li>
+                <li><strong>Notification System</strong>
+                    <ul>
+                        <li>Email reminder 2 days before due date</li>
+                        <li>Overdue notification</li>
+                        <li>Confirmation email on successful borrowing</li>
+                    </ul>
+                </li>
+                <li><strong>Admin Dashboard</strong>
+                    <ul>
+                        <li>Add/edit/delete books</li>
+                        <li>Manage user accounts</li>
+                        <li>View borrowing statistics</li>
+                        <li>Generate reports (most borrowed books, overdue list)</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h4>8. Technology Stack</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Technology</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Backend Framework</td>
+                        <td>Laravel 10</td>
+                    </tr>
+                    <tr>
+                        <td>Database</td>
+                        <td>MySQL 8.0</td>
+                    </tr>
+                    <tr>
+                        <td>Frontend</td>
+                        <td>Blade Templates, Bootstrap 5, JavaScript</td>
+                    </tr>
+                    <tr>
+                        <td>Authentication</td>
+                        <td>Laravel Breeze</td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td>Laravel Mail with SMTP (Gmail)</td>
+                    </tr>
+                    <tr>
+                        <td>Version Control</td>
+                        <td>Git & GitHub</td>
+                    </tr>
+                    <tr>
+                        <td>Deployment</td>
+                        <td>cPanel / Laravel Forge</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>9. Project Timeline (4 Weeks)</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Week</th>
+                        <th>Tasks</th>
+                        <th>Deliverable</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Week 21</td>
+                        <td>Planning, proposal, database design</td>
+                        <td>Approved proposal</td>
+                    </tr>
+                    <tr>
+                        <td>Week 22</td>
+                        <td>Backend development, frontend UI</td>
+                        <td>Integrated system</td>
+                    </tr>
+                    <tr>
+                        <td>Week 23</td>
+                        <td>Testing, bug fixes, documentation, deployment</td>
+                        <td>Live application</td>
+                    </tr>
+                    <tr>
+                        <td>Week 24</td>
+                        <td>Final testing, presentation preparation</td>
+                        <td>Final presentation</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>10. Expected Outcomes</h4>
+            <ul>
+                <li>✅ Fully functional web application deployed live</li>
+                <li>✅ GitHub repository with complete source code</li>
+                <li>✅ Technical documentation (README, setup guide)</li>
+                <li>✅ User manual for students and librarians</li>
+                <li>✅ Professional presentation with system demonstration</li>
+            </ul>
+        </div>
+
+        <h2>✍️ Writing Tips</h2>
+        
+        <div class="tip">
+            <h3>Do's:</h3>
+            <ul>
+                <li>✅ Be clear and concise</li>
+                <li>✅ Use professional language</li>
+                <li>✅ Include diagrams (ER diagram is mandatory)</li>
+                <li>✅ Proofread for grammar and spelling</li>
+                <li>✅ Use bullet points for readability</li>
+                <li>✅ Be realistic about what you can achieve in 4 weeks</li>
+            </ul>
+
+            <h3>Don'ts:</h3>
+            <ul>
+                <li>❌ Don't overpromise features you can't deliver</li>
+                <li>❌ Don't copy-paste from other proposals</li>
+                <li>❌ Don't use vague terms like "very good" or "nice"</li>
+                <li>❌ Don't ignore instructor feedback</li>
+                <li>❌ Don't submit without reviewing as a team</li>
+            </ul>
+        </div>
+
+        <h2>🎤 Presenting Your Proposal</h2>
+        
+        <div class="key-concept">
+            <h3>Presentation Guidelines (10-15 minutes)</h3>
+            
+            <h4>Presentation Structure:</h4>
+            <ol>
+                <li><strong>Introduction (2 minutes)</strong>
+                    <ul>
+                        <li>Team introduction</li>
+                        <li>Project title and overview</li>
+                    </ul>
+                </li>
+                <li><strong>Problem & Solution (3 minutes)</strong>
+                    <ul>
+                        <li>Explain the problem clearly</li>
+                        <li>How your solution addresses it</li>
+                    </ul>
+                </li>
+                <li><strong>Features Demo (5 minutes)</strong>
+                    <ul>
+                        <li>Walk through main features</li>
+                        <li>Show ER diagram and explain database</li>
+                    </ul>
+                </li>
+                <li><strong>Technology & Timeline (3 minutes)</strong>
+                    <ul>
+                        <li>Technology stack justification</li>
+                        <li>Development plan and milestones</li>
+                    </ul>
+                </li>
+                <li><strong>Q&A (2-3 minutes)</strong>
+                    <ul>
+                        <li>Answer instructor questions</li>
+                        <li>Clarify any concerns</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <div class="exercise">
+            <h2>✏️ Today's Tasks</h2>
+            
+            <h3>Task 1: Write Complete Proposal (3 hours)</h3>
+            <ol>
+                <li>Use yesterday's documents (problem statement, requirements, ER diagram)</li>
+                <li>Follow the proposal structure outlined above</li>
+                <li>Include all 13 sections</li>
+                <li>Add your ER diagram</li>
+                <li>Proofread as a team</li>
+            </ol>
+
+            <h3>Task 2: Create Presentation Slides (45 minutes)</h3>
+            <ol>
+                <li>Use PowerPoint or Google Slides</li>
+                <li>Maximum 10-12 slides</li>
+                <li>Include visuals (ER diagram, mockups)</li>
+                <li>Practice presentation timing</li>
+            </ol>
+
+            <h3>Task 3: Present to Instructor (15 minutes)</h3>
+            <ol>
+                <li>Present confidently</li>
+                <li>Answer questions clearly</li>
+                <li>Take notes on feedback</li>
+                <li>Request approval</li>
+            </ol>
+
+            <h3>Task 4: Revise & Finalize (30 minutes)</h3>
+            <ol>
+                <li>Incorporate instructor feedback</li>
+                <li>Make necessary adjustments</li>
+                <li>Get final approval signature</li>
+                <li>Submit final proposal document</li>
+            </ol>
+        </div>
+
+        <div class="deliverable">
+            <h2>📦 Final Deliverables</h2>
+            <h3>Submit today:</h3>
+            <ol>
+                <li><strong>Complete Proposal Document (PDF)</strong>
+                    <ul>
+                        <li>All 13 sections included</li>
+                        <li>ER diagram embedded</li>
+                        <li>10-15 pages minimum</li>
+                        <li>Professional formatting</li>
+                    </ul>
+                </li>
+                <li><strong>Presentation Slides (PDF or PPT)</strong></li>
+                <li><strong>ER Diagram (separate image file)</strong></li>
+                <li><strong>Instructor Approval Form (signed)</strong></li>
+            </ol>
+        </div>
+
+        <div class="tip">
+            <strong>🎉 Congratulations!</strong> Once your proposal is approved, you're ready to start development in Week 22!
+        </div>
+
+        <div class="navigation">
+            <a href="day2-system-analysis.html" class="nav-button">← Previous: System Analysis</a>
+            <a href="../week22/day1-backend-development.html" class="nav-button">Next Week: Backend Development →</a>
+        </div>
+    </div>
+</body>
+</html>

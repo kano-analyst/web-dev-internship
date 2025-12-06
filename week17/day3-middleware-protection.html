@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 17 Day 3 - Middleware & Route Protection | Laravel Bootcamp</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+        }
+        h1 { color: #667eea; font-size: 2.5rem; margin-bottom: 10px; }
+        h2 { color: #764ba2; margin-top: 30px; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #eee; }
+        h3 { color: #667eea; margin-top: 25px; margin-bottom: 15px; }
+        .highlight {
+            background: #f0f0ff;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+        .code-block code { font-size: 14px; line-height: 1.5; }
+        .comment { color: #6a9955; }
+        .keyword { color: #569cd6; }
+        .string { color: #ce9178; }
+        .function { color: #dcdcaa; }
+        ul, ol { margin-left: 30px; margin-bottom: 20px; }
+        li { margin-bottom: 10px; }
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: transform 0.3s ease;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .exercise {
+            background: #fff3cd;
+            padding: 20px;
+            border-left: 4px solid #ffc107;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .tip {
+            background: #d1ecf1;
+            padding: 15px;
+            border-left: 4px solid #17a2b8;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background: #667eea; color: white; }
+        tr:nth-child(even) { background: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛡️ Week 17, Day 3: Middleware & Route Protection</h1>
+            <p>Secure Routes with Authentication Middleware</p>
+        </header>
+
+        <section>
+            <h2>📖 Learning Objectives</h2>
+            <ul>
+                <li>Understand middleware concepts in Laravel</li>
+                <li>Apply auth middleware to protect routes</li>
+                <li>Use guest middleware for unauthenticated users</li>
+                <li>Create route groups with middleware</li>
+                <li>Build custom middleware</li>
+                <li>Implement role-based access control</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>🎯 What is Middleware?</h2>
+            <div class="highlight">
+                <p><strong>Middleware</strong> provides a convenient mechanism for filtering HTTP requests entering your application. Think of it as a security checkpoint before reaching your routes.</p>
+            </div>
+
+            <h3>Middleware Flow:</h3>
+            <div class="code-block">
+<code>Request → Middleware 1 → Middleware 2 → Route/Controller → Response</code>
+            </div>
+
+            <h3>Common Use Cases:</h3>
+            <ul>
+                <li>Authentication (verify user is logged in)</li>
+                <li>Authorization (check user permissions)</li>
+                <li>CORS headers</li>
+                <li>Logging</li>
+                <li>Rate limiting</li>
+                <li>Maintenance mode</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>🔒 Auth Middleware</h2>
+
+            <h3>Protecting Individual Routes:</h3>
+            <div class="code-block">
+<code><span class="keyword">use</span> Illuminate\Support\Facades\Route;
+
+<span class="comment">// This route requires authentication</span>
+Route::<span class="function">get</span>(<span class="string">'/dashboard'</span>, <span class="keyword">function</span> () {
+    <span class="keyword">return</span> <span class="function">view</span>(<span class="string">'dashboard'</span>);
+})-><span class="function">middleware</span>(<span class="string">'auth'</span>);
+
+<span class="comment">// Alternative syntax</span>
+Route::<span class="function">get</span>(<span class="string">'/profile'</span>, <span class="keyword">function</span> () {
+    <span class="keyword">return</span> <span class="function">view</span>(<span class="string">'profile'</span>);
+})-><span class="function">name</span>(<span class="string">'profile'</span>)-><span class="function">middleware</span>(<span class="string">'auth'</span>);</code>
+            </div>
+
+            <h3>Protecting Controller Actions:</h3>
+            <div class="code-block">
+<code><span class="keyword">namespace</span> App\Http\Controllers;
+
+<span class="keyword">class</span> <span class="function">DashboardController</span> <span class="keyword">extends</span> Controller
+{
+    <span class="comment">// Apply middleware in constructor</span>
+    <span class="keyword">public function</span> <span class="function">__construct</span>()
+    {
+        $this-><span class="function">middleware</span>(<span class="string">'auth'</span>);
+    }
+
+    <span class="keyword">public function</span> <span class="function">index</span>()
+    {
+        <span class="keyword">return</span> <span class="function">view</span>(<span class="string">'dashboard'</span>);
+    }
+}</code>
+            </div>
+
+            <h3>What Happens Without Auth?</h3>
+            <ol>
+                <li>User tries to access protected route</li>
+                <li>Auth middleware checks if user is logged in</li>
+                <li>If not logged in, redirect to /login</li>
+                <li>After login, redirect back to intended page</li>
+            </ol>
+        </section>
+
+        <section>
+            <h2>👥 Guest Middleware</h2>
+
+            <div class="highlight">
+                <p>Guest middleware ensures that only <strong>unauthenticated</strong> users can access certain routes (like login/register pages).</p>
+            </div>
+
+            <div class="code-block">
+<code><span class="comment">// routes/auth.php (Already applied by Breeze)</span>
+Route::<span class="function">get</span>(<span class="string">'/login'</span>, [AuthenticatedSessionController::<span class="keyword">class</span>, <span class="string">'create'</span>])
+    -><span class="function">middleware</span>(<span class="string">'guest'</span>)
+    -><span class="function">name</span>(<span class="string">'login'</span>);
+
+Route::<span class="function">get</span>(<span class="string">'/register'</span>, [RegisteredUserController::<span class="keyword">class</span>, <span class="string">'create'</span>])
+    -><span class="function">middleware</span>(<span class="string">'guest'</span>)
+    -><span class="function">name</span>(<span class="string">'register'</span>);</code>
+            </div>
+
+            <div class="tip">
+                <strong>💡 Tip:</strong> If a logged-in user tries to access /login, they'll be redirected to /dashboard automatically.
+            </div>
+        </section>
+
+        <section>
+            <h2>📦 Route Groups with Middleware</h2>
+
+            <h3>Group Multiple Routes:</h3>
+            <div class="code-block">
+<code><span class="comment">// routes/web.php</span>
+<span class="keyword">use</span> Illuminate\Support\Facades\Route;
+
+<span class="comment">// All routes in this group require authentication</span>
+Route::<span class="function">middleware</span>([<span class="string">'auth'</span>])-><span class="function">group</span>(<span class="keyword">function</span> () {
+    Route::<span class="function">get</span>(<span class="string">'/dashboard'</span>, <span class="keyword">function</span> () {
+        <span class="keyword">return</span> <span class="function">view</span>(<span class="string">'dashboard'</span>);
+    });
+
+    Route::<span class="function">get</span>(<span class="string">'/profile'</span>, <span class="keyword">function</span> () {
+        <span class="keyword">return</span> <span class="function">view</span>(<span class="string">'profile'</span>);
+    });
+
+    Route::<span class="function">get</span>(<span class="string">'/settings'</span>, <span class="keyword">function</span> () {
+        <span class="keyword">return</span> <span class="function">view</span>(<span class="string">'settings'</span>);
+    });
+});</code>
+            </div>
+
+            <h3>Multiple Middleware:</h3>
+            <div class="code-block">
+<code><span class="comment">// Apply multiple middleware</span>
+Route::<span class="function">middleware</span>([<span class="string">'auth'</span>, <span class="string">'verified'</span>])-><span class="function">group</span>(<span class="keyword">function</span> () {
+    Route::<span class="function">get</span>(<span class="string">'/email/verify'</span>, <span class="keyword">function</span> () {
+        <span class="keyword">return</span> <span class="function">view</span>(<span class="string">'verify-email'</span>);
+    });
+});</code>
+            </div>
+        </section>
+
+        <section>
+            <h2>🔧 Creating Custom Middleware</h2>
+
+            <h3>Step 1: Generate Middleware</h3>
+            <div class="code-block">
+<code><span class="comment"># Create middleware</span>
+php artisan make:middleware CheckAge</code>
+            </div>
+
+            <h3>Step 2: Define Middleware Logic</h3>
+            <div class="code-block">
+<code><span class="comment">// app/Http/Middleware/CheckAge.php</span>
+<span class="keyword">namespace</span> App\Http\Middleware;
+
+<span class="keyword">use</span> Closure;
+<span class="keyword">use</span> Illuminate\Http\Request;
+
+<span class="keyword">class</span> <span class="function">CheckAge</span>
+{
+    <span class="keyword">public function</span> <span class="function">handle</span>(Request $request, Closure $next)
+    {
+        <span class="comment">// Check if user is 18+</span>
+        <span class="keyword">if</span> ($request-><span class="function">input</span>(<span class="string">'age'</span>) < 18) {
+            <span class="keyword">return</span> <span class="function">redirect</span>(<span class="string">'/'</span>)-><span class="function">with</span>(<span class="string">'error'</span>, <span class="string">'You must be 18+'</span>);
+        }
+
+        <span class="keyword">return</span> <span class="function">$next</span>($request);
+    }
+}</code>
+            </div>
+
+            <h3>Step 3: Register Middleware</h3>
+            <div class="code-block">
+<code><span class="comment">// bootstrap/app.php (Laravel 11+)</span>
+<span class="keyword">use</span> App\Http\Middleware\CheckAge;
+
+-><span class="function">withMiddleware</span>(<span class="keyword">function</span> (Middleware $middleware) {
+    $middleware-><span class="function">alias</span>([
+        <span class="string">'check.age'</span> => CheckAge::<span class="keyword">class</span>,
+    ]);
+})
+
+<span class="comment">// OR in Laravel 10, use app/Http/Kernel.php</span>
+<span class="keyword">protected</span> $middlewareAliases = [
+    <span class="string">'check.age'</span> => \App\Http\Middleware\CheckAge::<span class="keyword">class</span>,
+];</code>
+            </div>
+
+            <h3>Step 4: Apply Middleware</h3>
+            <div class="code-block">
+<code>Route::<span class="function">get</span>(<span class="string">'/adult-content'</span>, <span class="keyword">function</span> () {
+    <span class="keyword">return</span> <span class="function">view</span>(<span class="string">'adult-content'</span>);
+})-><span class="function">middleware</span>(<span class="string">'check.age'</span>);</code>
+            </div>
+        </section>
+
+        <section>
+            <h2>👑 Role-Based Access Control</h2>
+
+            <h3>Add Role to Users Table:</h3>
+            <div class="code-block">
+<code><span class="comment">// Create migration</span>
+php artisan make:migration add_role_to_users_table --table=users
+
+<span class="comment">// Migration file:</span>
+<span class="keyword">public function</span> <span class="function">up</span>()
+{
+    Schema::<span class="function">table</span>(<span class="string">'users'</span>, <span class="keyword">function</span> (Blueprint $table) {
+        $table-><span class="function">string</span>(<span class="string">'role'</span>)-><span class="function">default</span>(<span class="string">'user'</span>); <span class="comment">// user, admin, etc.</span>
+    });
+}
+
+php artisan migrate</code>
+            </div>
+
+            <h3>Create CheckAdmin Middleware:</h3>
+            <div class="code-block">
+<code>php artisan make:middleware CheckAdmin
+
+<span class="comment">// app/Http/Middleware/CheckAdmin.php</span>
+<span class="keyword">public function</span> <span class="function">handle</span>(Request $request, Closure $next)
+{
+    <span class="keyword">if</span> (auth()-><span class="function">user</span>()->role !== <span class="string">'admin'</span>) {
+        <span class="keyword">return</span> <span class="function">redirect</span>(<span class="string">'/dashboard'</span>)
+            -><span class="function">with</span>(<span class="string">'error'</span>, <span class="string">'Access denied. Admin only.'</span>);
+    }
+
+    <span class="keyword">return</span> <span class="function">$next</span>($request);
+}</code>
+            </div>
+
+            <h3>Protect Admin Routes:</h3>
+            <div class="code-block">
+<code><span class="comment">// routes/web.php</span>
+Route::<span class="function">middleware</span>([<span class="string">'auth'</span>, <span class="string">'admin'</span>])-><span class="function">group</span>(<span class="keyword">function</span> () {
+    Route::<span class="function">get</span>(<span class="string">'/admin/dashboard'</span>, <span class="keyword">function</span> () {
+        <span class="keyword">return</span> <span class="function">view</span>(<span class="string">'admin.dashboard'</span>);
+    });
+
+    Route::<span class="function">get</span>(<span class="string">'/admin/users'</span>, <span class="keyword">function</span> () {
+        <span class="keyword">return</span> <span class="function">view</span>(<span class="string">'admin.users'</span>);
+    });
+});</code>
+            </div>
+        </section>
+
+        <section>
+            <h2>🔍 Accessing Authenticated User</h2>
+
+            <h3>In Controllers:</h3>
+            <div class="code-block">
+<code><span class="keyword">use</span> Illuminate\Support\Facades\Auth;
+
+<span class="comment">// Get authenticated user</span>
+$user = Auth::<span class="function">user</span>();
+
+<span class="comment">// Get user ID</span>
+$userId = Auth::<span class="function">id</span>();
+
+<span class="comment">// Check if authenticated</span>
+<span class="keyword">if</span> (Auth::<span class="function">check</span>()) {
+    <span class="comment">// User is logged in</span>
+}
+
+<span class="comment">// Using auth() helper</span>
+$user = <span class="function">auth</span>()-><span class="function">user</span>();
+$userId = <span class="function">auth</span>()-><span class="function">id</span>();</code>
+            </div>
+
+            <h3>In Blade Templates:</h3>
+            <div class="code-block">
+<code>@auth
+    <span class="keyword">&lt;p&gt;</span>Welcome, {{ auth()->user()->name }}!<span class="keyword">&lt;/p&gt;</span>
+    <span class="keyword">&lt;a</span> href=<span class="string">"{{ route('logout') }}"</span><span class="keyword">&gt;</span>Logout<span class="keyword">&lt;/a&gt;</span>
+@endauth
+
+@guest
+    <span class="keyword">&lt;a</span> href=<span class="string">"{{ route('login') }}"</span><span class="keyword">&gt;</span>Login<span class="keyword">&lt;/a&gt;</span>
+    <span class="keyword">&lt;a</span> href=<span class="string">"{{ route('register') }}"</span><span class="keyword">&gt;</span>Register<span class="keyword">&lt;/a&gt;</span>
+@endguest</code>
+            </div>
+        </section>
+
+        <section>
+            <h2>✍️ Practice Exercises</h2>
+
+            <div class="exercise">
+                <h3>Exercise 1: Protect Dashboard Routes</h3>
+                <ol>
+                    <li>Create /dashboard route</li>
+                    <li>Apply auth middleware</li>
+                    <li>Try accessing without login (should redirect)</li>
+                    <li>Login and access dashboard</li>
+                    <li>Display logged-in user's name</li>
+                </ol>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 2: Create Admin Middleware</h3>
+                <ol>
+                    <li>Add role field to users table</li>
+                    <li>Create CheckAdmin middleware</li>
+                    <li>Register middleware alias</li>
+                    <li>Create admin-only route</li>
+                    <li>Test with regular user and admin</li>
+                </ol>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 3: Route Groups</h3>
+                <ol>
+                    <li>Create route group for profile pages</li>
+                    <li>Apply auth middleware to group</li>
+                    <li>Add /profile, /settings, /preferences routes</li>
+                    <li>Test all routes with and without login</li>
+                </ol>
+            </div>
+        </section>
+
+        <section>
+            <h2>🎯 Today's Deliverable</h2>
+            <div class="highlight">
+                <h3>✅ Secured Laravel Application</h3>
+                <p><strong>Requirements:</strong></p>
+                <ul>
+                    <li>Protected dashboard with auth middleware</li>
+                    <li>Admin role added to users table</li>
+                    <li>CheckAdmin middleware implemented</li>
+                    <li>Admin-only routes protected</li>
+                    <li>Route groups with multiple middleware</li>
+                    <li>Test users with different roles created</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>📚 Summary</h2>
+            <ul>
+                <li>Middleware filters HTTP requests before reaching routes</li>
+                <li>Auth middleware protects routes for logged-in users</li>
+                <li>Guest middleware is for unauthenticated users only</li>
+                <li>Route groups apply middleware to multiple routes</li>
+                <li>Custom middleware can be created for specific logic</li>
+                <li>Role-based access control restricts features by user role</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>🔜 What's Next?</h2>
+            <p>In Week 18, we'll learn about:</p>
+            <ul>
+                <li>REST API concepts and principles</li>
+                <li>Building API endpoints with Laravel</li>
+                <li>JSON responses and formatting</li>
+                <li>API authentication with Sanctum</li>
+            </ul>
+        </section>
+
+        <div class="nav-buttons">
+            <a href="day2-login-registration.html" class="btn">← Previous: Login System</a>
+            <a href="../week18/day1-rest-apis-intro.html" class="btn">Next: REST APIs →</a>
+        </div>
+    </div>
+</body>
+</html>

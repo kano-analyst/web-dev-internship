@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 12 Day 2: Blog Development</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        header { background: #f5576c; color: white; padding: 30px; border-radius: 15px 15px 0 0; }
+        .content { padding: 40px; }
+        h2 { color: #f5576c; border-bottom: 3px solid #f093fb; padding-bottom: 10px; margin: 30px 0 20px; }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        .info-box { background: #fce4ec; border-left: 5px solid #f5576c; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        .btn { background: #f5576c; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 10px 10px 0; }
+        footer { background: #f5576c; color: white; padding: 20px; text-align: center; border-radius: 0 0 15px 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 12 - Day 2: Blog Development</h1>
+            <p>Wednesday | Duration: 3 hours | Building Core Features 💻</p>
+        </header>
+
+        <div class="content">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Build homepage to display all posts</li>
+                <li>Create single post view page</li>
+                <li>Implement create post functionality</li>
+                <li>Add header and footer components</li>
+                <li>Style the blog beautifully</li>
+            </ul>
+
+            <h2>📄 Header Component (includes/header.php)</h2>
+            <div class="code-block">
+&lt;?php
+// includes/header.php
+$pageTitle = isset($pageTitle) ? $pageTitle : 'My Blog';
+?&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;&lt;?php echo $pageTitle; ?&gt;&lt;/title&gt;
+    &lt;link rel="stylesheet" href="css/style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;header&gt;
+        &lt;div class="container"&gt;
+            &lt;h1&gt;📝 My Awesome Blog&lt;/h1&gt;
+            &lt;p&gt;Sharing thoughts and ideas with the world&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/header&gt;
+    
+    &lt;nav&gt;
+        &lt;ul&gt;
+            &lt;li&gt;&lt;a href="index.php"&gt;Home&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="create_post.php"&gt;Create Post&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/nav&gt;
+            </div>
+
+            <h2>📄 Footer Component (includes/footer.php)</h2>
+            <div class="code-block">
+&lt;!-- includes/footer.php --&gt;
+    &lt;footer&gt;
+        &lt;div class="container"&gt;
+            &lt;p&gt;&copy; &lt;?php echo date('Y'); ?&gt; My Awesome Blog. All rights reserved.&lt;/p&gt;
+            &lt;p&gt;Built with PHP & MySQL&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </div>
+
+            <h2>🏠 Homepage - Display All Posts (index.php)</h2>
+            <div class="code-block">
+&lt;?php
+// index.php
+$pageTitle = "Home - My Blog";
+require_once 'config/database.php';
+include 'includes/header.php';
+?&gt;
+
+&lt;div class="container"&gt;
+    &lt;h2 style="margin-bottom: 30px;"&gt;Latest Blog Posts&lt;/h2&gt;
+    
+    &lt;?php
+    // Fetch all posts, newest first
+    $sql = "SELECT * FROM posts ORDER BY created_at DESC";
+    $result = mysqli_query($conn, $sql);
+    
+    if (mysqli_num_rows($result) > 0) {
+        while ($post = mysqli_fetch_assoc($result)) {
+            // Create excerpt (first 150 characters)
+            $excerpt = substr($post['content'], 0, 150) . '...';
+            ?&gt;
+            
+            &lt;div class="post-card"&gt;
+                &lt;h3 style="color: #f5576c; margin-bottom: 10px;"&gt;
+                    &lt;a href="view_post.php?id=&lt;?php echo $post['id']; ?&gt;" style="text-decoration: none; color: inherit;"&gt;
+                        &lt;?php echo htmlspecialchars($post['title']); ?&gt;
+                    &lt;/a&gt;
+                &lt;/h3&gt;
+                
+                &lt;div style="color: #666; font-size: 14px; margin-bottom: 15px;"&gt;
+                    &lt;span&gt;✍️ &lt;?php echo htmlspecialchars($post['author']); ?&gt;&lt;/span&gt;
+                    &lt;span style="margin: 0 10px;"&gt;|&lt;/span&gt;
+                    &lt;span&gt;📅 &lt;?php echo date('F j, Y', strtotime($post['created_at'])); ?&gt;&lt;/span&gt;
+                    &lt;span style="margin: 0 10px;"&gt;|&lt;/span&gt;
+                    &lt;span&gt;👁️ &lt;?php echo $post['views']; ?&gt; views&lt;/span&gt;
+                    &lt;?php if ($post['category']): ?&gt;
+                        &lt;span style="margin: 0 10px;"&gt;|&lt;/span&gt;
+                        &lt;span&gt;🏷️ &lt;?php echo htmlspecialchars($post['category']); ?&gt;&lt;/span&gt;
+                    &lt;?php endif; ?&gt;
+                &lt;/div&gt;
+                
+                &lt;p style="color: #555; line-height: 1.6; margin-bottom: 15px;"&gt;
+                    &lt;?php echo htmlspecialchars($excerpt); ?&gt;
+                &lt;/p&gt;
+                
+                &lt;a href="view_post.php?id=&lt;?php echo $post['id']; ?&gt;" class="btn"&gt;Read More →&lt;/a&gt;
+            &lt;/div&gt;
+            
+            &lt;?php
+        }
+    } else {
+        echo "&lt;p&gt;No blog posts yet. &lt;a href='create_post.php'&gt;Create the first one!&lt;/a&gt;&lt;/p&gt;";
+    }
+    
+    mysqli_close($conn);
+    ?&gt;
+&lt;/div&gt;
+
+&lt;?php include 'includes/footer.php'; ?&gt;
+            </div>
+
+            <h2>👁️ View Single Post (view_post.php)</h2>
+            <div class="code-block">
+&lt;?php
+// view_post.php
+require_once 'config/database.php';
+
+// Get post ID from URL
+$post_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+
+if ($post_id > 0) {
+    // Fetch post
+    $stmt = mysqli_prepare($conn, "SELECT * FROM posts WHERE id = ?");
+    mysqli_stmt_bind_param($stmt, "i", $post_id);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $post = mysqli_fetch_assoc($result);
+    
+    if ($post) {
+        // Increment view count
+        $updateViews = mysqli_prepare($conn, "UPDATE posts SET views = views + 1 WHERE id = ?");
+        mysqli_stmt_bind_param($updateViews, "i", $post_id);
+        mysqli_stmt_execute($updateViews);
+        
+        $pageTitle = htmlspecialchars($post['title']) . " - My Blog";
+    } else {
+        header("Location: index.php");
+        exit();
+    }
+} else {
+    header("Location: index.php");
+    exit();
+}
+
+include 'includes/header.php';
+?&gt;
+
+&lt;div class="container"&gt;
+    &lt;div class="post-card"&gt;
+        &lt;h2 style="color: #f5576c; margin-bottom: 15px;"&gt;
+            &lt;?php echo htmlspecialchars($post['title']); ?&gt;
+        &lt;/h2&gt;
+        
+        &lt;div style="color: #666; font-size: 14px; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid #f093fb;"&gt;
+            &lt;span&gt;✍️ &lt;strong&gt;&lt;?php echo htmlspecialchars($post['author']); ?&gt;&lt;/strong&gt;&lt;/span&gt;
+            &lt;span style="margin: 0 10px;"&gt;|&lt;/span&gt;
+            &lt;span&gt;📅 &lt;?php echo date('F j, Y \a\t g:i A', strtotime($post['created_at'])); ?&gt;&lt;/span&gt;
+            &lt;span style="margin: 0 10px;"&gt;|&lt;/span&gt;
+            &lt;span&gt;👁️ &lt;?php echo $post['views']; ?&gt; views&lt;/span&gt;
+            &lt;?php if ($post['category']): ?&gt;
+                &lt;span style="margin: 0 10px;"&gt;|&lt;/span&gt;
+                &lt;span&gt;🏷️ &lt;?php echo htmlspecialchars($post['category']); ?&gt;&lt;/span&gt;
+            &lt;?php endif; ?&gt;
+        &lt;/div&gt;
+        
+        &lt;div style="color: #333; line-height: 1.8; font-size: 16px;"&gt;
+            &lt;?php echo nl2br(htmlspecialchars($post['content'])); ?&gt;
+        &lt;/div&gt;
+        
+        &lt;div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd;"&gt;
+            &lt;a href="edit_post.php?id=&lt;?php echo $post['id']; ?&gt;" class="btn"&gt;✏️ Edit Post&lt;/a&gt;
+            &lt;a href="delete_post.php?id=&lt;?php echo $post['id']; ?&gt;" class="btn" style="background: #dc3545;" onclick="return confirm('Are you sure you want to delete this post?');"&gt;🗑️ Delete Post&lt;/a&gt;
+            &lt;a href="index.php" class="btn" style="background: #6c757d;"&gt;← Back to Home&lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;?php
+mysqli_close($conn);
+include 'includes/footer.php';
+?&gt;
+            </div>
+
+            <h2>➕ Create New Post (create_post.php)</h2>
+            <div class="code-block">
+&lt;?php
+// create_post.php
+$pageTitle = "Create New Post - My Blog";
+require_once 'config/database.php';
+
+$errors = [];
+$success = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get and validate inputs
+    $title = trim($_POST['title']);
+    $content = trim($_POST['content']);
+    $author = trim($_POST['author']);
+    $category = trim($_POST['category']);
+    
+    // Validation
+    if (empty($title) || strlen($title) < 5) {
+        $errors[] = "Title must be at least 5 characters";
+    }
+    if (empty($content) || strlen($content) < 20) {
+        $errors[] = "Content must be at least 20 characters";
+    }
+    if (empty($author)) {
+        $errors[] = "Author name is required";
+    }
+    
+    // If no errors, insert into database
+    if (empty($errors)) {
+        $stmt = mysqli_prepare($conn, "INSERT INTO posts (title, content, author, category) VALUES (?, ?, ?, ?)");
+        mysqli_stmt_bind_param($stmt, "ssss", $title, $content, $author, $category);
+        
+        if (mysqli_stmt_execute($stmt)) {
+            $post_id = mysqli_insert_id($conn);
+            header("Location: view_post.php?id=" . $post_id);
+            exit();
+        } else {
+            $errors[] = "Error creating post: " . mysqli_error($conn);
+        }
+        
+        mysqli_stmt_close($stmt);
+    }
+}
+
+include 'includes/header.php';
+?&gt;
+
+&lt;div class="container"&gt;
+    &lt;div class="post-card"&gt;
+        &lt;h2 style="color: #f5576c; margin-bottom: 30px;"&gt;Create New Blog Post&lt;/h2&gt;
+        
+        &lt;?php if (!empty($errors)): ?&gt;
+            &lt;div style="background: #f8d7da; color: #721c24; padding: 15px; border-radius: 5px; margin-bottom: 20px;"&gt;
+                &lt;ul style="margin-left: 20px;"&gt;
+                    &lt;?php foreach ($errors as $error): ?&gt;
+                        &lt;li&gt;&lt;?php echo htmlspecialchars($error); ?&gt;&lt;/li&gt;
+                    &lt;?php endforeach; ?&gt;
+                &lt;/ul&gt;
+            &lt;/div&gt;
+        &lt;?php endif; ?&gt;
+        
+        &lt;form method="POST" action=""&gt;
+            &lt;div style="margin-bottom: 20px;"&gt;
+                &lt;label style="display: block; margin-bottom: 5px; font-weight: bold;"&gt;Post Title:&lt;/label&gt;
+                &lt;input type="text" name="title" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px;"
+                       value="&lt;?php echo isset($_POST['title']) ? htmlspecialchars($_POST['title']) : ''; ?&gt;" required&gt;
+            &lt;/div&gt;
+            
+            &lt;div style="margin-bottom: 20px;"&gt;
+                &lt;label style="display: block; margin-bottom: 5px; font-weight: bold;"&gt;Author Name:&lt;/label&gt;
+                &lt;input type="text" name="author" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px;"
+                       value="&lt;?php echo isset($_POST['author']) ? htmlspecialchars($_POST['author']) : ''; ?&gt;" required&gt;
+            &lt;/div&gt;
+            
+            &lt;div style="margin-bottom: 20px;"&gt;
+                &lt;label style="display: block; margin-bottom: 5px; font-weight: bold;"&gt;Category (optional):&lt;/label&gt;
+                &lt;select name="category" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px;"&gt;
+                    &lt;option value=""&gt;-- Select Category --&lt;/option&gt;
+                    &lt;option value="Technology"&gt;Technology&lt;/option&gt;
+                    &lt;option value="Career"&gt;Career&lt;/option&gt;
+                    &lt;option value="Personal"&gt;Personal&lt;/option&gt;
+                    &lt;option value="Tutorial"&gt;Tutorial&lt;/option&gt;
+                    &lt;option value="General"&gt;General&lt;/option&gt;
+                &lt;/select&gt;
+            &lt;/div&gt;
+            
+            &lt;div style="margin-bottom: 20px;"&gt;
+                &lt;label style="display: block; margin-bottom: 5px; font-weight: bold;"&gt;Content:&lt;/label&gt;
+                &lt;textarea name="content" rows="12" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; resize: vertical;" required&gt;&lt;?php echo isset($_POST['content']) ? htmlspecialchars($_POST['content']) : ''; ?&gt;&lt;/textarea&gt;
+            &lt;/div&gt;
+            
+            &lt;button type="submit" class="btn"&gt;📝 Publish Post&lt;/button&gt;
+            &lt;a href="index.php" class="btn" style="background: #6c757d; text-decoration: none;"&gt;Cancel&lt;/a&gt;
+        &lt;/form&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;?php
+mysqli_close($conn);
+include 'includes/footer.php';
+?&gt;
+            </div>
+
+            <h2>✏️ Today's Tasks</h2>
+            <ol>
+                <li>Create header and footer components</li>
+                <li>Build homepage (index.php) showing all posts</li>
+                <li>Create view_post.php for single post view</li>
+                <li>Build create_post.php with form</li>
+                <li>Test all pages and fix any issues</li>
+            </ol>
+
+            <h2>✅ Today's Deliverable</h2>
+            <ul>
+                <li>✓ Header and footer components working</li>
+                <li>✓ Homepage displaying all blog posts</li>
+                <li>✓ Single post view with full content</li>
+                <li>✓ Create post form functional</li>
+                <li>✓ View counter incrementing</li>
+                <li>✓ All styling applied and looks good</li>
+            </ul>
+
+            <div style="margin-top: 40px;">
+                <a href="day1-blog-planning.html" class="btn">← Previous</a>
+                <a href="../index.html" class="btn">Course Home</a>
+                <a href="day3-blog-finalization.html" class="btn">Next: Day 3 →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 12 - Day 2: Blog Development</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 13 Day 2: Laravel Folder Structure & Configuration</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        header { background: #fa709a; color: white; padding: 30px; border-radius: 15px 15px 0 0; }
+        .content { padding: 40px; }
+        h2 { color: #fa709a; border-bottom: 3px solid #fee140; padding-bottom: 10px; margin: 30px 0 20px; }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        .info-box { background: #fff3cd; border-left: 5px solid #fa709a; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border: 1px solid #ddd; }
+        th { background: #fa709a; color: white; }
+        .btn { background: #fa709a; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 10px 10px 0; }
+        footer { background: #fa709a; color: white; padding: 20px; text-align: center; border-radius: 0 0 15px 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 13 - Day 2: Folder Structure & Configuration</h1>
+            <p>Wednesday | Duration: 3 hours</p>
+        </header>
+
+        <div class="content">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Understand Laravel directory structure</li>
+                <li>Learn about important folders and files</li>
+                <li>Configure .env file</li>
+                <li>Set up database connection</li>
+                <li>Understand configuration files</li>
+            </ul>
+
+            <h2>📁 Complete Laravel Directory Structure</h2>
+            <div class="code-block">
+laravel-project/
+│
+├── app/                          # Core application code
+│   ├── Console/                 # Artisan commands
+│   ├── Exceptions/              # Exception handling
+│   ├── Http/
+│   │   ├── Controllers/         # All controllers here
+│   │   ├── Middleware/          # HTTP middleware
+│   │   └── Requests/            # Form requests
+│   ├── Models/                  # Eloquent models
+│   └── Providers/               # Service providers
+│
+├── bootstrap/                   # Framework bootstrap files
+│   └── cache/                   # Framework cache
+│
+├── config/                      # Configuration files
+│   ├── app.php                 # App configuration
+│   ├── database.php            # Database settings
+│   ├── mail.php                # Mail settings
+│   └── ...
+│
+├── database/
+│   ├── migrations/             # Database migrations
+│   ├── seeders/                # Database seeders
+│   └── factories/              # Model factories
+│
+├── public/                      # Publicly accessible files
+│   ├── index.php               # Entry point
+│   ├── css/                    # Compiled CSS
+│   ├── js/                     # Compiled JS
+│   └── images/                 # Images
+│
+├── resources/                   # Raw assets
+│   ├── css/                    # Raw CSS files
+│   ├── js/                     # Raw JavaScript
+│   └── views/                  # Blade templates
+│
+├── routes/                      # Route definitions
+│   ├── web.php                 # Web routes
+│   ├── api.php                 # API routes
+│   └── console.php             # Console routes
+│
+├── storage/                     # Generated files
+│   ├── app/                    # Application files
+│   ├── framework/              # Framework cache
+│   └── logs/                   # Log files
+│
+├── tests/                       # Automated tests
+│   ├── Feature/                # Feature tests
+│   └── Unit/                   # Unit tests
+│
+├── vendor/                      # Composer dependencies
+│
+├── .env                        # Environment variables
+├── .env.example               # Example environment file
+├── artisan                     # Laravel CLI tool
+├── composer.json              # Composer dependencies
+└── package.json               # NPM dependencies
+            </div>
+
+            <h2>📂 Important Folders Explained</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Folder</th>
+                        <th>Purpose</th>
+                        <th>When to Use</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>app/Http/Controllers</strong></td>
+                        <td>Store all controllers</td>
+                        <td>Every time you create logic</td>
+                    </tr>
+                    <tr>
+                        <td><strong>app/Models</strong></td>
+                        <td>Eloquent models for database</td>
+                        <td>For each database table</td>
+                    </tr>
+                    <tr>
+                        <td><strong>resources/views</strong></td>
+                        <td>Blade template files</td>
+                        <td>For all HTML pages</td>
+                    </tr>
+                    <tr>
+                        <td><strong>routes/web.php</strong></td>
+                        <td>Define web routes</td>
+                        <td>Map URLs to controllers</td>
+                    </tr>
+                    <tr>
+                        <td><strong>database/migrations</strong></td>
+                        <td>Database structure</td>
+                        <td>Creating/modifying tables</td>
+                    </tr>
+                    <tr>
+                        <td><strong>public/</strong></td>
+                        <td>Public files (CSS, JS, images)</td>
+                        <td>Static assets</td>
+                    </tr>
+                    <tr>
+                        <td><strong>config/</strong></td>
+                        <td>Configuration files</td>
+                        <td>App settings</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>⚙️ The .env File (Environment Configuration)</h2>
+            <div class="info-box">
+                <p><strong>.env</strong> file contains environment-specific settings like database credentials, app key, debug mode, etc. This file is NOT committed to version control for security.</p>
+            </div>
+
+            <h3>Open .env File:</h3>
+            <p>Located at project root: <code>C:\xampp\htdocs\student-management\.env</code></p>
+
+            <h3>Important .env Settings:</h3>
+            <div class="code-block">
+# Application
+APP_NAME="Student Management System"
+APP_ENV=local                    # local, production, testing
+APP_KEY=base64:xxx              # Auto-generated, don't change
+APP_DEBUG=true                  # Show errors (true for development)
+APP_URL=http://localhost:8000
+
+# Database Connection
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=student_management   # Your database name
+DB_USERNAME=root                 # MySQL username
+DB_PASSWORD=                     # MySQL password (empty for XAMPP)
+
+# Mail (for later)
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+            </div>
+
+            <h2>🗄️ Configure Database Connection</h2>
+            
+            <h3>Step 1: Create Database in phpMyAdmin</h3>
+            <ol>
+                <li>Start Apache and MySQL in XAMPP</li>
+                <li>Open phpMyAdmin: <code>http://localhost/phpmyadmin</code></li>
+                <li>Click "New" in left sidebar</li>
+                <li>Database name: <code>student_management</code></li>
+                <li>Collation: <code>utf8mb4_general_ci</code></li>
+                <li>Click "Create"</li>
+            </ol>
+
+            <h3>Step 2: Update .env File</h3>
+            <div class="code-block">
+# Open .env file and update:
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=student_management   # ← Your database name
+DB_USERNAME=root
+DB_PASSWORD=                     # Leave empty for XAMPP
+            </div>
+
+            <h3>Step 3: Test Database Connection</h3>
+            <div class="code-block">
+# In terminal/PowerShell (in project directory):
+php artisan migrate
+
+# If successful, you should see:
+# Migration table created successfully.
+# Migrated: 2014_10_12_000000_create_users_table
+# etc...
+            </div>
+
+            <h2>📝 Configuration Files Overview</h2>
+            
+            <h3>config/app.php - Application Settings</h3>
+            <div class="code-block">
+return [
+    'name' => env('APP_NAME', 'Laravel'),  // App name
+    'env' => env('APP_ENV', 'production'), // Environment
+    'debug' => env('APP_DEBUG', false),    // Debug mode
+    'url' => env('APP_URL', 'http://localhost'),
+    
+    'timezone' => 'UTC',                   // Can change to 'Africa/Lagos'
+    'locale' => 'en',                      // Default language
+];
+            </div>
+
+            <h3>config/database.php - Database Settings</h3>
+            <div class="code-block">
+'default' => env('DB_CONNECTION', 'mysql'),
+
+'connections' => [
+    'mysql' => [
+        'driver' => 'mysql',
+        'host' => env('DB_HOST', '127.0.0.1'),
+        'port' => env('DB_PORT', '3306'),
+        'database' => env('DB_DATABASE', 'forge'),
+        'username' => env('DB_USERNAME', 'forge'),
+        'password' => env('DB_PASSWORD', ''),
+    ],
+],
+            </div>
+
+            <h2>🔑 Generate Application Key</h2>
+            <div class="info-box">
+                <p>Laravel requires an application key for encryption. This is auto-generated, but if needed:</p>
+            </div>
+            <div class="code-block">
+php artisan key:generate
+
+# Output:
+# Application key set successfully.
+
+# This updates APP_KEY in .env file
+            </div>
+
+            <h2>🧹 Clear Cache Commands</h2>
+            <p>Useful when configuration isn't updating:</p>
+            <div class="code-block">
+# Clear configuration cache
+php artisan config:clear
+
+# Clear application cache
+php artisan cache:clear
+
+# Clear route cache
+php artisan route:clear
+
+# Clear view cache
+php artisan view:clear
+
+# Clear all caches at once
+php artisan optimize:clear
+            </div>
+
+            <h2>🎨 Public Folder & Assets</h2>
+            
+            <h3>Accessing Public Files:</h3>
+            <div class="code-block">
+<!-- In Blade templates, use asset() helper -->
+&lt;link rel="stylesheet" href="{{ asset('css/style.css') }}"&gt;
+&lt;script src="{{ asset('js/app.js') }}"&gt;&lt;/script&gt;
+&lt;img src="{{ asset('images/logo.png') }}" alt="Logo"&gt;
+
+<!-- This references files in public/ directory -->
+public/css/style.css
+public/js/app.js
+public/images/logo.png
+            </div>
+
+            <h2>📦 Composer & Dependencies</h2>
+            
+            <h3>composer.json - Project Dependencies</h3>
+            <div class="code-block">
+{
+    "require": {
+        "php": "^8.1",
+        "laravel/framework": "^10.0"
+    }
+}
+            </div>
+
+            <h3>Install Dependencies:</h3>
+            <div class="code-block">
+# Install all dependencies from composer.json
+composer install
+
+# Update dependencies
+composer update
+
+# Add new package
+composer require package-name
+            </div>
+
+            <h2>✏️ Practice Exercises</h2>
+            <ol>
+                <li>Navigate through all main folders in your Laravel project</li>
+                <li>Create database "student_management" in phpMyAdmin</li>
+                <li>Configure .env file with correct database credentials</li>
+                <li>Run <code>php artisan migrate</code> successfully</li>
+                <li>Change APP_NAME in .env to "My Student System"</li>
+                <li>Clear all caches with <code>php artisan optimize:clear</code></li>
+            </ol>
+
+            <h2>✅ Today's Deliverable</h2>
+            <ul>
+                <li>✓ Understanding of Laravel folder structure</li>
+                <li>✓ .env file configured correctly</li>
+                <li>✓ Database created and connected</li>
+                <li>✓ Migrations run successfully</li>
+                <li>✓ Application key generated</li>
+                <li>✓ Familiar with main configuration files</li>
+            </ul>
+
+            <div style="margin-top: 40px;">
+                <a href="day1-laravel-installation.html" class="btn">← Previous</a>
+                <a href="../index.html" class="btn">Course Home</a>
+                <a href="day3-routes-controllers-views.html" class="btn">Next: Day 3 →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 13 - Day 2: Laravel Folder Structure & Configuration</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 12 Day 1: Blog Project Planning</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        header { background: #f5576c; color: white; padding: 30px; border-radius: 15px 15px 0 0; }
+        .content { padding: 40px; }
+        h2 { color: #f5576c; border-bottom: 3px solid #f093fb; padding-bottom: 10px; margin: 30px 0 20px; }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        .info-box { background: #fce4ec; border-left: 5px solid #f5576c; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border: 1px solid #ddd; }
+        th { background: #f5576c; color: white; }
+        .btn { background: #f5576c; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 10px 10px 0; }
+        footer { background: #f5576c; color: white; padding: 20px; text-align: center; border-radius: 0 0 15px 15px; }
+        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 20px 0; }
+        .feature-card { background: #f9f9f9; padding: 20px; border-radius: 8px; border-left: 4px solid #f5576c; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 12 - Day 1: Blog Project Planning</h1>
+            <p>Monday | Duration: 3 hours | Final Project Begins! 🎉</p>
+        </header>
+
+        <div class="content">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Plan a complete blog application</li>
+                <li>Design database schema</li>
+                <li>Create project file structure</li>
+                <li>Set up project foundation</li>
+                <li>Understand project requirements</li>
+            </ul>
+
+            <h2>📝 Project Overview: Simple Blog System</h2>
+            <div class="info-box">
+                <h3>What We're Building:</h3>
+                <p>A complete blog application where users can create, view, edit, and delete blog posts. This project combines everything you've learned: HTML, CSS, PHP, and MySQL!</p>
+            </div>
+
+            <h2>✨ Project Features</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>📰 View Posts</h3>
+                    <p>Display all blog posts on homepage with title, excerpt, author, and date</p>
+                </div>
+                <div class="feature-card">
+                    <h3>➕ Create Post</h3>
+                    <p>Form to add new blog posts with title, content, and author</p>
+                </div>
+                <div class="feature-card">
+                    <h3>👁️ View Single Post</h3>
+                    <p>Read full blog post with all details</p>
+                </div>
+                <div class="feature-card">
+                    <h3>✏️ Edit Post</h3>
+                    <p>Update existing blog posts</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🗑️ Delete Post</h3>
+                    <p>Remove unwanted blog posts</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🔍 Search</h3>
+                    <p>Find posts by title or content</p>
+                </div>
+            </div>
+
+            <h2>🗄️ Database Schema</h2>
+            
+            <h3>Posts Table Structure:</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Column</th>
+                        <th>Data Type</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>id</td>
+                        <td>INT AUTO_INCREMENT PRIMARY KEY</td>
+                        <td>Unique post ID</td>
+                    </tr>
+                    <tr>
+                        <td>title</td>
+                        <td>VARCHAR(200) NOT NULL</td>
+                        <td>Post title</td>
+                    </tr>
+                    <tr>
+                        <td>content</td>
+                        <td>TEXT NOT NULL</td>
+                        <td>Full post content</td>
+                    </tr>
+                    <tr>
+                        <td>author</td>
+                        <td>VARCHAR(100) NOT NULL</td>
+                        <td>Author name</td>
+                    </tr>
+                    <tr>
+                        <td>category</td>
+                        <td>VARCHAR(50)</td>
+                        <td>Post category (optional)</td>
+                    </tr>
+                    <tr>
+                        <td>views</td>
+                        <td>INT DEFAULT 0</td>
+                        <td>View count</td>
+                    </tr>
+                    <tr>
+                        <td>created_at</td>
+                        <td>DATETIME DEFAULT CURRENT_TIMESTAMP</td>
+                        <td>Creation date/time</td>
+                    </tr>
+                    <tr>
+                        <td>updated_at</td>
+                        <td>DATETIME ON UPDATE CURRENT_TIMESTAMP</td>
+                        <td>Last update date/time</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>SQL to Create Database and Table:</h3>
+            <div class="code-block">
+-- 1. Create database
+CREATE DATABASE blog_db;
+USE blog_db;
+
+-- 2. Create posts table
+CREATE TABLE posts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(200) NOT NULL,
+    content TEXT NOT NULL,
+    author VARCHAR(100) NOT NULL,
+    category VARCHAR(50),
+    views INT DEFAULT 0,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- 3. Insert sample data for testing
+INSERT INTO posts (title, content, author, category) VALUES
+('Welcome to My Blog', 
+ 'This is my first blog post. I am excited to share my thoughts and experiences with you all!', 
+ 'Ahmad Ibrahim', 
+ 'General'),
+
+('Learning PHP and MySQL', 
+ 'Today I learned how to connect PHP with MySQL. It opens up so many possibilities for web development. I can now create dynamic websites that interact with databases!', 
+ 'Fatima Yusuf', 
+ 'Technology'),
+
+('The Power of Web Development', 
+ 'Web development has changed my life. From HTML to CSS to JavaScript and now PHP, each step has been rewarding.', 
+ 'Ibrahim Musa', 
+ 'Career'),
+
+('Building My First CRUD App', 
+ 'CRUD operations are the foundation of most web applications. Today I built my first complete CRUD system!', 
+ 'Aisha Hassan', 
+ 'Technology');
+            </div>
+
+            <h2>📁 Project File Structure</h2>
+            <div class="code-block">
+blog-project/
+│
+├── config/
+│   └── database.php          # Database connection
+│
+├── includes/
+│   ├── header.php            # Header component
+│   ├── footer.php            # Footer component
+│   └── nav.php               # Navigation menu
+│
+├── css/
+│   └── style.css             # Main stylesheet
+│
+├── index.php                 # Homepage (list all posts)
+├── view_post.php             # View single post
+├── create_post.php           # Create new post
+├── edit_post.php             # Edit existing post
+├── delete_post.php           # Delete post
+└── search.php                # Search posts
+            </div>
+
+            <h2>🎨 Styling Plan</h2>
+            <div class="code-block">
+/* Basic color scheme */
+--primary-color: #f5576c;
+--secondary-color: #f093fb;
+--text-color: #333;
+--background: #f9f9f9;
+--card-background: #fff;
+
+/* Layout */
+- Responsive design
+- Grid layout for post cards
+- Clean, modern interface
+- Mobile-friendly navigation
+            </div>
+
+            <h2>📋 Project Checklist</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Task</th>
+                        <th>Day</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Database setup</td>
+                        <td>Day 1</td>
+                        <td>☐ To Do</td>
+                    </tr>
+                    <tr>
+                        <td>File structure creation</td>
+                        <td>Day 1</td>
+                        <td>☐ To Do</td>
+                    </tr>
+                    <tr>
+                        <td>Database connection file</td>
+                        <td>Day 1</td>
+                        <td>☐ To Do</td>
+                    </tr>
+                    <tr>
+                        <td>Header/Footer components</td>
+                        <td>Day 1</td>
+                        <td>☐ To Do</td>
+                    </tr>
+                    <tr>
+                        <td>Homepage (view posts)</td>
+                        <td>Day 2</td>
+                        <td>☐ To Do</td>
+                    </tr>
+                    <tr>
+                        <td>View single post</td>
+                        <td>Day 2</td>
+                        <td>☐ To Do</td>
+                    </tr>
+                    <tr>
+                        <td>Create new post</td>
+                        <td>Day 2</td>
+                        <td>☐ To Do</td>
+                    </tr>
+                    <tr>
+                        <td>Edit post</td>
+                        <td>Day 3</td>
+                        <td>☐ To Do</td>
+                    </tr>
+                    <tr>
+                        <td>Delete post</td>
+                        <td>Day 3</td>
+                        <td>☐ To Do</td>
+                    </tr>
+                    <tr>
+                        <td>Search functionality</td>
+                        <td>Day 3</td>
+                        <td>☐ To Do</td>
+                    </tr>
+                    <tr>
+                        <td>Final testing & polish</td>
+                        <td>Day 3</td>
+                        <td>☐ To Do</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>💻 Setting Up Today</h2>
+            
+            <h3>Step 1: Create Database</h3>
+            <ol>
+                <li>Open phpMyAdmin</li>
+                <li>Create database <code>blog_db</code></li>
+                <li>Run the SQL above to create posts table</li>
+                <li>Insert sample data</li>
+            </ol>
+
+            <h3>Step 2: Create Project Folder</h3>
+            <ol>
+                <li>In <code>C:\xampp\htdocs\</code> create folder <code>blog-project</code></li>
+                <li>Create subfolders: <code>config</code>, <code>includes</code>, <code>css</code></li>
+            </ol>
+
+            <h3>Step 3: Database Connection (config/database.php)</h3>
+            <div class="code-block">
+&lt;?php
+// config/database.php
+
+// Database configuration
+define('DB_HOST', 'localhost');
+define('DB_USER', 'root');
+define('DB_PASS', '');
+define('DB_NAME', 'blog_db');
+
+// Create connection
+$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+// Check connection
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+// Set charset
+mysqli_set_charset($conn, "utf8mb4");
+?&gt;
+            </div>
+
+            <h3>Step 4: Create Basic CSS (css/style.css)</h3>
+            <div class="code-block">
+/* css/style.css */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #f5576c;
+    --secondary: #f093fb;
+    --dark: #333;
+    --light: #f9f9f9;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    background: var(--light);
+    color: var(--dark);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
+header {
+    background: linear-gradient(135deg, var(--secondary), var(--primary));
+    color: white;
+    padding: 30px 0;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    text-align: center;
+}
+
+/* Navigation */
+nav {
+    background: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    display: block;
+    padding: 15px 20px;
+    color: var(--dark);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: var(--primary);
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: var(--primary);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn:hover {
+    background: #d94860;
+}
+
+/* Cards */
+.post-card {
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+/* Footer */
+footer {
+    background: var(--dark);
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 50px;
+}
+            </div>
+
+            <h2>✏️ Today's Tasks</h2>
+            <ol>
+                <li>Create <code>blog_db</code> database with posts table</li>
+                <li>Insert sample blog posts</li>
+                <li>Set up project folder structure</li>
+                <li>Create <code>config/database.php</code></li>
+                <li>Create <code>css/style.css</code></li>
+                <li>Test database connection</li>
+            </ol>
+
+            <h2>✅ Today's Deliverable</h2>
+            <ul>
+                <li>✓ Database created with sample posts</li>
+                <li>✓ Project folder structure set up</li>
+                <li>✓ Database connection file working</li>
+                <li>✓ Basic CSS file created</li>
+                <li>✓ Ready for Day 2 development</li>
+            </ul>
+
+            <div style="margin-top: 40px;">
+                <a href="../week11/day3-crud.html" class="btn">← Previous Week</a>
+                <a href="../index.html" class="btn">Course Home</a>
+                <a href="day2-blog-development.html" class="btn">Next: Day 2 →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 12 - Day 1: Blog Project Planning</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

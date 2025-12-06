@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 6 Day 2: JavaScript Operators</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        header { background: #4facfe; color: white; padding: 30px; border-radius: 15px 15px 0 0; }
+        .content { padding: 40px; }
+        h2 { color: #4facfe; border-bottom: 3px solid #00f2fe; padding-bottom: 10px; margin: 30px 0 20px; }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border: 1px solid #ddd; }
+        th { background: #4facfe; color: white; }
+        tr:nth-child(even) { background: #f9f9f9; }
+        .btn { background: #4facfe; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 10px 10px 0; }
+        footer { background: #4facfe; color: white; padding: 20px; text-align: center; border-radius: 0 0 15px 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 6 - Day 2: JavaScript Operators</h1>
+            <p>Wednesday | Duration: 3 hours</p>
+        </header>
+
+        <div class="content">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Master arithmetic operators</li>
+                <li>Understand comparison operators</li>
+                <li>Learn logical operators</li>
+                <li>Practice conditional statements</li>
+                <li>Solve operator-based exercises</li>
+            </ul>
+
+            <h2>➕ Arithmetic Operators</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Operator</th>
+                        <th>Name</th>
+                        <th>Example</th>
+                        <th>Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>+</td>
+                        <td>Addition</td>
+                        <td>10 + 5</td>
+                        <td>15</td>
+                    </tr>
+                    <tr>
+                        <td>-</td>
+                        <td>Subtraction</td>
+                        <td>10 - 5</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>*</td>
+                        <td>Multiplication</td>
+                        <td>10 * 5</td>
+                        <td>50</td>
+                    </tr>
+                    <tr>
+                        <td>/</td>
+                        <td>Division</td>
+                        <td>10 / 5</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>%</td>
+                        <td>Modulus (Remainder)</td>
+                        <td>10 % 3</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>++</td>
+                        <td>Increment</td>
+                        <td>x++</td>
+                        <td>x = x + 1</td>
+                    </tr>
+                    <tr>
+                        <td>--</td>
+                        <td>Decrement</td>
+                        <td>x--</td>
+                        <td>x = x - 1</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="code-block">
+// Basic arithmetic
+let a = 10;
+let b = 3;
+
+console.log(a + b);  // 13
+console.log(a - b);  // 7
+console.log(a * b);  // 30
+console.log(a / b);  // 3.333...
+console.log(a % b);  // 1 (remainder)
+
+// Increment and Decrement
+let count = 5;
+count++;  // count is now 6
+count--;  // count is now 5
+            </div>
+
+            <h2>🔍 Comparison Operators</h2>
+            <p>Compare two values and return true or false</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Operator</th>
+                        <th>Name</th>
+                        <th>Example</th>
+                        <th>Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>==</td>
+                        <td>Equal to</td>
+                        <td>5 == "5"</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
+                        <td>===</td>
+                        <td>Strict equal</td>
+                        <td>5 === "5"</td>
+                        <td>false</td>
+                    </tr>
+                    <tr>
+                        <td>!=</td>
+                        <td>Not equal</td>
+                        <td>5 != 3</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
+                        <td>!==</td>
+                        <td>Strict not equal</td>
+                        <td>5 !== "5"</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
+                        <td>></td>
+                        <td>Greater than</td>
+                        <td>10 > 5</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
+                        <td><</td>
+                        <td>Less than</td>
+                        <td>5 < 10</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
+                        <td>>=</td>
+                        <td>Greater or equal</td>
+                        <td>10 >= 10</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
+                        <td><=</td>
+                        <td>Less or equal</td>
+                        <td>5 <= 10</td>
+                        <td>true</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="code-block">
+let age = 18;
+
+console.log(age == 18);   // true
+console.log(age === "18"); // false (different types)
+console.log(age > 16);     // true
+console.log(age < 20);     // true
+console.log(age >= 18);    // true
+console.log(age <= 17);    // false
+            </div>
+
+            <h2>🔗 Logical Operators</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Operator</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>&&</td>
+                        <td>AND</td>
+                        <td>Both conditions must be true</td>
+                    </tr>
+                    <tr>
+                        <td>||</td>
+                        <td>OR</td>
+                        <td>At least one condition must be true</td>
+                    </tr>
+                    <tr>
+                        <td>!</td>
+                        <td>NOT</td>
+                        <td>Reverses the boolean value</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="code-block">
+let age = 25;
+let hasLicense = true;
+
+// AND operator
+console.log(age >= 18 && hasLicense);  // true (both true)
+
+// OR operator
+console.log(age < 18 || hasLicense);   // true (one is true)
+
+// NOT operator
+console.log(!hasLicense);  // false (reverses true)
+            </div>
+
+            <h2>🔀 Conditional Statements (if/else)</h2>
+            <div class="code-block">
+let score = 85;
+
+if (score >= 90) {
+    console.log("Grade: A");
+} else if (score >= 80) {
+    console.log("Grade: B");
+} else if (score >= 70) {
+    console.log("Grade: C");
+} else {
+    console.log("Grade: F");
+}
+
+// Output: Grade: B
+            </div>
+
+            <h2>💻 Complete Practice Example</h2>
+            <div class="code-block">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript Operators Practice</title>
+</head>
+<body>
+    <h1>JavaScript Operators</h1>
+    <p>Check console (F12) for results</p>
+
+    <script>
+        // Simple Calculator
+        let num1 = 20;
+        let num2 = 5;
+
+        console.log("=== Calculator ===");
+        console.log(num1 + " + " + num2 + " = " + (num1 + num2));
+        console.log(num1 + " - " + num2 + " = " + (num1 - num2));
+        console.log(num1 + " * " + num2 + " = " + (num1 * num2));
+        console.log(num1 + " / " + num2 + " = " + (num1 / num2));
+        console.log(num1 + " % " + num2 + " = " + (num1 % num2));
+
+        // Age Checker
+        let userAge = 17;
+        
+        if (userAge >= 18) {
+            console.log("You can vote!");
+        } else {
+            console.log("You cannot vote yet.");
+        }
+
+        // Ticket Price Calculator
+        let age = 15;
+        let isStudent = true;
+        let ticketPrice;
+
+        if (age < 12) {
+            ticketPrice = 5;
+        } else if (age >= 60) {
+            ticketPrice = 7;
+        } else if (isStudent) {
+            ticketPrice = 8;
+        } else {
+            ticketPrice = 10;
+        }
+
+        console.log("Ticket Price: $" + ticketPrice);
+    </script>
+</body>
+</html>
+            </div>
+
+            <h2>✏️ Practice Exercises</h2>
+            <ol>
+                <li>Create a calculator that adds, subtracts, multiplies, and divides two numbers</li>
+                <li>Write an if/else statement to check if a number is positive, negative, or zero</li>
+                <li>Check if a person is eligible to drive (age >= 18 AND has license)</li>
+                <li>Create a grade calculator (A: 90+, B: 80-89, C: 70-79, F: below 70)</li>
+                <li>Calculate the area of a rectangle (length * width)</li>
+            </ol>
+
+            <h2>✅ Today's Deliverable</h2>
+            <ul>
+                <li>✓ operators-practice.html file</li>
+                <li>✓ All arithmetic operators demonstrated</li>
+                <li>✓ Comparison operators used</li>
+                <li>✓ Logical operators practiced</li>
+                <li>✓ At least 3 if/else statements</li>
+                <li>✓ Simple calculator implemented</li>
+                <li>✓ Console output screenshot</li>
+            </ul>
+
+            <div style="margin-top: 40px;">
+                <a href="day1-js-variables.html" class="btn">← Previous</a>
+                <a href="../index.html" class="btn">Course Home</a>
+                <a href="day3-dom-manipulation.html" class="btn">Next: Day 3 →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 6 - Day 2: JavaScript Operators</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

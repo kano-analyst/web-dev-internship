@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 16 Day 1: Project Planning - Student Management System</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        header { background: linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%); color: white; padding: 30px; border-radius: 15px 15px 0 0; }
+        .content { padding: 40px; }
+        h2 { color: #ff6e7f; border-bottom: 3px solid #bfe9ff; padding-bottom: 10px; margin: 30px 0 20px; }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        .info-box { background: #fff3cd; border-left: 5px solid #ff6e7f; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border: 1px solid #ddd; }
+        th { background: #ff6e7f; color: white; }
+        .btn { background: #ff6e7f; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 10px 10px 0; }
+        footer { background: linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%); color: white; padding: 20px; text-align: center; border-radius: 0 0 15px 15px; }
+        .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin: 20px 0; }
+        .feature-card { border: 2px solid #bfe9ff; padding: 20px; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 16 - Day 1: Project Planning</h1>
+            <p>Monday | Duration: 3 hours | Student Management System 🎓</p>
+        </header>
+
+        <div class="content">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Define project requirements</li>
+                <li>Design database schema</li>
+                <li>Plan application structure</li>
+                <li>Create project roadmap</li>
+                <li>Set up Laravel project</li>
+            </ul>
+
+            <h2>📋 Project Overview</h2>
+            <div class="info-box">
+                <p><strong>Student Management System</strong> - A complete CRUD application where administrators can manage students, courses, and enrollments.</p>
+                <p><strong>Tech Stack:</strong> Laravel 10, MySQL, Bootstrap 5, Blade Templates</p>
+            </div>
+
+            <h2>✨ Project Features</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>👨‍🎓 Student Management</h3>
+                    <ul>
+                        <li>Add new students</li>
+                        <li>View all students</li>
+                        <li>Update student information</li>
+                        <li>Delete students</li>
+                        <li>Search students</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>📚 Course Management</h3>
+                    <ul>
+                        <li>Create courses</li>
+                        <li>List all courses</li>
+                        <li>Update course details</li>
+                        <li>Delete courses</li>
+                        <li>View enrolled students</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>📝 Enrollment System</h3>
+                    <ul>
+                        <li>Enroll students in courses</li>
+                        <li>View enrollments</li>
+                        <li>Unenroll students</li>
+                        <li>Track enrollment dates</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>📊 Dashboard & Reports</h3>
+                    <ul>
+                        <li>Total students count</li>
+                        <li>Total courses count</li>
+                        <li>Recent enrollments</li>
+                        <li>Statistics overview</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2>🗄️ Database Schema</h2>
+            
+            <h3>Students Table</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Column</th>
+                        <th>Type</th>
+                        <th>Constraints</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>id</td>
+                        <td>bigint</td>
+                        <td>PRIMARY KEY, AUTO_INCREMENT</td>
+                    </tr>
+                    <tr>
+                        <td>name</td>
+                        <td>varchar(100)</td>
+                        <td>NOT NULL</td>
+                    </tr>
+                    <tr>
+                        <td>email</td>
+                        <td>varchar(100)</td>
+                        <td>UNIQUE, NOT NULL</td>
+                    </tr>
+                    <tr>
+                        <td>phone</td>
+                        <td>varchar(20)</td>
+                        <td>NOT NULL</td>
+                    </tr>
+                    <tr>
+                        <td>date_of_birth</td>
+                        <td>date</td>
+                        <td>NULL</td>
+                    </tr>
+                    <tr>
+                        <td>address</td>
+                        <td>text</td>
+                        <td>NULL</td>
+                    </tr>
+                    <tr>
+                        <td>created_at</td>
+                        <td>timestamp</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>updated_at</td>
+                        <td>timestamp</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Courses Table</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Column</th>
+                        <th>Type</th>
+                        <th>Constraints</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>id</td>
+                        <td>bigint</td>
+                        <td>PRIMARY KEY, AUTO_INCREMENT</td>
+                    </tr>
+                    <tr>
+                        <td>name</td>
+                        <td>varchar(100)</td>
+                        <td>NOT NULL</td>
+                    </tr>
+                    <tr>
+                        <td>code</td>
+                        <td>varchar(20)</td>
+                        <td>UNIQUE, NOT NULL</td>
+                    </tr>
+                    <tr>
+                        <td>description</td>
+                        <td>text</td>
+                        <td>NULL</td>
+                    </tr>
+                    <tr>
+                        <td>duration_weeks</td>
+                        <td>integer</td>
+                        <td>NOT NULL</td>
+                    </tr>
+                    <tr>
+                        <td>created_at</td>
+                        <td>timestamp</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>updated_at</td>
+                        <td>timestamp</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Course_Student Table (Pivot)</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Column</th>
+                        <th>Type</th>
+                        <th>Constraints</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>id</td>
+                        <td>bigint</td>
+                        <td>PRIMARY KEY, AUTO_INCREMENT</td>
+                    </tr>
+                    <tr>
+                        <td>student_id</td>
+                        <td>bigint</td>
+                        <td>FOREIGN KEY → students(id)</td>
+                    </tr>
+                    <tr>
+                        <td>course_id</td>
+                        <td>bigint</td>
+                        <td>FOREIGN KEY → courses(id)</td>
+                    </tr>
+                    <tr>
+                        <td>enrolled_at</td>
+                        <td>timestamp</td>
+                        <td>NULL</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>📁 Project Structure</h2>
+            <div class="code-block">
+student-management/
+│
+├── app/
+│   ├── Http/
+│   │   └── Controllers/
+│   │       ├── StudentController.php
+│   │       ├── CourseController.php
+│   │       ├── EnrollmentController.php
+│   │       └── DashboardController.php
+│   │
+│   └── Models/
+│       ├── Student.php
+│       ├── Course.php
+│       └── Enrollment.php (if separate table)
+│
+├── database/
+│   └── migrations/
+│       ├── xxxx_create_students_table.php
+│       ├── xxxx_create_courses_table.php
+│       └── xxxx_create_course_student_table.php
+│
+├── resources/
+│   └── views/
+│       ├── layouts/
+│       │   └── app.blade.php
+│       │
+│       ├── dashboard/
+│       │   └── index.blade.php
+│       │
+│       ├── students/
+│       │   ├── index.blade.php
+│       │   ├── create.blade.php
+│       │   ├── edit.blade.php
+│       │   └── show.blade.php
+│       │
+│       ├── courses/
+│       │   ├── index.blade.php
+│       │   ├── create.blade.php
+│       │   ├── edit.blade.php
+│       │   └── show.blade.php
+│       │
+│       └── enrollments/
+│           ├── create.blade.php
+│           └── index.blade.php
+│
+├── routes/
+│   └── web.php
+│
+└── public/
+    ├── css/
+    └── js/
+            </div>
+
+            <h2>🛠️ Project Setup Steps</h2>
+            
+            <h3>Step 1: Create Laravel Project</h3>
+            <div class="code-block">
+# Create new Laravel project
+composer create-project laravel/laravel student-management
+
+# Or using Laravel installer
+laravel new student-management
+
+cd student-management
+            </div>
+
+            <h3>Step 2: Configure Database</h3>
+            <div class="code-block">
+# 1. Create database in phpMyAdmin
+#    Database name: student_management
+#    Collation: utf8mb4_unicode_ci
+
+# 2. Update .env file
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=student_management
+DB_USERNAME=root
+DB_PASSWORD=
+            </div>
+
+            <h3>Step 3: Create Models & Migrations</h3>
+            <div class="code-block">
+# Create Student model with migration
+php artisan make:model Student -m
+
+# Create Course model with migration
+php artisan make:model Course -m
+
+# Create pivot table migration
+php artisan make:migration create_course_student_table
+            </div>
+
+            <h3>Step 4: Create Controllers</h3>
+            <div class="code-block">
+# Create resource controllers
+php artisan make:controller StudentController --resource
+php artisan make:controller CourseController --resource
+php artisan make:controller EnrollmentController
+php artisan make:controller DashboardController
+            </div>
+
+            <h2>🎨 UI Design Plan</h2>
+            
+            <h3>Color Scheme:</h3>
+            <ul>
+                <li><strong>Primary:</strong> #007bff (Blue)</li>
+                <li><strong>Success:</strong> #28a745 (Green)</li>
+                <li><strong>Danger:</strong> #dc3545 (Red)</li>
+                <li><strong>Info:</strong> #17a2b8 (Cyan)</li>
+            </ul>
+
+            <h3>Layout Components:</h3>
+            <ul>
+                <li>Navigation bar with logo and menu</li>
+                <li>Sidebar for dashboard navigation</li>
+                <li>Content area with cards</li>
+                <li>Footer with copyright</li>
+                <li>Bootstrap 5 for responsive design</li>
+            </ul>
+
+            <h2>📝 Routes Planning</h2>
+            <div class="code-block">
+&lt;?php
+// routes/web.php
+
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\EnrollmentController;
+use App\Http\Controllers\DashboardController;
+
+// Dashboard
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+// Students CRUD
+Route::resource('students', StudentController::class);
+
+// Courses CRUD
+Route::resource('courses', CourseController::class);
+
+// Enrollments
+Route::get('/enrollments', [EnrollmentController::class, 'index'])->name('enrollments.index');
+Route::get('/enrollments/create', [EnrollmentController::class, 'create'])->name('enrollments.create');
+Route::post('/enrollments', [EnrollmentController::class, 'store'])->name('enrollments.store');
+Route::delete('/enrollments/{student}/{course}', [EnrollmentController::class, 'destroy'])->name('enrollments.destroy');
+?&gt;
+            </div>
+
+            <h2>📊 Development Timeline</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Day</th>
+                        <th>Tasks</th>
+                        <th>Deliverables</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Day 1 (Today)</td>
+                        <td>Planning, Setup, Database Design</td>
+                        <td>Project structure, Migrations ready</td>
+                    </tr>
+                    <tr>
+                        <td>Day 2</td>
+                        <td>Create & Read Operations</td>
+                        <td>Add students, List students, View student</td>
+                    </tr>
+                    <tr>
+                        <td>Day 3</td>
+                        <td>Update, Delete & Testing</td>
+                        <td>Complete CRUD, Enrollments, Dashboard</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>✏️ Today's Tasks</h2>
+            <ol>
+                <li>Create new Laravel project: student-management</li>
+                <li>Set up database connection in .env</li>
+                <li>Create Student, Course models with migrations</li>
+                <li>Create pivot table migration</li>
+                <li>Create all necessary controllers</li>
+                <li>Plan routes in web.php</li>
+                <li>Create basic layout template</li>
+            </ol>
+
+            <h2>✅ Today's Deliverable</h2>
+            <ul>
+                <li>✓ Project created and configured</li>
+                <li>✓ Database connected</li>
+                <li>✓ All migrations created</li>
+                <li>✓ Models configured with relationships</li>
+                <li>✓ Controllers generated</li>
+                <li>✓ Routes defined</li>
+                <li>✓ Project structure complete</li>
+            </ul>
+
+            <div style="margin-top: 40px;">
+                <a href="../week15/day3-relationships.html" class="btn">← Previous</a>
+                <a href="../index.html" class="btn">Course Home</a>
+                <a href="day2-create-read.html" class="btn">Next →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 16 - Day 1: Project Planning - Student Management System</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

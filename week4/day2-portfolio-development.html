@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 4 Day 2: Portfolio Development</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        header { background: #1565c0; color: white; padding: 30px; }
+        .nav-breadcrumb {
+            background: #e3f2fd;
+            padding: 15px 30px;
+            border-bottom: 2px solid #1976d2;
+        }
+        .nav-breadcrumb a { color: #1565c0; text-decoration: none; margin-right: 10px; }
+        .content { padding: 40px; }
+        .section { margin-bottom: 40px; }
+        .section h2 {
+            color: #1565c0;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #1976d2;
+        }
+        .section h3 { color: #1976d2; margin: 20px 0 15px 0; }
+        .info-box {
+            background: #e3f2fd;
+            border-left: 5px solid #1565c0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .activity-box {
+            background: #f1f8e9;
+            border-left: 5px solid #4caf50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .warning-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+        ul, ol { margin-left: 30px; margin-top: 10px; }
+        li { margin-bottom: 10px; }
+        .checklist { list-style: none; margin-left: 0; }
+        .checklist li:before {
+            content: "✓ ";
+            color: #4caf50;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        footer { background: #1565c0; color: white; padding: 20px; text-align: center; }
+        .btn-primary {
+            background: #1565c0;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin: 10px 10px 10px 0;
+        }
+        .preview {
+            border: 2px solid #ddd;
+            padding: 20px;
+            margin: 20px 0;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 4 - Day 2: Portfolio Development</h1>
+            <p>Tuesday | Duration: 6 hours (Full Day)</p>
+            <p style="margin-top: 10px;">🔨 Build Your Complete Portfolio Website</p>
+        </header>
+
+        <div class="nav-breadcrumb">
+            <a href="../index.html">← Back to Course Home</a> / Week 4 / Day 2
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2>🎯 Learning Objectives</h2>
+                <ul class="checklist">
+                    <li>Build complete HTML structure for portfolio</li>
+                    <li>Apply comprehensive CSS styling</li>
+                    <li>Create responsive navigation bar</li>
+                    <li>Implement all portfolio sections</li>
+                    <li>Ensure mobile responsiveness</li>
+                    <li>Add interactive elements and animations</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>📋 Development Checklist</h2>
+                
+                <div class="info-box">
+                    <h3>Today's Goal</h3>
+                    <p>Build your complete portfolio website with all sections functional and styled.</p>
+                </div>
+
+                <ol>
+                    <li>✅ HTML structure for all sections</li>
+                    <li>✅ Navigation menu (with smooth scrolling)</li>
+                    <li>✅ Hero section with CTA</li>
+                    <li>✅ About section</li>
+                    <li>✅ Skills section</li>
+                    <li>✅ Projects showcase</li>
+                    <li>✅ Contact form</li>
+                    <li>✅ Footer</li>
+                    <li>✅ CSS styling</li>
+                    <li>✅ Responsive design</li>
+                    <li>✅ Hover effects and transitions</li>
+                </ol>
+            </div>
+
+            <div class="section">
+                <h2>💻 Complete HTML Structure</h2>
+                
+                <h3>index.html</h3>
+                <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;meta name="description" content="Portfolio of [Your Name] - Web Developer"&gt;
+    &lt;title&gt;[Your Name] | Web Developer Portfolio&lt;/title&gt;
+    &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- Navigation --&gt;
+    &lt;nav class="navbar"&gt;
+        &lt;div class="nav-container"&gt;
+            &lt;div class="logo"&gt;
+                &lt;a href="#home"&gt;[Your Name]&lt;/a&gt;
+            &lt;/div&gt;
+            &lt;ul class="nav-menu"&gt;
+                &lt;li&gt;&lt;a href="#home" class="nav-link"&gt;Home&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#about" class="nav-link"&gt;About&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#skills" class="nav-link"&gt;Skills&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#projects" class="nav-link"&gt;Projects&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#contact" class="nav-link"&gt;Contact&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+            &lt;div class="hamburger"&gt;
+                &lt;span&gt;&lt;/span&gt;
+                &lt;span&gt;&lt;/span&gt;
+                &lt;span&gt;&lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/nav&gt;
+
+    &lt;!-- Hero Section --&gt;
+    &lt;section id="home" class="hero"&gt;
+        &lt;div class="hero-content"&gt;
+            &lt;h1 class="hero-title"&gt;Hi, I'm &lt;span class="highlight"&gt;[Your Name]&lt;/span&gt;&lt;/h1&gt;
+            &lt;p class="hero-subtitle"&gt;Junior Web Developer&lt;/p&gt;
+            &lt;p class="hero-description"&gt;
+                Building beautiful, responsive websites with HTML, CSS, and JavaScript
+            &lt;/p&gt;
+            &lt;div class="hero-buttons"&gt;
+                &lt;a href="#projects" class="btn btn-primary"&gt;View My Work&lt;/a&gt;
+                &lt;a href="#contact" class="btn btn-secondary"&gt;Contact Me&lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;!-- About Section --&gt;
+    &lt;section id="about" class="about"&gt;
+        &lt;div class="container"&gt;
+            &lt;h2 class="section-title"&gt;About Me&lt;/h2&gt;
+            &lt;div class="about-content"&gt;
+                &lt;div class="about-image"&gt;
+                    &lt;img src="images/profile.jpg" alt="[Your Name]"&gt;
+                &lt;/div&gt;
+                &lt;div class="about-text"&gt;
+                    &lt;h3&gt;Hello! I'm a passionate web developer&lt;/h3&gt;
+                    &lt;p&gt;
+                        I recently completed an intensive web development bootcamp at 
+                        Next-Step Technology, where I gained hands-on experience in 
+                        HTML5, CSS3, responsive design, and version control with Git.
+                    &lt;/p&gt;
+                    &lt;p&gt;
+                        I love creating clean, user-friendly websites that solve real 
+                        problems. I'm eager to apply my skills in a professional 
+                        environment and continue growing as a developer.
+                    &lt;/p&gt;
+                    &lt;div class="about-info"&gt;
+                        &lt;p&gt;&lt;strong&gt;Location:&lt;/strong&gt; City, Country&lt;/p&gt;
+                        &lt;p&gt;&lt;strong&gt;Education:&lt;/strong&gt; [Your Degree]&lt;/p&gt;
+                        &lt;p&gt;&lt;strong&gt;Email:&lt;/strong&gt; your.email@example.com&lt;/p&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;!-- Skills Section --&gt;
+    &lt;section id="skills" class="skills"&gt;
+        &lt;div class="container"&gt;
+            &lt;h2 class="section-title"&gt;My Skills&lt;/h2&gt;
+            &lt;p class="section-description"&gt;
+                Technologies and tools I've worked with
+            &lt;/p&gt;
+            &lt;div class="skills-grid"&gt;
+                &lt;div class="skill-card"&gt;
+                    &lt;div class="skill-icon"&gt;📄&lt;/div&gt;
+                    &lt;h3&gt;HTML5&lt;/h3&gt;
+                    &lt;p&gt;Semantic markup, accessibility, SEO best practices&lt;/p&gt;
+                &lt;/div&gt;
+                &lt;div class="skill-card"&gt;
+                    &lt;div class="skill-icon"&gt;🎨&lt;/div&gt;
+                    &lt;h3&gt;CSS3&lt;/h3&gt;
+                    &lt;p&gt;Flexbox, Grid, animations, responsive design&lt;/p&gt;
+                &lt;/div&gt;
+                &lt;div class="skill-card"&gt;
+                    &lt;div class="skill-icon"&gt;📱&lt;/div&gt;
+                    &lt;h3&gt;Responsive Design&lt;/h3&gt;
+                    &lt;p&gt;Mobile-first approach, media queries, breakpoints&lt;/p&gt;
+                &lt;/div&gt;
+                &lt;div class="skill-card"&gt;
+                    &lt;div class="skill-icon"&gt;🔧&lt;/div&gt;
+                    &lt;h3&gt;Git & GitHub&lt;/h3&gt;
+                    &lt;p&gt;Version control, branching, collaboration&lt;/p&gt;
+                &lt;/div&gt;
+                &lt;div class="skill-card"&gt;
+                    &lt;div class="skill-icon"&gt;💻&lt;/div&gt;
+                    &lt;h3&gt;VS Code&lt;/h3&gt;
+                    &lt;p&gt;Efficient workflow, extensions, debugging&lt;/p&gt;
+                &lt;/div&gt;
+                &lt;div class="skill-card"&gt;
+                    &lt;div class="skill-icon"&gt;🎯&lt;/div&gt;
+                    &lt;h3&gt;Problem Solving&lt;/h3&gt;
+                    &lt;p&gt;Debugging, optimization, critical thinking&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;!-- Projects Section --&gt;
+    &lt;section id="projects" class="projects"&gt;
+        &lt;div class="container"&gt;
+            &lt;h2 class="section-title"&gt;My Projects&lt;/h2&gt;
+            &lt;p class="section-description"&gt;
+                Here are some projects I've built during my learning journey
+            &lt;/p&gt;
+            &lt;div class="projects-grid"&gt;
+                &lt;!-- Project 1 --&gt;
+                &lt;div class="project-card"&gt;
+                    &lt;div class="project-image"&gt;
+                        &lt;img src="images/project1.png" alt="Student Registration Form"&gt;
+                        &lt;div class="project-overlay"&gt;
+                            &lt;a href="#" class="btn-small"&gt;View Code&lt;/a&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class="project-content"&gt;
+                        &lt;h3&gt;Student Registration Form&lt;/h3&gt;
+                        &lt;p&gt;
+                            Fully responsive registration form with custom styling 
+                            and form validation
+                        &lt;/p&gt;
+                        &lt;div class="project-tags"&gt;
+                            &lt;span&gt;HTML&lt;/span&gt;
+                            &lt;span&gt;CSS&lt;/span&gt;
+                            &lt;span&gt;Forms&lt;/span&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+
+                &lt;!-- Project 2 --&gt;
+                &lt;div class="project-card"&gt;
+                    &lt;div class="project-image"&gt;
+                        &lt;img src="images/project2.png" alt="Responsive Landing Page"&gt;
+                        &lt;div class="project-overlay"&gt;
+                            &lt;a href="#" class="btn-small"&gt;View Code&lt;/a&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class="project-content"&gt;
+                        &lt;h3&gt;Responsive Landing Page&lt;/h3&gt;
+                        &lt;p&gt;
+                            Modern landing page with mobile-first responsive design 
+                            and smooth animations
+                        &lt;/p&gt;
+                        &lt;div class="project-tags"&gt;
+                            &lt;span&gt;HTML&lt;/span&gt;
+                            &lt;span&gt;CSS&lt;/span&gt;
+                            &lt;span&gt;Responsive&lt;/span&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+
+                &lt;!-- Project 3 --&gt;
+                &lt;div class="project-card"&gt;
+                    &lt;div class="project-image"&gt;
+                        &lt;img src="images/project3.png" alt="Portfolio Website"&gt;
+                        &lt;div class="project-overlay"&gt;
+                            &lt;a href="#" class="btn-small"&gt;View Code&lt;/a&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class="project-content"&gt;
+                        &lt;h3&gt;Personal Portfolio&lt;/h3&gt;
+                        &lt;p&gt;
+                            This website! Built from scratch to showcase my work 
+                            and skills
+                        &lt;/p&gt;
+                        &lt;div class="project-tags"&gt;
+                            &lt;span&gt;HTML&lt;/span&gt;
+                            &lt;span&gt;CSS&lt;/span&gt;
+                            &lt;span&gt;Design&lt;/span&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;!-- Contact Section --&gt;
+    &lt;section id="contact" class="contact"&gt;
+        &lt;div class="container"&gt;
+            &lt;h2 class="section-title"&gt;Get In Touch&lt;/h2&gt;
+            &lt;p class="section-description"&gt;
+                Have a project in mind? Let's work together!
+            &lt;/p&gt;
+            &lt;div class="contact-content"&gt;
+                &lt;div class="contact-form"&gt;
+                    &lt;form&gt;
+                        &lt;div class="form-group"&gt;
+                            &lt;label for="name"&gt;Name&lt;/label&gt;
+                            &lt;input type="text" id="name" name="name" required&gt;
+                        &lt;/div&gt;
+                        &lt;div class="form-group"&gt;
+                            &lt;label for="email"&gt;Email&lt;/label&gt;
+                            &lt;input type="email" id="email" name="email" required&gt;
+                        &lt;/div&gt;
+                        &lt;div class="form-group"&gt;
+                            &lt;label for="message"&gt;Message&lt;/label&gt;
+                            &lt;textarea id="message" name="message" rows="5" required&gt;&lt;/textarea&gt;
+                        &lt;/div&gt;
+                        &lt;button type="submit" class="btn btn-primary"&gt;Send Message&lt;/button&gt;
+                    &lt;/form&gt;
+                &lt;/div&gt;
+                &lt;div class="contact-info"&gt;
+                    &lt;h3&gt;Contact Information&lt;/h3&gt;
+                    &lt;div class="contact-item"&gt;
+                        &lt;p&gt;📧 your.email@example.com&lt;/p&gt;
+                    &lt;/div&gt;
+                    &lt;div class="contact-item"&gt;
+                        &lt;p&gt;📍 City, Country&lt;/p&gt;
+                    &lt;/div&gt;
+                    &lt;div class="social-links"&gt;
+                        &lt;h3&gt;Follow Me&lt;/h3&gt;
+                        &lt;a href="#" class="social-link"&gt;GitHub&lt;/a&gt;
+                        &lt;a href="#" class="social-link"&gt;LinkedIn&lt;/a&gt;
+                        &lt;a href="#" class="social-link"&gt;Twitter&lt;/a&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;!-- Footer --&gt;
+    &lt;footer class="footer"&gt;
+        &lt;div class="container"&gt;
+            &lt;p&gt;&amp;copy; 2025 [Your Name]. All rights reserved.&lt;/p&gt;
+            &lt;p&gt;Built with ❤️ using HTML & CSS&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/footer&gt;
+
+    &lt;script&gt;
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🎨 Complete CSS Styling</h2>
+                
+                <h3>style.css (Part 1: Base & Layout)</h3>
+                <div class="code-block">
+/* ========== CSS Variables ========== */
+:root {
+    --primary-color: #1565c0;
+    --secondary-color: #1976d2;
+    --dark-color: #0d47a1;
+    --light-color: #e3f2fd;
+    --text-dark: #333;
+    --text-light: #666;
+    --white: #ffffff;
+    --success: #4caf50;
+    --shadow: 0 4px 6px rgba(0,0,0,0.1);
+    --shadow-hover: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+/* ========== Reset & Base ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ========== Typography ========== */
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+h1 { font-size: 3rem; }
+h2 { font-size: 2.5rem; }
+h3 { font-size: 1.8rem; }
+
+.section-title {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 2.5rem;
+}
+
+.section-description {
+    text-align: center;
+    color: var(--text-light);
+    margin-bottom: 3rem;
+    font-size: 1.1rem;
+}
+
+/* ========== Navigation ========== */
+.navbar {
+    background: var(--white);
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo a {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-link {
+    color: var(--text-dark);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: var(--primary-color);
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background: var(--text-dark);
+    margin: 3px 0;
+    transition: 0.3s;
+}
+
+/* ========== Hero Section ========== */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: var(--white);
+    text-align: center;
+    padding: 2rem;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    animation: fadeInDown 1s;
+}
+
+.highlight {
+    color: #ffd700;
+}
+
+.hero-subtitle {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    animation: fadeInUp 1s 0.2s backwards;
+}
+
+.hero-description {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    animation: fadeInUp 1s 0.4s backwards;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    animation: fadeInUp 1s 0.6s backwards;
+}
+
+/* ========== Buttons ========== */
+.btn {
+    display: inline-block;
+    padding: 12px 30px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.btn-primary {
+    background: var(--white);
+    color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--white);
+    border: 2px solid var(--white);
+}
+
+.btn-secondary:hover {
+    background: var(--white);
+    color: var(--primary-color);
+}
+
+.btn-small {
+    padding: 8px 20px;
+    font-size: 0.9rem;
+}
+
+/* ========== Animations ========== */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+                </div>
+
+                <h3>style.css (Part 2: Sections)</h3>
+                <div class="code-block">
+/* ========== About Section ========== */
+.about {
+    padding: 5rem 0;
+    background: var(--white);
+}
+
+.about-content {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+.about-image img {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+}
+
+.about-text h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.about-text p {
+    margin-bottom: 1rem;
+    color: var(--text-light);
+}
+
+.about-info {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: var(--light-color);
+    border-radius: 8px;
+}
+
+.about-info p {
+    margin-bottom: 0.5rem;
+}
+
+/* ========== Skills Section ========== */
+.skills {
+    padding: 5rem 0;
+    background: var(--light-color);
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.skill-card {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.skill-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-hover);
+}
+
+.skill-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.skill-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.skill-card p {
+    color: var(--text-light);
+}
+
+/* ========== Projects Section ========== */
+.projects {
+    padding: 5rem 0;
+    background: var(--white);
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.project-card {
+    background: var(--white);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.project-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-hover);
+}
+
+.project-image {
+    position: relative;
+    overflow: hidden;
+    height: 200px;
+}
+
+.project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.project-card:hover .project-image img {
+    transform: scale(1.1);
+}
+
+.project-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(21, 101, 192, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.project-card:hover .project-overlay {
+    opacity: 1;
+}
+
+.project-content {
+    padding: 1.5rem;
+}
+
+.project-content h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.project-content p {
+    color: var(--text-light);
+    margin-bottom: 1rem;
+}
+
+.project-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.project-tags span {
+    background: var(--light-color);
+    color: var(--primary-color);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+}
+
+/* ========== Contact Section ========== */
+.contact {
+    padding: 5rem 0;
+    background: var(--light-color);
+}
+
+.contact-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: var(--text-dark);
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.contact-info {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+}
+
+.contact-info h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.contact-item {
+    margin-bottom: 1rem;
+}
+
+.social-links {
+    margin-top: 2rem;
+}
+
+.social-link {
+    display: inline-block;
+    margin-right: 1rem;
+    padding: 0.5rem 1rem;
+    background: var(--primary-color);
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.social-link:hover {
+    background: var(--dark-color);
+}
+
+/* ========== Footer ========== */
+.footer {
+    background: var(--dark-color);
+    color: var(--white);
+    text-align: center;
+    padding: 2rem 0;
+}
+
+.footer p {
+    margin: 0.5rem 0;
+}
+                </div>
+
+                <h3>style.css (Part 3: Responsive)</h3>
+                <div class="code-block">
+/* ========== Responsive Design ========== */
+
+@media (max-width: 768px) {
+    /* Navigation */
+    .hamburger {
+        display: flex;
+    }
+    
+    .nav-menu {
+        position: fixed;
+        left: -100%;
+        top: 70px;
+        flex-direction: column;
+        background: var(--white);
+        width: 100%;
+        text-align: center;
+        transition: 0.3s;
+        box-shadow: var(--shadow);
+        padding: 2rem 0;
+    }
+    
+    .nav-menu.active {
+        left: 0;
+    }
+    
+    .hamburger.active span:nth-child(1) {
+        transform: rotate(-45deg) translate(-5px, 6px);
+    }
+    
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .hamburger.active span:nth-child(3) {
+        transform: rotate(45deg) translate(-5px, -6px);
+    }
+    
+    /* Hero */
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.5rem;
+    }
+    
+    .hero-description {
+        font-size: 1rem;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .hero-buttons .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    /* About */
+    .about-content {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Contact */
+    .contact-content {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Skills & Projects */
+    .skills-grid,
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Typography */
+    .section-title {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .container {
+        padding: 0 15px;
+    }
+}
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>✅ Development Steps</h2>
+                
+                <h3>Phase 1: Setup (30 mins)</h3>
+                <div class="code-block">
+# 1. Create branch
+git checkout -b develop-portfolio
+
+# 2. Create files
+# Already have: index.html, style.css
+
+# 3. Add placeholder images
+# Create images folder and add profile.jpg, project1.png, etc.
+                </div>
+
+                <h3>Phase 2: HTML Structure (2 hours)</h3>
+                <ol>
+                    <li>Create navigation structure</li>
+                    <li>Build hero section</li>
+                    <li>Create about section</li>
+                    <li>Add skills section</li>
+                    <li>Build projects showcase</li>
+                    <li>Create contact form</li>
+                    <li>Add footer</li>
+                </ol>
+
+                <div class="code-block">
+# Commit after HTML structure
+git add index.html
+git commit -m "Add complete HTML structure for portfolio"
+                </div>
+
+                <h3>Phase 3: CSS Styling (3 hours)</h3>
+                <ol>
+                    <li>Set CSS variables</li>
+                    <li>Style navigation</li>
+                    <li>Style hero section with gradient</li>
+                    <li>Style about section</li>
+                    <li>Create skill cards</li>
+                    <li>Style project cards with hover effects</li>
+                    <li>Style contact form</li>
+                    <li>Style footer</li>
+                </ol>
+
+                <div class="code-block">
+# Commit after styling
+git add style.css
+git commit -m "Add complete CSS styling with responsive design"
+                </div>
+
+                <h3>Phase 4: Responsive Design (1 hour)</h3>
+                <ol>
+                    <li>Add media queries</li>
+                    <li>Test on mobile (375px)</li>
+                    <li>Test on tablet (768px)</li>
+                    <li>Test on desktop (1200px+)</li>
+                    <li>Fix hamburger menu</li>
+                </ol>
+
+                <div class="code-block">
+# Commit responsive updates
+git add style.css
+git commit -m "Add responsive design for all devices"
+                </div>
+
+                <h3>Phase 5: JavaScript & Final Touches (30 mins)</h3>
+                <ol>
+                    <li>Add smooth scrolling</li>
+                    <li>Implement mobile menu toggle</li>
+                    <li>Test all links</li>
+                    <li>Validate HTML & CSS</li>
+                </ol>
+
+                <div class="code-block">
+# Final commit
+git add .
+git commit -m "Add interactivity and final touches"
+
+# Merge to main
+git checkout main
+git merge develop-portfolio
+
+# Push to GitHub
+git push origin main
+
+# Delete feature branch
+git branch -d develop-portfolio
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🔍 Testing Checklist</h2>
+                
+                <div class="activity-box">
+                    <ul class="checklist">
+                        <li>Navigation links work and smooth scroll</li>
+                        <li>Mobile menu opens and closes</li>
+                        <li>All sections visible and properly styled</li>
+                        <li>Images load correctly</li>
+                        <li>Form inputs focus properly</li>
+                        <li>Hover effects work on buttons and cards</li>
+                        <li>Responsive on mobile (test with DevTools)</li>
+                        <li>Responsive on tablet (test with DevTools)</li>
+                        <li>No console errors</li>
+                        <li>HTML validated (validator.w3.org)</li>
+                        <li>CSS validated (jigsaw.w3.org/css-validator)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>💡 Enhancement Ideas</h2>
+                
+                <div class="warning-box">
+                    <h3>Optional Additions (if time permits):</h3>
+                    <ul>
+                        <li>Add a dark mode toggle</li>
+                        <li>Include typing animation for hero subtitle</li>
+                        <li>Add scroll-triggered animations</li>
+                        <li>Create a "Back to Top" button</li>
+                        <li>Add loading animations for images</li>
+                        <li>Include testimonials section</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>✅ Today's Deliverable</h2>
+                <div class="activity-box">
+                    <ul class="checklist">
+                        <li>Complete index.html with all sections</li>
+                        <li>Complete style.css with full styling</li>
+                        <li>Fully responsive design (mobile, tablet, desktop)</li>
+                        <li>Working navigation with smooth scrolling</li>
+                        <li>Mobile hamburger menu functional</li>
+                        <li>All sections styled and interactive</li>
+                        <li>Multiple commits showing progress</li>
+                        <li>Pushed to GitHub</li>
+                        <li>Screenshots of desktop and mobile views</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📚 Additional Resources</h2>
+                <ul>
+                    <li><a href="https://validator.w3.org/" target="_blank">W3C HTML Validator</a></li>
+                    <li><a href="https://jigsaw.w3.org/css-validator/" target="_blank">W3C CSS Validator</a></li>
+                    <li><a href="https://unsplash.com/" target="_blank">Unsplash - Free Images</a></li>
+                    <li><a href="https://www.pexels.com/" target="_blank">Pexels - Free Stock Photos</a></li>
+                    <li><a href="https://fontawesome.com/" target="_blank">Font Awesome - Icons</a></li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <a href="day1-project-planning.html" class="btn-primary">← Previous: Day 1</a>
+                <a href="../index.html" class="btn-primary">Back to Course Home</a>
+                <a href="day3-project-review.html" class="btn-primary">Next: Day 3 →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 4 - Day 2: Portfolio Development</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

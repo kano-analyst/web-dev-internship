@@ -1,0 +1,1507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 2: API Resource Controllers - Week 18 - Web Development Internship</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        header {
+            background: #f093fb;
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: #f093fb;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #f093fb;
+        }
+
+        h3 {
+            color: #f5576c;
+            margin-top: 25px;
+            margin-bottom: 12px;
+        }
+
+        .code-block {
+            background: #f8f9fa;
+            border-left: 4px solid #f093fb;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .tip {
+            background: #d1ecf1;
+            border-left: 4px solid #0dcaf0;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .warning {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #f093fb;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .exercise {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+
+        .deliverable {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #666;
+            padding: 20px;
+            border-top: 2px solid #f093fb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📡 Day 2: API Resource Controllers</h1>
+            <p>Week 18 - Laravel REST API Development</p>
+        </header>
+
+        <section>
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Create API resource controllers using Artisan commands</li>
+                <li>Implement RESTful CRUD operations in controllers</li>
+                <li>Use API resource routing in Laravel</li>
+                <li>Transform data with JSON resources</li>
+                <li>Validate API requests properly</li>
+                <li>Handle error responses and status codes</li>
+                <li>Test APIs using Postman</li>
+                <li>Follow API best practices</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>📚 What are API Resource Controllers?</h2>
+            <p>API resource controllers are specialized controllers designed specifically for building RESTful APIs. Unlike standard resource controllers that include methods for displaying views (like create and edit), API resource controllers only include the methods needed for API operations:</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>HTTP Method</th>
+                        <th>URI</th>
+                        <th>Controller Method</th>
+                        <th>Purpose</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>GET</td>
+                        <td>/api/posts</td>
+                        <td>index()</td>
+                        <td>Display all resources</td>
+                    </tr>
+                    <tr>
+                        <td>POST</td>
+                        <td>/api/posts</td>
+                        <td>store()</td>
+                        <td>Create a new resource</td>
+                    </tr>
+                    <tr>
+                        <td>GET</td>
+                        <td>/api/posts/{id}</td>
+                        <td>show()</td>
+                        <td>Display specific resource</td>
+                    </tr>
+                    <tr>
+                        <td>PUT/PATCH</td>
+                        <td>/api/posts/{id}</td>
+                        <td>update()</td>
+                        <td>Update specific resource</td>
+                    </tr>
+                    <tr>
+                        <td>DELETE</td>
+                        <td>/api/posts/{id}</td>
+                        <td>destroy()</td>
+                        <td>Delete specific resource</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="tip">
+                <strong>💡 API vs Standard Resource Controllers:</strong> API controllers exclude the create() and edit() methods because APIs don't need to display HTML forms. They work purely with data (JSON) rather than views.
+            </div>
+        </section>
+
+        <section>
+            <h2>🚀 Creating API Resource Controllers</h2>
+            
+            <h3>Using Artisan Command</h3>
+            <p>Create an API resource controller with the --api flag:</p>
+            
+            <div class="code-block">
+# Create API controller for Posts
+php artisan make:controller Api/PostController --api
+
+# Create API controller with model binding
+php artisan make:controller Api/PostController --api --model=Post
+
+# Create controller with all resource methods
+php artisan make:controller Api/UserController --api --resource
+            </div>
+
+            <h3>Generated Controller Structure</h3>
+            <div class="code-block">
+&lt;?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Models\Post;
+use Illuminate\Http\Request;
+
+class PostController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Post $post)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Post $post)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Post $post)
+    {
+        //
+    }
+}
+            </div>
+        </section>
+
+        <section>
+            <h2>🛣️ API Resource Routing</h2>
+            
+            <h3>Setting Up API Routes</h3>
+            <p>In <strong>routes/api.php</strong>, register API resource routes:</p>
+            
+            <div class="code-block">
+&lt;?php
+
+use App\Http\Controllers\Api\PostController;
+use App\Http\Controllers\Api\CommentController;
+use Illuminate\Support\Facades\Route;
+
+// Single API resource route
+Route::apiResource('posts', PostController::class);
+
+// Multiple API resources
+Route::apiResources([
+    'posts' => PostController::class,
+    'comments' => CommentController::class,
+]);
+
+// API resource with middleware
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('posts', PostController::class);
+});
+
+// Partial API resource (only specific methods)
+Route::apiResource('posts', PostController::class)->only([
+    'index', 'show'
+]);
+
+// Exclude certain methods
+Route::apiResource('posts', PostController::class)->except([
+    'destroy'
+]);
+            </div>
+
+            <div class="note">
+                <strong>📝 Note:</strong> API routes automatically have the /api prefix and use the api middleware group. All routes return JSON responses by default.
+            </div>
+
+            <h3>View Registered Routes</h3>
+            <div class="code-block">
+# List all routes
+php artisan route:list
+
+# Filter API routes only
+php artisan route:list --path=api
+
+# Show specific route details
+php artisan route:list --name=posts
+            </div>
+        </section>
+
+        <section>
+            <h2>🔧 Implementing CRUD Operations</h2>
+            
+            <h3>1. Index Method - List All Resources</h3>
+            <div class="code-block">
+/**
+ * Display a listing of the resource.
+ * GET /api/posts
+ */
+public function index()
+{
+    // Simple pagination
+    $posts = Post::with('user')
+        ->latest()
+        ->paginate(15);
+
+    return response()->json([
+        'success' => true,
+        'data' => $posts
+    ], 200);
+}
+
+// With filtering and search
+public function index(Request $request)
+{
+    $query = Post::with('user', 'category');
+
+    // Search
+    if ($request->has('search')) {
+        $query->where('title', 'like', '%' . $request->search . '%');
+    }
+
+    // Filter by category
+    if ($request->has('category_id')) {
+        $query->where('category_id', $request->category_id);
+    }
+
+    // Sort
+    $sortBy = $request->get('sort_by', 'created_at');
+    $sortOrder = $request->get('sort_order', 'desc');
+    $query->orderBy($sortBy, $sortOrder);
+
+    $posts = $query->paginate($request->get('per_page', 15));
+
+    return response()->json([
+        'success' => true,
+        'data' => $posts,
+        'message' => 'Posts retrieved successfully'
+    ], 200);
+}
+            </div>
+
+            <h3>2. Store Method - Create New Resource</h3>
+            <div class="code-block">
+/**
+ * Store a newly created resource in storage.
+ * POST /api/posts
+ */
+public function store(Request $request)
+{
+    // Validate the request
+    $validated = $request->validate([
+        'title' => 'required|string|max:255',
+        'content' => 'required|string',
+        'category_id' => 'required|exists:categories,id',
+        'status' => 'required|in:draft,published',
+        'featured_image' => 'nullable|image|max:2048'
+    ]);
+
+    try {
+        // Handle file upload if present
+        if ($request->hasFile('featured_image')) {
+            $path = $request->file('featured_image')
+                ->store('posts', 'public');
+            $validated['featured_image'] = $path;
+        }
+
+        // Add authenticated user
+        $validated['user_id'] = auth()->id();
+
+        // Create the post
+        $post = Post::create($validated);
+
+        // Load relationships
+        $post->load('user', 'category');
+
+        return response()->json([
+            'success' => true,
+            'data' => $post,
+            'message' => 'Post created successfully'
+        ], 201); // 201 Created status code
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Failed to create post',
+            'error' => $e->getMessage()
+        ], 500);
+    }
+}
+            </div>
+
+            <h3>3. Show Method - Display Specific Resource</h3>
+            <div class="code-block">
+/**
+ * Display the specified resource.
+ * GET /api/posts/{post}
+ */
+public function show(Post $post)
+{
+    // Route model binding automatically finds the post
+    $post->load(['user', 'category', 'comments.user']);
+
+    return response()->json([
+        'success' => true,
+        'data' => $post
+    ], 200);
+}
+
+// Alternative without route model binding
+public function show($id)
+{
+    $post = Post::with(['user', 'category', 'comments'])
+        ->find($id);
+
+    if (!$post) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Post not found'
+        ], 404);
+    }
+
+    return response()->json([
+        'success' => true,
+        'data' => $post
+    ], 200);
+}
+            </div>
+
+            <h3>4. Update Method - Update Resource</h3>
+            <div class="code-block">
+/**
+ * Update the specified resource in storage.
+ * PUT/PATCH /api/posts/{post}
+ */
+public function update(Request $request, Post $post)
+{
+    // Check authorization
+    if ($post->user_id !== auth()->id()) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Unauthorized to update this post'
+        ], 403);
+    }
+
+    // Validate the request
+    $validated = $request->validate([
+        'title' => 'sometimes|required|string|max:255',
+        'content' => 'sometimes|required|string',
+        'category_id' => 'sometimes|required|exists:categories,id',
+        'status' => 'sometimes|required|in:draft,published',
+        'featured_image' => 'nullable|image|max:2048'
+    ]);
+
+    try {
+        // Handle file upload
+        if ($request->hasFile('featured_image')) {
+            // Delete old image
+            if ($post->featured_image) {
+                Storage::disk('public')->delete($post->featured_image);
+            }
+            
+            $path = $request->file('featured_image')
+                ->store('posts', 'public');
+            $validated['featured_image'] = $path;
+        }
+
+        // Update the post
+        $post->update($validated);
+        $post->load('user', 'category');
+
+        return response()->json([
+            'success' => true,
+            'data' => $post,
+            'message' => 'Post updated successfully'
+        ], 200);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Failed to update post',
+            'error' => $e->getMessage()
+        ], 500);
+    }
+}
+            </div>
+
+            <h3>5. Destroy Method - Delete Resource</h3>
+            <div class="code-block">
+/**
+ * Remove the specified resource from storage.
+ * DELETE /api/posts/{post}
+ */
+public function destroy(Post $post)
+{
+    // Check authorization
+    if ($post->user_id !== auth()->id()) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Unauthorized to delete this post'
+        ], 403);
+    }
+
+    try {
+        // Delete associated file
+        if ($post->featured_image) {
+            Storage::disk('public')->delete($post->featured_image);
+        }
+
+        // Delete the post
+        $post->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Post deleted successfully'
+        ], 200);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Failed to delete post',
+            'error' => $e->getMessage()
+        ], 500);
+    }
+}
+
+// Soft delete alternative
+public function destroy(Post $post)
+{
+    $post->delete(); // Soft delete if using SoftDeletes trait
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Post deleted successfully',
+        'data' => null
+    ], 204); // 204 No Content
+}
+            </div>
+        </section>
+
+        <section>
+            <h2>💎 JSON Resources</h2>
+            <p>JSON resources allow you to transform your models into JSON responses with full control over the output format.</p>
+
+            <h3>Creating a JSON Resource</h3>
+            <div class="code-block">
+# Create a single resource
+php artisan make:resource PostResource
+
+# Create a resource collection
+php artisan make:resource PostCollection
+
+# Create both at once
+php artisan make:resource Post --collection
+            </div>
+
+            <h3>Defining a Resource</h3>
+            <div class="code-block">
+&lt;?php
+
+namespace App\Http\Resources;
+
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class PostResource extends JsonResource
+{
+    /**
+     * Transform the resource into an array.
+     */
+    public function toArray(Request $request): array
+    {
+        return [
+            'id' => $this->id,
+            'title' => $this->title,
+            'slug' => $this->slug,
+            'content' => $this->content,
+            'excerpt' => $this->excerpt,
+            'status' => $this->status,
+            'featured_image' => $this->featured_image 
+                ? asset('storage/' . $this->featured_image) 
+                : null,
+            'views_count' => $this->views_count,
+            'author' => [
+                'id' => $this->user->id,
+                'name' => $this->user->name,
+                'email' => $this->user->email,
+            ],
+            'category' => [
+                'id' => $this->category->id,
+                'name' => $this->category->name,
+            ],
+            'comments_count' => $this->comments->count(),
+            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
+            'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
+            'published_at' => $this->published_at 
+                ? $this->published_at->format('Y-m-d H:i:s') 
+                : null,
+        ];
+    }
+}
+            </div>
+
+            <h3>Using Resources in Controllers</h3>
+            <div class="code-block">
+use App\Http\Resources\PostResource;
+use App\Http\Resources\PostCollection;
+
+class PostController extends Controller
+{
+    // Return single resource
+    public function show(Post $post)
+    {
+        return new PostResource($post->load('user', 'category', 'comments'));
+    }
+
+    // Return resource collection
+    public function index()
+    {
+        $posts = Post::with('user', 'category')->paginate(15);
+        return PostResource::collection($posts);
+    }
+
+    // With custom collection
+    public function index()
+    {
+        $posts = Post::with('user', 'category')->paginate(15);
+        return new PostCollection($posts);
+    }
+
+    // With additional metadata
+    public function index()
+    {
+        $posts = Post::with('user', 'category')->paginate(15);
+        
+        return PostResource::collection($posts)
+            ->additional([
+                'meta' => [
+                    'total_posts' => Post::count(),
+                    'published_posts' => Post::where('status', 'published')->count(),
+                ]
+            ]);
+    }
+}
+            </div>
+
+            <h3>Resource Collection with Pagination</h3>
+            <div class="code-block">
+&lt;?php
+
+namespace App\Http\Resources;
+
+use Illuminate\Http\Resources\Json\ResourceCollection;
+
+class PostCollection extends ResourceCollection
+{
+    /**
+     * Transform the resource collection into an array.
+     */
+    public function toArray(Request $request): array
+    {
+        return [
+            'data' => $this->collection,
+            'meta' => [
+                'total' => $this->total(),
+                'per_page' => $this->perPage(),
+                'current_page' => $this->currentPage(),
+                'last_page' => $this->lastPage(),
+            ],
+            'links' => [
+                'first' => $this->url(1),
+                'last' => $this->url($this->lastPage()),
+                'prev' => $this->previousPageUrl(),
+                'next' => $this->nextPageUrl(),
+            ],
+        ];
+    }
+}
+            </div>
+        </section>
+
+        <section>
+            <h2>✅ Request Validation</h2>
+            
+            <h3>Creating Form Requests</h3>
+            <div class="code-block">
+# Create a form request
+php artisan make:request StorePostRequest
+php artisan make:request UpdatePostRequest
+            </div>
+
+            <h3>Defining Validation Rules</h3>
+            <div class="code-block">
+&lt;?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
+class StorePostRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return auth()->check();
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     */
+    public function rules(): array
+    {
+        return [
+            'title' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('posts')
+            ],
+            'content' => 'required|string|min:100',
+            'excerpt' => 'nullable|string|max:500',
+            'category_id' => 'required|exists:categories,id',
+            'status' => 'required|in:draft,published',
+            'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'tags' => 'nullable|array',
+            'tags.*' => 'exists:tags,id',
+            'publish_at' => 'nullable|date|after:now',
+        ];
+    }
+
+    /**
+     * Get custom messages for validator errors.
+     */
+    public function messages(): array
+    {
+        return [
+            'title.required' => 'The post title is required.',
+            'title.unique' => 'A post with this title already exists.',
+            'content.required' => 'Post content cannot be empty.',
+            'content.min' => 'Post content must be at least 100 characters.',
+            'category_id.required' => 'Please select a category.',
+            'category_id.exists' => 'The selected category does not exist.',
+            'featured_image.image' => 'The file must be an image.',
+            'featured_image.max' => 'The image size cannot exceed 2MB.',
+        ];
+    }
+
+    /**
+     * Get custom attributes for validator errors.
+     */
+    public function attributes(): array
+    {
+        return [
+            'category_id' => 'category',
+            'featured_image' => 'image',
+        ];
+    }
+}
+            </div>
+
+            <h3>Using Form Requests in Controllers</h3>
+            <div class="code-block">
+use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
+
+class PostController extends Controller
+{
+    public function store(StorePostRequest $request)
+    {
+        // Request is already validated
+        $validated = $request->validated();
+        
+        $post = Post::create($validated);
+        
+        return new PostResource($post);
+    }
+
+    public function update(UpdatePostRequest $request, Post $post)
+    {
+        $validated = $request->validated();
+        
+        $post->update($validated);
+        
+        return new PostResource($post);
+    }
+}
+            </div>
+
+            <h3>Custom Validation Error Responses</h3>
+            <div class="code-block">
+// In App\Exceptions\Handler.php
+
+use Illuminate\Validation\ValidationException;
+
+protected function invalidJson($request, ValidationException $exception)
+{
+    return response()->json([
+        'success' => false,
+        'message' => 'Validation failed',
+        'errors' => $exception->errors(),
+    ], $exception->status);
+}
+            </div>
+        </section>
+
+        <section>
+            <h2>⚠️ Error Responses and Status Codes</h2>
+            
+            <h3>HTTP Status Codes</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Status Code</th>
+                        <th>Meaning</th>
+                        <th>Usage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>200</td>
+                        <td>OK</td>
+                        <td>Successful GET, PUT, PATCH</td>
+                    </tr>
+                    <tr>
+                        <td>201</td>
+                        <td>Created</td>
+                        <td>Successful POST (resource created)</td>
+                    </tr>
+                    <tr>
+                        <td>204</td>
+                        <td>No Content</td>
+                        <td>Successful DELETE</td>
+                    </tr>
+                    <tr>
+                        <td>400</td>
+                        <td>Bad Request</td>
+                        <td>Invalid request format</td>
+                    </tr>
+                    <tr>
+                        <td>401</td>
+                        <td>Unauthorized</td>
+                        <td>Authentication required</td>
+                    </tr>
+                    <tr>
+                        <td>403</td>
+                        <td>Forbidden</td>
+                        <td>User doesn't have permission</td>
+                    </tr>
+                    <tr>
+                        <td>404</td>
+                        <td>Not Found</td>
+                        <td>Resource doesn't exist</td>
+                    </tr>
+                    <tr>
+                        <td>422</td>
+                        <td>Unprocessable Entity</td>
+                        <td>Validation failed</td>
+                    </tr>
+                    <tr>
+                        <td>500</td>
+                        <td>Internal Server Error</td>
+                        <td>Server error occurred</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Standardized Error Responses</h3>
+            <div class="code-block">
+// Create a trait for consistent responses
+// app/Traits/ApiResponses.php
+
+&lt;?php
+
+namespace App\Traits;
+
+trait ApiResponses
+{
+    protected function successResponse($data, $message = null, $code = 200)
+    {
+        return response()->json([
+            'success' => true,
+            'message' => $message,
+            'data' => $data
+        ], $code);
+    }
+
+    protected function errorResponse($message, $code = 400, $errors = null)
+    {
+        $response = [
+            'success' => false,
+            'message' => $message,
+        ];
+
+        if ($errors) {
+            $response['errors'] = $errors;
+        }
+
+        return response()->json($response, $code);
+    }
+
+    protected function notFoundResponse($message = 'Resource not found')
+    {
+        return $this->errorResponse($message, 404);
+    }
+
+    protected function unauthorizedResponse($message = 'Unauthorized')
+    {
+        return $this->errorResponse($message, 401);
+    }
+
+    protected function forbiddenResponse($message = 'Forbidden')
+    {
+        return $this->errorResponse($message, 403);
+    }
+
+    protected function validationErrorResponse($errors)
+    {
+        return $this->errorResponse('Validation failed', 422, $errors);
+    }
+}
+            </div>
+
+            <h3>Using the Response Trait</h3>
+            <div class="code-block">
+use App\Traits\ApiResponses;
+
+class PostController extends Controller
+{
+    use ApiResponses;
+
+    public function index()
+    {
+        $posts = Post::paginate(15);
+        return $this->successResponse($posts, 'Posts retrieved successfully');
+    }
+
+    public function show($id)
+    {
+        $post = Post::find($id);
+        
+        if (!$post) {
+            return $this->notFoundResponse('Post not found');
+        }
+        
+        return $this->successResponse($post);
+    }
+
+    public function destroy(Post $post)
+    {
+        if ($post->user_id !== auth()->id()) {
+            return $this->forbiddenResponse('You cannot delete this post');
+        }
+        
+        $post->delete();
+        
+        return $this->successResponse(null, 'Post deleted successfully', 204);
+    }
+}
+            </div>
+        </section>
+
+        <section>
+            <h2>🔍 Testing APIs with Postman</h2>
+            
+            <h3>Setting Up Postman</h3>
+            <div class="note">
+                <strong>📝 Steps:</strong>
+                <ol>
+                    <li>Download and install Postman from postman.com</li>
+                    <li>Create a new collection for your API</li>
+                    <li>Set up environment variables (base_url, token, etc.)</li>
+                    <li>Create requests for each API endpoint</li>
+                </ol>
+            </div>
+
+            <h3>Testing CRUD Operations</h3>
+            
+            <h4>1. GET Request - List Posts</h4>
+            <div class="code-block">
+Method: GET
+URL: http://localhost:8000/api/posts
+
+Headers:
+Accept: application/json
+Content-Type: application/json
+
+Query Parameters:
+- search: laravel
+- category_id: 1
+- per_page: 20
+- sort_by: created_at
+- sort_order: desc
+            </div>
+
+            <h4>2. POST Request - Create Post</h4>
+            <div class="code-block">
+Method: POST
+URL: http://localhost:8000/api/posts
+
+Headers:
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {your_token}
+
+Body (JSON):
+{
+    "title": "My First API Post",
+    "content": "This is the content of my post created via API",
+    "excerpt": "A brief excerpt",
+    "category_id": 1,
+    "status": "published"
+}
+            </div>
+
+            <h4>3. GET Request - Show Single Post</h4>
+            <div class="code-block">
+Method: GET
+URL: http://localhost:8000/api/posts/1
+
+Headers:
+Accept: application/json
+            </div>
+
+            <h4>4. PUT Request - Update Post</h4>
+            <div class="code-block">
+Method: PUT
+URL: http://localhost:8000/api/posts/1
+
+Headers:
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {your_token}
+
+Body (JSON):
+{
+    "title": "Updated Title",
+    "content": "Updated content",
+    "status": "published"
+}
+            </div>
+
+            <h4>5. DELETE Request - Delete Post</h4>
+            <div class="code-block">
+Method: DELETE
+URL: http://localhost:8000/api/posts/1
+
+Headers:
+Accept: application/json
+Authorization: Bearer {your_token}
+            </div>
+
+            <div class="tip">
+                <strong>💡 Postman Tips:</strong>
+                <ul>
+                    <li>Use environment variables for base URL and tokens</li>
+                    <li>Save example responses for documentation</li>
+                    <li>Use Tests tab to write automatic tests</li>
+                    <li>Create pre-request scripts for dynamic data</li>
+                    <li>Export collections to share with team</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>🎨 Complete API Controller Example</h2>
+            <div class="code-block">
+&lt;?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Models\Post;
+use App\Http\Resources\PostResource;
+use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
+use App\Traits\ApiResponses;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
+class PostController extends Controller
+{
+    use ApiResponses;
+
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->except(['index', 'show']);
+    }
+
+    /**
+     * Display a listing of posts
+     */
+    public function index(Request $request)
+    {
+        $query = Post::with(['user', 'category']);
+
+        // Search
+        if ($request->filled('search')) {
+            $query->where(function($q) use ($request) {
+                $q->where('title', 'like', '%' . $request->search . '%')
+                  ->orWhere('content', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        // Filter by category
+        if ($request->filled('category_id')) {
+            $query->where('category_id', $request->category_id);
+        }
+
+        // Filter by status
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        // Sort
+        $sortBy = $request->get('sort_by', 'created_at');
+        $sortOrder = $request->get('sort_order', 'desc');
+        $query->orderBy($sortBy, $sortOrder);
+
+        // Paginate
+        $perPage = $request->get('per_page', 15);
+        $posts = $query->paginate($perPage);
+
+        return PostResource::collection($posts);
+    }
+
+    /**
+     * Store a newly created post
+     */
+    public function store(StorePostRequest $request)
+    {
+        try {
+            $validated = $request->validated();
+
+            // Handle file upload
+            if ($request->hasFile('featured_image')) {
+                $validated['featured_image'] = $request
+                    ->file('featured_image')
+                    ->store('posts', 'public');
+            }
+
+            // Add user ID
+            $validated['user_id'] = auth()->id();
+
+            // Create post
+            $post = Post::create($validated);
+            $post->load(['user', 'category']);
+
+            return $this->successResponse(
+                new PostResource($post),
+                'Post created successfully',
+                201
+            );
+
+        } catch (\Exception $e) {
+            return $this->errorResponse(
+                'Failed to create post: ' . $e->getMessage(),
+                500
+            );
+        }
+    }
+
+    /**
+     * Display the specified post
+     */
+    public function show(Post $post)
+    {
+        $post->load(['user', 'category', 'comments.user']);
+        $post->increment('views_count');
+
+        return $this->successResponse(new PostResource($post));
+    }
+
+    /**
+     * Update the specified post
+     */
+    public function update(UpdatePostRequest $request, Post $post)
+    {
+        // Authorization check
+        if ($post->user_id !== auth()->id()) {
+            return $this->forbiddenResponse(
+                'You are not authorized to update this post'
+            );
+        }
+
+        try {
+            $validated = $request->validated();
+
+            // Handle file upload
+            if ($request->hasFile('featured_image')) {
+                // Delete old image
+                if ($post->featured_image) {
+                    Storage::disk('public')->delete($post->featured_image);
+                }
+                
+                $validated['featured_image'] = $request
+                    ->file('featured_image')
+                    ->store('posts', 'public');
+            }
+
+            // Update post
+            $post->update($validated);
+            $post->load(['user', 'category']);
+
+            return $this->successResponse(
+                new PostResource($post),
+                'Post updated successfully'
+            );
+
+        } catch (\Exception $e) {
+            return $this->errorResponse(
+                'Failed to update post: ' . $e->getMessage(),
+                500
+            );
+        }
+    }
+
+    /**
+     * Remove the specified post
+     */
+    public function destroy(Post $post)
+    {
+        // Authorization check
+        if ($post->user_id !== auth()->id()) {
+            return $this->forbiddenResponse(
+                'You are not authorized to delete this post'
+            );
+        }
+
+        try {
+            // Delete associated file
+            if ($post->featured_image) {
+                Storage::disk('public')->delete($post->featured_image);
+            }
+
+            // Delete post
+            $post->delete();
+
+            return $this->successResponse(
+                null,
+                'Post deleted successfully',
+                204
+            );
+
+        } catch (\Exception $e) {
+            return $this->errorResponse(
+                'Failed to delete post: ' . $e->getMessage(),
+                500
+            );
+        }
+    }
+}
+            </div>
+        </section>
+
+        <section>
+            <h2>📝 Best Practices</h2>
+            <div class="tip">
+                <strong>✅ API Controller Best Practices:</strong>
+                <ul>
+                    <li><strong>Use API Resources:</strong> Transform data consistently with JSON resources</li>
+                    <li><strong>Validate Requests:</strong> Always validate input using Form Requests</li>
+                    <li><strong>Proper Status Codes:</strong> Return appropriate HTTP status codes</li>
+                    <li><strong>Consistent Responses:</strong> Use a standard response format across all endpoints</li>
+                    <li><strong>Error Handling:</strong> Handle exceptions gracefully with meaningful messages</li>
+                    <li><strong>Authorization:</strong> Check user permissions before operations</li>
+                    <li><strong>Pagination:</strong> Always paginate list endpoints</li>
+                    <li><strong>Eager Loading:</strong> Prevent N+1 queries with eager loading</li>
+                    <li><strong>API Versioning:</strong> Version your API (e.g., /api/v1/posts)</li>
+                    <li><strong>Documentation:</strong> Document your API endpoints thoroughly</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <div class="exercise">
+                <h2>💻 Hands-on Exercises</h2>
+                
+                <h3>Exercise 1: Create Product API Controller</h3>
+                <p>Create a complete API resource controller for products with the following requirements:</p>
+                <ol>
+                    <li>Generate API controller: <code>php artisan make:controller Api/ProductController --api</code></li>
+                    <li>Implement all CRUD operations (index, store, show, update, destroy)</li>
+                    <li>Add validation for: name (required), price (required, numeric), description, stock (integer)</li>
+                    <li>Create ProductResource for JSON transformation</li>
+                    <li>Add search and filtering capabilities</li>
+                    <li>Test all endpoints with Postman</li>
+                </ol>
+
+                <h3>Exercise 2: Category API with Relationships</h3>
+                <p>Build a Category API controller that:</p>
+                <ol>
+                    <li>Lists categories with product count</li>
+                    <li>Shows category with all its products</li>
+                    <li>Creates new categories with validation</li>
+                    <li>Updates existing categories</li>
+                    <li>Prevents deletion of categories that have products</li>
+                    <li>Returns proper error messages and status codes</li>
+                </ol>
+
+                <h3>Exercise 3: Advanced API Features</h3>
+                <p>Enhance your Post API controller with:</p>
+                <ol>
+                    <li>Bulk operations (create/update/delete multiple posts)</li>
+                    <li>Advanced search with multiple filters</li>
+                    <li>Sorting by multiple fields</li>
+                    <li>Custom endpoints (e.g., /api/posts/published, /api/posts/popular)</li>
+                    <li>Rate limiting for API requests</li>
+                    <li>API response caching</li>
+                </ol>
+
+                <h3>Exercise 4: Create a Complete Blog API</h3>
+                <p>Build a full blog API system with:</p>
+                <ol>
+                    <li>Posts, Categories, Tags, and Comments controllers</li>
+                    <li>Nested routes (e.g., /api/posts/{post}/comments)</li>
+                    <li>Resource relationships in responses</li>
+                    <li>Comprehensive validation</li>
+                    <li>Proper authorization checks</li>
+                    <li>Complete Postman collection with all endpoints</li>
+                </ol>
+            </div>
+        </section>
+
+        <section>
+            <div class="deliverable">
+                <h2>📦 Day 2 Deliverable</h2>
+                <h3>Build a Complete API Resource Controller System</h3>
+                
+                <h4>Requirements:</h4>
+                <ol>
+                    <li><strong>API Controllers:</strong>
+                        <ul>
+                            <li>Create API controllers for at least 2 resources (e.g., Products, Categories)</li>
+                            <li>Implement all 5 CRUD methods in each controller</li>
+                            <li>Use route model binding where appropriate</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Routing:</strong>
+                        <ul>
+                            <li>Register API resource routes in routes/api.php</li>
+                            <li>Use Route::apiResource for automatic routing</li>
+                            <li>Add middleware for authentication where needed</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Validation:</strong>
+                        <ul>
+                            <li>Create Form Request classes for store and update operations</li>
+                            <li>Include custom validation rules and messages</li>
+                            <li>Handle validation errors with proper responses</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>JSON Resources:</strong>
+                        <ul>
+                            <li>Create Resource classes for data transformation</li>
+                            <li>Include relationships in resource output</li>
+                            <li>Format dates and other data appropriately</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Error Handling:</strong>
+                        <ul>
+                            <li>Use consistent response format across all endpoints</li>
+                            <li>Return appropriate HTTP status codes</li>
+                            <li>Provide meaningful error messages</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Features:</strong>
+                        <ul>
+                            <li>Implement pagination for list endpoints</li>
+                            <li>Add search and filtering capabilities</li>
+                            <li>Include sorting options</li>
+                            <li>Handle file uploads (optional)</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Testing:</strong>
+                        <ul>
+                            <li>Test all endpoints using Postman</li>
+                            <li>Create a Postman collection with all requests</li>
+                            <li>Include example requests and responses</li>
+                            <li>Export collection as JSON file</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Documentation:</strong>
+                        <ul>
+                            <li>Create README.md with API documentation</li>
+                            <li>List all available endpoints</li>
+                            <li>Document request/response formats</li>
+                            <li>Include setup and testing instructions</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <h4>Submission Checklist:</h4>
+                <ul>
+                    <li>✅ API controllers with all CRUD methods</li>
+                    <li>✅ API routes properly configured</li>
+                    <li>✅ Form Request classes for validation</li>
+                    <li>✅ JSON Resource classes</li>
+                    <li>✅ Consistent error handling</li>
+                    <li>✅ Pagination, search, and filtering</li>
+                    <li>✅ Postman collection (exported JSON)</li>
+                    <li>✅ API documentation</li>
+                    <li>✅ All endpoints tested and working</li>
+                    <li>✅ Code pushed to GitHub</li>
+                </ul>
+
+                <div class="warning">
+                    <strong>⚠️ Important:</strong> Make sure all API endpoints return JSON responses, use proper HTTP status codes, and include comprehensive validation. Test every endpoint thoroughly with Postman before submission.
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>🎯 Summary</h2>
+            <p>Today you learned how to build RESTful API controllers in Laravel:</p>
+            <ul>
+                <li>✅ Created API resource controllers using Artisan commands</li>
+                <li>✅ Implemented all five CRUD operations (index, store, show, update, destroy)</li>
+                <li>✅ Used Route::apiResource for automatic API routing</li>
+                <li>✅ Transformed data with JSON resources</li>
+                <li>✅ Validated API requests using Form Request classes</li>
+                <li>✅ Handled errors with proper status codes and messages</li>
+                <li>✅ Tested APIs using Postman</li>
+                <li>✅ Applied API best practices and standards</li>
+            </ul>
+
+            <div class="tip">
+                <strong>🎓 Next Steps:</strong> In Day 3, you'll learn about API authentication using Laravel Sanctum, including token-based authentication, protecting routes, and managing API tokens.
+            </div>
+        </section>
+
+        <footer>
+            <p>Day 2: API Resource Controllers | Week 18: Laravel REST API Development</p>
+            <p>Keep building amazing APIs! 🚀</p>
+        </footer>
+    </div>
+</body>
+</html>

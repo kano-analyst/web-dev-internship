@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 2 Day 1: Semantic HTML & Multimedia</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        header { background: #d5006d; color: white; padding: 30px; }
+        .nav-breadcrumb {
+            background: #fff0f6;
+            padding: 15px 30px;
+            border-bottom: 2px solid #f5576c;
+        }
+        .nav-breadcrumb a { color: #d5006d; text-decoration: none; margin-right: 10px; }
+        .content { padding: 40px; }
+        .section { margin-bottom: 40px; }
+        .section h2 {
+            color: #d5006d;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #f5576c;
+        }
+        .section h3 { color: #f5576c; margin: 20px 0 15px 0; }
+        .info-box {
+            background: #fff0f6;
+            border-left: 5px solid #f5576c;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+        .activity-box {
+            background: #f1f8e9;
+            border-left: 5px solid #4caf50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .btn-primary {
+            display: inline-block;
+            background: #f5576c;
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 6px;
+            margin: 10px 10px 10px 0;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        .btn-primary:hover { background: #d5006d; }
+        .semantic-diagram {
+            border: 3px solid #f5576c;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        .semantic-element {
+            background: #f5576c;
+            color: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        ul, ol { margin-left: 30px; margin-top: 10px; }
+        li { margin-bottom: 10px; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th { background: #f5576c; color: white; }
+        .checklist { list-style: none; margin-left: 0; }
+        .checklist li:before {
+            content: "✓ ";
+            color: #4caf50;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        footer { background: #d5006d; color: white; padding: 20px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 2 - Day 1: Semantic HTML & Multimedia</h1>
+            <p>Monday | Duration: 3 hours</p>
+        </header>
+
+        <div class="nav-breadcrumb">
+            <a href="../index.html">← Back to Course Home</a> / Week 2 / Day 1
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2>🎯 Learning Objectives</h2>
+                <ul class="checklist">
+                    <li>Understand semantic HTML and its importance</li>
+                    <li>Use structural tags: header, nav, main, article, section, aside, footer</li>
+                    <li>Embed audio and video content</li>
+                    <li>Build a complete news article page</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>📚 What is Semantic HTML?</h2>
+                <div class="info-box">
+                    <p><strong>Semantic HTML</strong> uses tags that clearly describe their meaning to both the browser and the developer.</p>
+                    <p><strong>Benefits:</strong></p>
+                    <ul>
+                        <li>Improves accessibility for screen readers</li>
+                        <li>Better SEO (Search Engine Optimization)</li>
+                        <li>Easier to maintain code</li>
+                        <li>Clearer structure for developers</li>
+                    </ul>
+                </div>
+
+                <h3>Non-Semantic vs Semantic</h3>
+                <table>
+                    <tr>
+                        <th>Non-Semantic</th>
+                        <th>Semantic</th>
+                    </tr>
+                    <tr>
+                        <td>&lt;div id="header"&gt;</td>
+                        <td>&lt;header&gt;</td>
+                    </tr>
+                    <tr>
+                        <td>&lt;div id="nav"&gt;</td>
+                        <td>&lt;nav&gt;</td>
+                    </tr>
+                    <tr>
+                        <td>&lt;div id="footer"&gt;</td>
+                        <td>&lt;footer&gt;</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="section">
+                <h2>🏗️ Semantic HTML Structure</h2>
+                
+                <div class="semantic-diagram">
+                    <div class="semantic-element">&lt;header&gt; - Top section (logo, navigation)</div>
+                    <div class="semantic-element">&lt;nav&gt; - Navigation links</div>
+                    <div class="semantic-element">&lt;main&gt; - Main content area</div>
+                    <div style="margin-left: 20px;">
+                        <div class="semantic-element">&lt;article&gt; - Independent content</div>
+                        <div class="semantic-element">&lt;section&gt; - Thematic grouping</div>
+                        <div class="semantic-element">&lt;aside&gt; - Sidebar content</div>
+                    </div>
+                    <div class="semantic-element">&lt;footer&gt; - Bottom section</div>
+                </div>
+
+                <h3>Key Semantic Elements</h3>
+                
+                <h4>1. &lt;header&gt;</h4>
+                <p>Contains introductory content, typically logo, site title, and navigation.</p>
+                <div class="code-block">
+&lt;header&gt;
+    &lt;h1&gt;My Website&lt;/h1&gt;
+    &lt;nav&gt;
+        &lt;a href="/"&gt;Home&lt;/a&gt;
+        &lt;a href="/about"&gt;About&lt;/a&gt;
+        &lt;a href="/contact"&gt;Contact&lt;/a&gt;
+    &lt;/nav&gt;
+&lt;/header&gt;
+                </div>
+
+                <h4>2. &lt;nav&gt;</h4>
+                <p>Contains navigation links.</p>
+                <div class="code-block">
+&lt;nav&gt;
+    &lt;ul&gt;
+        &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="/blog"&gt;Blog&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="/services"&gt;Services&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/nav&gt;
+                </div>
+
+                <h4>3. &lt;main&gt;</h4>
+                <p>The dominant content of the page. Only one per page.</p>
+
+                <h4>4. &lt;article&gt;</h4>
+                <p>Self-contained, independent content (blog post, news article).</p>
+                <div class="code-block">
+&lt;article&gt;
+    &lt;h2&gt;Article Title&lt;/h2&gt;
+    &lt;p&gt;Article content...&lt;/p&gt;
+&lt;/article&gt;
+                </div>
+
+                <h4>5. &lt;section&gt;</h4>
+                <p>Thematic grouping of content.</p>
+
+                <h4>6. &lt;aside&gt;</h4>
+                <p>Side content, related to main content (sidebar, callout boxes).</p>
+
+                <h4>7. &lt;footer&gt;</h4>
+                <p>Footer information (copyright, contact, links).</p>
+            </div>
+
+            <div class="section">
+                <h2>🎵 Embedding Multimedia</h2>
+                
+                <h3>Audio Element</h3>
+                <div class="code-block">
+&lt;audio controls&gt;
+    &lt;source src="audio.mp3" type="audio/mpeg"&gt;
+    &lt;source src="audio.ogg" type="audio/ogg"&gt;
+    Your browser does not support the audio element.
+&lt;/audio&gt;
+                </div>
+                <p><strong>Attributes:</strong></p>
+                <ul>
+                    <li><code>controls</code> - Shows play/pause buttons</li>
+                    <li><code>autoplay</code> - Starts automatically</li>
+                    <li><code>loop</code> - Repeats continuously</li>
+                    <li><code>muted</code> - Starts muted</li>
+                </ul>
+
+                <h3>Video Element</h3>
+                <div class="code-block">
+&lt;video width="640" height="360" controls&gt;
+    &lt;source src="video.mp4" type="video/mp4"&gt;
+    &lt;source src="video.webm" type="video/webm"&gt;
+    Your browser does not support the video tag.
+&lt;/video&gt;
+                </div>
+
+                <h3>Embedding YouTube Videos</h3>
+                <div class="code-block">
+&lt;iframe width="560" height="315" 
+    src="https://www.youtube.com/embed/VIDEO_ID" 
+    frameborder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+    allowfullscreen&gt;
+&lt;/iframe&gt;
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>💻 Main Activity: Build a News Article Page</h2>
+                
+                <div class="activity-box">
+                    <h3>Create: news-article.html</h3>
+                    <p>Build a complete news page using semantic HTML and multimedia.</p>
+                </div>
+
+                <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Latest Tech News&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;header&gt;
+        &lt;h1&gt;Tech News Daily&lt;/h1&gt;
+        &lt;nav&gt;
+            &lt;a href="/"&gt;Home&lt;/a&gt; | 
+            &lt;a href="/news"&gt;News&lt;/a&gt; | 
+            &lt;a href="/tech"&gt;Technology&lt;/a&gt; | 
+            &lt;a href="/contact"&gt;Contact&lt;/a&gt;
+        &lt;/nav&gt;
+    &lt;/header&gt;
+
+    &lt;main&gt;
+        &lt;article&gt;
+            &lt;header&gt;
+                &lt;h2&gt;AI Revolution in Web Development&lt;/h2&gt;
+                &lt;p&gt;
+                    &lt;time datetime="2025-12-05"&gt;December 5, 2025&lt;/time&gt; | 
+                    By &lt;strong&gt;Ahmad Tijjani&lt;/strong&gt;
+                &lt;/p&gt;
+            &lt;/header&gt;
+
+            &lt;figure&gt;
+                &lt;img src="https://picsum.photos/800/400" alt="AI in Web Development"&gt;
+                &lt;figcaption&gt;Artificial Intelligence transforming web development&lt;/figcaption&gt;
+            &lt;/figure&gt;
+
+            &lt;section&gt;
+                &lt;h3&gt;Introduction&lt;/h3&gt;
+                &lt;p&gt;
+                    Artificial Intelligence is revolutionizing how we build websites. 
+                    From automated code generation to intelligent design suggestions, 
+                    AI tools are making developers more productive than ever.
+                &lt;/p&gt;
+            &lt;/section&gt;
+
+            &lt;section&gt;
+                &lt;h3&gt;Key Benefits&lt;/h3&gt;
+                &lt;ul&gt;
+                    &lt;li&gt;Faster development cycles&lt;/li&gt;
+                    &lt;li&gt;Improved code quality&lt;/li&gt;
+                    &lt;li&gt;Better user experiences&lt;/li&gt;
+                    &lt;li&gt;Automated testing&lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/section&gt;
+
+            &lt;section&gt;
+                &lt;h3&gt;Watch the Interview&lt;/h3&gt;
+                &lt;video width="640" height="360" controls&gt;
+                    &lt;source src="interview.mp4" type="video/mp4"&gt;
+                    Your browser does not support the video tag.
+                &lt;/video&gt;
+            &lt;/section&gt;
+
+            &lt;section&gt;
+                &lt;h3&gt;Expert Opinion&lt;/h3&gt;
+                &lt;blockquote&gt;
+                    "AI is not replacing developers; it's empowering them to focus on 
+                    creative problem-solving rather than repetitive tasks."
+                    &lt;footer&gt;- Dr. Sarah Johnson, Tech Innovator&lt;/footer&gt;
+                &lt;/blockquote&gt;
+            &lt;/section&gt;
+
+            &lt;footer&gt;
+                &lt;p&gt;Tags: #AI #WebDevelopment #Technology&lt;/p&gt;
+                &lt;p&gt;Share: &lt;a href="#"&gt;Twitter&lt;/a&gt; | &lt;a href="#"&gt;Facebook&lt;/a&gt;&lt;/p&gt;
+            &lt;/footer&gt;
+        &lt;/article&gt;
+
+        &lt;aside&gt;
+            &lt;h3&gt;Related Articles&lt;/h3&gt;
+            &lt;ul&gt;
+                &lt;li&gt;&lt;a href="#"&gt;Future of JavaScript&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#"&gt;CSS Grid Tutorial&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#"&gt;Web Accessibility Guide&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+
+            &lt;h3&gt;Listen to Our Podcast&lt;/h3&gt;
+            &lt;audio controls&gt;
+                &lt;source src="podcast.mp3" type="audio/mpeg"&gt;
+                Your browser does not support the audio element.
+            &lt;/audio&gt;
+        &lt;/aside&gt;
+    &lt;/main&gt;
+
+    &lt;footer&gt;
+        &lt;p&gt;&copy; 2025 Tech News Daily. All rights reserved.&lt;/p&gt;
+        &lt;nav&gt;
+            &lt;a href="/privacy"&gt;Privacy Policy&lt;/a&gt; | 
+            &lt;a href="/terms"&gt;Terms of Service&lt;/a&gt;
+        &lt;/nav&gt;
+    &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>✏️ Practice Exercises</h2>
+                
+                <div class="activity-box">
+                    <h3>Exercise 1: Personal Blog Post</h3>
+                    <p>Create a blog post about your web development journey using:</p>
+                    <ul>
+                        <li>Proper semantic structure</li>
+                        <li>At least 3 sections</li>
+                        <li>An image with figure and figcaption</li>
+                        <li>A blockquote with your favorite coding quote</li>
+                    </ul>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Exercise 2: Add Multimedia</h3>
+                    <p>Enhance your page with:</p>
+                    <ul>
+                        <li>An embedded YouTube video about web development</li>
+                        <li>An audio element (use any online audio file)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>✅ Today's Deliverable</h2>
+                <div class="activity-box">
+                    <ul class="checklist">
+                        <li>news-article.html with complete semantic structure</li>
+                        <li>Working audio and video elements</li>
+                        <li>Personal blog post exercise completed</li>
+                        <li>Committed and pushed to GitHub</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <a href="../week1/day3-forms-tables-git.html" class="btn-primary">← Previous: Week 1 Day 3</a>
+                <a href="../index.html" class="btn-primary">Back to Course Home</a>
+                <a href="day2-intro-to-css.html" class="btn-primary">Next: Day 2 →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 2 - Day 1: Semantic HTML & Multimedia</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

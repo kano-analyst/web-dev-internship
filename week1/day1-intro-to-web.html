@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 1 Day 1: Introduction to Web Technologies</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        header {
+            background: #1e3c72;
+            color: white;
+            padding: 30px;
+        }
+        header h1 {
+            margin-bottom: 10px;
+        }
+        .nav-breadcrumb {
+            background: #f0f4ff;
+            padding: 15px 30px;
+            border-bottom: 2px solid #667eea;
+        }
+        .nav-breadcrumb a {
+            color: #667eea;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+        .content {
+            padding: 40px;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .section h2 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        .section h3 {
+            color: #667eea;
+            margin: 20px 0 15px 0;
+        }
+        .info-box {
+            background: #e3f2fd;
+            border-left: 5px solid #2196f3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .tip-box {
+            background: #fff3e0;
+            border-left: 5px solid #ff9800;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .activity-box {
+            background: #f1f8e9;
+            border-left: 5px solid #4caf50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+        .diagram {
+            background: white;
+            border: 2px solid #667eea;
+            padding: 30px;
+            margin: 20px 0;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .flow-step {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 15px 25px;
+            margin: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        .arrow {
+            font-size: 2em;
+            color: #667eea;
+        }
+        ul, ol {
+            margin-left: 30px;
+            margin-top: 10px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        .interactive-demo {
+            background: #fafafa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px dashed #667eea;
+        }
+        .btn-primary {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 6px;
+            margin: 10px 10px 10px 0;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        .btn-primary:hover {
+            background: #764ba2;
+            transform: scale(1.05);
+        }
+        .checklist {
+            list-style: none;
+            margin-left: 0;
+        }
+        .checklist li:before {
+            content: "✓ ";
+            color: #4caf50;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #667eea;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        footer {
+            background: #1e3c72;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 1 - Day 1: Introduction to Web Technologies</h1>
+            <p>Monday | Duration: 3 hours</p>
+        </header>
+
+        <div class="nav-breadcrumb">
+            <a href="../index.html">← Back to Course Home</a> / Week 1 / Day 1
+        </div>
+
+        <div class="content">
+            <!-- Learning Objectives -->
+            <div class="section">
+                <h2>🎯 Learning Objectives</h2>
+                <p>By the end of this lesson, you will be able to:</p>
+                <ul class="checklist">
+                    <li>Explain how the Internet and World Wide Web work</li>
+                    <li>Understand the client-server model and HTTP protocol</li>
+                    <li>Set up a professional web development environment</li>
+                    <li>Create and run your first HTML page</li>
+                    <li>Understand basic file and folder structure for web projects</li>
+                </ul>
+            </div>
+
+            <!-- Theory Section -->
+            <div class="section">
+                <h2>📚 Lecture Notes: How the Web Works</h2>
+                
+                <h3>1. The Internet vs The World Wide Web</h3>
+                <div class="info-box">
+                    <p><strong>The Internet:</strong> A global network of interconnected computers that communicate using standardized protocols.</p>
+                    <p><strong>The World Wide Web (WWW):</strong> A system of interlinked documents and resources accessed via the Internet using web browsers.</p>
+                    <p><strong>Key Point:</strong> The Internet is the infrastructure; the Web is a service that runs on top of it.</p>
+                </div>
+
+                <h3>2. The Client-Server Model</h3>
+                <div class="diagram">
+                    <h4>How a Webpage is Loaded</h4>
+                    <div style="margin: 30px 0;">
+                        <div class="flow-step">Client (Browser)</div>
+                        <span class="arrow">→</span>
+                        <div class="flow-step">Request</div>
+                        <span class="arrow">→</span>
+                        <div class="flow-step">Server</div>
+                        <br><br>
+                        <div class="flow-step">Server</div>
+                        <span class="arrow">→</span>
+                        <div class="flow-step">Response (HTML/CSS/JS)</div>
+                        <span class="arrow">→</span>
+                        <div class="flow-step">Client Renders Page</div>
+                    </div>
+                </div>
+
+                <h3>3. What is HTTP?</h3>
+                <p><strong>HTTP (HyperText Transfer Protocol)</strong> is the foundation of data communication on the web.</p>
+                <table>
+                    <tr>
+                        <th>HTTP Method</th>
+                        <th>Purpose</th>
+                        <th>Example</th>
+                    </tr>
+                    <tr>
+                        <td>GET</td>
+                        <td>Retrieve data from server</td>
+                        <td>Loading a webpage</td>
+                    </tr>
+                    <tr>
+                        <td>POST</td>
+                        <td>Send data to server</td>
+                        <td>Submitting a form</td>
+                    </tr>
+                    <tr>
+                        <td>PUT</td>
+                        <td>Update existing data</td>
+                        <td>Editing a profile</td>
+                    </tr>
+                    <tr>
+                        <td>DELETE</td>
+                        <td>Remove data</td>
+                        <td>Deleting an account</td>
+                    </tr>
+                </table>
+
+                <h3>4. DNS: The Internet's Phone Book</h3>
+                <div class="info-box">
+                    <p><strong>DNS (Domain Name System)</strong> translates human-readable domain names into IP addresses.</p>
+                    <p><strong>Example:</strong> www.google.com → 142.250.190.46</p>
+                    <p>Without DNS, we'd have to remember IP addresses for every website!</p>
+                </div>
+
+                <h3>5. Key Web Technologies</h3>
+                <ul>
+                    <li><strong>HTML (HyperText Markup Language):</strong> Structure and content of web pages</li>
+                    <li><strong>CSS (Cascading Style Sheets):</strong> Styling and layout</li>
+                    <li><strong>JavaScript:</strong> Interactivity and dynamic behavior</li>
+                    <li><strong>HTTP/HTTPS:</strong> Communication protocol</li>
+                    <li><strong>Web Servers:</strong> Apache, Nginx, XAMPP</li>
+                </ul>
+            </div>
+
+            <!-- Setup Section -->
+            <div class="section">
+                <h2>🛠️ Setting Up Your Development Environment</h2>
+                
+                <h3>Step 1: Install Visual Studio Code</h3>
+                <div class="activity-box">
+                    <h4>📥 Installation Steps:</h4>
+                    <ol>
+                        <li>Visit <a href="https://code.visualstudio.com/" target="_blank">https://code.visualstudio.com/</a></li>
+                        <li>Download the installer for Windows</li>
+                        <li>Run the installer and follow the prompts</li>
+                        <li>Launch VS Code after installation</li>
+                    </ol>
+                </div>
+
+                <h3>Step 2: Install Essential VS Code Extensions</h3>
+                <div class="tip-box">
+                    <h4>Recommended Extensions:</h4>
+                    <ul>
+                        <li><strong>Live Server:</strong> Launch a local development server with live reload</li>
+                        <li><strong>HTML CSS Support:</strong> Improved HTML and CSS IntelliSense</li>
+                        <li><strong>Prettier:</strong> Code formatter</li>
+                        <li><strong>Auto Rename Tag:</strong> Automatically rename paired HTML tags</li>
+                    </ul>
+                    <p><strong>How to Install:</strong> Click Extensions icon (Ctrl+Shift+X) → Search → Install</p>
+                </div>
+
+                <h3>Step 3: Install XAMPP</h3>
+                <div class="activity-box">
+                    <h4>📥 Installation Steps:</h4>
+                    <ol>
+                        <li>Visit <a href="https://www.apachefriends.org/" target="_blank">https://www.apachefriends.org/</a></li>
+                        <li>Download XAMPP for Windows</li>
+                        <li>Run installer (you may need administrator rights)</li>
+                        <li>Install to default location: C:\xampp</li>
+                        <li>Launch XAMPP Control Panel</li>
+                        <li>Start Apache server (click "Start" button)</li>
+                    </ol>
+                    <p><strong>Purpose:</strong> XAMPP provides Apache web server for testing websites locally.</p>
+                </div>
+
+                <h3>Step 4: Install Git</h3>
+                <div class="activity-box">
+                    <h4>📥 Installation Steps:</h4>
+                    <ol>
+                        <li>Visit <a href="https://git-scm.com/" target="_blank">https://git-scm.com/</a></li>
+                        <li>Download Git for Windows</li>
+                        <li>Run installer with default settings</li>
+                        <li>Verify installation: Open Command Prompt and type: <code>git --version</code></li>
+                    </ol>
+                    <p><strong>Purpose:</strong> Git tracks changes in your code and enables collaboration.</p>
+                </div>
+
+                <h3>Step 5: Create Your Project Folder</h3>
+                <div class="code-block">
+C:\xampp\htdocs\web_basics\
+│
+├── index.html          (your main page)
+├── about.html          (about page)
+├── css/
+│   └── style.css       (stylesheets)
+├── images/
+│   └── (your images)
+└── js/
+    └── script.js       (JavaScript files)
+                </div>
+                <div class="tip-box">
+                    <p><strong>💡 Best Practice:</strong> Keep files organized in folders. Use lowercase names without spaces (use hyphens or underscores).</p>
+                </div>
+            </div>
+
+            <!-- Hands-On Activity -->
+            <div class="section">
+                <h2>💻 Hands-On Activity: Your First HTML Page</h2>
+                
+                <h3>Task: Create "Hello World" Webpage</h3>
+                <div class="activity-box">
+                    <h4>Instructions:</h4>
+                    <ol>
+                        <li>Open VS Code</li>
+                        <li>Create a new file: File → New File</li>
+                        <li>Save as: <code>C:\xampp\htdocs\web_basics\hello.html</code></li>
+                        <li>Type the code below</li>
+                        <li>Save the file (Ctrl+S)</li>
+                        <li>Open in browser: <code>http://localhost/web_basics/hello.html</code></li>
+                    </ol>
+                </div>
+
+                <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;My First Web Page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Hello World!&lt;/h1&gt;
+    &lt;p&gt;Welcome to my first web page. My name is [Your Name].&lt;/p&gt;
+    &lt;p&gt;I am learning web development at Next-Step Technology.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                </div>
+
+                <h3>Understanding the Code</h3>
+                <ul>
+                    <li><strong>&lt;!DOCTYPE html&gt;:</strong> Tells browser this is HTML5</li>
+                    <li><strong>&lt;html&gt;:</strong> Root element of the page</li>
+                    <li><strong>&lt;head&gt;:</strong> Contains meta information (not displayed)</li>
+                    <li><strong>&lt;meta charset="UTF-8"&gt;:</strong> Character encoding for proper text display</li>
+                    <li><strong>&lt;title&gt;:</strong> Title shown in browser tab</li>
+                    <li><strong>&lt;body&gt;:</strong> Contains visible content</li>
+                    <li><strong>&lt;h1&gt;:</strong> Main heading (largest)</li>
+                    <li><strong>&lt;p&gt;:</strong> Paragraph</li>
+                </ul>
+
+                <div class="interactive-demo">
+                    <h4>🎨 Try This: Modify Your Page</h4>
+                    <ul>
+                        <li>Change the heading text</li>
+                        <li>Add your own name and information</li>
+                        <li>Add more paragraphs with &lt;p&gt; tags</li>
+                        <li>Save and refresh your browser to see changes</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Practice Exercises -->
+            <div class="section">
+                <h2>✏️ Practice Exercises</h2>
+                
+                <div class="activity-box">
+                    <h3>Exercise 1: Create an Index Page</h3>
+                    <p>Create <code>index.html</code> in your web_basics folder with:</p>
+                    <ul>
+                        <li>A main heading with your name</li>
+                        <li>A subheading (use &lt;h2&gt;) saying "Web Development Journey"</li>
+                        <li>Three paragraphs about yourself</li>
+                        <li>A horizontal line (use &lt;hr&gt;)</li>
+                        <li>A footer paragraph with the date</li>
+                    </ul>
+                </div>
+
+                <div class="activity-box">
+                    <h3>Exercise 2: Test Your Environment</h3>
+                    <ul class="checklist">
+                        <li>Verify XAMPP Apache is running (green in control panel)</li>
+                        <li>Access your page via http://localhost/web_basics/index.html</li>
+                        <li>Open Chrome DevTools (F12) and explore the Elements tab</li>
+                        <li>Make a small change and refresh to see it update</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Quiz Section -->
+            <div class="section">
+                <h2>📝 Quick Quiz</h2>
+                <div class="info-box">
+                    <ol>
+                        <li>What is the difference between the Internet and the World Wide Web?</li>
+                        <li>What does HTTP stand for?</li>
+                        <li>What are the three main technologies used in web development?</li>
+                        <li>What is the purpose of the &lt;!DOCTYPE html&gt; tag?</li>
+                        <li>Where should visible content be placed in an HTML document?</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Deliverable -->
+            <div class="section">
+                <h2>✅ Today's Deliverable</h2>
+                <div class="activity-box">
+                    <h3>Submit the following:</h3>
+                    <ul class="checklist">
+                        <li>Screenshot of VS Code with your hello.html file open</li>
+                        <li>Screenshot of your webpage running in the browser</li>
+                        <li>Screenshot of XAMPP Control Panel showing Apache running</li>
+                        <li>Your completed index.html file</li>
+                    </ul>
+                    <p><strong>Submit to:</strong> Your instructor via email or learning management system</p>
+                </div>
+            </div>
+
+            <!-- Resources -->
+            <div class="section">
+                <h2>📚 Additional Resources</h2>
+                <ul>
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web" target="_blank">MDN: Getting Started with the Web</a></li>
+                    <li><a href="https://www.w3schools.com/html/html_intro.asp" target="_blank">W3Schools: HTML Introduction</a></li>
+                    <li><a href="https://code.visualstudio.com/docs" target="_blank">VS Code Documentation</a></li>
+                    <li><a href="https://www.youtube.com/watch?v=guvsH5OFizE" target="_blank">Video: How the Internet Works</a></li>
+                </ul>
+            </div>
+
+            <!-- Navigation -->
+            <div class="section">
+                <a href="../index.html" class="btn-primary">← Back to Course Home</a>
+                <a href="day2-html-fundamentals.html" class="btn-primary">Next: Day 2 - HTML Fundamentals →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 1 - Day 1: Introduction to Web Technologies</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 10 Day 2: Includes & File Structure</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #ee5a6f 0%, #f29263 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        header { background: #ee5a6f; color: white; padding: 30px; border-radius: 15px 15px 0 0; }
+        .content { padding: 40px; }
+        h2 { color: #ee5a6f; border-bottom: 3px solid #f29263; padding-bottom: 10px; margin: 30px 0 20px; }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        .info-box { background: #ffe0b2; border-left: 5px solid #ee5a6f; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border: 1px solid #ddd; }
+        th { background: #ee5a6f; color: white; }
+        .btn { background: #ee5a6f; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 10px 10px 0; }
+        footer { background: #ee5a6f; color: white; padding: 20px; text-align: center; border-radius: 0 0 15px 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 10 - Day 2: Includes & File Structure</h1>
+            <p>Wednesday | Duration: 3 hours</p>
+        </header>
+
+        <div class="content">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Understand include and require statements</li>
+                <li>Create modular PHP applications</li>
+                <li>Build reusable components (header, footer, navigation)</li>
+                <li>Organize project file structure</li>
+                <li>Implement DRY (Don't Repeat Yourself) principle</li>
+            </ul>
+
+            <h2>📂 Include vs Require</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Statement</th>
+                        <th>Description</th>
+                        <th>On Error</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>include</td>
+                        <td>Includes file, continues if file not found</td>
+                        <td>Warning (script continues)</td>
+                    </tr>
+                    <tr>
+                        <td>include_once</td>
+                        <td>Includes file only once</td>
+                        <td>Warning (script continues)</td>
+                    </tr>
+                    <tr>
+                        <td>require</td>
+                        <td>Requires file, stops if file not found</td>
+                        <td>Fatal error (script stops)</td>
+                    </tr>
+                    <tr>
+                        <td>require_once</td>
+                        <td>Requires file only once</td>
+                        <td>Fatal error (script stops)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>🏗️ Project File Structure</h2>
+            <div class="code-block">
+my-website/
+│
+├── includes/
+│   ├── header.php
+│   ├── footer.php
+│   ├── nav.php
+│   └── config.php
+│
+├── css/
+│   └── style.css
+│
+├── images/
+│   └── logo.png
+│
+├── index.php
+├── about.php
+├── contact.php
+└── services.php
+            </div>
+
+            <h2>📝 Creating Reusable Components</h2>
+            
+            <h3>1. Header Component (includes/header.php)</h3>
+            <div class="code-block">
+&lt;!-- includes/header.php --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;&lt;?php echo $pageTitle; ?&gt;&lt;/title&gt;
+    &lt;link rel="stylesheet" href="css/style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;header&gt;
+        &lt;div class="container"&gt;
+            &lt;h1&gt;My Website&lt;/h1&gt;
+            &lt;p&gt;Welcome to our amazing site&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/header&gt;
+            </div>
+
+            <h3>2. Navigation Component (includes/nav.php)</h3>
+            <div class="code-block">
+&lt;!-- includes/nav.php --&gt;
+&lt;nav&gt;
+    &lt;ul&gt;
+        &lt;li&gt;&lt;a href="index.php"&gt;Home&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="about.php"&gt;About&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="services.php"&gt;Services&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="contact.php"&gt;Contact&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/nav&gt;
+            </div>
+
+            <h3>3. Footer Component (includes/footer.php)</h3>
+            <div class="code-block">
+&lt;!-- includes/footer.php --&gt;
+    &lt;footer&gt;
+        &lt;div class="container"&gt;
+            &lt;p&gt;&copy; 2025 My Website. All rights reserved.&lt;/p&gt;
+            &lt;p&gt;Built with PHP&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </div>
+
+            <h3>4. Config File (includes/config.php)</h3>
+            <div class="code-block">
+&lt;?php
+// includes/config.php
+
+// Site configuration
+define('SITE_NAME', 'My Website');
+define('SITE_EMAIL', 'info@mywebsite.com');
+define('SITE_PHONE', '080-123-4567');
+
+// Database configuration
+define('DB_HOST', 'localhost');
+define('DB_USER', 'root');
+define('DB_PASS', '');
+define('DB_NAME', 'my_database');
+
+// Paths
+define('BASE_URL', 'http://localhost/my-website/');
+define('UPLOAD_DIR', 'uploads/');
+?&gt;
+            </div>
+
+            <h2>🔗 Using Includes in Pages</h2>
+            
+            <h3>Homepage (index.php)</h3>
+            <div class="code-block">
+&lt;?php
+$pageTitle = "Home - My Website";
+include 'includes/header.php';
+include 'includes/nav.php';
+?&gt;
+
+&lt;main&gt;
+    &lt;div class="container"&gt;
+        &lt;h2&gt;Welcome to Our Homepage&lt;/h2&gt;
+        &lt;p&gt;This is the main content of the homepage.&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/main&gt;
+
+&lt;?php include 'includes/footer.php'; ?&gt;
+            </div>
+
+            <h3>About Page (about.php)</h3>
+            <div class="code-block">
+&lt;?php
+$pageTitle = "About Us - My Website";
+include 'includes/header.php';
+include 'includes/nav.php';
+?&gt;
+
+&lt;main&gt;
+    &lt;div class="container"&gt;
+        &lt;h2&gt;About Us&lt;/h2&gt;
+        &lt;p&gt;Learn more about our company and mission.&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/main&gt;
+
+&lt;?php include 'includes/footer.php'; ?&gt;
+            </div>
+
+            <h2>💻 Complete Modular Website Example</h2>
+            <div class="code-block">
+&lt;!-- includes/header.php --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;&lt;?php echo isset($pageTitle) ? $pageTitle : 'My Website'; ?&gt;&lt;/title&gt;
+    &lt;style&gt;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background: #333;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        nav {
+            background: #555;
+            padding: 15px 0;
+        }
+        nav ul {
+            list-style: none;
+            text-align: center;
+        }
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+        }
+        nav ul li a:hover {
+            background: #777;
+        }
+        main {
+            min-height: 400px;
+            padding: 40px 0;
+        }
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;header&gt;
+        &lt;div class="container"&gt;
+            &lt;h1&gt;Welcome to My Website&lt;/h1&gt;
+        &lt;/div&gt;
+    &lt;/header&gt;
+    
+    &lt;nav&gt;
+        &lt;ul&gt;
+            &lt;li&gt;&lt;a href="index.php"&gt;Home&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="about.php"&gt;About&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="services.php"&gt;Services&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="contact.php"&gt;Contact&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/nav&gt;
+            </div>
+
+            <div class="code-block">
+&lt;!-- includes/footer.php --&gt;
+    &lt;footer&gt;
+        &lt;div class="container"&gt;
+            &lt;p&gt;&copy; &lt;?php echo date("Y"); ?&gt; My Website. All rights reserved.&lt;/p&gt;
+            &lt;p&gt;Contact: info@mywebsite.com | Phone: 080-123-4567&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </div>
+
+            <div class="code-block">
+&lt;?php
+// index.php
+$pageTitle = "Home - My Website";
+include 'includes/header.php';
+?&gt;
+
+&lt;main&gt;
+    &lt;div class="container"&gt;
+        &lt;h2&gt;Welcome to Our Homepage&lt;/h2&gt;
+        &lt;p&gt;This is a modular PHP website with reusable components.&lt;/p&gt;
+        
+        &lt;div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 30px;"&gt;
+            &lt;div style="background: #f4f4f4; padding: 20px; border-radius: 5px;"&gt;
+                &lt;h3&gt;Feature 1&lt;/h3&gt;
+                &lt;p&gt;Amazing feature description here.&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div style="background: #f4f4f4; padding: 20px; border-radius: 5px;"&gt;
+                &lt;h3&gt;Feature 2&lt;/h3&gt;
+                &lt;p&gt;Another great feature description.&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div style="background: #f4f4f4; padding: 20px; border-radius: 5px;"&gt;
+                &lt;h3&gt;Feature 3&lt;/h3&gt;
+                &lt;p&gt;One more awesome feature here.&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/main&gt;
+
+&lt;?php include 'includes/footer.php'; ?&gt;
+            </div>
+
+            <h2>🎨 Dynamic Active Navigation</h2>
+            <div class="code-block">
+&lt;?php
+// Get current page filename
+$currentPage = basename($_SERVER['PHP_SELF']);
+?&gt;
+
+&lt;nav&gt;
+    &lt;ul&gt;
+        &lt;li&gt;
+            &lt;a href="index.php" class="&lt;?php echo ($currentPage == 'index.php') ? 'active' : ''; ?&gt;"&gt;
+                Home
+            &lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+            &lt;a href="about.php" class="&lt;?php echo ($currentPage == 'about.php') ? 'active' : ''; ?&gt;"&gt;
+                About
+            &lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+            &lt;a href="contact.php" class="&lt;?php echo ($currentPage == 'contact.php') ? 'active' : ''; ?&gt;"&gt;
+                Contact
+            &lt;/a&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/nav&gt;
+
+&lt;style&gt;
+    nav a.active {
+        background: #777;
+        font-weight: bold;
+    }
+&lt;/style&gt;
+            </div>
+
+            <h2>✏️ Practice Exercises</h2>
+            <ol>
+                <li>Create a modular website with header, nav, and footer</li>
+                <li>Build at least 4 pages (home, about, services, contact)</li>
+                <li>Create a config.php file with site settings</li>
+                <li>Implement dynamic page titles</li>
+                <li>Add active navigation highlighting</li>
+            </ol>
+
+            <h2>✅ Best Practices</h2>
+            <ul>
+                <li>✓ Use require_once for critical files (config, database)</li>
+                <li>✓ Use include for optional components</li>
+                <li>✓ Keep includes in a separate folder</li>
+                <li>✓ Use relative paths consistently</li>
+                <li>✓ Don't repeat code - create reusable components</li>
+            </ul>
+
+            <h2>✅ Today's Deliverable</h2>
+            <ul>
+                <li>✓ Modular website with includes folder</li>
+                <li>✓ Header, navigation, and footer components</li>
+                <li>✓ At least 4 pages using the includes</li>
+                <li>✓ Config file with site settings</li>
+                <li>✓ Dynamic page titles working</li>
+                <li>✓ All pages properly styled and linked</li>
+            </ul>
+
+            <div style="margin-top: 40px;">
+                <a href="day1-php-functions.html" class="btn">← Previous</a>
+                <a href="../index.html" class="btn">Course Home</a>
+                <a href="day3-file-handling.html" class="btn">Next: Day 3 →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 10 - Day 2: Includes & File Structure</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

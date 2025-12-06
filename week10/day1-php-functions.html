@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 10 Day 1: PHP Functions</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #ee5a6f 0%, #f29263 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        header { background: #ee5a6f; color: white; padding: 30px; border-radius: 15px 15px 0 0; }
+        .content { padding: 40px; }
+        h2 { color: #ee5a6f; border-bottom: 3px solid #f29263; padding-bottom: 10px; margin: 30px 0 20px; }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+        .info-box { background: #ffe0b2; border-left: 5px solid #ee5a6f; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border: 1px solid #ddd; }
+        th { background: #ee5a6f; color: white; }
+        .btn { background: #ee5a6f; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 10px 10px 0; }
+        footer { background: #ee5a6f; color: white; padding: 20px; text-align: center; border-radius: 0 0 15px 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 10 - Day 1: PHP Functions (Built-in & User-defined)</h1>
+            <p>Monday | Duration: 3 hours</p>
+        </header>
+
+        <div class="content">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Understand PHP functions and their purpose</li>
+                <li>Use built-in PHP functions</li>
+                <li>Create custom user-defined functions</li>
+                <li>Work with parameters and return values</li>
+                <li>Master function scope</li>
+            </ul>
+
+            <h2>📦 What are Functions?</h2>
+            <div class="info-box">
+                <p><strong>Functions</strong> are reusable blocks of code that perform specific tasks. They help organize code, reduce repetition, and make programs easier to maintain.</p>
+            </div>
+
+            <h2>🔧 Built-in PHP Functions</h2>
+            
+            <h3>String Functions</h3>
+            <div class="code-block">
+&lt;?php
+$text = "Hello World";
+
+// String length
+echo strlen($text);  // 11
+
+// Convert to uppercase
+echo strtoupper($text);  // HELLO WORLD
+
+// Convert to lowercase
+echo strtolower($text);  // hello world
+
+// Replace text
+echo str_replace("World", "PHP", $text);  // Hello PHP
+
+// Substring
+echo substr($text, 0, 5);  // Hello
+
+// Trim whitespace
+$name = "  Ahmad  ";
+echo trim($name);  // Ahmad
+?&gt;
+            </div>
+
+            <h3>Array Functions</h3>
+            <div class="code-block">
+&lt;?php
+$numbers = [5, 2, 8, 1, 9];
+
+// Count elements
+echo count($numbers);  // 5
+
+// Sort array
+sort($numbers);
+print_r($numbers);  // [1, 2, 5, 8, 9]
+
+// Add element
+array_push($numbers, 10);
+
+// Remove last element
+array_pop($numbers);
+
+// Check if value exists
+if (in_array(5, $numbers)) {
+    echo "5 is in the array";
+}
+
+// Get maximum value
+echo max($numbers);  // 9
+
+// Get minimum value
+echo min($numbers);  // 1
+?&gt;
+            </div>
+
+            <h3>Math Functions</h3>
+            <div class="code-block">
+&lt;?php
+// Absolute value
+echo abs(-15);  // 15
+
+// Round number
+echo round(4.6);  // 5
+echo round(4.3);  // 4
+
+// Square root
+echo sqrt(16);  // 4
+
+// Power
+echo pow(2, 3);  // 8 (2³)
+
+// Random number
+echo rand(1, 100);  // Random between 1 and 100
+
+// Ceiling (round up)
+echo ceil(4.2);  // 5
+
+// Floor (round down)
+echo floor(4.8);  // 4
+?&gt;
+            </div>
+
+            <h3>Date & Time Functions</h3>
+            <div class="code-block">
+&lt;?php
+// Current date
+echo date("Y-m-d");  // 2025-12-06
+
+// Current time
+echo date("H:i:s");  // 14:30:45
+
+// Full date format
+echo date("l, F j, Y");  // Friday, December 6, 2025
+
+// Day of week
+echo date("l");  // Friday
+
+// Month name
+echo date("F");  // December
+?&gt;
+            </div>
+
+            <h2>✍️ User-Defined Functions</h2>
+            
+            <h3>Basic Function</h3>
+            <div class="code-block">
+&lt;?php
+// Function without parameters
+function greet() {
+    echo "Hello, welcome to PHP!";
+}
+
+// Call the function
+greet();  // Hello, welcome to PHP!
+?&gt;
+            </div>
+
+            <h3>Function with Parameters</h3>
+            <div class="code-block">
+&lt;?php
+// Function with one parameter
+function greetUser($name) {
+    echo "Hello, " . $name . "!";
+}
+
+greetUser("Ahmad");  // Hello, Ahmad!
+greetUser("Fatima");  // Hello, Fatima!
+
+// Function with multiple parameters
+function addNumbers($a, $b) {
+    echo $a + $b;
+}
+
+addNumbers(10, 5);  // 15
+?&gt;
+            </div>
+
+            <h3>Function with Return Value</h3>
+            <div class="code-block">
+&lt;?php
+// Return a value
+function multiply($x, $y) {
+    return $x * $y;
+}
+
+$result = multiply(5, 4);
+echo $result;  // 20
+
+// Use in expression
+$total = multiply(3, 7) + 10;
+echo $total;  // 31
+?&gt;
+            </div>
+
+            <h3>Function with Default Parameters</h3>
+            <div class="code-block">
+&lt;?php
+function createGreeting($name, $title = "Mr.") {
+    return $title . " " . $name;
+}
+
+echo createGreeting("Ahmad");  // Mr. Ahmad
+echo createGreeting("Fatima", "Miss");  // Miss Fatima
+?&gt;
+            </div>
+
+            <h2>🎯 Practical Function Examples</h2>
+            
+            <h3>1. Calculator Functions</h3>
+            <div class="code-block">
+&lt;?php
+function add($a, $b) {
+    return $a + $b;
+}
+
+function subtract($a, $b) {
+    return $a - $b;
+}
+
+function multiply($a, $b) {
+    return $a * $b;
+}
+
+function divide($a, $b) {
+    if ($b == 0) {
+        return "Cannot divide by zero!";
+    }
+    return $a / $b;
+}
+
+// Use the functions
+echo "10 + 5 = " . add(10, 5) . "&lt;br&gt;";
+echo "10 - 5 = " . subtract(10, 5) . "&lt;br&gt;";
+echo "10 × 5 = " . multiply(10, 5) . "&lt;br&gt;";
+echo "10 ÷ 5 = " . divide(10, 5) . "&lt;br&gt;";
+?&gt;
+            </div>
+
+            <h3>2. Validation Functions</h3>
+            <div class="code-block">
+&lt;?php
+// Check if email is valid
+function isValidEmail($email) {
+    return filter_var($email, FILTER_VALIDATE_EMAIL);
+}
+
+// Check if password is strong
+function isStrongPassword($password) {
+    return strlen($password) >= 8;
+}
+
+// Check if age is valid
+function isValidAge($age) {
+    return $age >= 18 && $age <= 100;
+}
+
+// Usage
+if (isValidEmail("test@example.com")) {
+    echo "Valid email";
+}
+
+if (isStrongPassword("mypass123")) {
+    echo "Strong password";
+}
+?&gt;
+            </div>
+
+            <h3>3. Formatting Functions</h3>
+            <div class="code-block">
+&lt;?php
+// Format currency
+function formatCurrency($amount) {
+    return "₦" . number_format($amount, 2);
+}
+
+// Format phone number
+function formatPhone($phone) {
+    return substr($phone, 0, 4) . "-" . substr($phone, 4, 3) . "-" . substr($phone, 7);
+}
+
+// Truncate text
+function truncateText($text, $length = 50) {
+    if (strlen($text) > $length) {
+        return substr($text, 0, $length) . "...";
+    }
+    return $text;
+}
+
+echo formatCurrency(15000);  // ₦15,000.00
+echo formatPhone("08012345678");  // 0801-234-5678
+?&gt;
+            </div>
+
+            <h2>🔄 Variable Scope</h2>
+            
+            <div class="code-block">
+&lt;?php
+$globalVar = "I am global";
+
+function testScope() {
+    $localVar = "I am local";
+    echo $localVar;  // Works
+    
+    // To access global variable
+    global $globalVar;
+    echo $globalVar;  // Now works
+}
+
+testScope();
+echo $localVar;  // Error: undefined variable
+?&gt;
+            </div>
+
+            <h2>💻 Complete Example: Grading System</h2>
+            <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Student Grading System&lt;/title&gt;
+    &lt;style&gt;
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #ee5a6f;
+            color: white;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="card"&gt;
+        &lt;h1&gt;Student Grading System&lt;/h1&gt;
+        
+        &lt;?php
+        // Function to calculate grade
+        function calculateGrade($score) {
+            if ($score >= 90) return "A";
+            elseif ($score >= 80) return "B";
+            elseif ($score >= 70) return "C";
+            elseif ($score >= 60) return "D";
+            else return "F";
+        }
+        
+        // Function to determine pass/fail
+        function getStatus($score) {
+            return $score >= 50 ? "PASS" : "FAIL";
+        }
+        
+        // Function to calculate average
+        function calculateAverage($scores) {
+            return array_sum($scores) / count($scores);
+        }
+        
+        // Function to get highest score
+        function getHighestScore($students) {
+            $highest = 0;
+            foreach ($students as $student) {
+                if ($student['score'] > $highest) {
+                    $highest = $student['score'];
+                }
+            }
+            return $highest;
+        }
+        
+        // Student data
+        $students = [
+            ["name" => "Ahmad Garba", "score" => 85],
+            ["name" => "Fatima Yusuf", "score" => 92],
+            ["name" => "Ibrahim Musa", "score" => 78],
+            ["name" => "Aisha Mohammed", "score" => 45],
+            ["name" => "Usman Ali", "score" => 88]
+        ];
+        
+        // Display students
+        echo "&lt;table&gt;";
+        echo "&lt;tr&gt;&lt;th&gt;Student Name&lt;/th&gt;&lt;th&gt;Score&lt;/th&gt;&lt;th&gt;Grade&lt;/th&gt;&lt;th&gt;Status&lt;/th&gt;&lt;/tr&gt;";
+        
+        $scores = [];
+        foreach ($students as $student) {
+            $name = $student['name'];
+            $score = $student['score'];
+            $grade = calculateGrade($score);
+            $status = getStatus($score);
+            $scores[] = $score;
+            
+            echo "&lt;tr&gt;";
+            echo "&lt;td&gt;$name&lt;/td&gt;";
+            echo "&lt;td&gt;$score&lt;/td&gt;";
+            echo "&lt;td&gt;$grade&lt;/td&gt;";
+            echo "&lt;td&gt;$status&lt;/td&gt;";
+            echo "&lt;/tr&gt;";
+        }
+        echo "&lt;/table&gt;";
+        
+        // Statistics
+        $average = calculateAverage($scores);
+        $highest = getHighestScore($students);
+        
+        echo "&lt;h3&gt;Statistics&lt;/h3&gt;";
+        echo "&lt;p&gt;Average Score: " . round($average, 2) . "&lt;/p&gt;";
+        echo "&lt;p&gt;Highest Score: $highest&lt;/p&gt;";
+        echo "&lt;p&gt;Total Students: " . count($students) . "&lt;/p&gt;";
+        ?&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </div>
+
+            <h2>✏️ Practice Exercises</h2>
+            <ol>
+                <li>Create a function that calculates area of a circle</li>
+                <li>Write a function that converts Celsius to Fahrenheit</li>
+                <li>Build a function that checks if a number is even or odd</li>
+                <li>Create a function that generates a random password</li>
+                <li>Write a function that finds the largest number in an array</li>
+            </ol>
+
+            <h2>✅ Today's Deliverable</h2>
+            <ul>
+                <li>✓ At least 5 user-defined functions created</li>
+                <li>✓ Calculator functions (add, subtract, multiply, divide)</li>
+                <li>✓ Validation functions implemented</li>
+                <li>✓ Functions with parameters and return values</li>
+                <li>✓ Grading system or similar project</li>
+                <li>✓ All functions tested and working</li>
+            </ul>
+
+            <div style="margin-top: 40px;">
+                <a href="../week9/day3-forms-getpost.html" class="btn">← Previous</a>
+                <a href="../index.html" class="btn">Course Home</a>
+                <a href="day2-includes.html" class="btn">Next: Day 2 →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 10 - Day 1: PHP Functions (Built-in & User-defined)</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>

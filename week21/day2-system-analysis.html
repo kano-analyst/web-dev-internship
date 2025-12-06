@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 2: Project Requirements & System Analysis | Week 21</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%);
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #ff6e7f;
+            border-bottom: 3px solid #bfe9ff;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        h2 {
+            color: #ff6e7f;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        h3 {
+            color: #5a9fd4;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .objectives, .key-concept, .example, .exercise, .deliverable {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #ff6e7f;
+            border-radius: 8px;
+        }
+        .key-concept {
+            border-left-color: #5a9fd4;
+            background: #e7f3ff;
+        }
+        .example {
+            border-left-color: #28a745;
+            background: #d4edda;
+        }
+        .exercise {
+            border-left-color: #ffc107;
+            background: #fff3cd;
+        }
+        .deliverable {
+            border-left-color: #17a2b8;
+            background: #d1ecf1;
+        }
+        code {
+            background: #272822;
+            color: #f8f8f2;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        pre {
+            background: #272822;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #ff6e7f;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+        li {
+            margin: 8px 0;
+        }
+        .navigation {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+        .nav-button {
+            padding: 10px 20px;
+            background: #ff6e7f;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .nav-button:hover {
+            background: #e55d6e;
+        }
+        .tip {
+            background: #fff9e6;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .warning {
+            background: #ffe6e6;
+            border-left: 5px solid #dc3545;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Week 21, Day 2: Project Requirements & System Analysis</h1>
+        
+        <div class="objectives">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Define clear problem statements for your project</li>
+                <li>Identify and document system requirements (functional and non-functional)</li>
+                <li>Create user personas and user stories</li>
+                <li>Design use case diagrams</li>
+                <li>Define project scope and constraints</li>
+                <li>Create initial database schema (ER diagram)</li>
+            </ul>
+        </div>
+
+        <h2>📋 Step 1: Problem Definition</h2>
+        
+        <div class="key-concept">
+            <h3>Writing a Strong Problem Statement</h3>
+            <p>A problem statement clearly explains what problem your application will solve and why it matters.</p>
+            
+            <h4>Template:</h4>
+            <pre><code>[Target users] face [problem] because [reason].
+This leads to [negative consequence].
+Our solution will [how your app solves it].</code></pre>
+        </div>
+
+        <div class="example">
+            <h3>Example Problem Statements</h3>
+            
+            <h4>Example 1: Library Management System</h4>
+            <p><strong>Problem Statement:</strong><br>
+            "Students and library staff face difficulties tracking book borrowing and returns because the current manual system is inefficient and error-prone. This leads to lost books, overdue fines disputes, and wasted staff time. Our Library Management System will automate book tracking, send email notifications for due dates, and provide a searchable catalog with availability status."</p>
+
+            <h4>Example 2: Hospital Appointment System</h4>
+            <p><strong>Problem Statement:</strong><br>
+            "Patients struggle to book appointments with doctors because phone lines are often busy and reception hours are limited. This leads to missed appointments, long wait times, and poor patient satisfaction. Our Hospital Appointment System will allow patients to book, reschedule, and cancel appointments online 24/7, with automatic email confirmations and reminders."</p>
+
+            <h4>Example 3: Online Marketplace</h4>
+            <p><strong>Problem Statement:</strong><br>
+            "Small local vendors lack a platform to sell their products online because creating individual e-commerce websites is expensive and complex. This limits their customer reach and sales potential. Our Online Marketplace will provide vendors with an easy-to-use platform to list products, manage orders, and reach customers across the region."</p>
+        </div>
+
+        <h2>👥 Step 2: User Personas & User Stories</h2>
+        
+        <div class="key-concept">
+            <h3>Creating User Personas</h3>
+            <p>User personas represent your typical users and help guide design decisions.</p>
+            
+            <h4>Persona Template:</h4>
+            <ul>
+                <li><strong>Name & Role:</strong> e.g., "Sarah - Student"</li>
+                <li><strong>Age & Background:</strong> e.g., "22, University student"</li>
+                <li><strong>Goals:</strong> What they want to achieve</li>
+                <li><strong>Pain Points:</strong> Current frustrations</li>
+                <li><strong>Tech Savviness:</strong> Comfort level with technology</li>
+            </ul>
+        </div>
+
+        <div class="example">
+            <h3>Example: Library Management System Personas</h3>
+            
+            <h4>Persona 1: Student User</h4>
+            <ul>
+                <li><strong>Name:</strong> Ahmed, 20 years old</li>
+                <li><strong>Role:</strong> Computer Science Student</li>
+                <li><strong>Goals:</strong> Find and borrow books quickly, track due dates</li>
+                <li><strong>Pain Points:</strong> Forgets due dates, can't check book availability from home</li>
+                <li><strong>Tech Level:</strong> High - uses smartphone daily</li>
+            </ul>
+
+            <h4>Persona 2: Librarian</h4>
+            <ul>
+                <li><strong>Name:</strong> Mrs. Fatima, 45 years old</li>
+                <li><strong>Role:</strong> Head Librarian</li>
+                <li><strong>Goals:</strong> Manage book inventory, track overdue books, generate reports</li>
+                <li><strong>Pain Points:</strong> Manual tracking is time-consuming, difficult to find overdue borrowers</li>
+                <li><strong>Tech Level:</strong> Medium - uses computers but prefers simple interfaces</li>
+            </ul>
+        </div>
+
+        <div class="key-concept">
+            <h3>Writing User Stories</h3>
+            <p>User stories describe features from the user's perspective.</p>
+            
+            <h4>Template:</h4>
+            <pre><code>As a [user type],
+I want to [action],
+So that [benefit].</code></pre>
+        </div>
+
+        <div class="example">
+            <h3>Example User Stories (Library System)</h3>
+            <ol>
+                <li>As a <strong>student</strong>, I want to <strong>search for books by title or author</strong>, so that <strong>I can quickly find the books I need</strong>.</li>
+                <li>As a <strong>student</strong>, I want to <strong>see book availability status</strong>, so that <strong>I don't waste time looking for borrowed books</strong>.</li>
+                <li>As a <strong>student</strong>, I want to <strong>receive email reminders</strong>, so that <strong>I return books on time and avoid fines</strong>.</li>
+                <li>As a <strong>librarian</strong>, I want to <strong>scan book barcodes</strong>, so that <strong>I can quickly process borrowing and returns</strong>.</li>
+                <li>As a <strong>librarian</strong>, I want to <strong>view overdue books report</strong>, so that <strong>I can follow up with students</strong>.</li>
+                <li>As an <strong>admin</strong>, I want to <strong>add new books to the system</strong>, so that <strong>the catalog stays up to date</strong>.</li>
+            </ol>
+        </div>
+
+        <h2>⚙️ Step 3: System Requirements</h2>
+        
+        <div class="key-concept">
+            <h3>Functional Requirements (What the system DOES)</h3>
+            <p>List all features and actions users can perform.</p>
+            
+            <h4>Example (Library System):</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Requirement</th>
+                        <th>Priority</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>FR-01</td>
+                        <td>System shall allow users to register and login</td>
+                        <td>High</td>
+                    </tr>
+                    <tr>
+                        <td>FR-02</td>
+                        <td>System shall display searchable book catalog</td>
+                        <td>High</td>
+                    </tr>
+                    <tr>
+                        <td>FR-03</td>
+                        <td>System shall allow librarians to issue books</td>
+                        <td>High</td>
+                    </tr>
+                    <tr>
+                        <td>FR-04</td>
+                        <td>System shall track borrowing history</td>
+                        <td>Medium</td>
+                    </tr>
+                    <tr>
+                        <td>FR-05</td>
+                        <td>System shall send email notifications for due dates</td>
+                        <td>Medium</td>
+                    </tr>
+                    <tr>
+                        <td>FR-06</td>
+                        <td>System shall calculate and track fines</td>
+                        <td>Low</td>
+                    </tr>
+                    <tr>
+                        <td>FR-07</td>
+                        <td>System shall generate borrowing reports</td>
+                        <td>Low</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="key-concept">
+            <h3>Non-Functional Requirements (HOW the system performs)</h3>
+            <p>Define performance, security, and usability standards.</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Requirement</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Security</strong></td>
+                        <td>User passwords must be hashed using bcrypt</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Security</strong></td>
+                        <td>Only authenticated users can access the system</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Performance</strong></td>
+                        <td>Search results should load within 2 seconds</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Usability</strong></td>
+                        <td>Interface must be responsive (mobile and desktop)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Compatibility</strong></td>
+                        <td>Must work on Chrome, Firefox, Safari, Edge</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Reliability</strong></td>
+                        <td>System uptime should be 99% or higher</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>🗄️ Step 4: Database Design (ER Diagram)</h2>
+        
+        <div class="example">
+            <h3>Example Database Schema (Library System)</h3>
+            
+            <h4>Tables Needed:</h4>
+            <ol>
+                <li><strong>users</strong> - Store user accounts (students, librarians, admins)</li>
+                <li><strong>books</strong> - Store book information</li>
+                <li><strong>categories</strong> - Book categories (Fiction, Science, etc.)</li>
+                <li><strong>borrowings</strong> - Track who borrowed which book and when</li>
+                <li><strong>fines</strong> - Track overdue fines</li>
+            </ol>
+
+            <h4>Relationships:</h4>
+            <ul>
+                <li>users → borrowings (One-to-Many): One user can borrow many books</li>
+                <li>books → borrowings (One-to-Many): One book can have many borrowing records</li>
+                <li>categories → books (One-to-Many): One category has many books</li>
+                <li>borrowings → fines (One-to-One): One borrowing can have one fine</li>
+            </ul>
+
+            <h4>Sample Table Structure:</h4>
+            <pre><code>users
+-----
+id (PK)
+name
+email (unique)
+password
+role (student/librarian/admin)
+created_at
+
+books
+-----
+id (PK)
+title
+author
+isbn (unique)
+category_id (FK)
+quantity
+available_quantity
+cover_image
+created_at
+
+categories
+----------
+id (PK)
+name
+description
+
+borrowings
+----------
+id (PK)
+user_id (FK)
+book_id (FK)
+borrowed_date
+due_date
+return_date (nullable)
+status (borrowed/returned/overdue)
+
+fines
+-----
+id (PK)
+borrowing_id (FK)
+amount
+paid_at (nullable)
+status (pending/paid)</code></pre>
+        </div>
+
+        <h2>🎯 Step 5: Project Scope</h2>
+        
+        <div class="key-concept">
+            <h3>Defining Scope (What's IN and OUT)</h3>
+            
+            <h4>In Scope (What you WILL build):</h4>
+            <ul>
+                <li>✅ User authentication (registration, login, logout)</li>
+                <li>✅ Book catalog with search and filters</li>
+                <li>✅ Borrowing and return management</li>
+                <li>✅ Email notifications for due dates</li>
+                <li>✅ Admin dashboard for book management</li>
+                <li>✅ Borrowing history and reports</li>
+            </ul>
+
+            <h4>Out of Scope (What you WON'T build - to save time):</h4>
+            <ul>
+                <li>❌ Mobile app (web only)</li>
+                <li>❌ Online payment for fines (manual payment only)</li>
+                <li>❌ Real-time chat support</li>
+                <li>❌ Integration with external library systems</li>
+                <li>❌ Advanced analytics and AI recommendations</li>
+            </ul>
+        </div>
+
+        <div class="warning">
+            <strong>⚠️ Warning:</strong> Avoid scope creep! It's better to build a smaller system WELL than a large system POORLY.
+        </div>
+
+        <div class="exercise">
+            <h2>✏️ Today's Tasks</h2>
+            
+            <h3>Task 1: Write Your Problem Statement (20 minutes)</h3>
+            <p>Use the template provided to write a clear, concise problem statement for your project.</p>
+
+            <h3>Task 2: Create User Personas (30 minutes)</h3>
+            <p>Identify 2-3 types of users and create detailed personas for each.</p>
+
+            <h3>Task 3: Write User Stories (30 minutes)</h3>
+            <p>Write at least 10 user stories covering major features of your system.</p>
+
+            <h3>Task 4: List Requirements (40 minutes)</h3>
+            <ol>
+                <li>List 10-15 functional requirements</li>
+                <li>List 5-7 non-functional requirements</li>
+                <li>Prioritize each (High/Medium/Low)</li>
+            </ol>
+
+            <h3>Task 5: Design Database Schema (45 minutes)</h3>
+            <ol>
+                <li>Identify all tables needed</li>
+                <li>Define columns for each table</li>
+                <li>Identify relationships (One-to-Many, Many-to-Many)</li>
+                <li>Draw an ER diagram (use paper or draw.io)</li>
+            </ol>
+
+            <h3>Task 6: Define Scope (15 minutes)</h3>
+            <p>Clearly list what's IN scope and what's OUT of scope.</p>
+        </div>
+
+        <div class="deliverable">
+            <h2>📦 Deliverables</h2>
+            <h3>Submit before next class:</h3>
+            <ol>
+                <li><strong>Problem Statement Document:</strong> Clear problem definition with target users and solution</li>
+                <li><strong>User Personas:</strong> At least 2 detailed personas</li>
+                <li><strong>User Stories:</strong> Minimum 10 user stories</li>
+                <li><strong>Requirements Document:</strong>
+                    <ul>
+                        <li>10-15 functional requirements</li>
+                        <li>5-7 non-functional requirements</li>
+                    </ul>
+                </li>
+                <li><strong>ER Diagram:</strong> Database schema showing all tables and relationships</li>
+                <li><strong>Scope Document:</strong> Clear in-scope and out-of-scope lists</li>
+            </ol>
+        </div>
+
+        <div class="tip">
+            <strong>💡 Pro Tips:</strong>
+            <ul>
+                <li>Use <strong>draw.io</strong> (free) to create professional ER diagrams</li>
+                <li>Keep user stories short and focused on ONE feature</li>
+                <li>Review similar projects online for inspiration</li>
+                <li>Get feedback from instructor before finalizing</li>
+            </ul>
+        </div>
+
+        <div class="navigation">
+            <a href="day1-capstone-orientation.html" class="nav-button">← Previous: Orientation</a>
+            <a href="day3-proposal-writing.html" class="nav-button">Next: Proposal Writing →</a>
+        </div>
+    </div>
+</body>
+</html>

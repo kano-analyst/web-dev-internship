@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 15 Day 1: Database Migrations & Models</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #ff9a56 0%, #ff6a00 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        header { background: #ff6a00; color: white; padding: 30px; border-radius: 15px 15px 0 0; }
+        .content { padding: 40px; }
+        h2 { color: #ff6a00; border-bottom: 3px solid #ff9a56; padding-bottom: 10px; margin: 30px 0 20px; }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        .info-box { background: #fff3cd; border-left: 5px solid #ff6a00; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border: 1px solid #ddd; }
+        th { background: #ff6a00; color: white; }
+        .btn { background: #ff6a00; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 10px 10px 0; }
+        footer { background: #ff6a00; color: white; padding: 20px; text-align: center; border-radius: 0 0 15px 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Week 15 - Day 1: Database Migrations & Models</h1>
+            <p>Monday | Duration: 3 hours | Build Your Database Structure! 🗄️</p>
+        </header>
+
+        <div class="content">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Understand database migrations</li>
+                <li>Create and run migrations</li>
+                <li>Define table columns and data types</li>
+                <li>Create Eloquent models</li>
+                <li>Understand model conventions</li>
+            </ul>
+
+            <h2>📚 What are Migrations?</h2>
+            <div class="info-box">
+                <p><strong>Migrations</strong> are like version control for your database. They allow you to define and share the database schema with your team.</p>
+                <p><strong>Benefits:</strong> Easy rollback, consistent database structure, no manual SQL!</p>
+            </div>
+
+            <h2>🏗️ Creating Migrations</h2>
+            
+            <h3>Generate Migration:</h3>
+            <div class="code-block">
+# Create students table migration
+php artisan make:migration create_students_table
+
+# Output:
+# Created Migration: 2024_12_06_120000_create_students_table.php
+# Location: database/migrations/
+            </div>
+
+            <h3>Migration Structure:</h3>
+            <div class="code-block">
+&lt;?php
+// database/migrations/2024_12_06_120000_create_students_table.php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations - creates the table
+     */
+    public function up(): void
+    {
+        Schema::create('students', function (Blueprint $table) {
+            $table->id();  // Auto-increment primary key
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->string('phone');
+            $table->integer('age');
+            $table->string('course');
+            $table->timestamps();  // created_at, updated_at
+        });
+    }
+
+    /**
+     * Reverse the migrations - drops the table
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('students');
+    }
+};
+?&gt;
+            </div>
+
+            <h2>📊 Column Data Types</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Database Type</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>$table->id()</td>
+                        <td>BIGINT UNSIGNED</td>
+                        <td>Auto-increment primary key</td>
+                    </tr>
+                    <tr>
+                        <td>$table->string('name')</td>
+                        <td>VARCHAR(255)</td>
+                        <td>Text field (max 255 chars)</td>
+                    </tr>
+                    <tr>
+                        <td>$table->text('description')</td>
+                        <td>TEXT</td>
+                        <td>Long text field</td>
+                    </tr>
+                    <tr>
+                        <td>$table->integer('age')</td>
+                        <td>INT</td>
+                        <td>Whole number</td>
+                    </tr>
+                    <tr>
+                        <td>$table->decimal('price', 8, 2)</td>
+                        <td>DECIMAL</td>
+                        <td>Decimal number (8 digits, 2 after point)</td>
+                    </tr>
+                    <tr>
+                        <td>$table->boolean('active')</td>
+                        <td>TINYINT(1)</td>
+                        <td>True/False</td>
+                    </tr>
+                    <tr>
+                        <td>$table->date('birth_date')</td>
+                        <td>DATE</td>
+                        <td>Date only (YYYY-MM-DD)</td>
+                    </tr>
+                    <tr>
+                        <td>$table->timestamps()</td>
+                        <td>TIMESTAMP</td>
+                        <td>created_at & updated_at</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>⚙️ Column Modifiers</h2>
+            <div class="code-block">
+&lt;?php
+Schema::create('students', function (Blueprint $table) {
+    $table->id();
+    
+    // Required field (NOT NULL)
+    $table->string('name')->required();
+    
+    // Unique value
+    $table->string('email')->unique();
+    
+    // Optional field (can be NULL)
+    $table->string('phone')->nullable();
+    
+    // Default value
+    $table->boolean('active')->default(true);
+    
+    // Multiple modifiers
+    $table->string('username')->unique()->nullable();
+    
+    $table->timestamps();
+});
+?&gt;
+            </div>
+
+            <h2>▶️ Running Migrations</h2>
+            <div class="code-block">
+# Run all pending migrations
+php artisan migrate
+
+# Output:
+# Migrating: 2024_12_06_120000_create_students_table
+# Migrated:  2024_12_06_120000_create_students_table (45.23ms)
+
+# Rollback last migration
+php artisan migrate:rollback
+
+# Rollback all migrations
+php artisan migrate:reset
+
+# Rollback all and re-run
+php artisan migrate:refresh
+
+# Drop all tables and re-migrate (careful!)
+php artisan migrate:fresh
+            </div>
+
+            <h2>🎨 Complete Migration Example</h2>
+            <div class="code-block">
+&lt;?php
+// Create courses table
+php artisan make:migration create_courses_table
+
+// database/migrations/xxxx_create_courses_table.php
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('courses', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->text('description')->nullable();
+            $table->integer('duration_weeks');
+            $table->decimal('price', 10, 2)->default(0);
+            $table->boolean('is_active')->default(true);
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('courses');
+    }
+};
+?&gt;
+            </div>
+
+            <h2>🏛️ Eloquent Models</h2>
+            <div class="info-box">
+                <p><strong>Eloquent</strong> is Laravel's ORM (Object-Relational Mapping). Models represent database tables and allow you to interact with data using PHP objects.</p>
+            </div>
+
+            <h3>Creating Models:</h3>
+            <div class="code-block">
+# Create Student model
+php artisan make:model Student
+
+# Create model WITH migration
+php artisan make:model Course -m
+
+# Output:
+# Model created successfully: app/Models/Student.php
+# Migration: database/migrations/xxxx_create_courses_table.php
+            </div>
+
+            <h2>📦 Model Structure</h2>
+            <div class="code-block">
+&lt;?php
+// app/Models/Student.php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Student extends Model
+{
+    use HasFactory;
+    
+    // Table name (optional - Laravel auto-detects from model name)
+    protected $table = 'students';
+    
+    // Primary key (optional - defaults to 'id')
+    protected $primaryKey = 'id';
+    
+    // Mass assignable fields (for security)
+    protected $fillable = [
+        'name',
+        'email',
+        'phone',
+        'age',
+        'course'
+    ];
+    
+    // Hidden fields (won't show in JSON)
+    protected $hidden = [
+        'password',
+    ];
+    
+    // Disable timestamps if table doesn't have them
+    // public $timestamps = false;
+}
+?&gt;
+            </div>
+
+            <h2>📏 Model Naming Conventions</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Model Name</th>
+                        <th>Table Name</th>
+                        <th>Convention</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Student</td>
+                        <td>students</td>
+                        <td>Lowercase, plural</td>
+                    </tr>
+                    <tr>
+                        <td>Course</td>
+                        <td>courses</td>
+                        <td>Add 's'</td>
+                    </tr>
+                    <tr>
+                        <td>Category</td>
+                        <td>categories</td>
+                        <td>'y' becomes 'ies'</td>
+                    </tr>
+                    <tr>
+                        <td>Person</td>
+                        <td>people</td>
+                        <td>Irregular plural</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>💻 Complete Example: Blog System</h2>
+            
+            <h3>Step 1: Create Posts Migration & Model</h3>
+            <div class="code-block">
+php artisan make:model Post -m
+            </div>
+
+            <h3>Step 2: Define Migration</h3>
+            <div class="code-block">
+&lt;?php
+// database/migrations/xxxx_create_posts_table.php
+
+public function up(): void
+{
+    Schema::create('posts', function (Blueprint $table) {
+        $table->id();
+        $table->string('title');
+        $table->string('slug')->unique();
+        $table->text('content');
+        $table->string('author');
+        $table->integer('views')->default(0);
+        $table->boolean('published')->default(false);
+        $table->timestamps();
+    });
+}
+?&gt;
+            </div>
+
+            <h3>Step 3: Run Migration</h3>
+            <div class="code-block">
+php artisan migrate
+            </div>
+
+            <h3>Step 4: Configure Model</h3>
+            <div class="code-block">
+&lt;?php
+// app/Models/Post.php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Post extends Model
+{
+    protected $fillable = [
+        'title',
+        'slug',
+        'content',
+        'author',
+        'views',
+        'published'
+    ];
+    
+    // Cast to specific types
+    protected $casts = [
+        'published' => 'boolean',
+        'views' => 'integer',
+    ];
+}
+?&gt;
+            </div>
+
+            <h2>🔧 Modifying Existing Tables</h2>
+            <div class="code-block">
+# Add column to existing table
+php artisan make:migration add_address_to_students_table
+
+&lt;?php
+public function up(): void
+{
+    Schema::table('students', function (Blueprint $table) {
+        $table->text('address')->nullable()->after('phone');
+    });
+}
+
+public function down(): void
+{
+    Schema::table('students', function (Blueprint $table) {
+        $table->dropColumn('address');
+    });
+}
+?&gt;
+            </div>
+
+            <h2>✏️ Practice Exercises</h2>
+            <ol>
+                <li>Create a migration for 'products' table (name, price, stock, description)</li>
+                <li>Create a 'categories' migration with name and description</li>
+                <li>Run migrations and verify tables in phpMyAdmin</li>
+                <li>Create Product and Category models</li>
+                <li>Add 'image' column to products table using new migration</li>
+                <li>Practice rollback and refresh commands</li>
+            </ol>
+
+            <h2>✅ Today's Deliverable</h2>
+            <ul>
+                <li>✓ Understand migrations concept</li>
+                <li>✓ Create students table migration</li>
+                <li>✓ Create courses table migration</li>
+                <li>✓ Run migrations successfully</li>
+                <li>✓ Create Student and Course models</li>
+                <li>✓ Configure $fillable property</li>
+                <li>✓ Verify tables exist in phpMyAdmin</li>
+            </ul>
+
+            <div style="margin-top: 40px;">
+                <a href="../week14/day3-forms-validation.html" class="btn">← Previous</a>
+                <a href="../index.html" class="btn">Course Home</a>
+                <a href="day2-eloquent-crud.html" class="btn">Next →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Week 15 - Day 1: Database Migrations & Models</p>
+            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+        </footer>
+    </div>
+</body>
+</html>
