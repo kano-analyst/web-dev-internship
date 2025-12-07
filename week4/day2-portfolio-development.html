@@ -4,12 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Week 4 Day 2: Portfolio Development</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #10b981;
+            --secondary: #34d399;
+            --accent: #6ee7b7;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gradient-1: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            background: var(--gradient-1);
             padding: 20px;
         }
         .container {
@@ -20,32 +29,50 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.3);
             overflow: hidden;
         }
-        header { background: #1565c0; color: white; padding: 30px; }
-        .nav-breadcrumb {
-            background: #e3f2fd;
+        /* Top Navigation */
+        .top-nav {
+            background: var(--dark);
             padding: 15px 30px;
-            border-bottom: 2px solid #1976d2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .nav-breadcrumb a { color: #1565c0; text-decoration: none; margin-right: 10px; }
+        .top-nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            transition: color 0.3s;
+        }
+        .top-nav a:hover { color: var(--secondary); }
+        .top-nav i { margin-right: 5px; }
+        header { background: var(--gradient-1); color: white; padding: 30px; }
+        .nav-breadcrumb {
+            background: #ecfdf5;
+            padding: 15px 30px;
+            border-bottom: 2px solid var(--primary);
+        }
+        .nav-breadcrumb a { color: var(--primary); text-decoration: none; margin-right: 10px; }
+        .nav-breadcrumb i { margin: 0 5px; color: var(--secondary); }
         .content { padding: 40px; }
         .section { margin-bottom: 40px; }
         .section h2 {
-            color: #1565c0;
+            color: var(--primary);
             margin-bottom: 20px;
             padding-bottom: 10px;
-            border-bottom: 3px solid #1976d2;
+            border-bottom: 3px solid var(--secondary);
         }
-        .section h3 { color: #1976d2; margin: 20px 0 15px 0; }
+        .section h3 { color: var(--primary); margin: 20px 0 15px 0; }
+        .section h4 { color: var(--primary); margin: 15px 0 10px 0; font-size: 1.1em; }
         .info-box {
-            background: #e3f2fd;
-            border-left: 5px solid #1565c0;
+            background: #ecfdf5;
+            border-left: 5px solid var(--primary);
             padding: 20px;
             margin: 20px 0;
             border-radius: 5px;
         }
         .activity-box {
-            background: #f1f8e9;
-            border-left: 5px solid #4caf50;
+            background: #fef3c7;
+            border-left: 5px solid #f59e0b;
             padding: 20px;
             margin: 20px 0;
             border-radius: 5px;
@@ -58,14 +85,96 @@
             border-radius: 5px;
         }
         .code-block {
-            background: #2d2d2d;
-            color: #f8f8f2;
+            background: var(--dark);
+            color: var(--light);
             padding: 20px;
             border-radius: 8px;
             overflow-x: auto;
             margin: 20px 0;
             font-family: 'Courier New', monospace;
+            line-height: 1.8;
         }
+        .html-code {
+            background: var(--dark);
+            color: var(--light);
+            padding: 25px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Fira Code', 'Consolas', 'Courier New', monospace;
+            line-height: 2;
+            font-size: 14px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            border: 1px solid #334155;
+        }
+        .html-code .tag { color: #34d399; font-weight: 500; }
+        .html-code .attr { color: #60a5fa; font-weight: 400; }
+        .html-code .value { color: #fbbf24; font-weight: 400; }
+        .html-code .comment { color: #64748b; font-style: italic; opacity: 0.8; }
+        .css-code {
+            background: var(--dark);
+            color: var(--light);
+            padding: 25px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Fira Code', 'Consolas', 'Courier New', monospace;
+            line-height: 2;
+            font-size: 14px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            border: 1px solid #334155;
+        }
+        .css-code .selector { color: #fbbf24; font-weight: 500; }
+        .css-code .property { color: #60a5fa; font-weight: 400; padding-left: 20px; }
+        .css-code .value { color: #34d399; font-weight: 400; }
+        .css-code .comment { color: #64748b; font-style: italic; opacity: 0.8; }
+        
+        /* JavaScript Syntax */
+        .js-code {
+            background: var(--dark);
+            color: var(--light);
+            padding: 25px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Fira Code', 'Consolas', 'Courier New', monospace;
+            line-height: 2;
+            font-size: 14px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            border: 1px solid #334155;
+        }
+        .js-code .keyword { color: #c792ea; font-weight: 500; }
+        .js-code .function { color: #fbbf24; font-weight: 500; }
+        .js-code .string { color: #34d399; font-weight: 400; }
+        .js-code .variable { color: #60a5fa; font-weight: 400; }
+        .js-code .comment { color: #64748b; font-style: italic; opacity: 0.8; }
+        
+        /* Bash/Terminal Syntax */
+        .bash-code, .terminal-code {
+            background: var(--dark);
+            color: var(--light);
+            padding: 25px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Fira Code', 'Consolas', 'Courier New', monospace;
+            line-height: 2;
+            font-size: 14px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            border: 1px solid #334155;
+        }
+        .bash-code .command, .terminal-code .command { color: #34d399; font-weight: 500; }
+        .bash-code .flag, .terminal-code .flag { color: #60a5fa; font-weight: 400; }
+        .bash-code .string, .terminal-code .string { color: #fbbf24; font-weight: 400; }
+        .bash-code .comment, .terminal-code .comment { color: #64748b; font-style: italic; opacity: 0.8; }
+        .bash-code .prompt, .terminal-code .prompt { color: #10b981; font-weight: bold; }
+        
+        .line { display: block; padding: 2px 0; }
+        .indent-1 { padding-left: 20px; }
+        .indent-2 { padding-left: 40px; }
+        .indent-3 { padding-left: 60px; }
+        .indent-4 { padding-left: 80px; }
+        
         ul, ol { margin-left: 30px; margin-top: 10px; }
         li { margin-bottom: 10px; }
         .checklist { list-style: none; margin-left: 0; }
@@ -75,18 +184,34 @@
             font-weight: bold;
             margin-right: 10px;
         }
-        footer { background: #1565c0; color: white; padding: 20px; text-align: center; }
+        footer { background: var(--dark); color: white; padding: 20px; text-align: center; }
         .btn-primary {
-            background: #1565c0;
+            background: var(--primary);
             color: white;
             padding: 10px 20px;
             text-decoration: none;
             border-radius: 5px;
             display: inline-block;
             margin: 10px 10px 10px 0;
+            transition: background 0.3s;
+        }
+        .btn-primary:hover { background: var(--secondary); }
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px solid #e5e7eb;
+            flex-wrap: wrap;
+        }
+        .nav-buttons .btn-primary {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
         }
         .preview {
-            border: 2px solid #ddd;
+            border: 2px solid var(--secondary);
             padding: 20px;
             margin: 20px 0;
             background: #f9f9f9;
@@ -96,6 +221,17 @@
 </head>
 <body>
     <div class="container">
+        <nav class="top-nav">
+            <div>
+                <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+                <a href="day1-project-planning.html"><i class="fas fa-arrow-left"></i> Previous</a>
+                <a href="day3-project-review.html"><i class="fas fa-arrow-right"></i> Next</a>
+            </div>
+            <div>
+                <a href="https://github.com" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+            </div>
+        </nav>
+
         <header>
             <h1>📅 Week 4 - Day 2: Portfolio Development</h1>
             <p>Tuesday | Duration: 6 hours (Full Day)</p>
@@ -103,7 +239,11 @@
         </header>
 
         <div class="nav-breadcrumb">
-            <a href="../index.html">← Back to Course Home</a> / Week 4 / Day 2
+            <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>Week 4</span>
+            <i class="fas fa-chevron-right"></i>
+            <span>Day 2: Portfolio Development</span>
         </div>
 
         <div class="content">
@@ -145,886 +285,920 @@
             <div class="section">
                 <h2>💻 Complete HTML Structure</h2>
                 
-                <h3>index.html</h3>
-                <div class="code-block">
-&lt;!DOCTYPE html&gt;
-&lt;html lang="en"&gt;
-&lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
-    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
-    &lt;meta name="description" content="Portfolio of [Your Name] - Web Developer"&gt;
-    &lt;title&gt;[Your Name] | Web Developer Portfolio&lt;/title&gt;
-    &lt;link rel="stylesheet" href="style.css"&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;!-- Navigation --&gt;
-    &lt;nav class="navbar"&gt;
-        &lt;div class="nav-container"&gt;
-            &lt;div class="logo"&gt;
-                &lt;a href="#home"&gt;[Your Name]&lt;/a&gt;
-            &lt;/div&gt;
-            &lt;ul class="nav-menu"&gt;
-                &lt;li&gt;&lt;a href="#home" class="nav-link"&gt;Home&lt;/a&gt;&lt;/li&gt;
-                &lt;li&gt;&lt;a href="#about" class="nav-link"&gt;About&lt;/a&gt;&lt;/li&gt;
-                &lt;li&gt;&lt;a href="#skills" class="nav-link"&gt;Skills&lt;/a&gt;&lt;/li&gt;
-                &lt;li&gt;&lt;a href="#projects" class="nav-link"&gt;Projects&lt;/a&gt;&lt;/li&gt;
-                &lt;li&gt;&lt;a href="#contact" class="nav-link"&gt;Contact&lt;/a&gt;&lt;/li&gt;
-            &lt;/ul&gt;
-            &lt;div class="hamburger"&gt;
-                &lt;span&gt;&lt;/span&gt;
-                &lt;span&gt;&lt;/span&gt;
-                &lt;span&gt;&lt;/span&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/nav&gt;
+                <div class="info-box">
+                    <p><strong><i class="fas fa-code"></i> Complete HTML code for your portfolio website.</strong></p>
+                    <p>This code features IDE-style syntax highlighting with:</p>
+                    <ul style="margin-top: 10px;">
+                        <li><span style="color: #34d399; font-weight: 500;">Green</span> - HTML tags</li>
+                        <li><span style="color: #60a5fa;">Blue</span> - Attributes (class, href, id)</li>
+                        <li><span style="color: #fbbf24;">Yellow</span> - Attribute values</li>
+                        <li><span style="color: #64748b; font-style: italic;">Gray italic</span> - HTML comments</li>
+                    </ul>
+                    <p style="margin-top: 10px;"><strong>Tip:</strong> Copy this code into your own IDE to see it with full color coding!</p>
+                </div>
+                
+                <h3><i class="fas fa-file-code"></i> index.html</h3>
+                <div class="html-code">
+<span class="line"><span class="tag">&lt;!DOCTYPE html&gt;</span></span>
+<span class="line"><span class="tag">&lt;html</span> <span class="attr">lang</span>=<span class="value">"en"</span><span class="tag">&gt;</span></span>
+<span class="line"><span class="tag">&lt;head&gt;</span></span>
+<span class="line">    <span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="value">"UTF-8"</span><span class="tag">&gt;</span></span>
+<span class="line">    <span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="value">"viewport"</span> <span class="attr">content</span>=<span class="value">"width=device-width, initial-scale=1.0"</span><span class="tag">&gt;</span></span>
+<span class="line">    <span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="value">"description"</span> <span class="attr">content</span>=<span class="value">"Portfolio of [Your Name] - Web Developer"</span><span class="tag">&gt;</span></span>
+<span class="line">    <span class="tag">&lt;title&gt;</span>[Your Name] | Web Developer Portfolio<span class="tag">&lt;/title&gt;</span></span>
+<span class="line">    <span class="tag">&lt;link</span> <span class="attr">rel</span>=<span class="value">"stylesheet"</span> <span class="attr">href</span>=<span class="value">"style.css"</span><span class="tag">&gt;</span></span>
+<span class="line"><span class="tag">&lt;/head&gt;</span></span>
+<span class="line"><span class="tag">&lt;body&gt;</span></span>
+<span class="line">    <span class="comment">&lt;!-- Navigation --&gt;</span></span>
+<span class="line">    <span class="tag">&lt;nav</span> <span class="attr">class</span>=<span class="value">"navbar"</span><span class="tag">&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"nav-container"</span><span class="tag">&gt;</span></span>
+<span class="line">            <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"logo"</span><span class="tag">&gt;</span></span>
+<span class="line">                <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="value">"#home"</span><span class="tag">&gt;</span>[Your Name]<span class="tag">&lt;/a&gt;</span></span>
+<span class="line">            <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">            <span class="tag">&lt;ul</span> <span class="attr">class</span>=<span class="value">"nav-menu"</span><span class="tag">&gt;</span></span>
+<span class="line">                <span class="tag">&lt;li&gt;&lt;a</span> <span class="attr">href</span>=<span class="value">"#home"</span> <span class="attr">class</span>=<span class="value">"nav-link"</span><span class="tag">&gt;</span>Home<span class="tag">&lt;/a&gt;&lt;/li&gt;</span></span>
+<span class="line">                <span class="tag">&lt;li&gt;&lt;a</span> <span class="attr">href</span>=<span class="value">"#about"</span> <span class="attr">class</span>=<span class="value">"nav-link"</span><span class="tag">&gt;</span>About<span class="tag">&lt;/a&gt;&lt;/li&gt;</span></span>
+<span class="line">                <span class="tag">&lt;li&gt;&lt;a</span> <span class="attr">href</span>=<span class="value">"#skills"</span> <span class="attr">class</span>=<span class="value">"nav-link"</span><span class="tag">&gt;</span>Skills<span class="tag">&lt;/a&gt;&lt;/li&gt;</span></span>
+<span class="line">                <span class="tag">&lt;li&gt;&lt;a</span> <span class="attr">href</span>=<span class="value">"#projects"</span> <span class="attr">class</span>=<span class="value">"nav-link"</span><span class="tag">&gt;</span>Projects<span class="tag">&lt;/a&gt;&lt;/li&gt;</span></span>
+<span class="line">                <span class="tag">&lt;li&gt;&lt;a</span> <span class="attr">href</span>=<span class="value">"#contact"</span> <span class="attr">class</span>=<span class="value">"nav-link"</span><span class="tag">&gt;</span>Contact<span class="tag">&lt;/a&gt;&lt;/li&gt;</span></span>
+<span class="line">            <span class="tag">&lt;/ul&gt;</span></span>
+<span class="line">            <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"hamburger"</span><span class="tag">&gt;</span></span>
+<span class="line">                <span class="tag">&lt;span&gt;&lt;/span&gt;</span></span>
+<span class="line">                <span class="tag">&lt;span&gt;&lt;/span&gt;</span></span>
+<span class="line">                <span class="tag">&lt;span&gt;&lt;/span&gt;</span></span>
+<span class="line">            <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">    <span class="tag">&lt;/nav&gt;</span></span>
+<span class="line"></span>
+<span class="line">    <span class="comment">&lt;!-- Hero Section --&gt;</span></span>
+<span class="line">    <span class="tag">&lt;section</span> <span class="attr">id</span>=<span class="value">"home"</span> <span class="attr">class</span>=<span class="value">"hero"</span><span class="tag">&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"hero-content"</span><span class="tag">&gt;</span></span>
+<span class="line">            <span class="tag">&lt;h1</span> <span class="attr">class</span>=<span class="value">"hero-title"</span><span class="tag">&gt;</span>Hi, I'm <span class="tag">&lt;span</span> <span class="attr">class</span>=<span class="value">"highlight"</span><span class="tag">&gt;</span>[Your Name]<span class="tag">&lt;/span&gt;&lt;/h1&gt;</span></span>
+<span class="line">            <span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="value">"hero-subtitle"</span><span class="tag">&gt;</span>Junior Web Developer<span class="tag">&lt;/p&gt;</span></span>
+<span class="line">            <span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="value">"hero-description"</span><span class="tag">&gt;</span></span>
+<span class="line">                Building beautiful, responsive websites with HTML, CSS, and JavaScript</span>
+<span class="line">            <span class="tag">&lt;/p&gt;</span></span>
+<span class="line">            <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"hero-buttons"</span><span class="tag">&gt;</span></span>
+<span class="line">                <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="value">"#projects"</span> <span class="attr">class</span>=<span class="value">"btn btn-primary"</span><span class="tag">&gt;</span>View My Work<span class="tag">&lt;/a&gt;</span></span>
+<span class="line">                <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="value">"#contact"</span> <span class="attr">class</span>=<span class="value">"btn btn-secondary"</span><span class="tag">&gt;</span>Contact Me<span class="tag">&lt;/a&gt;</span></span>
+<span class="line">            <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">    <span class="tag">&lt;/section&gt;</span></span>
+<span class="line"></span>
+<span class="line">    <span class="comment">&lt;!-- About Section --&gt;</span></span>
+<span class="line">    <span class="tag">&lt;section</span> <span class="attr">id</span>=<span class="value">"about"</span> <span class="attr">class</span>=<span class="value">"about"</span><span class="tag">&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"container"</span><span class="tag">&gt;</span></span>
+<span class="line">            <span class="tag">&lt;h2</span> <span class="attr">class</span>=<span class="value">"section-title"</span><span class="tag">&gt;</span>About Me<span class="tag">&lt;/h2&gt;</span></span>
+<span class="line">            <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"about-content"</span><span class="tag">&gt;</span></span>
+<span class="line">                <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"about-image"</span><span class="tag">&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="value">"images/profile.jpg"</span> <span class="attr">alt</span>=<span class="value">"[Your Name]"</span><span class="tag">&gt;</span></span>
+<span class="line">                <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"about-text"</span><span class="tag">&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;h3&gt;</span>Hello! I'm a passionate web developer<span class="tag">&lt;/h3&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;p&gt;</span></span>
+<span class="line">                        I recently completed an intensive web development bootcamp at </span>
+<span class="line">                        Next-Step Technology, where I gained hands-on experience in </span>
+<span class="line">                        HTML5, CSS3, responsive design, and version control with Git.</span>
+<span class="line">                    <span class="tag">&lt;/p&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;p&gt;</span></span>
+<span class="line">                        I love creating clean, user-friendly websites that solve real </span>
+<span class="line">                        problems. I'm eager to apply my skills in a professional </span>
+<span class="line">                        environment and continue growing as a developer.</span>
+<span class="line">                    <span class="tag">&lt;/p&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"about-info"</span><span class="tag">&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;p&gt;&lt;strong&gt;</span>Location:<span class="tag">&lt;/strong&gt;</span> City, Country<span class="tag">&lt;/p&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;p&gt;&lt;strong&gt;</span>Education:<span class="tag">&lt;/strong&gt;</span> [Your Degree]<span class="tag">&lt;/p&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;p&gt;&lt;strong&gt;</span>Email:<span class="tag">&lt;/strong&gt;</span> your.email@example.com<span class="tag">&lt;/p&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">            <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">    <span class="tag">&lt;/section&gt;</span></span>
+<span class="line"></span>
+<span class="line">    <span class="comment">&lt;!-- Skills Section --&gt;</span></span>
+<span class="line">    <span class="tag">&lt;section</span> <span class="attr">id</span>=<span class="value">"skills"</span> <span class="attr">class</span>=<span class="value">"skills"</span><span class="tag">&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"container"</span><span class="tag">&gt;</span></span>
+<span class="line">            <span class="tag">&lt;h2</span> <span class="attr">class</span>=<span class="value">"section-title"</span><span class="tag">&gt;</span>My Skills<span class="tag">&lt;/h2&gt;</span></span>
+<span class="line">            <span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="value">"section-description"</span><span class="tag">&gt;</span></span>
+<span class="line">                Technologies and tools I've worked with</span>
+<span class="line">            <span class="tag">&lt;/p&gt;</span></span>
+<span class="line">            <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"skills-grid"</span><span class="tag">&gt;</span></span>
+<span class="line">                <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"skill-card"</span><span class="tag">&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"skill-icon"</span><span class="tag">&gt;</span>📄<span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;h3&gt;</span>HTML5<span class="tag">&lt;/h3&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;p&gt;</span>Semantic markup, accessibility, SEO best practices<span class="tag">&lt;/p&gt;</span></span>
+<span class="line">                <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"skill-card"</span><span class="tag">&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"skill-icon"</span><span class="tag">&gt;</span>🎨<span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;h3&gt;</span>CSS3<span class="tag">&lt;/h3&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;p&gt;</span>Flexbox, Grid, animations, responsive design<span class="tag">&lt;/p&gt;</span></span>
+<span class="line">                <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"skill-card"</span><span class="tag">&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"skill-icon"</span><span class="tag">&gt;</span>📱<span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;h3&gt;</span>Responsive Design<span class="tag">&lt;/h3&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;p&gt;</span>Mobile-first approach, media queries, breakpoints<span class="tag">&lt;/p&gt;</span></span>
+<span class="line">                <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"skill-card"</span><span class="tag">&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"skill-icon"</span><span class="tag">&gt;</span>🔧<span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;h3&gt;</span>Git & GitHub<span class="tag">&lt;/h3&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;p&gt;</span>Version control, branching, collaboration<span class="tag">&lt;/p&gt;</span></span>
+<span class="line">                <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"skill-card"</span><span class="tag">&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"skill-icon"</span><span class="tag">&gt;</span>💻<span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;h3&gt;</span>VS Code<span class="tag">&lt;/h3&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;p&gt;</span>Efficient workflow, extensions, debugging<span class="tag">&lt;/p&gt;</span></span>
+<span class="line">                <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"skill-card"</span><span class="tag">&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"skill-icon"</span><span class="tag">&gt;</span>🎯<span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;h3&gt;</span>Problem Solving<span class="tag">&lt;/h3&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;p&gt;</span>Debugging, optimization, critical thinking<span class="tag">&lt;/p&gt;</span></span>
+<span class="line">                <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">            <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">    <span class="tag">&lt;/section&gt;</span></span>
 
-    &lt;!-- Hero Section --&gt;
-    &lt;section id="home" class="hero"&gt;
-        &lt;div class="hero-content"&gt;
-            &lt;h1 class="hero-title"&gt;Hi, I'm &lt;span class="highlight"&gt;[Your Name]&lt;/span&gt;&lt;/h1&gt;
-            &lt;p class="hero-subtitle"&gt;Junior Web Developer&lt;/p&gt;
-            &lt;p class="hero-description"&gt;
-                Building beautiful, responsive websites with HTML, CSS, and JavaScript
-            &lt;/p&gt;
-            &lt;div class="hero-buttons"&gt;
-                &lt;a href="#projects" class="btn btn-primary"&gt;View My Work&lt;/a&gt;
-                &lt;a href="#contact" class="btn btn-secondary"&gt;Contact Me&lt;/a&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/section&gt;
+<span class="line"></span>
+<span class="line">    <span class="comment">&lt;!-- Projects Section --&gt;</span></span>
+<span class="line">    <span class="tag">&lt;section</span> <span class="attr">id</span>=<span class="value">"projects"</span> <span class="attr">class</span>=<span class="value">"projects"</span><span class="tag">&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"container"</span><span class="tag">&gt;</span></span>
+<span class="line">            <span class="tag">&lt;h2</span> <span class="attr">class</span>=<span class="value">"section-title"</span><span class="tag">&gt;</span>My Projects<span class="tag">&lt;/h2&gt;</span></span>
+<span class="line">            <span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="value">"section-description"</span><span class="tag">&gt;</span></span>
+<span class="line">                Here are some projects I've built during my learning journey</span>
+<span class="line">            <span class="tag">&lt;/p&gt;</span></span>
+<span class="line">            <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"projects-grid"</span><span class="tag">&gt;</span></span>
+<span class="line">                <span class="comment">&lt;!-- Project 1 --&gt;</span></span>
+<span class="line">                <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"project-card"</span><span class="tag">&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"project-image"</span><span class="tag">&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="value">"images/project1.png"</span> <span class="attr">alt</span>=<span class="value">"Student Registration Form"</span><span class="tag">&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"project-overlay"</span><span class="tag">&gt;</span></span>
+<span class="line">                            <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="value">"#"</span> <span class="attr">class</span>=<span class="value">"btn-small"</span><span class="tag">&gt;</span>View Code<span class="tag">&lt;/a&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"project-content"</span><span class="tag">&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;h3&gt;</span>Student Registration Form<span class="tag">&lt;/h3&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;p&gt;</span></span>
+<span class="line">                            Fully responsive registration form with custom styling </span>
+<span class="line">                            and form validation</span>
+<span class="line">                        <span class="tag">&lt;/p&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"project-tags"</span><span class="tag">&gt;</span></span>
+<span class="line">                            <span class="tag">&lt;span&gt;</span>HTML<span class="tag">&lt;/span&gt;</span></span>
+<span class="line">                            <span class="tag">&lt;span&gt;</span>CSS<span class="tag">&lt;/span&gt;</span></span>
+<span class="line">                            <span class="tag">&lt;span&gt;</span>Forms<span class="tag">&lt;/span&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                <span class="tag">&lt;/div&gt;</span></span>
+<span class="line"></span>
+<span class="line">                <span class="comment">&lt;!-- Project 2 --&gt;</span></span>
+<span class="line">                <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"project-card"</span><span class="tag">&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"project-image"</span><span class="tag">&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="value">"images/project2.png"</span> <span class="attr">alt</span>=<span class="value">"Responsive Landing Page"</span><span class="tag">&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"project-overlay"</span><span class="tag">&gt;</span></span>
+<span class="line">                            <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="value">"#"</span> <span class="attr">class</span>=<span class="value">"btn-small"</span><span class="tag">&gt;</span>View Code<span class="tag">&lt;/a&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"project-content"</span><span class="tag">&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;h3&gt;</span>Responsive Landing Page<span class="tag">&lt;/h3&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;p&gt;</span></span>
+<span class="line">                            Modern landing page with mobile-first responsive design </span>
+<span class="line">                            and smooth animations</span>
+<span class="line">                        <span class="tag">&lt;/p&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"project-tags"</span><span class="tag">&gt;</span></span>
+<span class="line">                            <span class="tag">&lt;span&gt;</span>HTML<span class="tag">&lt;/span&gt;</span></span>
+<span class="line">                            <span class="tag">&lt;span&gt;</span>CSS<span class="tag">&lt;/span&gt;</span></span>
+<span class="line">                            <span class="tag">&lt;span&gt;</span>Responsive<span class="tag">&lt;/span&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                <span class="tag">&lt;/div&gt;</span></span>
+<span class="line"></span>
+<span class="line">                <span class="comment">&lt;!-- Project 3 --&gt;</span></span>
+<span class="line">                <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"project-card"</span><span class="tag">&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"project-image"</span><span class="tag">&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="value">"images/project3.png"</span> <span class="attr">alt</span>=<span class="value">"Portfolio Website"</span><span class="tag">&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"project-overlay"</span><span class="tag">&gt;</span></span>
+<span class="line">                            <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="value">"#"</span> <span class="attr">class</span>=<span class="value">"btn-small"</span><span class="tag">&gt;</span>View Code<span class="tag">&lt;/a&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"project-content"</span><span class="tag">&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;h3&gt;</span>Personal Portfolio<span class="tag">&lt;/h3&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;p&gt;</span></span>
+<span class="line">                            This website! Built from scratch to showcase my work </span>
+<span class="line">                            and skills</span>
+<span class="line">                        <span class="tag">&lt;/p&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"project-tags"</span><span class="tag">&gt;</span></span>
+<span class="line">                            <span class="tag">&lt;span&gt;</span>HTML<span class="tag">&lt;/span&gt;</span></span>
+<span class="line">                            <span class="tag">&lt;span&gt;</span>CSS<span class="tag">&lt;/span&gt;</span></span>
+<span class="line">                            <span class="tag">&lt;span&gt;</span>Design<span class="tag">&lt;/span&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">            <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">    <span class="tag">&lt;/section&gt;</span></span>
 
-    &lt;!-- About Section --&gt;
-    &lt;section id="about" class="about"&gt;
-        &lt;div class="container"&gt;
-            &lt;h2 class="section-title"&gt;About Me&lt;/h2&gt;
-            &lt;div class="about-content"&gt;
-                &lt;div class="about-image"&gt;
-                    &lt;img src="images/profile.jpg" alt="[Your Name]"&gt;
-                &lt;/div&gt;
-                &lt;div class="about-text"&gt;
-                    &lt;h3&gt;Hello! I'm a passionate web developer&lt;/h3&gt;
-                    &lt;p&gt;
-                        I recently completed an intensive web development bootcamp at 
-                        Next-Step Technology, where I gained hands-on experience in 
-                        HTML5, CSS3, responsive design, and version control with Git.
-                    &lt;/p&gt;
-                    &lt;p&gt;
-                        I love creating clean, user-friendly websites that solve real 
-                        problems. I'm eager to apply my skills in a professional 
-                        environment and continue growing as a developer.
-                    &lt;/p&gt;
-                    &lt;div class="about-info"&gt;
-                        &lt;p&gt;&lt;strong&gt;Location:&lt;/strong&gt; City, Country&lt;/p&gt;
-                        &lt;p&gt;&lt;strong&gt;Education:&lt;/strong&gt; [Your Degree]&lt;/p&gt;
-                        &lt;p&gt;&lt;strong&gt;Email:&lt;/strong&gt; your.email@example.com&lt;/p&gt;
-                    &lt;/div&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/section&gt;
+<span class="line"></span>
+<span class="line">    <span class="comment">&lt;!-- Contact Section --&gt;</span></span>
+<span class="line">    <span class="tag">&lt;section</span> <span class="attr">id</span>=<span class="value">"contact"</span> <span class="attr">class</span>=<span class="value">"contact"</span><span class="tag">&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"container"</span><span class="tag">&gt;</span></span>
+<span class="line">            <span class="tag">&lt;h2</span> <span class="attr">class</span>=<span class="value">"section-title"</span><span class="tag">&gt;</span>Get In Touch<span class="tag">&lt;/h2&gt;</span></span>
+<span class="line">            <span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="value">"section-description"</span><span class="tag">&gt;</span></span>
+<span class="line">                Have a project in mind? Let's work together!</span>
+<span class="line">            <span class="tag">&lt;/p&gt;</span></span>
+<span class="line">            <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"contact-content"</span><span class="tag">&gt;</span></span>
+<span class="line">                <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"contact-form"</span><span class="tag">&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;form&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"form-group"</span><span class="tag">&gt;</span></span>
+<span class="line">                            <span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="value">"name"</span><span class="tag">&gt;</span>Name<span class="tag">&lt;/label&gt;</span></span>
+<span class="line">                            <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="value">"text"</span> <span class="attr">id</span>=<span class="value">"name"</span> <span class="attr">name</span>=<span class="value">"name"</span> <span class="attr">required</span><span class="tag">&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"form-group"</span><span class="tag">&gt;</span></span>
+<span class="line">                            <span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="value">"email"</span><span class="tag">&gt;</span>Email<span class="tag">&lt;/label&gt;</span></span>
+<span class="line">                            <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="value">"email"</span> <span class="attr">id</span>=<span class="value">"email"</span> <span class="attr">name</span>=<span class="value">"email"</span> <span class="attr">required</span><span class="tag">&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"form-group"</span><span class="tag">&gt;</span></span>
+<span class="line">                            <span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="value">"message"</span><span class="tag">&gt;</span>Message<span class="tag">&lt;/label&gt;</span></span>
+<span class="line">                            <span class="tag">&lt;textarea</span> <span class="attr">id</span>=<span class="value">"message"</span> <span class="attr">name</span>=<span class="value">"message"</span> <span class="attr">rows</span>=<span class="value">"5"</span> <span class="attr">required</span><span class="tag">&gt;&lt;/textarea&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;button</span> <span class="attr">type</span>=<span class="value">"submit"</span> <span class="attr">class</span>=<span class="value">"btn btn-primary"</span><span class="tag">&gt;</span>Send Message<span class="tag">&lt;/button&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;/form&gt;</span></span>
+<span class="line">                <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"contact-info"</span><span class="tag">&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;h3&gt;</span>Contact Information<span class="tag">&lt;/h3&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"contact-item"</span><span class="tag">&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;p&gt;</span>📧 your.email@example.com<span class="tag">&lt;/p&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"contact-item"</span><span class="tag">&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;p&gt;</span>📍 City, Country<span class="tag">&lt;/p&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"social-links"</span><span class="tag">&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;h3&gt;</span>Follow Me<span class="tag">&lt;/h3&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="value">"#"</span> <span class="attr">class</span>=<span class="value">"social-link"</span><span class="tag">&gt;</span>GitHub<span class="tag">&lt;/a&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="value">"#"</span> <span class="attr">class</span>=<span class="value">"social-link"</span><span class="tag">&gt;</span>LinkedIn<span class="tag">&lt;/a&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="value">"#"</span> <span class="attr">class</span>=<span class="value">"social-link"</span><span class="tag">&gt;</span>Twitter<span class="tag">&lt;/a&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">            <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">    <span class="tag">&lt;/section&gt;</span></span>
+<span class="line"></span>
+<span class="line">    <span class="comment">&lt;!-- Footer --&gt;</span></span>
+<span class="line">    <span class="tag">&lt;footer</span> <span class="attr">class</span>=<span class="value">"footer"</span><span class="tag">&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"container"</span><span class="tag">&gt;</span></span>
+<span class="line">            <span class="tag">&lt;p&gt;</span>&amp;copy; 2025 [Your Name]. All rights reserved.<span class="tag">&lt;/p&gt;</span></span>
+<span class="line">            <span class="tag">&lt;p&gt;</span>Built with ❤️ using HTML & CSS<span class="tag">&lt;/p&gt;</span></span>
+<span class="line">        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">    <span class="tag">&lt;/footer&gt;</span></span>
 
-    &lt;!-- Skills Section --&gt;
-    &lt;section id="skills" class="skills"&gt;
-        &lt;div class="container"&gt;
-            &lt;h2 class="section-title"&gt;My Skills&lt;/h2&gt;
-            &lt;p class="section-description"&gt;
-                Technologies and tools I've worked with
-            &lt;/p&gt;
-            &lt;div class="skills-grid"&gt;
-                &lt;div class="skill-card"&gt;
-                    &lt;div class="skill-icon"&gt;📄&lt;/div&gt;
-                    &lt;h3&gt;HTML5&lt;/h3&gt;
-                    &lt;p&gt;Semantic markup, accessibility, SEO best practices&lt;/p&gt;
-                &lt;/div&gt;
-                &lt;div class="skill-card"&gt;
-                    &lt;div class="skill-icon"&gt;🎨&lt;/div&gt;
-                    &lt;h3&gt;CSS3&lt;/h3&gt;
-                    &lt;p&gt;Flexbox, Grid, animations, responsive design&lt;/p&gt;
-                &lt;/div&gt;
-                &lt;div class="skill-card"&gt;
-                    &lt;div class="skill-icon"&gt;📱&lt;/div&gt;
-                    &lt;h3&gt;Responsive Design&lt;/h3&gt;
-                    &lt;p&gt;Mobile-first approach, media queries, breakpoints&lt;/p&gt;
-                &lt;/div&gt;
-                &lt;div class="skill-card"&gt;
-                    &lt;div class="skill-icon"&gt;🔧&lt;/div&gt;
-                    &lt;h3&gt;Git & GitHub&lt;/h3&gt;
-                    &lt;p&gt;Version control, branching, collaboration&lt;/p&gt;
-                &lt;/div&gt;
-                &lt;div class="skill-card"&gt;
-                    &lt;div class="skill-icon"&gt;💻&lt;/div&gt;
-                    &lt;h3&gt;VS Code&lt;/h3&gt;
-                    &lt;p&gt;Efficient workflow, extensions, debugging&lt;/p&gt;
-                &lt;/div&gt;
-                &lt;div class="skill-card"&gt;
-                    &lt;div class="skill-icon"&gt;🎯&lt;/div&gt;
-                    &lt;h3&gt;Problem Solving&lt;/h3&gt;
-                    &lt;p&gt;Debugging, optimization, critical thinking&lt;/p&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/section&gt;
-
-    &lt;!-- Projects Section --&gt;
-    &lt;section id="projects" class="projects"&gt;
-        &lt;div class="container"&gt;
-            &lt;h2 class="section-title"&gt;My Projects&lt;/h2&gt;
-            &lt;p class="section-description"&gt;
-                Here are some projects I've built during my learning journey
-            &lt;/p&gt;
-            &lt;div class="projects-grid"&gt;
-                &lt;!-- Project 1 --&gt;
-                &lt;div class="project-card"&gt;
-                    &lt;div class="project-image"&gt;
-                        &lt;img src="images/project1.png" alt="Student Registration Form"&gt;
-                        &lt;div class="project-overlay"&gt;
-                            &lt;a href="#" class="btn-small"&gt;View Code&lt;/a&gt;
-                        &lt;/div&gt;
-                    &lt;/div&gt;
-                    &lt;div class="project-content"&gt;
-                        &lt;h3&gt;Student Registration Form&lt;/h3&gt;
-                        &lt;p&gt;
-                            Fully responsive registration form with custom styling 
-                            and form validation
-                        &lt;/p&gt;
-                        &lt;div class="project-tags"&gt;
-                            &lt;span&gt;HTML&lt;/span&gt;
-                            &lt;span&gt;CSS&lt;/span&gt;
-                            &lt;span&gt;Forms&lt;/span&gt;
-                        &lt;/div&gt;
-                    &lt;/div&gt;
-                &lt;/div&gt;
-
-                &lt;!-- Project 2 --&gt;
-                &lt;div class="project-card"&gt;
-                    &lt;div class="project-image"&gt;
-                        &lt;img src="images/project2.png" alt="Responsive Landing Page"&gt;
-                        &lt;div class="project-overlay"&gt;
-                            &lt;a href="#" class="btn-small"&gt;View Code&lt;/a&gt;
-                        &lt;/div&gt;
-                    &lt;/div&gt;
-                    &lt;div class="project-content"&gt;
-                        &lt;h3&gt;Responsive Landing Page&lt;/h3&gt;
-                        &lt;p&gt;
-                            Modern landing page with mobile-first responsive design 
-                            and smooth animations
-                        &lt;/p&gt;
-                        &lt;div class="project-tags"&gt;
-                            &lt;span&gt;HTML&lt;/span&gt;
-                            &lt;span&gt;CSS&lt;/span&gt;
-                            &lt;span&gt;Responsive&lt;/span&gt;
-                        &lt;/div&gt;
-                    &lt;/div&gt;
-                &lt;/div&gt;
-
-                &lt;!-- Project 3 --&gt;
-                &lt;div class="project-card"&gt;
-                    &lt;div class="project-image"&gt;
-                        &lt;img src="images/project3.png" alt="Portfolio Website"&gt;
-                        &lt;div class="project-overlay"&gt;
-                            &lt;a href="#" class="btn-small"&gt;View Code&lt;/a&gt;
-                        &lt;/div&gt;
-                    &lt;/div&gt;
-                    &lt;div class="project-content"&gt;
-                        &lt;h3&gt;Personal Portfolio&lt;/h3&gt;
-                        &lt;p&gt;
-                            This website! Built from scratch to showcase my work 
-                            and skills
-                        &lt;/p&gt;
-                        &lt;div class="project-tags"&gt;
-                            &lt;span&gt;HTML&lt;/span&gt;
-                            &lt;span&gt;CSS&lt;/span&gt;
-                            &lt;span&gt;Design&lt;/span&gt;
-                        &lt;/div&gt;
-                    &lt;/div&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/section&gt;
-
-    &lt;!-- Contact Section --&gt;
-    &lt;section id="contact" class="contact"&gt;
-        &lt;div class="container"&gt;
-            &lt;h2 class="section-title"&gt;Get In Touch&lt;/h2&gt;
-            &lt;p class="section-description"&gt;
-                Have a project in mind? Let's work together!
-            &lt;/p&gt;
-            &lt;div class="contact-content"&gt;
-                &lt;div class="contact-form"&gt;
-                    &lt;form&gt;
-                        &lt;div class="form-group"&gt;
-                            &lt;label for="name"&gt;Name&lt;/label&gt;
-                            &lt;input type="text" id="name" name="name" required&gt;
-                        &lt;/div&gt;
-                        &lt;div class="form-group"&gt;
-                            &lt;label for="email"&gt;Email&lt;/label&gt;
-                            &lt;input type="email" id="email" name="email" required&gt;
-                        &lt;/div&gt;
-                        &lt;div class="form-group"&gt;
-                            &lt;label for="message"&gt;Message&lt;/label&gt;
-                            &lt;textarea id="message" name="message" rows="5" required&gt;&lt;/textarea&gt;
-                        &lt;/div&gt;
-                        &lt;button type="submit" class="btn btn-primary"&gt;Send Message&lt;/button&gt;
-                    &lt;/form&gt;
-                &lt;/div&gt;
-                &lt;div class="contact-info"&gt;
-                    &lt;h3&gt;Contact Information&lt;/h3&gt;
-                    &lt;div class="contact-item"&gt;
-                        &lt;p&gt;📧 your.email@example.com&lt;/p&gt;
-                    &lt;/div&gt;
-                    &lt;div class="contact-item"&gt;
-                        &lt;p&gt;📍 City, Country&lt;/p&gt;
-                    &lt;/div&gt;
-                    &lt;div class="social-links"&gt;
-                        &lt;h3&gt;Follow Me&lt;/h3&gt;
-                        &lt;a href="#" class="social-link"&gt;GitHub&lt;/a&gt;
-                        &lt;a href="#" class="social-link"&gt;LinkedIn&lt;/a&gt;
-                        &lt;a href="#" class="social-link"&gt;Twitter&lt;/a&gt;
-                    &lt;/div&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/section&gt;
-
-    &lt;!-- Footer --&gt;
-    &lt;footer class="footer"&gt;
-        &lt;div class="container"&gt;
-            &lt;p&gt;&amp;copy; 2025 [Your Name]. All rights reserved.&lt;/p&gt;
-            &lt;p&gt;Built with ❤️ using HTML & CSS&lt;/p&gt;
-        &lt;/div&gt;
-    &lt;/footer&gt;
-
-    &lt;script&gt;
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        // Mobile menu toggle
-        const hamburger = document.querySelector('.hamburger');
-        const navMenu = document.querySelector('.nav-menu');
-        
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
-        });
-
-        // Close menu when clicking a link
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                navMenu.classList.remove('active');
-            });
-        });
-    &lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;
+<span class="line"></span>
+<span class="line">    <span class="tag">&lt;script&gt;</span></span>
+<span class="line">        <span class="comment">// Smooth scrolling</span></span>
+<span class="line">        document.<span class="function">querySelectorAll</span>(<span class="string">'a[href^="#"]'</span>).<span class="function">forEach</span>(<span class="variable">anchor</span> => {</span>
+<span class="line">            <span class="variable">anchor</span>.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span> (<span class="variable">e</span>) {</span>
+<span class="line">                <span class="variable">e</span>.<span class="function">preventDefault</span>();</span>
+<span class="line">                document.<span class="function">querySelector</span>(<span class="keyword">this</span>.<span class="function">getAttribute</span>(<span class="string">'href'</span>)).<span class="function">scrollIntoView</span>({</span>
+<span class="line">                    <span class="property">behavior</span>: <span class="string">'smooth'</span></span>
+<span class="line">                });</span>
+<span class="line">            });</span>
+<span class="line">        });</span>
+<span class="line"></span>
+<span class="line">        <span class="comment">// Mobile menu toggle</span></span>
+<span class="line">        <span class="keyword">const</span> <span class="variable">hamburger</span> = document.<span class="function">querySelector</span>(<span class="string">'.hamburger'</span>);</span>
+<span class="line">        <span class="keyword">const</span> <span class="variable">navMenu</span> = document.<span class="function">querySelector</span>(<span class="string">'.nav-menu'</span>);</span>
+<span class="line">        </span>
+<span class="line">        <span class="variable">hamburger</span>.<span class="function">addEventListener</span>(<span class="string">'click'</span>, () => {</span>
+<span class="line">            <span class="variable">hamburger</span>.classList.<span class="function">toggle</span>(<span class="string">'active'</span>);</span>
+<span class="line">            <span class="variable">navMenu</span>.classList.<span class="function">toggle</span>(<span class="string">'active'</span>);</span>
+<span class="line">        });</span>
+<span class="line"></span>
+<span class="line">        <span class="comment">// Close menu when clicking a link</span></span>
+<span class="line">        document.<span class="function">querySelectorAll</span>(<span class="string">'.nav-link'</span>).<span class="function">forEach</span>(<span class="variable">link</span> => {</span>
+<span class="line">            <span class="variable">link</span>.<span class="function">addEventListener</span>(<span class="string">'click'</span>, () => {</span>
+<span class="line">                <span class="variable">hamburger</span>.classList.<span class="function">remove</span>(<span class="string">'active'</span>);</span>
+<span class="line">                <span class="variable">navMenu</span>.classList.<span class="function">remove</span>(<span class="string">'active'</span>);</span>
+<span class="line">            });</span>
+<span class="line">        });</span>
+<span class="line">    <span class="tag">&lt;/script&gt;</span></span>
+<span class="line"><span class="tag">&lt;/body&gt;</span></span>
+<span class="line"><span class="tag">&lt;/html&gt;</span></span>
                 </div>
             </div>
 
             <div class="section">
                 <h2>🎨 Complete CSS Styling</h2>
                 
-                <h3>style.css (Part 1: Base & Layout)</h3>
-                <div class="code-block">
-/* ========== CSS Variables ========== */
-:root {
-    --primary-color: #1565c0;
-    --secondary-color: #1976d2;
-    --dark-color: #0d47a1;
-    --light-color: #e3f2fd;
-    --text-dark: #333;
-    --text-light: #666;
-    --white: #ffffff;
-    --success: #4caf50;
-    --shadow: 0 4px 6px rgba(0,0,0,0.1);
-    --shadow-hover: 0 6px 12px rgba(0,0,0,0.15);
-}
-
-/* ========== Reset & Base ========== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
-    color: var(--text-dark);
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-/* ========== Typography ========== */
-h1, h2, h3, h4, h5, h6 {
-    margin-bottom: 1rem;
-    line-height: 1.2;
-}
-
-h1 { font-size: 3rem; }
-h2 { font-size: 2.5rem; }
-h3 { font-size: 1.8rem; }
-
-.section-title {
-    text-align: center;
-    color: var(--primary-color);
-    margin-bottom: 1rem;
-    font-size: 2.5rem;
-}
-
-.section-description {
-    text-align: center;
-    color: var(--text-light);
-    margin-bottom: 3rem;
-    font-size: 1.1rem;
-}
-
-/* ========== Navigation ========== */
-.navbar {
-    background: var(--white);
-    box-shadow: var(--shadow);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-.nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 1rem 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo a {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: var(--primary-color);
-    text-decoration: none;
-}
-
-.nav-menu {
-    display: flex;
-    list-style: none;
-    gap: 2rem;
-}
-
-.nav-link {
-    color: var(--text-dark);
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s;
-}
-
-.nav-link:hover {
-    color: var(--primary-color);
-}
-
-.hamburger {
-    display: none;
-    flex-direction: column;
-    cursor: pointer;
-}
-
-.hamburger span {
-    width: 25px;
-    height: 3px;
-    background: var(--text-dark);
-    margin: 3px 0;
-    transition: 0.3s;
-}
-
-/* ========== Hero Section ========== */
-.hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    color: var(--white);
-    text-align: center;
-    padding: 2rem;
-}
-
-.hero-title {
-    font-size: 3.5rem;
-    margin-bottom: 1rem;
-    animation: fadeInDown 1s;
-}
-
-.highlight {
-    color: #ffd700;
-}
-
-.hero-subtitle {
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-    animation: fadeInUp 1s 0.2s backwards;
-}
-
-.hero-description {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    animation: fadeInUp 1s 0.4s backwards;
-}
-
-.hero-buttons {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    animation: fadeInUp 1s 0.6s backwards;
-}
-
-/* ========== Buttons ========== */
-.btn {
-    display: inline-block;
-    padding: 12px 30px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: all 0.3s;
-}
-
-.btn-primary {
-    background: var(--white);
-    color: var(--primary-color);
-}
-
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-hover);
-}
-
-.btn-secondary {
-    background: transparent;
-    color: var(--white);
-    border: 2px solid var(--white);
-}
-
-.btn-secondary:hover {
-    background: var(--white);
-    color: var(--primary-color);
-}
-
-.btn-small {
-    padding: 8px 20px;
-    font-size: 0.9rem;
-}
-
-/* ========== Animations ========== */
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+                <div class="info-box">
+                    <p><strong><i class="fas fa-palette"></i> Complete CSS code for your portfolio website.</strong></p>
+                    <p>This is organized into three parts for easier understanding. Code features IDE-style syntax highlighting:</p>
+                    <ul style="margin-top: 10px;">
+                        <li><span style="color: #fbbf24; font-weight: 500;">Yellow</span> - CSS selectors (.class, #id, element)</li>
+                        <li><span style="color: #60a5fa;">Blue</span> - CSS properties (color, padding, margin)</li>
+                        <li><span style="color: #34d399;">Green</span> - CSS values (#fff, 20px, flex)</li>
+                        <li><span style="color: #64748b; font-style: italic;">Gray italic</span> - CSS comments</li>
+                    </ul>
+                    <p style="margin-top: 10px;"><strong>Tip:</strong> Properties are indented with 20px padding for better readability!</p>
+                </div>
+                
+                <h3><i class="fas fa-file-code"></i> style.css (Part 1: Base & Layout)</h3>
+                <div class="css-code">
+<span class="line"><span class="comment">/* ========== CSS Variables ========== */</span></span>
+<span class="line"><span class="selector">:root</span> {</span>
+<span class="line">    <span class="property">--primary-color</span>: <span class="value">#1565c0</span>;</span>
+<span class="line">    <span class="property">--secondary-color</span>: <span class="value">#1976d2</span>;</span>
+<span class="line">    <span class="property">--dark-color</span>: <span class="value">#0d47a1</span>;</span>
+<span class="line">    <span class="property">--light-color</span>: <span class="value">#e3f2fd</span>;</span>
+<span class="line">    <span class="property">--text-dark</span>: <span class="value">#333</span>;</span>
+<span class="line">    <span class="property">--text-light</span>: <span class="value">#666</span>;</span>
+<span class="line">    <span class="property">--white</span>: <span class="value">#ffffff</span>;</span>
+<span class="line">    <span class="property">--success</span>: <span class="value">#4caf50</span>;</span>
+<span class="line">    <span class="property">--shadow</span>: <span class="value">0 4px 6px rgba(0,0,0,0.1)</span>;</span>
+<span class="line">    <span class="property">--shadow-hover</span>: <span class="value">0 6px 12px rgba(0,0,0,0.15)</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* ========== Reset & Base ========== */</span></span>
+<span class="line"><span class="selector">*</span> {</span>
+<span class="line">    <span class="property">margin</span>: <span class="value">0</span>;</span>
+<span class="line">    <span class="property">padding</span>: <span class="value">0</span>;</span>
+<span class="line">    <span class="property">box-sizing</span>: <span class="value">border-box</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">html</span> {</span>
+<span class="line">    <span class="property">scroll-behavior</span>: <span class="value">smooth</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">body</span> {</span>
+<span class="line">    <span class="property">font-family</span>: <span class="value">'Segoe UI', Tahoma, Geneva, Verdana, sans-serif</span>;</span>
+<span class="line">    <span class="property">line-height</span>: <span class="value">1.6</span>;</span>
+<span class="line">    <span class="property">color</span>: <span class="value">var(--text-dark)</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.container</span> {</span>
+<span class="line">    <span class="property">max-width</span>: <span class="value">1200px</span>;</span>
+<span class="line">    <span class="property">margin</span>: <span class="value">0 auto</span>;</span>
+<span class="line">    <span class="property">padding</span>: <span class="value">0 20px</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* ========== Typography ========== */</span></span>
+<span class="line"><span class="selector">h1, h2, h3, h4, h5, h6</span> {</span>
+<span class="line">    <span class="property">margin-bottom</span>: <span class="value">1rem</span>;</span>
+<span class="line">    <span class="property">line-height</span>: <span class="value">1.2</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">h1</span> { <span class="property">font-size</span>: <span class="value">3rem</span>; }</span>
+<span class="line"><span class="selector">h2</span> { <span class="property">font-size</span>: <span class="value">2.5rem</span>; }</span>
+<span class="line"><span class="selector">h3</span> { <span class="property">font-size</span>: <span class="value">1.8rem</span>; }</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.section-title</span> {</span>
+<span class="line">    <span class="property">text-align</span>: <span class="value">center</span>;</span>
+<span class="line">    <span class="property">color</span>: <span class="value">var(--primary-color)</span>;</span>
+<span class="line">    <span class="property">margin-bottom</span>: <span class="value">1rem</span>;</span>
+<span class="line">    <span class="property">font-size</span>: <span class="value">2.5rem</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.section-description</span> {</span>
+<span class="line">    <span class="property">text-align</span>: <span class="value">center</span>;</span>
+<span class="line">    <span class="property">color</span>: <span class="value">var(--text-light)</span>;</span>
+<span class="line">    <span class="property">margin-bottom</span>: <span class="value">3rem</span>;</span>
+<span class="line">    <span class="property">font-size</span>: <span class="value">1.1rem</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* ========== Navigation ========== */</span></span>
+<span class="line"><span class="selector">.navbar</span> {</span>
+<span class="line">    <span class="property">background</span>: <span class="value">var(--white)</span>;</span>
+<span class="line">    <span class="property">box-shadow</span>: <span class="value">var(--shadow)</span>;</span>
+<span class="line">    <span class="property">position</span>: <span class="value">sticky</span>;</span>
+<span class="line">    <span class="property">top</span>: <span class="value">0</span>;</span>
+<span class="line">    <span class="property">z-index</span>: <span class="value">1000</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.nav-container</span> {</span>
+<span class="line">    <span class="property">max-width</span>: <span class="value">1200px</span>;</span>
+<span class="line">    <span class="property">margin</span>: <span class="value">0 auto</span>;</span>
+<span class="line">    <span class="property">padding</span>: <span class="value">1rem 20px</span>;</span>
+<span class="line">    <span class="property">display</span>: <span class="value">flex</span>;</span>
+<span class="line">    <span class="property">justify-content</span>: <span class="value">space-between</span>;</span>
+<span class="line">    <span class="property">align-items</span>: <span class="value">center</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.logo a</span> {</span>
+<span class="line">    <span class="property">font-size</span>: <span class="value">1.5rem</span>;</span>
+<span class="line">    <span class="property">font-weight</span>: <span class="value">bold</span>;</span>
+<span class="line">    <span class="property">color</span>: <span class="value">var(--primary-color)</span>;</span>
+<span class="line">    <span class="property">text-decoration</span>: <span class="value">none</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.nav-menu</span> {</span>
+<span class="line">    <span class="property">display</span>: <span class="value">flex</span>;</span>
+<span class="line">    <span class="property">list-style</span>: <span class="value">none</span>;</span>
+<span class="line">    <span class="property">gap</span>: <span class="value">2rem</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.nav-link</span> {</span>
+<span class="line">    <span class="property">color</span>: <span class="value">var(--text-dark)</span>;</span>
+<span class="line">    <span class="property">text-decoration</span>: <span class="value">none</span>;</span>
+<span class="line">    <span class="property">font-weight</span>: <span class="value">500</span>;</span>
+<span class="line">    <span class="property">transition</span>: <span class="value">color 0.3s</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.nav-link:hover</span> {</span>
+<span class="line">    <span class="property">color</span>: <span class="value">var(--primary-color)</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.hamburger</span> {</span>
+<span class="line">    <span class="property">display</span>: <span class="value">none</span>;</span>
+<span class="line">    <span class="property">flex-direction</span>: <span class="value">column</span>;</span>
+<span class="line">    <span class="property">cursor</span>: <span class="value">pointer</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.hamburger span</span> {</span>
+<span class="line">    <span class="property">width</span>: <span class="value">25px</span>;</span>
+<span class="line">    <span class="property">height</span>: <span class="value">3px</span>;</span>
+<span class="line">    <span class="property">background</span>: <span class="value">var(--text-dark)</span>;</span>
+<span class="line">    <span class="property">margin</span>: <span class="value">3px 0</span>;</span>
+<span class="line">    <span class="property">transition</span>: <span class="value">0.3s</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* ========== Hero Section ========== */</span></span>
+<span class="line"><span class="selector">.hero</span> {</span>
+<span class="line">    <span class="property">min-height</span>: <span class="value">100vh</span>;</span>
+<span class="line">    <span class="property">display</span>: <span class="value">flex</span>;</span>
+<span class="line">    <span class="property">align-items</span>: <span class="value">center</span>;</span>
+<span class="line">    <span class="property">justify-content</span>: <span class="value">center</span>;</span>
+<span class="line">    <span class="property">background</span>: <span class="value">linear-gradient(135deg, var(--primary-color), var(--secondary-color))</span>;</span>
+<span class="line">    <span class="property">color</span>: <span class="value">var(--white)</span>;</span>
+<span class="line">    <span class="property">text-align</span>: <span class="value">center</span>;</span>
+<span class="line">    <span class="property">padding</span>: <span class="value">2rem</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.hero-title</span> {</span>
+<span class="line">    <span class="property">font-size</span>: <span class="value">3.5rem</span>;</span>
+<span class="line">    <span class="property">margin-bottom</span>: <span class="value">1rem</span>;</span>
+<span class="line">    <span class="property">animation</span>: <span class="value">fadeInDown 1s</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.highlight</span> {</span>
+<span class="line">    <span class="property">color</span>: <span class="value">#ffd700</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.hero-subtitle</span> {</span>
+<span class="line">    <span class="property">font-size</span>: <span class="value">1.8rem</span>;</span>
+<span class="line">    <span class="property">margin-bottom</span>: <span class="value">1rem</span>;</span>
+<span class="line">    <span class="property">animation</span>: <span class="value">fadeInUp 1s 0.2s backwards</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.hero-description</span> {</span>
+<span class="line">    <span class="property">font-size</span>: <span class="value">1.2rem</span>;</span>
+<span class="line">    <span class="property">margin-bottom</span>: <span class="value">2rem</span>;</span>
+<span class="line">    <span class="property">max-width</span>: <span class="value">600px</span>;</span>
+<span class="line">    <span class="property">margin-left</span>: <span class="value">auto</span>;</span>
+<span class="line">    <span class="property">margin-right</span>: <span class="value">auto</span>;</span>
+<span class="line">    <span class="property">animation</span>: <span class="value">fadeInUp 1s 0.4s backwards</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.hero-buttons</span> {</span>
+<span class="line">    <span class="property">display</span>: <span class="value">flex</span>;</span>
+<span class="line">    <span class="property">gap</span>: <span class="value">1rem</span>;</span>
+<span class="line">    <span class="property">justify-content</span>: <span class="value">center</span>;</span>
+<span class="line">    <span class="property">animation</span>: <span class="value">fadeInUp 1s 0.6s backwards</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* ========== Buttons ========== */</span></span>
+<span class="line"><span class="selector">.btn</span> {</span>
+<span class="line">    <span class="property">display</span>: <span class="value">inline-block</span>;</span>
+<span class="line">    <span class="property">padding</span>: <span class="value">12px 30px</span>;</span>
+<span class="line">    <span class="property">border-radius</span>: <span class="value">5px</span>;</span>
+<span class="line">    <span class="property">text-decoration</span>: <span class="value">none</span>;</span>
+<span class="line">    <span class="property">font-weight</span>: <span class="value">bold</span>;</span>
+<span class="line">    <span class="property">transition</span>: <span class="value">all 0.3s</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.btn-primary</span> {</span>
+<span class="line">    <span class="property">background</span>: <span class="value">var(--white)</span>;</span>
+<span class="line">    <span class="property">color</span>: <span class="value">var(--primary-color)</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.btn-primary:hover</span> {</span>
+<span class="line">    <span class="property">transform</span>: <span class="value">translateY(-2px)</span>;</span>
+<span class="line">    <span class="property">box-shadow</span>: <span class="value">var(--shadow-hover)</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.btn-secondary</span> {</span>
+<span class="line">    <span class="property">background</span>: <span class="value">transparent</span>;</span>
+<span class="line">    <span class="property">color</span>: <span class="value">var(--white)</span>;</span>
+<span class="line">    <span class="property">border</span>: <span class="value">2px solid var(--white)</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.btn-secondary:hover</span> {</span>
+<span class="line">    <span class="property">background</span>: <span class="value">var(--white)</span>;</span>
+<span class="line">    <span class="property">color</span>: <span class="value">var(--primary-color)</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.btn-small</span> {</span>
+<span class="line">    <span class="property">padding</span>: <span class="value">8px 20px</span>;</span>
+<span class="line">    <span class="property">font-size</span>: <span class="value">0.9rem</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* ========== Animations ========== */</span></span>
+<span class="line"><span class="selector">@keyframes fadeInDown</span> {</span>
+<span class="line">    <span class="selector">from</span> {</span>
+<span class="line">        <span class="property">opacity</span>: <span class="value">0</span>;</span>
+<span class="line">        <span class="property">transform</span>: <span class="value">translateY(-30px)</span>;</span>
+<span class="line">    }</span>
+<span class="line">    <span class="selector">to</span> {</span>
+<span class="line">        <span class="property">opacity</span>: <span class="value">1</span>;</span>
+<span class="line">        <span class="property">transform</span>: <span class="value">translateY(0)</span>;</span>
+<span class="line">    }</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">@keyframes fadeInUp</span> {</span>
+<span class="line">    <span class="selector">from</span> {</span>
+<span class="line">        <span class="property">opacity</span>: <span class="value">0</span>;</span>
+<span class="line">        <span class="property">transform</span>: <span class="value">translateY(30px)</span>;</span>
+<span class="line">    }</span>
+<span class="line">    <span class="selector">to</span> {</span>
+<span class="line">        <span class="property">opacity</span>: <span class="value">1</span>;</span>
+<span class="line">        <span class="property">transform</span>: <span class="value">translateY(0)</span>;</span>
+<span class="line">    }</span>
+<span class="line">}</span>
                 </div>
 
-                <h3>style.css (Part 2: Sections)</h3>
-                <div class="code-block">
-/* ========== About Section ========== */
-.about {
-    padding: 5rem 0;
-    background: var(--white);
-}
-
-.about-content {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 3rem;
-    align-items: center;
-}
-
-.about-image img {
-    width: 100%;
-    border-radius: 10px;
-    box-shadow: var(--shadow);
-}
-
-.about-text h3 {
-    color: var(--primary-color);
-    margin-bottom: 1rem;
-}
-
-.about-text p {
-    margin-bottom: 1rem;
-    color: var(--text-light);
-}
-
-.about-info {
-    margin-top: 2rem;
-    padding: 1.5rem;
-    background: var(--light-color);
-    border-radius: 8px;
-}
-
-.about-info p {
-    margin-bottom: 0.5rem;
-}
-
-/* ========== Skills Section ========== */
-.skills {
-    padding: 5rem 0;
-    background: var(--light-color);
-}
-
-.skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-}
-
-.skill-card {
-    background: var(--white);
-    padding: 2rem;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: var(--shadow);
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.skill-card:hover {
-    transform: translateY(-10px);
-    box-shadow: var(--shadow-hover);
-}
-
-.skill-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-}
-
-.skill-card h3 {
-    color: var(--primary-color);
-    margin-bottom: 0.5rem;
-}
-
-.skill-card p {
-    color: var(--text-light);
-}
-
-/* ========== Projects Section ========== */
-.projects {
-    padding: 5rem 0;
-    background: var(--white);
-}
-
-.projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-}
-
-.project-card {
-    background: var(--white);
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.project-card:hover {
-    transform: translateY(-10px);
-    box-shadow: var(--shadow-hover);
-}
-
-.project-image {
-    position: relative;
-    overflow: hidden;
-    height: 200px;
-}
-
-.project-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s;
-}
-
-.project-card:hover .project-image img {
-    transform: scale(1.1);
-}
-
-.project-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(21, 101, 192, 0.9);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.3s;
-}
-
-.project-card:hover .project-overlay {
-    opacity: 1;
-}
-
-.project-content {
-    padding: 1.5rem;
-}
-
-.project-content h3 {
-    color: var(--primary-color);
-    margin-bottom: 0.5rem;
-}
-
-.project-content p {
-    color: var(--text-light);
-    margin-bottom: 1rem;
-}
-
-.project-tags {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-}
-
-.project-tags span {
-    background: var(--light-color);
-    color: var(--primary-color);
-    padding: 0.3rem 0.8rem;
-    border-radius: 20px;
-    font-size: 0.85rem;
-}
-
-/* ========== Contact Section ========== */
-.contact {
-    padding: 5rem 0;
-    background: var(--light-color);
-}
-
-.contact-content {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 3rem;
-}
-
-.form-group {
-    margin-bottom: 1.5rem;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: bold;
-    color: var(--text-dark);
-}
-
-.form-group input,
-.form-group textarea {
-    width: 100%;
-    padding: 12px;
-    border: 2px solid #ddd;
-    border-radius: 5px;
-    font-family: inherit;
-    font-size: 1rem;
-    transition: border-color 0.3s;
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-color: var(--primary-color);
-}
-
-.contact-info {
-    background: var(--white);
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: var(--shadow);
-}
-
-.contact-info h3 {
-    color: var(--primary-color);
-    margin-bottom: 1rem;
-}
-
-.contact-item {
-    margin-bottom: 1rem;
-}
-
-.social-links {
-    margin-top: 2rem;
-}
-
-.social-link {
-    display: inline-block;
-    margin-right: 1rem;
-    padding: 0.5rem 1rem;
-    background: var(--primary-color);
-    color: var(--white);
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background 0.3s;
-}
-
-.social-link:hover {
-    background: var(--dark-color);
-}
-
-/* ========== Footer ========== */
-.footer {
-    background: var(--dark-color);
-    color: var(--white);
-    text-align: center;
-    padding: 2rem 0;
-}
-
-.footer p {
-    margin: 0.5rem 0;
-}
+                <h3><i class="fas fa-file-code"></i> style.css (Part 2: Sections)</h3>
+                <div class="css-code">
+<span class="line"><span class="comment">/* ========== About Section ========== */</span></span>
+<span class="line"><span class="selector">.about</span> {</span>
+<span class="line">    <span class="property">padding</span>: <span class="value">5rem 0</span>;</span>
+<span class="line">    <span class="property">background</span>: <span class="value">var(--white)</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.about-content</span> {</span>
+<span class="line">    <span class="property">display</span>: <span class="value">grid</span>;</span>
+<span class="line">    <span class="property">grid-template-columns</span>: <span class="value">1fr 2fr</span>;</span>
+<span class="line">    <span class="property">gap</span>: <span class="value">3rem</span>;</span>
+<span class="line">    <span class="property">align-items</span>: <span class="value">center</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.about-image img</span> {</span>
+<span class="line">    <span class="property">width</span>: <span class="value">100%</span>;</span>
+<span class="line">    <span class="property">border-radius</span>: <span class="value">10px</span>;</span>
+<span class="line">    <span class="property">box-shadow</span>: <span class="value">var(--shadow)</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.about-text h3</span> {</span>
+<span class="line">    <span class="property">color</span>: <span class="value">var(--primary-color)</span>;</span>
+<span class="line">    <span class="property">margin-bottom</span>: <span class="value">1rem</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.about-text p</span> {</span>
+<span class="line">    <span class="property">margin-bottom</span>: <span class="value">1rem</span>;</span>
+<span class="line">    <span class="property">color</span>: <span class="value">var(--text-light)</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.about-info</span> {</span>
+<span class="line">    <span class="property">margin-top</span>: <span class="value">2rem</span>;</span>
+<span class="line">    <span class="property">padding</span>: <span class="value">1.5rem</span>;</span>
+<span class="line">    <span class="property">background</span>: <span class="value">var(--light-color)</span>;</span>
+<span class="line">    <span class="property">border-radius</span>: <span class="value">8px</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.about-info p</span> {</span>
+<span class="line">    <span class="property">margin-bottom</span>: <span class="value">0.5rem</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* ========== Skills Section ========== */</span></span>
+<span class="line"><span class="selector">.skills</span> {</span>
+<span class="line">    <span class="property">padding</span>: <span class="value">5rem 0</span>;</span>
+<span class="line">    <span class="property">background</span>: <span class="value">var(--light-color)</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.skills-grid</span> {</span>
+<span class="line">    <span class="property">display</span>: <span class="value">grid</span>;</span>
+<span class="line">    <span class="property">grid-template-columns</span>: <span class="value">repeat(auto-fit, minmax(300px, 1fr))</span>;</span>
+<span class="line">    <span class="property">gap</span>: <span class="value">2rem</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.skill-card</span> {</span>
+<span class="line">    <span class="property">background</span>: <span class="value">var(--white)</span>;</span>
+<span class="line">    <span class="property">padding</span>: <span class="value">2rem</span>;</span>
+<span class="line">    <span class="property">border-radius</span>: <span class="value">10px</span>;</span>
+<span class="line">    <span class="property">text-align</span>: <span class="value">center</span>;</span>
+<span class="line">    <span class="property">box-shadow</span>: <span class="value">var(--shadow)</span>;</span>
+<span class="line">    <span class="property">transition</span>: <span class="value">transform 0.3s, box-shadow 0.3s</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.skill-card:hover</span> {</span>
+<span class="line">    <span class="property">transform</span>: <span class="value">translateY(-10px)</span>;</span>
+<span class="line">    <span class="property">box-shadow</span>: <span class="value">var(--shadow-hover)</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.skill-icon</span> {</span>
+<span class="line">    <span class="property">font-size</span>: <span class="value">3rem</span>;</span>
+<span class="line">    <span class="property">margin-bottom</span>: <span class="value">1rem</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.skill-card h3</span> {</span>
+<span class="line">    <span class="property">color</span>: <span class="value">var(--primary-color)</span>;</span>
+<span class="line">    <span class="property">margin-bottom</span>: <span class="value">0.5rem</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.skill-card p</span> {</span>
+<span class="line">    <span class="property">color</span>: <span class="value">var(--text-light)</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* ========== Projects Section ========== */</span></span>
+<span class="line"><span class="selector">.projects</span> {</span>
+<span class="line">    <span class="property">padding</span>: <span class="value">5rem 0</span>;</span>
+<span class="line">    <span class="property">background</span>: <span class="value">var(--white)</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.projects-grid</span> {</span>
+<span class="line">    <span class="property">display</span>: <span class="value">grid</span>;</span>
+<span class="line">    <span class="property">grid-template-columns</span>: <span class="value">repeat(auto-fit, minmax(300px, 1fr))</span>;</span>
+<span class="line">    <span class="property">gap</span>: <span class="value">2rem</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.project-card</span> {</span>
+<span class="line">    <span class="property">background</span>: <span class="value">var(--white)</span>;</span>
+<span class="line">    <span class="property">border-radius</span>: <span class="value">10px</span>;</span>
+<span class="line">    <span class="property">overflow</span>: <span class="value">hidden</span>;</span>
+<span class="line">    <span class="property">box-shadow</span>: <span class="value">var(--shadow)</span>;</span>
+<span class="line">    <span class="property">transition</span>: <span class="value">transform 0.3s, box-shadow 0.3s</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.project-card:hover</span> {</span>
+<span class="line">    <span class="property">transform</span>: <span class="value">translateY(-10px)</span>;</span>
+<span class="line">    <span class="property">box-shadow</span>: <span class="value">var(--shadow-hover)</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.project-image</span> {</span>
+<span class="line">    <span class="property">position</span>: <span class="value">relative</span>;</span>
+<span class="line">    <span class="property">overflow</span>: <span class="value">hidden</span>;</span>
+<span class="line">    <span class="property">height</span>: <span class="value">200px</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.project-image img</span> {</span>
+<span class="line">    <span class="property">width</span>: <span class="value">100%</span>;</span>
+<span class="line">    <span class="property">height</span>: <span class="value">100%</span>;</span>
+<span class="line">    <span class="property">object-fit</span>: <span class="value">cover</span>;</span>
+<span class="line">    <span class="property">transition</span>: <span class="value">transform 0.3s</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.project-card:hover .project-image img</span> {</span>
+<span class="line">    <span class="property">transform</span>: <span class="value">scale(1.1)</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.project-overlay</span> {</span>
+<span class="line">    <span class="property">position</span>: <span class="value">absolute</span>;</span>
+<span class="line">    <span class="property">top</span>: <span class="value">0</span>;</span>
+<span class="line">    <span class="property">left</span>: <span class="value">0</span>;</span>
+<span class="line">    <span class="property">width</span>: <span class="value">100%</span>;</span>
+<span class="line">    <span class="property">height</span>: <span class="value">100%</span>;</span>
+<span class="line">    <span class="property">background</span>: <span class="value">rgba(21, 101, 192, 0.9)</span>;</span>
+<span class="line">    <span class="property">display</span>: <span class="value">flex</span>;</span>
+<span class="line">    <span class="property">align-items</span>: <span class="value">center</span>;</span>
+<span class="line">    <span class="property">justify-content</span>: <span class="value">center</span>;</span>
+<span class="line">    <span class="property">opacity</span>: <span class="value">0</span>;</span>
+<span class="line">    <span class="property">transition</span>: <span class="value">opacity 0.3s</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.project-card:hover .project-overlay</span> {</span>
+<span class="line">    <span class="property">opacity</span>: <span class="value">1</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.project-content</span> {</span>
+<span class="line">    <span class="property">padding</span>: <span class="value">1.5rem</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.project-content h3</span> {</span>
+<span class="line">    <span class="property">color</span>: <span class="value">var(--primary-color)</span>;</span>
+<span class="line">    <span class="property">margin-bottom</span>: <span class="value">0.5rem</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.project-content p</span> {</span>
+<span class="line">    <span class="property">color</span>: <span class="value">var(--text-light)</span>;</span>
+<span class="line">    <span class="property">margin-bottom</span>: <span class="value">1rem</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.project-tags</span> {</span>
+<span class="line">    <span class="property">display</span>: <span class="value">flex</span>;</span>
+<span class="line">    <span class="property">gap</span>: <span class="value">0.5rem</span>;</span>
+<span class="line">    <span class="property">flex-wrap</span>: <span class="value">wrap</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.project-tags span</span> {</span>
+<span class="line">    <span class="property">background</span>: <span class="value">var(--light-color)</span>;</span>
+<span class="line">    <span class="property">color</span>: <span class="value">var(--primary-color)</span>;</span>
+<span class="line">    <span class="property">padding</span>: <span class="value">0.3rem 0.8rem</span>;</span>
+<span class="line">    <span class="property">border-radius</span>: <span class="value">20px</span>;</span>
+<span class="line">    <span class="property">font-size</span>: <span class="value">0.85rem</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* ========== Contact Section ========== */</span></span>
+<span class="line"><span class="selector">.contact</span> {</span>
+<span class="line">    <span class="property">padding</span>: <span class="value">5rem 0</span>;</span>
+<span class="line">    <span class="property">background</span>: <span class="value">var(--light-color)</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.contact-content</span> {</span>
+<span class="line">    <span class="property">display</span>: <span class="value">grid</span>;</span>
+<span class="line">    <span class="property">grid-template-columns</span>: <span class="value">2fr 1fr</span>;</span>
+<span class="line">    <span class="property">gap</span>: <span class="value">3rem</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.form-group</span> {</span>
+<span class="line">    <span class="property">margin-bottom</span>: <span class="value">1.5rem</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.form-group label</span> {</span>
+<span class="line">    <span class="property">display</span>: <span class="value">block</span>;</span>
+<span class="line">    <span class="property">margin-bottom</span>: <span class="value">0.5rem</span>;</span>
+<span class="line">    <span class="property">font-weight</span>: <span class="value">bold</span>;</span>
+<span class="line">    <span class="property">color</span>: <span class="value">var(--text-dark)</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.form-group input,</span>
+<span class="line"><span class="selector">.form-group textarea</span> {</span>
+<span class="line">    <span class="property">width</span>: <span class="value">100%</span>;</span>
+<span class="line">    <span class="property">padding</span>: <span class="value">12px</span>;</span>
+<span class="line">    <span class="property">border</span>: <span class="value">2px solid #ddd</span>;</span>
+<span class="line">    <span class="property">border-radius</span>: <span class="value">5px</span>;</span>
+<span class="line">    <span class="property">font-family</span>: <span class="value">inherit</span>;</span>
+<span class="line">    <span class="property">font-size</span>: <span class="value">1rem</span>;</span>
+<span class="line">    <span class="property">transition</span>: <span class="value">border-color 0.3s</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.form-group input:focus,</span>
+<span class="line"><span class="selector">.form-group textarea:focus</span> {</span>
+<span class="line">    <span class="property">outline</span>: <span class="value">none</span>;</span>
+<span class="line">    <span class="property">border-color</span>: <span class="value">var(--primary-color)</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.contact-info</span> {</span>
+<span class="line">    <span class="property">background</span>: <span class="value">var(--white)</span>;</span>
+<span class="line">    <span class="property">padding</span>: <span class="value">2rem</span>;</span>
+<span class="line">    <span class="property">border-radius</span>: <span class="value">10px</span>;</span>
+<span class="line">    <span class="property">box-shadow</span>: <span class="value">var(--shadow)</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.contact-info h3</span> {</span>
+<span class="line">    <span class="property">color</span>: <span class="value">var(--primary-color)</span>;</span>
+<span class="line">    <span class="property">margin-bottom</span>: <span class="value">1rem</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.contact-item</span> {</span>
+<span class="line">    <span class="property">margin-bottom</span>: <span class="value">1rem</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.social-links</span> {</span>
+<span class="line">    <span class="property">margin-top</span>: <span class="value">2rem</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.social-link</span> {</span>
+<span class="line">    <span class="property">display</span>: <span class="value">inline-block</span>;</span>
+<span class="line">    <span class="property">margin-right</span>: <span class="value">1rem</span>;</span>
+<span class="line">    <span class="property">padding</span>: <span class="value">0.5rem 1rem</span>;</span>
+<span class="line">    <span class="property">background</span>: <span class="value">var(--primary-color)</span>;</span>
+<span class="line">    <span class="property">color</span>: <span class="value">var(--white)</span>;</span>
+<span class="line">    <span class="property">text-decoration</span>: <span class="value">none</span>;</span>
+<span class="line">    <span class="property">border-radius</span>: <span class="value">5px</span>;</span>
+<span class="line">    <span class="property">transition</span>: <span class="value">background 0.3s</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.social-link:hover</span> {</span>
+<span class="line">    <span class="property">background</span>: <span class="value">var(--dark-color)</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* ========== Footer ========== */</span></span>
+<span class="line"><span class="selector">.footer</span> {</span>
+<span class="line">    <span class="property">background</span>: <span class="value">var(--dark-color)</span>;</span>
+<span class="line">    <span class="property">color</span>: <span class="value">var(--white)</span>;</span>
+<span class="line">    <span class="property">text-align</span>: <span class="value">center</span>;</span>
+<span class="line">    <span class="property">padding</span>: <span class="value">2rem 0</span>;</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">.footer p</span> {</span>
+<span class="line">    <span class="property">margin</span>: <span class="value">0.5rem 0</span>;</span>
+<span class="line">}</span>
                 </div>
 
-                <h3>style.css (Part 3: Responsive)</h3>
-                <div class="code-block">
-/* ========== Responsive Design ========== */
-
-@media (max-width: 768px) {
-    /* Navigation */
-    .hamburger {
-        display: flex;
-    }
-    
-    .nav-menu {
-        position: fixed;
-        left: -100%;
-        top: 70px;
-        flex-direction: column;
-        background: var(--white);
-        width: 100%;
-        text-align: center;
-        transition: 0.3s;
-        box-shadow: var(--shadow);
-        padding: 2rem 0;
-    }
-    
-    .nav-menu.active {
-        left: 0;
-    }
-    
-    .hamburger.active span:nth-child(1) {
-        transform: rotate(-45deg) translate(-5px, 6px);
-    }
-    
-    .hamburger.active span:nth-child(2) {
-        opacity: 0;
-    }
-    
-    .hamburger.active span:nth-child(3) {
-        transform: rotate(45deg) translate(-5px, -6px);
-    }
-    
-    /* Hero */
-    .hero-title {
-        font-size: 2.5rem;
-    }
-    
-    .hero-subtitle {
-        font-size: 1.5rem;
-    }
-    
-    .hero-description {
-        font-size: 1rem;
-    }
-    
-    .hero-buttons {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .hero-buttons .btn {
-        width: 100%;
-        max-width: 300px;
-    }
-    
-    /* About */
-    .about-content {
-        grid-template-columns: 1fr;
-    }
-    
-    /* Contact */
-    .contact-content {
-        grid-template-columns: 1fr;
-    }
-    
-    /* Skills & Projects */
-    .skills-grid,
-    .projects-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    /* Typography */
-    .section-title {
-        font-size: 2rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .hero-title {
-        font-size: 2rem;
-    }
-    
-    .section-title {
-        font-size: 1.8rem;
-    }
-    
-    .container {
-        padding: 0 15px;
-    }
-}
+                <h3><i class="fas fa-file-code"></i> style.css (Part 3: Responsive)</h3>
+                <div class="css-code">
+<span class="line"><span class="comment">/* ========== Responsive Design ========== */</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">@media (max-width: 768px)</span> {</span>
+<span class="line">    <span class="comment">/* Navigation */</span></span>
+<span class="line">    <span class="selector">.hamburger</span> {</span>
+<span class="line">        <span class="property">display</span>: <span class="value">flex</span>;</span>
+<span class="line">    }</span>
+<span class="line">    </span>
+<span class="line">    <span class="selector">.nav-menu</span> {</span>
+<span class="line">        <span class="property">position</span>: <span class="value">fixed</span>;</span>
+<span class="line">        <span class="property">left</span>: <span class="value">-100%</span>;</span>
+<span class="line">        <span class="property">top</span>: <span class="value">70px</span>;</span>
+<span class="line">        <span class="property">flex-direction</span>: <span class="value">column</span>;</span>
+<span class="line">        <span class="property">background</span>: <span class="value">var(--white)</span>;</span>
+<span class="line">        <span class="property">width</span>: <span class="value">100%</span>;</span>
+<span class="line">        <span class="property">text-align</span>: <span class="value">center</span>;</span>
+<span class="line">        <span class="property">transition</span>: <span class="value">0.3s</span>;</span>
+<span class="line">        <span class="property">box-shadow</span>: <span class="value">var(--shadow)</span>;</span>
+<span class="line">        <span class="property">padding</span>: <span class="value">2rem 0</span>;</span>
+<span class="line">    }</span>
+<span class="line">    </span>
+<span class="line">    <span class="selector">.nav-menu.active</span> {</span>
+<span class="line">        <span class="property">left</span>: <span class="value">0</span>;</span>
+<span class="line">    }</span>
+<span class="line">    </span>
+<span class="line">    <span class="selector">.hamburger.active span:nth-child(1)</span> {</span>
+<span class="line">        <span class="property">transform</span>: <span class="value">rotate(-45deg) translate(-5px, 6px)</span>;</span>
+<span class="line">    }</span>
+<span class="line">    </span>
+<span class="line">    <span class="selector">.hamburger.active span:nth-child(2)</span> {</span>
+<span class="line">        <span class="property">opacity</span>: <span class="value">0</span>;</span>
+<span class="line">    }</span>
+<span class="line">    </span>
+<span class="line">    <span class="selector">.hamburger.active span:nth-child(3)</span> {</span>
+<span class="line">        <span class="property">transform</span>: <span class="value">rotate(45deg) translate(-5px, -6px)</span>;</span>
+<span class="line">    }</span>
+<span class="line">    </span>
+<span class="line">    <span class="comment">/* Hero */</span></span>
+<span class="line">    <span class="selector">.hero-title</span> {</span>
+<span class="line">        <span class="property">font-size</span>: <span class="value">2.5rem</span>;</span>
+<span class="line">    }</span>
+<span class="line">    </span>
+<span class="line">    <span class="selector">.hero-subtitle</span> {</span>
+<span class="line">        <span class="property">font-size</span>: <span class="value">1.5rem</span>;</span>
+<span class="line">    }</span>
+<span class="line">    </span>
+<span class="line">    <span class="selector">.hero-description</span> {</span>
+<span class="line">        <span class="property">font-size</span>: <span class="value">1rem</span>;</span>
+<span class="line">    }</span>
+<span class="line">    </span>
+<span class="line">    <span class="selector">.hero-buttons</span> {</span>
+<span class="line">        <span class="property">flex-direction</span>: <span class="value">column</span>;</span>
+<span class="line">        <span class="property">align-items</span>: <span class="value">center</span>;</span>
+<span class="line">    }</span>
+<span class="line">    </span>
+<span class="line">    <span class="selector">.hero-buttons .btn</span> {</span>
+<span class="line">        <span class="property">width</span>: <span class="value">100%</span>;</span>
+<span class="line">        <span class="property">max-width</span>: <span class="value">300px</span>;</span>
+<span class="line">    }</span>
+<span class="line">    </span>
+<span class="line">    <span class="comment">/* About */</span></span>
+<span class="line">    <span class="selector">.about-content</span> {</span>
+<span class="line">        <span class="property">grid-template-columns</span>: <span class="value">1fr</span>;</span>
+<span class="line">    }</span>
+<span class="line">    </span>
+<span class="line">    <span class="comment">/* Contact */</span></span>
+<span class="line">    <span class="selector">.contact-content</span> {</span>
+<span class="line">        <span class="property">grid-template-columns</span>: <span class="value">1fr</span>;</span>
+<span class="line">    }</span>
+<span class="line">    </span>
+<span class="line">    <span class="comment">/* Skills & Projects */</span></span>
+<span class="line">    <span class="selector">.skills-grid,</span>
+<span class="line">    <span class="selector">.projects-grid</span> {</span>
+<span class="line">        <span class="property">grid-template-columns</span>: <span class="value">1fr</span>;</span>
+<span class="line">    }</span>
+<span class="line">    </span>
+<span class="line">    <span class="comment">/* Typography */</span></span>
+<span class="line">    <span class="selector">.section-title</span> {</span>
+<span class="line">        <span class="property">font-size</span>: <span class="value">2rem</span>;</span>
+<span class="line">    }</span>
+<span class="line">}</span>
+<span class="line"></span>
+<span class="line"><span class="selector">@media (max-width: 480px)</span> {</span>
+<span class="line">    <span class="selector">.hero-title</span> {</span>
+<span class="line">        <span class="property">font-size</span>: <span class="value">2rem</span>;</span>
+<span class="line">    }</span>
+<span class="line">    </span>
+<span class="line">    <span class="selector">.section-title</span> {</span>
+<span class="line">        <span class="property">font-size</span>: <span class="value">1.8rem</span>;</span>
+<span class="line">    }</span>
+<span class="line">    </span>
+<span class="line">    <span class="selector">.container</span> {</span>
+<span class="line">        <span class="property">padding</span>: <span class="value">0 15px</span>;</span>
+<span class="line">    }</span>
+<span class="line">}</span>
                 </div>
             </div>
 
             <div class="section">
                 <h2>✅ Development Steps</h2>
                 
-                <h3>Phase 1: Setup (30 mins)</h3>
-                <div class="code-block">
-# 1. Create branch
-git checkout -b develop-portfolio
-
-# 2. Create files
-# Already have: index.html, style.css
-
-# 3. Add placeholder images
-# Create images folder and add profile.jpg, project1.png, etc.
+                <div class="activity-box">
+                    <p><strong>Follow these phases to build your portfolio step-by-step.</strong></p>
                 </div>
+                
+                <h3>Phase 1: Setup (30 mins)</h3>
+                <ol>
+                    <li><strong>Create branch</strong>
+                        <div class="bash-code">
+<span class="line"><span class="prompt">$</span> <span class="command">git</span> <span class="flag">checkout</span> <span class="flag">-b</span> develop-portfolio</span>
+                        </div>
+                    </li>
+                    <li><strong>Create files</strong>
+                        <p>Already have: index.html, style.css</p>
+                    </li>
+                    <li><strong>Add placeholder images</strong>
+                        <p>Create images folder and add profile.jpg, project1.png, etc.</p>
+                    </li>
+                </ol>
 
                 <h3>Phase 2: HTML Structure (2 hours)</h3>
                 <ol>
@@ -1037,10 +1211,10 @@ git checkout -b develop-portfolio
                     <li>Add footer</li>
                 </ol>
 
-                <div class="code-block">
-# Commit after HTML structure
-git add index.html
-git commit -m "Add complete HTML structure for portfolio"
+                <h4>Commit after HTML structure:</h4>
+                <div class="bash-code">
+<span class="line"><span class="prompt">$</span> <span class="command">git</span> <span class="flag">add</span> index.html</span>
+<span class="line"><span class="prompt">$</span> <span class="command">git</span> <span class="flag">commit</span> <span class="flag">-m</span> <span class="string">"Add complete HTML structure for portfolio"</span></span>
                 </div>
 
                 <h3>Phase 3: CSS Styling (3 hours)</h3>
@@ -1055,10 +1229,10 @@ git commit -m "Add complete HTML structure for portfolio"
                     <li>Style footer</li>
                 </ol>
 
-                <div class="code-block">
-# Commit after styling
-git add style.css
-git commit -m "Add complete CSS styling with responsive design"
+                <h4>Commit after styling:</h4>
+                <div class="bash-code">
+<span class="line"><span class="prompt">$</span> <span class="command">git</span> <span class="flag">add</span> style.css</span>
+<span class="line"><span class="prompt">$</span> <span class="command">git</span> <span class="flag">commit</span> <span class="flag">-m</span> <span class="string">"Add complete CSS styling with responsive design"</span></span>
                 </div>
 
                 <h3>Phase 4: Responsive Design (1 hour)</h3>
@@ -1070,10 +1244,10 @@ git commit -m "Add complete CSS styling with responsive design"
                     <li>Fix hamburger menu</li>
                 </ol>
 
-                <div class="code-block">
-# Commit responsive updates
-git add style.css
-git commit -m "Add responsive design for all devices"
+                <h4>Commit responsive updates:</h4>
+                <div class="bash-code">
+<span class="line"><span class="prompt">$</span> <span class="command">git</span> <span class="flag">add</span> style.css</span>
+<span class="line"><span class="prompt">$</span> <span class="command">git</span> <span class="flag">commit</span> <span class="flag">-m</span> <span class="string">"Add responsive design for all devices"</span></span>
                 </div>
 
                 <h3>Phase 5: JavaScript & Final Touches (30 mins)</h3>
@@ -1084,21 +1258,31 @@ git commit -m "Add responsive design for all devices"
                     <li>Validate HTML & CSS</li>
                 </ol>
 
-                <div class="code-block">
-# Final commit
-git add .
-git commit -m "Add interactivity and final touches"
-
-# Merge to main
-git checkout main
-git merge develop-portfolio
-
-# Push to GitHub
-git push origin main
-
-# Delete feature branch
-git branch -d develop-portfolio
-                </div>
+                <h4>Final commits and deployment:</h4>
+                <ol>
+                    <li><strong>Final commit</strong>
+                        <div class="bash-code">
+<span class="line"><span class="prompt">$</span> <span class="command">git</span> <span class="flag">add</span> .</span>
+<span class="line"><span class="prompt">$</span> <span class="command">git</span> <span class="flag">commit</span> <span class="flag">-m</span> <span class="string">"Add interactivity and final touches"</span></span>
+                        </div>
+                    </li>
+                    <li><strong>Merge to main</strong>
+                        <div class="bash-code">
+<span class="line"><span class="prompt">$</span> <span class="command">git</span> <span class="flag">checkout</span> main</span>
+<span class="line"><span class="prompt">$</span> <span class="command">git</span> <span class="flag">merge</span> develop-portfolio</span>
+                        </div>
+                    </li>
+                    <li><strong>Push to GitHub</strong>
+                        <div class="bash-code">
+<span class="line"><span class="prompt">$</span> <span class="command">git</span> <span class="flag">push</span> origin main</span>
+                        </div>
+                    </li>
+                    <li><strong>Delete feature branch</strong>
+                        <div class="bash-code">
+<span class="line"><span class="prompt">$</span> <span class="command">git</span> <span class="flag">branch</span> <span class="flag">-d</span> develop-portfolio</span>
+                        </div>
+                    </li>
+                </ol>
             </div>
 
             <div class="section">
@@ -1165,16 +1349,16 @@ git branch -d develop-portfolio
                 </ul>
             </div>
 
-            <div class="section">
-                <a href="day1-project-planning.html" class="btn-primary">← Previous: Day 1</a>
-                <a href="../index.html" class="btn-primary">Back to Course Home</a>
-                <a href="day3-project-review.html" class="btn-primary">Next: Day 3 →</a>
+            <div class="nav-buttons">
+                <a href="day1-project-planning.html" class="btn-primary"><i class="fas fa-arrow-left"></i> Previous: Day 1</a>
+                <a href="../index.html" class="btn-primary"><i class="fas fa-home"></i> Course Home</a>
+                <a href="day3-project-review.html" class="btn-primary">Next: Day 3 <i class="fas fa-arrow-right"></i></a>
             </div>
         </div>
 
         <footer>
             <p>Week 4 - Day 2: Portfolio Development</p>
-            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+            <p>&copy; 2025 Next Step Innovation and Impact Space | Web Development Internship</p>
         </footer>
     </div>
 </body>

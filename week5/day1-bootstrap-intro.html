@@ -4,12 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Week 5 Day 1: Introduction to Bootstrap & Setup</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        :root {
+            --primary: #10b981;
+            --secondary: #34d399;
+            --accent: #6ee7b7;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --text-dark: #333;
+            --text-light: #666;
+            --white: #ffffff;
+            --success: #4caf50;
+            --gradient-1: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+        }
+        
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            background: var(--gradient-1);
             padding: 20px;
         }
         .container {
@@ -20,37 +35,59 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.3);
             overflow: hidden;
         }
-        header { background: #fa709a; color: white; padding: 30px; }
-        .nav-breadcrumb {
-            background: #fff0f5;
+        
+        /* Top Navigation */
+        .top-nav {
+            background: var(--dark);
             padding: 15px 30px;
-            border-bottom: 2px solid #fa709a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .nav-breadcrumb a { color: #fa709a; text-decoration: none; margin-right: 10px; }
+        .top-nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            transition: color 0.3s;
+        }
+        .top-nav a:hover { color: var(--secondary); }
+        .top-nav i { margin-right: 5px; }
+        
+        header { background: var(--gradient-1); color: white; padding: 30px; }
+        .nav-breadcrumb {
+            background: var(--light);
+            padding: 15px 30px;
+            border-bottom: 2px solid var(--primary);
+        }
+        .nav-breadcrumb a { color: var(--primary); text-decoration: none; margin-right: 10px; }
+        .nav-breadcrumb i { margin: 0 5px; color: var(--secondary); }
         .content { padding: 40px; }
         .section { margin-bottom: 40px; }
         .section h2 {
-            color: #fa709a;
+            color: var(--primary);
             margin-bottom: 20px;
             padding-bottom: 10px;
-            border-bottom: 3px solid #fee140;
+            border-bottom: 3px solid var(--secondary);
         }
-        .section h3 { color: #fa709a; margin: 20px 0 15px 0; }
+        .section h3 { color: var(--primary); margin: 20px 0 15px 0; }
+        .section h4 { color: var(--text-dark); margin: 15px 0 10px 0; }
         .info-box {
-            background: #fff0f5;
-            border-left: 5px solid #fa709a;
+            background: var(--light);
+            border-left: 5px solid var(--primary);
             padding: 20px;
             margin: 20px 0;
             border-radius: 5px;
         }
         .activity-box {
             background: #fff8e1;
-            border-left: 5px solid #fee140;
+            border-left: 5px solid var(--secondary);
             padding: 20px;
             margin: 20px 0;
             border-radius: 5px;
         }
-        .code-block {
+        
+        /* Syntax Highlighting */
+        .html-code, .css-code, .js-code, .bash-code {
             background: #2d2d2d;
             color: #f8f8f2;
             padding: 20px;
@@ -58,13 +95,21 @@
             overflow-x: auto;
             margin: 20px 0;
             font-family: 'Courier New', monospace;
+            line-height: 2;
+            font-size: 14px;
         }
+        .line { display: block; padding: 2px 0; }
+        .tag { color: #34d399; }
+        .attr { color: #60a5fa; }
+        .value { color: #fbbf24; }
+        .comment { color: #64748b; font-style: italic; }
+        
         ul, ol { margin-left: 30px; margin-top: 10px; }
         li { margin-bottom: 10px; }
         .checklist { list-style: none; margin-left: 0; }
         .checklist li:before {
             content: "✓ ";
-            color: #4caf50;
+            color: var(--success);
             font-weight: bold;
             margin-right: 10px;
         }
@@ -79,20 +124,22 @@
             border: 1px solid #ddd;
         }
         th {
-            background: #fa709a;
+            background: var(--primary);
             color: white;
         }
         tr:nth-child(even) { background: #f9f9f9; }
-        footer { background: #fa709a; color: white; padding: 20px; text-align: center; }
+        footer { background: var(--primary); color: white; padding: 20px; text-align: center; }
         .btn-primary {
-            background: #fa709a;
+            background: var(--primary);
             color: white;
             padding: 10px 20px;
             text-decoration: none;
             border-radius: 5px;
             display: inline-block;
             margin: 10px 10px 10px 0;
+            transition: background 0.3s;
         }
+        .btn-primary:hover { background: var(--accent); }
         .demo-box {
             border: 2px solid #ddd;
             padding: 20px;
@@ -100,10 +147,25 @@
             border-radius: 8px;
             background: #fafafa;
         }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: var(--primary);
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="top-nav">
+            <div>
+                <a href="../week4/day3-project-review.html"><i class="fas fa-arrow-left"></i> Previous</a>
+                <a href="day2-bootstrap-grid.html">Next <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <a href="../index.html"><i class="fas fa-home"></i> Course Home</a>
+        </div>
+
         <header>
             <h1>📅 Week 5 - Day 1: Introduction to Bootstrap & Setup</h1>
             <p>Monday | Duration: 3 hours</p>
@@ -111,7 +173,11 @@
         </header>
 
         <div class="nav-breadcrumb">
-            <a href="../index.html">← Back to Course Home</a> / Week 5 / Day 1
+            <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <a href="../index.html">Week 5</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>Day 1: Bootstrap Intro</span>
         </div>
 
         <div class="content">
@@ -163,20 +229,20 @@
                 </div>
 
                 <h4>Bootstrap CSS Link (Add to &lt;head&gt;):</h4>
-                <div class="code-block">
-&lt;!-- Bootstrap CSS --&gt;
-&lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
-      rel="stylesheet" 
-      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" 
-      crossorigin="anonymous"&gt;
+                <div class="html-code">
+<span class="line"><span class="comment">&lt;!-- Bootstrap CSS --&gt;</span></span>
+<span class="line"><span class="tag">&lt;link</span> <span class="attr">href</span>=<span class="value">"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"</span></span>
+<span class="line">      <span class="attr">rel</span>=<span class="value">"stylesheet"</span></span>
+<span class="line">      <span class="attr">integrity</span>=<span class="value">"sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"</span></span>
+<span class="line">      <span class="attr">crossorigin</span>=<span class="value">"anonymous"</span><span class="tag">&gt;</span></span>
                 </div>
 
                 <h4>Bootstrap JavaScript Bundle (Add before closing &lt;/body&gt;):</h4>
-                <div class="code-block">
-&lt;!-- Bootstrap JavaScript Bundle with Popper --&gt;
-&lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" 
-        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" 
-        crossorigin="anonymous"&gt;&lt;/script&gt;
+                <div class="html-code">
+<span class="line"><span class="comment">&lt;!-- Bootstrap JavaScript Bundle with Popper --&gt;</span></span>
+<span class="line"><span class="tag">&lt;script</span> <span class="attr">src</span>=<span class="value">"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"</span></span>
+<span class="line">        <span class="attr">integrity</span>=<span class="value">"sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"</span></span>
+<span class="line">        <span class="attr">crossorigin</span>=<span class="value">"anonymous"</span><span class="tag">&gt;&lt;/script&gt;</span></span>
                 </div>
 
                 <h3>Method 2: Download Bootstrap Files</h3>
@@ -188,29 +254,29 @@
                 </ol>
 
                 <h3>Complete HTML Template with Bootstrap</h3>
-                <div class="code-block">
-&lt;!DOCTYPE html&gt;
-&lt;html lang="en"&gt;
-&lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
-    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
-    &lt;title&gt;My First Bootstrap Page&lt;/title&gt;
-    
-    &lt;!-- Bootstrap CSS --&gt;
-    &lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
-          rel="stylesheet"&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;div class="container"&gt;
-        &lt;h1 class="text-center mt-5"&gt;Hello, Bootstrap!&lt;/h1&gt;
-        &lt;p class="lead text-center"&gt;My first Bootstrap webpage&lt;/p&gt;
-        &lt;button class="btn btn-primary"&gt;Click Me&lt;/button&gt;
-    &lt;/div&gt;
-
-    &lt;!-- Bootstrap JavaScript --&gt;
-    &lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;
+                <div class="html-code">
+<span class="line"><span class="tag">&lt;!DOCTYPE html&gt;</span></span>
+<span class="line"><span class="tag">&lt;html</span> <span class="attr">lang</span>=<span class="value">"en"</span><span class="tag">&gt;</span></span>
+<span class="line"><span class="tag">&lt;head&gt;</span></span>
+<span class="line">    <span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="value">"UTF-8"</span><span class="tag">&gt;</span></span>
+<span class="line">    <span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="value">"viewport"</span> <span class="attr">content</span>=<span class="value">"width=device-width, initial-scale=1.0"</span><span class="tag">&gt;</span></span>
+<span class="line">    <span class="tag">&lt;title&gt;</span>My First Bootstrap Page<span class="tag">&lt;/title&gt;</span></span>
+<span class="line">    </span>
+<span class="line">    <span class="comment">&lt;!-- Bootstrap CSS --&gt;</span></span>
+<span class="line">    <span class="tag">&lt;link</span> <span class="attr">href</span>=<span class="value">"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"</span></span>
+<span class="line">          <span class="attr">rel</span>=<span class="value">"stylesheet"</span><span class="tag">&gt;</span></span>
+<span class="line"><span class="tag">&lt;/head&gt;</span></span>
+<span class="line"><span class="tag">&lt;body&gt;</span></span>
+<span class="line">    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"container"</span><span class="tag">&gt;</span></span>
+<span class="line">        <span class="tag">&lt;h1</span> <span class="attr">class</span>=<span class="value">"text-center mt-5"</span><span class="tag">&gt;</span>Hello, Bootstrap!<span class="tag">&lt;/h1&gt;</span></span>
+<span class="line">        <span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="value">"lead text-center"</span><span class="tag">&gt;</span>My first Bootstrap webpage<span class="tag">&lt;/p&gt;</span></span>
+<span class="line">        <span class="tag">&lt;button</span> <span class="attr">class</span>=<span class="value">"btn btn-primary"</span><span class="tag">&gt;</span>Click Me<span class="tag">&lt;/button&gt;</span></span>
+<span class="line">    <span class="tag">&lt;/div&gt;</span></span>
+<span class="line"></span>
+<span class="line">    <span class="comment">&lt;!-- Bootstrap JavaScript --&gt;</span></span>
+<span class="line">    <span class="tag">&lt;script</span> <span class="attr">src</span>=<span class="value">"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"</span><span class="tag">&gt;&lt;/script&gt;</span></span>
+<span class="line"><span class="tag">&lt;/body&gt;</span></span>
+<span class="line"><span class="tag">&lt;/html&gt;</span></span>
                 </div>
             </div>
 
@@ -218,10 +284,10 @@
                 <h2>🧪 Testing Bootstrap Installation</h2>
                 
                 <h3>Test 1: Bootstrap Button</h3>
-                <div class="code-block">
-&lt;button class="btn btn-primary"&gt;Primary Button&lt;/button&gt;
-&lt;button class="btn btn-success"&gt;Success Button&lt;/button&gt;
-&lt;button class="btn btn-danger"&gt;Danger Button&lt;/button&gt;
+                <div class="html-code">
+<span class="line"><span class="tag">&lt;button</span> <span class="attr">class</span>=<span class="value">"btn btn-primary"</span><span class="tag">&gt;</span>Primary Button<span class="tag">&lt;/button&gt;</span></span>
+<span class="line"><span class="tag">&lt;button</span> <span class="attr">class</span>=<span class="value">"btn btn-success"</span><span class="tag">&gt;</span>Success Button<span class="tag">&lt;/button&gt;</span></span>
+<span class="line"><span class="tag">&lt;button</span> <span class="attr">class</span>=<span class="value">"btn btn-danger"</span><span class="tag">&gt;</span>Danger Button<span class="tag">&lt;/button&gt;</span></span>
                 </div>
 
                 <div class="demo-box">
@@ -229,18 +295,18 @@
                 </div>
 
                 <h3>Test 2: Bootstrap Alert</h3>
-                <div class="code-block">
-&lt;div class="alert alert-success" role="alert"&gt;
-    Bootstrap is working! ✅
-&lt;/div&gt;
+                <div class="html-code">
+<span class="line"><span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"alert alert-success"</span> <span class="attr">role</span>=<span class="value">"alert"</span><span class="tag">&gt;</span></span>
+<span class="line">    Bootstrap is working! ✅</span>
+<span class="line"><span class="tag">&lt;/div&gt;</span></span>
                 </div>
 
                 <h3>Test 3: Bootstrap Container</h3>
-                <div class="code-block">
-&lt;div class="container"&gt;
-    &lt;h1&gt;Container Example&lt;/h1&gt;
-    &lt;p&gt;This content is centered with padding on the sides.&lt;/p&gt;
-&lt;/div&gt;
+                <div class="html-code">
+<span class="line"><span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"container"</span><span class="tag">&gt;</span></span>
+<span class="line">    <span class="tag">&lt;h1&gt;</span>Container Example<span class="tag">&lt;/h1&gt;</span></span>
+<span class="line">    <span class="tag">&lt;p&gt;</span>This content is centered with padding on the sides.<span class="tag">&lt;/p&gt;</span></span>
+<span class="line"><span class="tag">&lt;/div&gt;</span></span>
                 </div>
             </div>
 
@@ -301,6 +367,28 @@
                     <li><code>btn-light</code> - Light gray</li>
                     <li><code>btn-dark</code> - Dark gray</li>
                 </ul>
+
+                <h4>Live Button Examples:</h4>
+                <div class="demo-box">
+                    <button class="btn btn-primary" style="margin: 5px;">Primary</button>
+                    <button class="btn btn-secondary" style="margin: 5px;">Secondary</button>
+                    <button class="btn btn-success" style="margin: 5px;">Success</button>
+                    <button class="btn btn-danger" style="margin: 5px;">Danger</button>
+                    <button class="btn btn-warning" style="margin: 5px;">Warning</button>
+                    <button class="btn btn-info" style="margin: 5px;">Info</button>
+                    <button class="btn btn-light" style="margin: 5px; border: 1px solid #ddd;">Light</button>
+                    <button class="btn btn-dark" style="margin: 5px;">Dark</button>
+                </div>
+
+                <h4>Outline Button Examples:</h4>
+                <div class="demo-box">
+                    <button class="btn btn-outline-primary" style="margin: 5px;">Outline Primary</button>
+                    <button class="btn btn-outline-secondary" style="margin: 5px;">Outline Secondary</button>
+                    <button class="btn btn-outline-success" style="margin: 5px;">Outline Success</button>
+                    <button class="btn btn-outline-danger" style="margin: 5px;">Outline Danger</button>
+                    <button class="btn btn-outline-warning" style="margin: 5px;">Outline Warning</button>
+                    <button class="btn btn-outline-info" style="margin: 5px;">Outline Info</button>
+                </div>
             </div>
 
             <div class="section">
@@ -312,76 +400,76 @@
                 </div>
 
                 <h3>Complete Example Code</h3>
-                <div class="code-block">
-&lt;!DOCTYPE html&gt;
-&lt;html lang="en"&gt;
-&lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
-    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
-    &lt;title&gt;Bootstrap Test Page&lt;/title&gt;
-    &lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
-          rel="stylesheet"&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;!-- Navigation Bar --&gt;
-    &lt;nav class="navbar navbar-expand-lg navbar-dark bg-primary"&gt;
-        &lt;div class="container-fluid"&gt;
-            &lt;a class="navbar-brand" href="#"&gt;My First Bootstrap Site&lt;/a&gt;
-        &lt;/div&gt;
-    &lt;/nav&gt;
-
-    &lt;!-- Main Content --&gt;
-    &lt;div class="container mt-5"&gt;
-        &lt;h1 class="text-center text-primary"&gt;Welcome to Bootstrap! 🎉&lt;/h1&gt;
-        &lt;p class="lead text-center"&gt;
-            Building responsive websites just got easier!
-        &lt;/p&gt;
-
-        &lt;!-- Alert Message --&gt;
-        &lt;div class="alert alert-success text-center" role="alert"&gt;
-            ✅ Bootstrap is successfully installed and working!
-        &lt;/div&gt;
-
-        &lt;!-- Buttons --&gt;
-        &lt;div class="text-center mt-4"&gt;
-            &lt;h3&gt;Button Examples&lt;/h3&gt;
-            &lt;button class="btn btn-primary"&gt;Primary&lt;/button&gt;
-            &lt;button class="btn btn-secondary"&gt;Secondary&lt;/button&gt;
-            &lt;button class="btn btn-success"&gt;Success&lt;/button&gt;
-            &lt;button class="btn btn-danger"&gt;Danger&lt;/button&gt;
-            &lt;button class="btn btn-warning"&gt;Warning&lt;/button&gt;
-            &lt;button class="btn btn-info"&gt;Info&lt;/button&gt;
-        &lt;/div&gt;
-
-        &lt;!-- Card Example --&gt;
-        &lt;div class="row mt-5"&gt;
-            &lt;div class="col-md-6 mx-auto"&gt;
-                &lt;div class="card"&gt;
-                    &lt;div class="card-body"&gt;
-                        &lt;h5 class="card-title"&gt;What is Bootstrap?&lt;/h5&gt;
-                        &lt;p class="card-text"&gt;
-                            Bootstrap is a powerful front-end framework that helps 
-                            you build responsive websites quickly and easily.
-                        &lt;/p&gt;
-                        &lt;a href="https://getbootstrap.com" 
-                           class="btn btn-primary" 
-                           target="_blank"&gt;
-                            Learn More
-                        &lt;/a&gt;
-                    &lt;/div&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;!-- Footer --&gt;
-    &lt;footer class="bg-dark text-white text-center p-4 mt-5"&gt;
-        &lt;p&gt;© 2025 My Bootstrap Journey&lt;/p&gt;
-    &lt;/footer&gt;
-
-    &lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;
+                <div class="html-code">
+<span class="line"><span class="tag">&lt;!DOCTYPE html&gt;</span></span>
+<span class="line"><span class="tag">&lt;html</span> <span class="attr">lang</span>=<span class="value">"en"</span><span class="tag">&gt;</span></span>
+<span class="line"><span class="tag">&lt;head&gt;</span></span>
+<span class="line">    <span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="value">"UTF-8"</span><span class="tag">&gt;</span></span>
+<span class="line">    <span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="value">"viewport"</span> <span class="attr">content</span>=<span class="value">"width=device-width, initial-scale=1.0"</span><span class="tag">&gt;</span></span>
+<span class="line">    <span class="tag">&lt;title&gt;</span>Bootstrap Test Page<span class="tag">&lt;/title&gt;</span></span>
+<span class="line">    <span class="tag">&lt;link</span> <span class="attr">href</span>=<span class="value">"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"</span></span>
+<span class="line">          <span class="attr">rel</span>=<span class="value">"stylesheet"</span><span class="tag">&gt;</span></span>
+<span class="line"><span class="tag">&lt;/head&gt;</span></span>
+<span class="line"><span class="tag">&lt;body&gt;</span></span>
+<span class="line">    <span class="comment">&lt;!-- Navigation Bar --&gt;</span></span>
+<span class="line">    <span class="tag">&lt;nav</span> <span class="attr">class</span>=<span class="value">"navbar navbar-expand-lg navbar-dark bg-primary"</span><span class="tag">&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"container-fluid"</span><span class="tag">&gt;</span></span>
+<span class="line">            <span class="tag">&lt;a</span> <span class="attr">class</span>=<span class="value">"navbar-brand"</span> <span class="attr">href</span>=<span class="value">"#"</span><span class="tag">&gt;</span>My First Bootstrap Site<span class="tag">&lt;/a&gt;</span></span>
+<span class="line">        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">    <span class="tag">&lt;/nav&gt;</span></span>
+<span class="line"></span>
+<span class="line">    <span class="comment">&lt;!-- Main Content --&gt;</span></span>
+<span class="line">    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"container mt-5"</span><span class="tag">&gt;</span></span>
+<span class="line">        <span class="tag">&lt;h1</span> <span class="attr">class</span>=<span class="value">"text-center text-primary"</span><span class="tag">&gt;</span>Welcome to Bootstrap! 🎉<span class="tag">&lt;/h1&gt;</span></span>
+<span class="line">        <span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="value">"lead text-center"</span><span class="tag">&gt;</span></span>
+<span class="line">            Building responsive websites just got easier!</span>
+<span class="line">        <span class="tag">&lt;/p&gt;</span></span>
+<span class="line"></span>
+<span class="line">        <span class="comment">&lt;!-- Alert Message --&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"alert alert-success text-center"</span> <span class="attr">role</span>=<span class="value">"alert"</span><span class="tag">&gt;</span></span>
+<span class="line">            ✅ Bootstrap is successfully installed and working!</span>
+<span class="line">        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line"></span>
+<span class="line">        <span class="comment">&lt;!-- Buttons --&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"text-center mt-4"</span><span class="tag">&gt;</span></span>
+<span class="line">            <span class="tag">&lt;h3&gt;</span>Button Examples<span class="tag">&lt;/h3&gt;</span></span>
+<span class="line">            <span class="tag">&lt;button</span> <span class="attr">class</span>=<span class="value">"btn btn-primary"</span><span class="tag">&gt;</span>Primary<span class="tag">&lt;/button&gt;</span></span>
+<span class="line">            <span class="tag">&lt;button</span> <span class="attr">class</span>=<span class="value">"btn btn-secondary"</span><span class="tag">&gt;</span>Secondary<span class="tag">&lt;/button&gt;</span></span>
+<span class="line">            <span class="tag">&lt;button</span> <span class="attr">class</span>=<span class="value">"btn btn-success"</span><span class="tag">&gt;</span>Success<span class="tag">&lt;/button&gt;</span></span>
+<span class="line">            <span class="tag">&lt;button</span> <span class="attr">class</span>=<span class="value">"btn btn-danger"</span><span class="tag">&gt;</span>Danger<span class="tag">&lt;/button&gt;</span></span>
+<span class="line">            <span class="tag">&lt;button</span> <span class="attr">class</span>=<span class="value">"btn btn-warning"</span><span class="tag">&gt;</span>Warning<span class="tag">&lt;/button&gt;</span></span>
+<span class="line">            <span class="tag">&lt;button</span> <span class="attr">class</span>=<span class="value">"btn btn-info"</span><span class="tag">&gt;</span>Info<span class="tag">&lt;/button&gt;</span></span>
+<span class="line">        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line"></span>
+<span class="line">        <span class="comment">&lt;!-- Card Example --&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"row mt-5"</span><span class="tag">&gt;</span></span>
+<span class="line">            <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col-md-6 mx-auto"</span><span class="tag">&gt;</span></span>
+<span class="line">                <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"card"</span><span class="tag">&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"card-body"</span><span class="tag">&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;h5</span> <span class="attr">class</span>=<span class="value">"card-title"</span><span class="tag">&gt;</span>What is Bootstrap?<span class="tag">&lt;/h5&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="value">"card-text"</span><span class="tag">&gt;</span></span>
+<span class="line">                            Bootstrap is a powerful front-end framework that helps</span>
+<span class="line">                            you build responsive websites quickly and easily.</span>
+<span class="line">                        <span class="tag">&lt;/p&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="value">"https://getbootstrap.com"</span></span>
+<span class="line">                           <span class="attr">class</span>=<span class="value">"btn btn-primary"</span></span>
+<span class="line">                           <span class="attr">target</span>=<span class="value">"_blank"</span><span class="tag">&gt;</span></span>
+<span class="line">                            Learn More</span>
+<span class="line">                        <span class="tag">&lt;/a&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">            <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">    <span class="tag">&lt;/div&gt;</span></span>
+<span class="line"></span>
+<span class="line">    <span class="comment">&lt;!-- Footer --&gt;</span></span>
+<span class="line">    <span class="tag">&lt;footer</span> <span class="attr">class</span>=<span class="value">"bg-dark text-white text-center p-4 mt-5"</span><span class="tag">&gt;</span></span>
+<span class="line">        <span class="tag">&lt;p&gt;</span>© 2025 My Bootstrap Journey<span class="tag">&lt;/p&gt;</span></span>
+<span class="line">    <span class="tag">&lt;/footer&gt;</span></span>
+<span class="line"></span>
+<span class="line">    <span class="tag">&lt;script</span> <span class="attr">src</span>=<span class="value">"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"</span><span class="tag">&gt;&lt;/script&gt;</span></span>
+<span class="line"><span class="tag">&lt;/body&gt;</span></span>
+<span class="line"><span class="tag">&lt;/html&gt;</span></span>
                 </div>
 
                 <h3>Steps to Complete</h3>

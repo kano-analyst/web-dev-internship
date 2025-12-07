@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 1: System Testing & Debugging | Week 23</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%);
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        h1 { color: #ff6e7f; border-bottom: 3px solid #bfe9ff; padding-bottom: 15px; margin-bottom: 25px; }
+        h2 { color: #ff6e7f; margin-top: 30px; margin-bottom: 15px; }
+        h3 { color: #5a9fd4; margin-top: 20px; margin-bottom: 10px; }
+        .objectives, .key-concept, .example, .exercise, .deliverable {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #ff6e7f;
+            border-radius: 8px;
+        }
+        .key-concept { border-left-color: #5a9fd4; background: #e7f3ff; }
+        .example { border-left-color: #28a745; background: #d4edda; }
+        .exercise { border-left-color: #ffc107; background: #fff3cd; }
+        .deliverable { border-left-color: #17a2b8; background: #d1ecf1; }
+        code {
+            background: #272822;
+            color: #f8f8f2;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        pre {
+            background: #272822;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th { background: #ff6e7f; color: white; }
+        tr:nth-child(even) { background: #f8f9fa; }
+        ul, ol { margin: 15px 0; padding-left: 30px; }
+        li { margin: 8px 0; }
+        .navigation {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+        .nav-button {
+            padding: 10px 20px;
+            background: #ff6e7f;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .nav-button:hover { background: #e55d6e; }
+        .tip {
+            background: #fff9e6;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Week 23, Day 1: System Testing & Debugging</h1>
+        
+        <div class="objectives">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Understand different types of testing (unit, feature, integration)</li>
+                <li>Write and run automated tests in Laravel</li>
+                <li>Perform manual testing with test cases</li>
+                <li>Identify and fix critical bugs</li>
+                <li>Use debugging tools effectively</li>
+                <li>Validate all user flows</li>
+            </ul>
+        </div>
+
+        <h2>🔍 Types of Testing</h2>
+        
+        <div class="key-concept">
+            <h3>Testing Pyramid</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Unit Testing</strong></td>
+                        <td>Test individual functions/methods</td>
+                        <td>Test that <code>isAvailable()</code> returns correct value</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Feature Testing</strong></td>
+                        <td>Test complete features/endpoints</td>
+                        <td>Test that book creation works end-to-end</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Integration Testing</strong></td>
+                        <td>Test multiple components working together</td>
+                        <td>Test borrowing system with database and emails</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Manual Testing</strong></td>
+                        <td>Human testing of user interface</td>
+                        <td>Click through application as a real user</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>✅ Manual Testing Checklist</h2>
+        
+        <div class="example">
+            <h3>Complete Test Cases</h3>
+            
+            <h4>1. Authentication Module</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Test Case</th>
+                        <th>Steps</th>
+                        <th>Expected Result</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>User Registration</td>
+                        <td>1. Go to /register<br>2. Fill form with valid data<br>3. Submit</td>
+                        <td>User created, redirected to dashboard</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>Registration Validation</td>
+                        <td>1. Submit empty form<br>2. Check error messages</td>
+                        <td>Validation errors shown</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>User Login</td>
+                        <td>1. Go to /login<br>2. Enter credentials<br>3. Submit</td>
+                        <td>User logged in, dashboard shown</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>Invalid Login</td>
+                        <td>1. Enter wrong password<br>2. Submit</td>
+                        <td>Error message displayed</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>Logout</td>
+                        <td>1. Click logout button</td>
+                        <td>User logged out, redirected to home</td>
+                        <td>☐</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>2. Book Management Module</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Test Case</th>
+                        <th>Steps</th>
+                        <th>Expected Result</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>View All Books</td>
+                        <td>1. Navigate to /books</td>
+                        <td>Books displayed in grid layout</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>Add New Book</td>
+                        <td>1. Click "Add Book"<br>2. Fill form<br>3. Upload image<br>4. Submit</td>
+                        <td>Book created, appears in list</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>Edit Book</td>
+                        <td>1. Click "Edit" on book<br>2. Modify data<br>3. Submit</td>
+                        <td>Book updated, changes reflected</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>Delete Book</td>
+                        <td>1. Click "Delete"<br>2. Confirm</td>
+                        <td>Book removed from database</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>Search Books</td>
+                        <td>1. Enter search term<br>2. Submit</td>
+                        <td>Filtered results displayed</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>Filter by Category</td>
+                        <td>1. Select category<br>2. Submit</td>
+                        <td>Books from that category shown</td>
+                        <td>☐</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>3. Borrowing System Module</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Test Case</th>
+                        <th>Steps</th>
+                        <th>Expected Result</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Borrow Book</td>
+                        <td>1. Select book<br>2. Select user<br>3. Submit</td>
+                        <td>Borrowing created, book availability decremented, email sent</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>Return Book</td>
+                        <td>1. Click "Return"<br>2. Confirm</td>
+                        <td>Book marked returned, availability incremented</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>Overdue Book</td>
+                        <td>1. Return book after due date</td>
+                        <td>Fine calculated and created</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>Cannot Borrow Unavailable</td>
+                        <td>1. Try to borrow book with 0 quantity</td>
+                        <td>Error message shown</td>
+                        <td>☐</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>🔬 Automated Testing with PHPUnit</h2>
+        
+        <div class="example">
+            <h3>Writing Feature Tests</h3>
+            
+            <h4>Create Test File</h4>
+            <pre><code>php artisan make:test BookTest</code></pre>
+
+            <h4>Example Test Cases</h4>
+            <pre><code>// tests/Feature/BookTest.php
+namespace Tests\Feature;
+
+use Tests\TestCase;
+use App\Models\User;
+use App\Models\Book;
+use App\Models\Category;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+class BookTest extends TestCase
+{
+    use RefreshDatabase;
+
+    /** @test */
+    public function authenticated_users_can_view_books()
+    {
+        $user = User::factory()->create();
+        
+        $response = $this->actingAs($user)->get('/books');
+        
+        $response->assertStatus(200);
+        $response->assertViewIs('books.index');
+    }
+
+    /** @test */
+    public function users_can_create_a_book()
+    {
+        $user = User::factory()->create(['is_admin' => true]);
+        $category = Category::factory()->create();
+        
+        $bookData = [
+            'title' => 'Test Book',
+            'author' => 'Test Author',
+            'isbn' => '1234567890',
+            'category_id' => $category->id,
+            'quantity' => 5,
+            'description' => 'Test description'
+        ];
+        
+        $response = $this->actingAs($user)
+                         ->post('/books', $bookData);
+        
+        $this->assertDatabaseHas('books', [
+            'title' => 'Test Book',
+            'author' => 'Test Author'
+        ]);
+        
+        $response->assertRedirect('/books');
+    }
+
+    /** @test */
+    public function book_title_is_required()
+    {
+        $user = User::factory()->create(['is_admin' => true]);
+        $category = Category::factory()->create();
+        
+        $response = $this->actingAs($user)
+                         ->post('/books', [
+                             'title' => '',
+                             'author' => 'Test Author',
+                             'isbn' => '1234567890',
+                             'category_id' => $category->id,
+                             'quantity' => 5
+                         ]);
+        
+        $response->assertSessionHasErrors('title');
+    }
+
+    /** @test */
+    public function users_can_search_books()
+    {
+        $user = User::factory()->create();
+        $category = Category::factory()->create();
+        
+        Book::factory()->create([
+            'title' => 'Laravel Tutorial',
+            'category_id' => $category->id
+        ]);
+        
+        Book::factory()->create([
+            'title' => 'PHP Basics',
+            'category_id' => $category->id
+        ]);
+        
+        $response = $this->actingAs($user)
+                         ->get('/books?search=Laravel');
+        
+        $response->assertSee('Laravel Tutorial');
+        $response->assertDontSee('PHP Basics');
+    }
+
+    /** @test */
+    public function book_availability_decreases_when_borrowed()
+    {
+        $user = User::factory()->create();
+        $category = Category::factory()->create();
+        $book = Book::factory()->create([
+            'category_id' => $category->id,
+            'quantity' => 5,
+            'available_quantity' => 5
+        ]);
+        
+        $this->actingAs($user)
+             ->post('/borrowings', [
+                 'book_id' => $book->id,
+                 'user_id' => $user->id
+             ]);
+        
+        $book->refresh();
+        $this->assertEquals(4, $book->available_quantity);
+    }
+}
+
+# Run tests
+php artisan test</code></pre>
+        </div>
+
+        <h2>🐛 Debugging Techniques</h2>
+        
+        <div class="key-concept">
+            <h3>Laravel Debugging Tools</h3>
+            
+            <h4>1. dd() - Dump and Die</h4>
+            <pre><code>// Dump variable and stop execution
+dd($books);
+
+// Dump multiple variables
+dd($books, $categories, $user);</code></pre>
+
+            <h4>2. dump() - Dump Without Stopping</h4>
+            <pre><code>// Dump and continue execution
+dump($book);
+dump($user);
+return view('books.show', compact('book'));</code></pre>
+
+            <h4>3. Laravel Debugbar</h4>
+            <pre><code># Install Laravel Debugbar
+composer require barryvdh/laravel-debugbar --dev
+
+# It will show:
+# - SQL queries executed
+# - Execution time
+# - Memory usage
+# - Request data
+# - Session data</code></pre>
+
+            <h4>4. Log Files</h4>
+            <pre><code>// Write to log file
+\Log::info('Book created', ['book_id' => $book->id]);
+\Log::error('Error borrowing book', ['error' => $e->getMessage()]);
+\Log::debug('Debug info', ['data' => $data]);
+
+# View logs
+tail -f storage/logs/laravel.log</code></pre>
+
+            <h4>5. Tinker - Interactive Shell</h4>
+            <pre><code>php artisan tinker
+
+# Test queries
+>>> App\Models\Book::count()
+>>> App\Models\User::where('email', 'test@example.com')->first()
+>>> $book = App\Models\Book::find(1)
+>>> $book->borrowings</code></pre>
+        </div>
+
+        <h2>🔧 Common Bugs and Solutions</h2>
+        
+        <div class="example">
+            <h3>Bug Fix Examples</h3>
+            
+            <h4>Bug 1: N+1 Query Problem</h4>
+            <pre><code>// Problem: This generates 101 queries (1 + 100)
+$borrowings = Borrowing::all(); // 1 query
+foreach ($borrowings as $borrowing) {
+    echo $borrowing->book->title; // 100 queries
+}
+
+// Solution: Use eager loading
+$borrowings = Borrowing::with(['book', 'user'])->get(); // 3 queries total</code></pre>
+
+            <h4>Bug 2: Mass Assignment Error</h4>
+            <pre><code>// Problem: "Add [field] to fillable property"
+Book::create($request->all()); // Error!
+
+// Solution: Add to $fillable array in model
+protected $fillable = [
+    'title', 'author', 'isbn', 'category_id', 
+    'description', 'quantity', 'available_quantity'
+];</code></pre>
+
+            <h4>Bug 3: File Upload Not Working</h4>
+            <pre><code>// Problem: Images not displaying
+
+// Solution 1: Create symbolic link
+php artisan storage:link
+
+// Solution 2: Update form to include enctype
+&lt;form method="POST" enctype="multipart/form-data"&gt;
+
+// Solution 3: Check file validation
+$request->validate([
+    'cover_image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
+]);</code></pre>
+        </div>
+
+        <div class="exercise">
+            <h2>✏️ Today's Tasks</h2>
+            
+            <h3>Task 1: Manual Testing (2 hours)</h3>
+            <ol>
+                <li>Test all authentication flows</li>
+                <li>Test all CRUD operations for books</li>
+                <li>Test borrowing and return flows</li>
+                <li>Test search and filter functionality</li>
+                <li>Test on different browsers (Chrome, Firefox, Edge)</li>
+                <li>Test on mobile devices</li>
+                <li>Document all bugs found</li>
+            </ol>
+
+            <h3>Task 2: Write Automated Tests (60 minutes)</h3>
+            <ol>
+                <li>Create BookTest with 5 test cases</li>
+                <li>Create BorrowingTest with 3 test cases</li>
+                <li>Run tests and ensure they pass</li>
+                <li>Fix any failing tests</li>
+            </ol>
+
+            <h3>Task 3: Bug Fixing (90 minutes)</h3>
+            <ol>
+                <li>Prioritize bugs (critical, high, medium, low)</li>
+                <li>Fix all critical bugs first</li>
+                <li>Fix high priority bugs</li>
+                <li>Retest after each fix</li>
+                <li>Update bug tracking document</li>
+            </ol>
+
+            <h3>Task 4: Performance Testing (30 minutes)</h3>
+            <ol>
+                <li>Check page load times</li>
+                <li>Optimize slow queries</li>
+                <li>Add database indexes if needed</li>
+                <li>Test with large datasets</li>
+            </ol>
+        </div>
+
+        <div class="deliverable">
+            <h2>📦 Deliverables</h2>
+            <h3>By end of day:</h3>
+            <ol>
+                <li><strong>Tested Application:</strong>
+                    <ul>
+                        <li>All test cases executed</li>
+                        <li>Test results documented</li>
+                    </ul>
+                </li>
+                <li><strong>Automated Tests:</strong>
+                    <ul>
+                        <li>Minimum 8 passing tests</li>
+                        <li>Tests cover critical features</li>
+                    </ul>
+                </li>
+                <li><strong>Bug Report:</strong>
+                    <ul>
+                        <li>List of bugs found</li>
+                        <li>Priority levels assigned</li>
+                        <li>Status (fixed/pending)</li>
+                    </ul>
+                </li>
+                <li><strong>Stable Application:</strong>
+                    <ul>
+                        <li>All critical bugs fixed</li>
+                        <li>No broken features</li>
+                        <li>Ready for deployment</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <div class="tip">
+            <strong>💡 Testing Best Practices:</strong>
+            <ul>
+                <li>Test like a real user would use the application</li>
+                <li>Try to break the application with unusual inputs</li>
+                <li>Test edge cases (empty data, very long text, special characters)</li>
+                <li>Test both success and failure scenarios</li>
+                <li>Document steps to reproduce bugs</li>
+                <li>Retest after fixing bugs to ensure fix works</li>
+            </ul>
+        </div>
+
+        <div class="navigation">
+            <a href="../week22/day3-integration-debugging.html" class="nav-button">← Previous: Integration & Debugging</a>
+            <a href="day2-documentation.html" class="nav-button">Next: Documentation →</a>
+        </div>
+    </div>
+</body>
+</html>

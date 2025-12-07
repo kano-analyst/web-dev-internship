@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 3: Feature Integration & Bug Fixing | Week 22</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%);
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        h1 { color: #ff6e7f; border-bottom: 3px solid #bfe9ff; padding-bottom: 15px; margin-bottom: 25px; }
+        h2 { color: #ff6e7f; margin-top: 30px; margin-bottom: 15px; }
+        h3 { color: #5a9fd4; margin-top: 20px; margin-bottom: 10px; }
+        .objectives, .key-concept, .example, .exercise, .deliverable {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #ff6e7f;
+            border-radius: 8px;
+        }
+        .key-concept { border-left-color: #5a9fd4; background: #e7f3ff; }
+        .example { border-left-color: #28a745; background: #d4edda; }
+        .exercise { border-left-color: #ffc107; background: #fff3cd; }
+        .deliverable { border-left-color: #17a2b8; background: #d1ecf1; }
+        code {
+            background: #272822;
+            color: #f8f8f2;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        pre {
+            background: #272822;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th { background: #ff6e7f; color: white; }
+        tr:nth-child(even) { background: #f8f9fa; }
+        ul, ol { margin: 15px 0; padding-left: 30px; }
+        li { margin: 8px 0; }
+        .navigation {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+        .nav-button {
+            padding: 10px 20px;
+            background: #ff6e7f;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .nav-button:hover { background: #e55d6e; }
+        .tip {
+            background: #fff9e6;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .warning {
+            background: #ffe6e6;
+            border-left: 5px solid #dc3545;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Week 22, Day 3: Feature Integration & Bug Fixing</h1>
+        
+        <div class="objectives">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Integrate frontend and backend components</li>
+                <li>Implement borrowing system functionality</li>
+                <li>Add email notifications</li>
+                <li>Test all user flows and features</li>
+                <li>Identify and fix common bugs</li>
+                <li>Optimize application performance</li>
+                <li>Use Git for version control and collaboration</li>
+            </ul>
+        </div>
+
+        <h2>🔗 Step 1: Complete Borrowing System</h2>
+        
+        <div class="example">
+            <h3>BorrowingController Implementation</h3>
+            <pre><code>// app/Http/Controllers/BorrowingController.php
+namespace App\Http\Controllers;
+
+use App\Models\Borrowing;
+use App\Models\Book;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Notifications\BookBorrowedNotification;
+use App\Notifications\BookReturnReminderNotification;
+
+class BorrowingController extends Controller
+{
+    public function index()
+    {
+        $borrowings = Borrowing::with(['book', 'user'])
+                               ->when(!Auth::user()->is_admin, function($query) {
+                                   $query->where('user_id', Auth::id());
+                               })
+                               ->latest()
+                               ->paginate(15);
+        
+        return view('borrowings.index', compact('borrowings'));
+    }
+
+    public function create()
+    {
+        $availableBooks = Book::where('available_quantity', '>', 0)->get();
+        return view('borrowings.create', compact('availableBooks'));
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'book_id' => 'required|exists:books,id',
+            'user_id' => 'required|exists:users,id',
+            'notes' => 'nullable|string|max:500'
+        ]);
+
+        $book = Book::findOrFail($validated['book_id']);
+
+        // Check availability
+        if ($book->available_quantity < 1) {
+            return back()->with('error', 'This book is currently unavailable.');
+        }
+
+        // Create borrowing record
+        $borrowing = Borrowing::create([
+            'user_id' => $validated['user_id'],
+            'book_id' => $validated['book_id'],
+            'borrowed_date' => now(),
+            'due_date' => now()->addDays(14), // 14 days loan period
+            'status' => 'borrowed',
+            'notes' => $validated['notes']
+        ]);
+
+        // Update book availability
+        $book->decrement('available_quantity');
+
+        // Send notification
+        $borrowing->user->notify(new BookBorrowedNotification($borrowing));
+
+        return redirect()->route('borrowings.index')
+                        ->with('success', 'Book borrowed successfully!');
+    }
+
+    public function return(Borrowing $borrowing)
+    {
+        // Check authorization
+        if (!Auth::user()->is_admin && $borrowing->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        // Update borrowing
+        $borrowing->update([
+            'return_date' => now(),
+            'status' => 'returned'
+        ]);
+
+        // Update book availability
+        $borrowing->book->increment('available_quantity');
+
+        // Check for overdue and create fine if necessary
+        if ($borrowing->return_date->isAfter($borrowing->due_date)) {
+            $daysOverdue = $borrowing->return_date->diffInDays($borrowing->due_date);
+            $fineAmount = $daysOverdue * 10; // 10 naira per day
+
+            $borrowing->fine()->create([
+                'amount' => $fineAmount,
+                'status' => 'pending'
+            ]);
+        }
+
+        return redirect()->route('borrowings.index')
+                        ->with('success', 'Book returned successfully!');
+    }
+
+    public function destroy(Borrowing $borrowing)
+    {
+        // Only allow deletion if not returned
+        if ($borrowing->status === 'borrowed') {
+            $borrowing->book->increment('available_quantity');
+        }
+
+        $borrowing->delete();
+
+        return redirect()->route('borrowings.index')
+                        ->with('success', 'Borrowing record deleted.');
+    }
+}</code></pre>
+        </div>
+
+        <h2>📧 Step 2: Email Notifications</h2>
+        
+        <div class="example">
+            <h3>Create Notification Classes</h3>
+            <pre><code># Generate notifications
+php artisan make:notification BookBorrowedNotification
+php artisan make:notification BookReturnReminderNotification</code></pre>
+
+            <h4>Book Borrowed Notification</h4>
+            <pre><code>// app/Notifications/BookBorrowedNotification.php
+namespace App\Notifications;
+
+use Illuminate\Notifications\Notification;
+use Illuminate\Notifications\Messages\MailMessage;
+use App\Models\Borrowing;
+
+class BookBorrowedNotification extends Notification
+{
+    protected $borrowing;
+
+    public function __construct(Borrowing $borrowing)
+    {
+        $this->borrowing = $borrowing;
+    }
+
+    public function via($notifiable)
+    {
+        return ['mail'];
+    }
+
+    public function toMail($notifiable)
+    {
+        return (new MailMessage)
+            ->subject('Book Borrowed Successfully')
+            ->greeting('Hello ' . $notifiable->name . '!')
+            ->line('You have successfully borrowed the following book:')
+            ->line('**Book:** ' . $this->borrowing->book->title)
+            ->line('**Author:** ' . $this->borrowing->book->author)
+            ->line('**Borrowed Date:** ' . $this->borrowing->borrowed_date->format('M d, Y'))
+            ->line('**Due Date:** ' . $this->borrowing->due_date->format('M d, Y'))
+            ->line('Please return the book on or before the due date to avoid fines.')
+            ->action('View My Borrowings', route('borrowings.index'))
+            ->line('Thank you for using our library!');
+    }
+}</code></pre>
+
+            <h4>Schedule Reminder Emails</h4>
+            <pre><code>// app/Console/Kernel.php
+protected function schedule(Schedule $schedule)
+{
+    // Send reminder emails 2 days before due date
+    $schedule->call(function () {
+        $upcomingDue = Borrowing::where('status', 'borrowed')
+                                ->whereDate('due_date', now()->addDays(2))
+                                ->get();
+
+        foreach ($upcomingDue as $borrowing) {
+            $borrowing->user->notify(new BookReturnReminderNotification($borrowing));
+        }
+    })->daily();
+
+    // Mark overdue borrowings
+    $schedule->call(function () {
+        Borrowing::where('status', 'borrowed')
+                ->whereDate('due_date', '<', now())
+                ->update(['status' => 'overdue']);
+    })->daily();
+}</code></pre>
+        </div>
+
+        <h2>🐛 Step 3: Common Bugs & Fixes</h2>
+        
+        <div class="key-concept">
+            <h3>Bug Tracking Checklist</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Issue</th>
+                        <th>Symptom</th>
+                        <th>Solution</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Image not displaying</td>
+                        <td>Broken image icons</td>
+                        <td>Run <code>php artisan storage:link</code></td>
+                    </tr>
+                    <tr>
+                        <td>Validation errors not showing</td>
+                        <td>Form submits without feedback</td>
+                        <td>Add <code>@error</code> directives in Blade</td>
+                    </tr>
+                    <tr>
+                        <td>Relationship not loading</td>
+                        <td>N+1 query problem</td>
+                        <td>Use <code>->with(['relation'])</code> eager loading</td>
+                    </tr>
+                    <tr>
+                        <td>Pagination links broken</td>
+                        <td>Page numbers don't preserve filters</td>
+                        <td>Use <code>->appends(request()->query())</code></td>
+                    </tr>
+                    <tr>
+                        <td>Old input not retained</td>
+                        <td>Form clears on validation error</td>
+                        <td>Use <code>old('field_name')</code> in inputs</td>
+                    </tr>
+                    <tr>
+                        <td>Unauthorized access</td>
+                        <td>Users can access restricted pages</td>
+                        <td>Add middleware or authorization checks</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="example">
+            <h3>Fixing Search Functionality</h3>
+            <pre><code>// Update BookController@index with search
+public function index(Request $request)
+{
+    $query = Book::with('category');
+
+    // Search filter
+    if ($request->filled('search')) {
+        $search = $request->search;
+        $query->where(function($q) use ($search) {
+            $q->where('title', 'like', "%{$search}%")
+              ->orWhere('author', 'like', "%{$search}%")
+              ->orWhere('isbn', 'like', "%{$search}%");
+        });
+    }
+
+    // Category filter
+    if ($request->filled('category')) {
+        $query->where('category_id', $request->category);
+    }
+
+    // Availability filter
+    if ($request->filled('available')) {
+        if ($request->available === 'yes') {
+            $query->where('available_quantity', '>', 0);
+        } else {
+            $query->where('available_quantity', '=', 0);
+        }
+    }
+
+    $books = $query->latest()->paginate(12)->appends($request->query());
+    $categories = Category::all();
+
+    return view('books.index', compact('books', 'categories'));
+}</code></pre>
+        </div>
+
+        <h2>🚀 Step 4: Performance Optimization</h2>
+        
+        <div class="key-concept">
+            <h3>Optimization Techniques</h3>
+            
+            <h4>1. Database Query Optimization</h4>
+            <pre><code>// Bad - N+1 query problem
+$borrowings = Borrowing::all();
+foreach ($borrowings as $borrowing) {
+    echo $borrowing->book->title; // Separate query each time
+}
+
+// Good - Eager loading
+$borrowings = Borrowing::with(['book', 'user'])->get();
+foreach ($borrowings as $borrowing) {
+    echo $borrowing->book->title; // No extra queries
+}</code></pre>
+
+            <h4>2. Caching Common Data</h4>
+            <pre><code>// Cache categories for 1 hour
+$categories = Cache::remember('categories', 3600, function () {
+    return Category::all();
+});</code></pre>
+
+            <h4>3. Image Optimization</h4>
+            <pre><code>// Install Intervention Image
+composer require intervention/image
+
+// Resize uploaded images
+use Intervention\Image\Facades\Image;
+
+if ($request->hasFile('cover_image')) {
+    $image = $request->file('cover_image');
+    $filename = time() . '.' . $image->extension();
+    $path = public_path('storage/book-covers/' . $filename);
+    
+    Image::make($image)->resize(400, 600)->save($path);
+    
+    $validated['cover_image'] = 'book-covers/' . $filename;
+}</code></pre>
+        </div>
+
+        <h2>📱 Step 5: Git Version Control</h2>
+        
+        <div class="example">
+            <h3>Git Workflow for Team Collaboration</h3>
+            
+            <h4>Initial Setup</h4>
+            <pre><code># Initialize Git repository
+git init
+
+# Add .gitignore
+echo "node_modules/
+/vendor/
+.env
+/storage/*.key
+/public/hot
+/public/storage" > .gitignore
+
+# Initial commit
+git add .
+git commit -m "Initial commit: Laravel project setup"
+
+# Create GitHub repository and push
+git remote add origin https://github.com/yourusername/library-system.git
+git branch -M main
+git push -u origin main</code></pre>
+
+            <h4>Team Workflow</h4>
+            <pre><code># Create feature branch
+git checkout -b feature/borrowing-system
+
+# Make changes and commit
+git add .
+git commit -m "Add borrowing system with email notifications"
+
+# Push to GitHub
+git push origin feature/borrowing-system
+
+# Create Pull Request on GitHub
+# After review, merge to main branch
+
+# Update local main branch
+git checkout main
+git pull origin main</code></pre>
+
+            <h4>Useful Git Commands</h4>
+            <pre><code># Check status
+git status
+
+# View changes
+git diff
+
+# View commit history
+git log --oneline
+
+# Undo uncommitted changes
+git checkout -- filename
+
+# Create and switch to new branch
+git checkout -b branch-name
+
+# Switch branches
+git checkout branch-name
+
+# Merge branch into current branch
+git merge branch-name</code></pre>
+        </div>
+
+        <div class="exercise">
+            <h2>✏️ Today's Tasks</h2>
+            
+            <h3>Task 1: Complete Borrowing System (90 minutes)</h3>
+            <ol>
+                <li>Implement BorrowingController with all methods</li>
+                <li>Create borrowing views (index, create)</li>
+                <li>Add return book functionality</li>
+                <li>Test borrowing flow end-to-end</li>
+                <li>Verify book availability updates correctly</li>
+            </ol>
+
+            <h3>Task 2: Add Email Notifications (45 minutes)</h3>
+            <ol>
+                <li>Create notification classes</li>
+                <li>Configure SMTP in .env</li>
+                <li>Test email sending</li>
+                <li>Schedule reminder emails</li>
+            </ol>
+
+            <h3>Task 3: Bug Fixing Sprint (60 minutes)</h3>
+            <ol>
+                <li>Test all CRUD operations</li>
+                <li>Fix validation issues</li>
+                <li>Fix image upload and display</li>
+                <li>Fix search and filter functionality</li>
+                <li>Test on different browsers</li>
+            </ol>
+
+            <h3>Task 4: Performance Optimization (30 minutes)</h3>
+            <ol>
+                <li>Add eager loading to prevent N+1 queries</li>
+                <li>Optimize database indexes</li>
+                <li>Add caching for categories</li>
+                <li>Resize uploaded images</li>
+            </ol>
+
+            <h3>Task 5: Git Version Control (30 minutes)</h3>
+            <ol>
+                <li>Initialize Git repository</li>
+                <li>Commit all changes</li>
+                <li>Push to GitHub</li>
+                <li>Add team members as collaborators</li>
+            </ol>
+        </div>
+
+        <div class="deliverable">
+            <h2>📦 Deliverables</h2>
+            <h3>By end of day:</h3>
+            <ol>
+                <li><strong>Integrated Application:</strong>
+                    <ul>
+                        <li>All modules working together</li>
+                        <li>Complete user flows functional</li>
+                        <li>No critical bugs</li>
+                    </ul>
+                </li>
+                <li><strong>Working Features:</strong>
+                    <ul>
+                        <li>User authentication</li>
+                        <li>Book management (CRUD)</li>
+                        <li>Borrowing system</li>
+                        <li>Email notifications</li>
+                        <li>Search and filtering</li>
+                    </ul>
+                </li>
+                <li><strong>Code Quality:</strong>
+                    <ul>
+                        <li>Clean, readable code</li>
+                        <li>Proper error handling</li>
+                        <li>Optimized queries</li>
+                    </ul>
+                </li>
+                <li><strong>Version Control:</strong>
+                    <ul>
+                        <li>GitHub repository created</li>
+                        <li>All code committed</li>
+                        <li>Team members added</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <div class="tip">
+            <strong>💡 Testing Checklist:</strong>
+            <ul>
+                <li>✅ Can users register and login?</li>
+                <li>✅ Can books be added, edited, and deleted?</li>
+                <li>✅ Does search return correct results?</li>
+                <li>✅ Can books be borrowed and returned?</li>
+                <li>✅ Do email notifications work?</li>
+                <li>✅ Does pagination work with filters?</li>
+                <li>✅ Are validation errors displayed properly?</li>
+                <li>✅ Do images upload and display correctly?</li>
+                <li>✅ Is the site responsive on mobile?</li>
+            </ul>
+        </div>
+
+        <div class="warning">
+            <strong>⚠️ Don't forget:</strong> Commit your code to Git regularly! Use meaningful commit messages like "Add borrowing system" or "Fix image upload bug".
+        </div>
+
+        <div class="navigation">
+            <a href="day2-frontend-integration.html" class="nav-button">← Previous: Frontend Integration</a>
+            <a href="../week23/day1-testing-debugging.html" class="nav-button">Next Week: Testing & Debugging →</a>
+        </div>
+    </div>
+</body>
+</html>

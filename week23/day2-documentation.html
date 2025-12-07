@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 2: Technical Documentation & User Manuals | Week 23</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%);
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        h1 { color: #ff6e7f; border-bottom: 3px solid #bfe9ff; padding-bottom: 15px; margin-bottom: 25px; }
+        h2 { color: #ff6e7f; margin-top: 30px; margin-bottom: 15px; }
+        h3 { color: #5a9fd4; margin-top: 20px; margin-bottom: 10px; }
+        .objectives, .key-concept, .example, .exercise, .deliverable {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #ff6e7f;
+            border-radius: 8px;
+        }
+        .key-concept { border-left-color: #5a9fd4; background: #e7f3ff; }
+        .example { border-left-color: #28a745; background: #d4edda; }
+        .exercise { border-left-color: #ffc107; background: #fff3cd; }
+        .deliverable { border-left-color: #17a2b8; background: #d1ecf1; }
+        code {
+            background: #272822;
+            color: #f8f8f2;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        pre {
+            background: #272822;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th { background: #ff6e7f; color: white; }
+        tr:nth-child(even) { background: #f8f9fa; }
+        ul, ol { margin: 15px 0; padding-left: 30px; }
+        li { margin: 8px 0; }
+        .navigation {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+        .nav-button {
+            padding: 10px 20px;
+            background: #ff6e7f;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .nav-button:hover { background: #e55d6e; }
+        .tip {
+            background: #fff9e6;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 Week 23, Day 2: Technical Documentation & User Manuals</h1>
+        
+        <div class="objectives">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Create comprehensive README documentation</li>
+                <li>Write technical documentation for developers</li>
+                <li>Create user manual for end-users</li>
+                <li>Document API endpoints</li>
+                <li>Write installation and setup guides</li>
+                <li>Create database schema documentation</li>
+            </ul>
+        </div>
+
+        <h2>📄 1. README.md Documentation</h2>
+        
+        <div class="example">
+            <h3>Complete README Template</h3>
+            <pre><code># Library Management System
+
+## 📖 About The Project
+
+The Library Management System is a comprehensive web application built with Laravel 10 that helps libraries manage their book inventory, borrowings, and user accounts efficiently.
+
+### Key Features
+
+- 🔐 User Authentication (Login, Register, Logout)
+- 📚 Book Management (CRUD operations)
+- 🔄 Borrowing System with due date tracking
+- 📧 Email Notifications for borrowed books and reminders
+- 🔍 Advanced Search and Filtering
+- 📊 Dashboard with Statistics
+- 👥 Role-based Access Control (Admin/User)
+- 📱 Responsive Design (Mobile & Desktop)
+
+### Built With
+
+- [Laravel 10](https://laravel.com/)
+- [Bootstrap 5](https://getbootstrap.com/)
+- [MySQL 8.0](https://www.mysql.com/)
+- [Laravel Breeze](https://github.com/laravel/breeze) - Authentication
+- [Laravel Mail](https://laravel.com/docs/mail) - Email Notifications
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+- PHP >= 8.1
+- Composer
+- MySQL >= 8.0
+- Node.js & NPM
+- Git
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/library-system.git
+   cd library-system
+   ```
+
+2. **Install PHP dependencies**
+   ```bash
+   composer install
+   ```
+
+3. **Install NPM dependencies**
+   ```bash
+   npm install
+   npm run dev
+   ```
+
+4. **Create environment file**
+   ```bash
+   cp .env.example .env
+   ```
+
+5. **Generate application key**
+   ```bash
+   php artisan key:generate
+   ```
+
+6. **Configure database**
+   
+   Create a MySQL database and update `.env`:
+   ```
+   DB_DATABASE=library_system
+   DB_USERNAME=root
+   DB_PASSWORD=your_password
+   ```
+
+7. **Run migrations and seeders**
+   ```bash
+   php artisan migrate --seed
+   ```
+
+8. **Create storage link**
+   ```bash
+   php artisan storage:link
+   ```
+
+9. **Start development server**
+   ```bash
+   php artisan serve
+   ```
+
+10. **Visit the application**
+    
+    Open your browser and navigate to: `http://localhost:8000`
+
+### Default Login Credentials
+
+- **Admin:**
+  - Email: admin@library.com
+  - Password: password
+
+- **User:**
+  - Email: user@library.com
+  - Password: password
+
+## 📱 Usage
+
+### For Students
+
+1. **Register Account:** Click "Register" and fill in your details
+2. **Browse Books:** View available books in the catalog
+3. **Search Books:** Use search bar to find specific titles or authors
+4. **View Borrowing History:** Check your borrowed books and due dates
+
+### For Librarians
+
+1. **Manage Books:** Add, edit, or delete books from the catalog
+2. **Process Borrowings:** Issue books to students
+3. **Handle Returns:** Process book returns and calculate fines if overdue
+4. **View Reports:** Access borrowing statistics and popular books
+
+### For Administrators
+
+1. **Manage Users:** Create and manage user accounts
+2. **Manage Categories:** Add and organize book categories
+3. **View Dashboard:** Monitor system statistics
+4. **Generate Reports:** Access comprehensive borrowing reports
+
+## 🗄️ Database Schema
+
+### Tables
+
+- **users** - Store user accounts and authentication
+- **categories** - Book categories (Fiction, Science, etc.)
+- **books** - Book information and inventory
+- **borrowings** - Track book borrowing records
+- **fines** - Store overdue fines
+
+### Relationships
+
+- One User → Many Borrowings
+- One Book → Many Borrowings
+- One Category → Many Books
+- One Borrowing → One Fine (optional)
+
+## 📧 Email Configuration
+
+Update `.env` with your SMTP settings:
+
+```
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=your-email@gmail.com
+MAIL_PASSWORD=your-app-password
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=your-email@gmail.com
+MAIL_FROM_NAME="Library System"
+```
+
+## 🧪 Running Tests
+
+```bash
+# Run all tests
+php artisan test
+
+# Run specific test file
+php artisan test tests/Feature/BookTest.php
+
+# Run with coverage
+php artisan test --coverage
+```
+
+## 📂 Project Structure
+
+```
+library-system/
+├── app/
+│   ├── Http/Controllers/     # Application controllers
+│   ├── Models/               # Eloquent models
+│   └── Notifications/        # Email notifications
+├── database/
+│   ├── migrations/           # Database migrations
+│   └── seeders/              # Database seeders
+├── resources/
+│   └── views/                # Blade templates
+├── routes/
+│   ├── web.php               # Web routes
+│   └── api.php               # API routes
+└── public/
+    └── storage/              # Uploaded files
+```
+
+## 🤝 Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License.
+
+## 👥 Team Members
+
+- **Ahmad Ibrahim** - Team Lead / Backend Developer
+- **Fatima Yusuf** - Frontend Developer
+- **Musa Abdullahi** - Database Designer / Tester
+
+## 🙏 Acknowledgments
+
+- Laravel Framework
+- Bootstrap
+- Our instructor: Ahmad Tijjani Garba
+- Next-Step Technology
+
+## 📞 Contact
+
+Project Link: [https://github.com/yourusername/library-system](https://github.com/yourusername/library-system)
+
+---
+
+Made with ❤️ by Team BookKeepers</code></pre>
+        </div>
+
+        <h2>📖 2. User Manual</h2>
+        
+        <div class="example">
+            <h3>USER_MANUAL.md Template</h3>
+            <pre><code># Library Management System - User Manual
+
+## Table of Contents
+
+1. [Getting Started](#getting-started)
+2. [Student Guide](#student-guide)
+3. [Librarian Guide](#librarian-guide)
+4. [Administrator Guide](#administrator-guide)
+5. [Troubleshooting](#troubleshooting)
+
+## Getting Started
+
+### Creating an Account
+
+1. Navigate to the registration page
+2. Fill in the following information:
+   - Full Name
+   - Email Address
+   - Password (minimum 8 characters)
+   - Confirm Password
+3. Click "Register"
+4. Check your email for verification (if enabled)
+5. Login with your credentials
+
+### Logging In
+
+1. Click "Login" on the homepage
+2. Enter your email and password
+3. Click "Login"
+4. You will be redirected to your dashboard
+
+## Student Guide
+
+### Browsing Books
+
+1. Click "Books" in the navigation menu
+2. Browse through the book catalog
+3. Use filters to narrow down results:
+   - Search by title, author, or ISBN
+   - Filter by category
+   - Filter by availability
+
+### Viewing Book Details
+
+1. Click on any book card
+2. View detailed information:
+   - Title, Author, ISBN
+   - Description
+   - Category
+   - Availability status
+   - Publication year
+
+### Checking Borrowing History
+
+1. Go to "My Borrowings"
+2. View your current and past borrowings
+3. Check due dates
+4. View any pending fines
+
+## Librarian Guide
+
+### Adding a New Book
+
+1. Go to "Books" → "Add Book"
+2. Fill in the book details:
+   - Title (required)
+   - Author (required)
+   - ISBN (required, must be unique)
+   - Category (required)
+   - Description (optional)
+   - Quantity (required)
+   - Publication Year (optional)
+   - Cover Image (optional, max 2MB)
+3. Click "Add Book"
+4. Book will appear in the catalog
+
+### Processing a Book Borrowing
+
+1. Go to "Borrowings" → "New Borrowing"
+2. Select the student
+3. Select the book
+4. Add any notes (optional)
+5. Click "Issue Book"
+6. System will:
+   - Create borrowing record
+   - Decrease available quantity
+   - Send email to student with due date
+
+### Processing a Book Return
+
+1. Go to "Borrowings"
+2. Find the borrowing record
+3. Click "Return Book"
+4. System will:
+   - Mark as returned
+   - Increase available quantity
+   - Calculate fine if overdue
+   - Create fine record if applicable
+
+### Viewing Reports
+
+1. Go to Dashboard
+2. View statistics:
+   - Total books
+   - Available books
+   - Active borrowings
+   - Overdue books
+3. View recent activity
+4. View popular books list
+
+## Administrator Guide
+
+### Managing Categories
+
+1. Go to "Categories"
+2. To add a new category:
+   - Click "Add Category"
+   - Enter name and description
+   - Click "Save"
+3. To edit a category:
+   - Click "Edit" on category
+   - Update information
+   - Click "Update"
+4. To delete a category:
+   - Click "Delete"
+   - Confirm deletion
+
+### Managing Users
+
+1. Go to "Users" (admin only)
+2. View all registered users
+3. Edit user roles:
+   - Student
+   - Librarian
+   - Administrator
+4. Deactivate users if needed
+
+## Troubleshooting
+
+### Cannot Login
+
+**Problem:** Email or password incorrect
+**Solution:**
+- Check that CAPS LOCK is off
+- Verify your email address is correct
+- Use "Forgot Password" to reset
+
+### Book Not Showing in Search
+
+**Problem:** Cannot find a specific book
+**Solution:**
+- Check spelling of search term
+- Try searching by author instead of title
+- Remove category filter
+- Check if book is actually in the system
+
+### Cannot Borrow Book
+
+**Problem:** Error message when trying to borrow
+**Solution:**
+- Check if book is available (quantity > 0)
+- Check if you have overdue books or fines
+- Contact librarian for assistance
+
+### Email Notifications Not Received
+
+**Problem:** Not getting email notifications
+**Solution:**
+- Check spam/junk folder
+- Verify email address in your profile
+- Contact administrator to check email settings
+
+## Keyboard Shortcuts
+
+- **Ctrl + K** - Quick search
+- **Ctrl + H** - Go to home/dashboard
+- **Ctrl + B** - Go to books page
+- **Esc** - Close modal dialogs
+
+## Contact Support
+
+If you encounter any issues not covered in this manual:
+
+- Email: support@library.com
+- Phone: +234-XXX-XXX-XXXX
+- Visit the library desk during office hours</code></pre>
+        </div>
+
+        <h2>🔧 3. Technical Documentation</h2>
+        
+        <div class="example">
+            <h3>TECHNICAL_DOCS.md</h3>
+            <pre><code># Technical Documentation
+
+## Architecture Overview
+
+The Library Management System follows the MVC (Model-View-Controller) architecture pattern provided by Laravel.
+
+### Technology Stack
+
+- **Backend:** Laravel 10.x (PHP 8.1+)
+- **Frontend:** Blade Templates, Bootstrap 5.3, JavaScript
+- **Database:** MySQL 8.0
+- **Authentication:** Laravel Breeze
+- **Email:** Laravel Mail (SMTP)
+- **File Storage:** Laravel Storage (local/public disk)
+
+## Database Schema
+
+### Users Table
+```sql
+CREATE TABLE users (
+    id BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    is_admin BOOLEAN DEFAULT 0,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
+);
+```
+
+### Categories Table
+```sql
+CREATE TABLE categories (
+    id BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
+);
+```
+
+### Books Table
+```sql
+CREATE TABLE books (
+    id BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(255) NOT NULL,
+    author VARCHAR(255) NOT NULL,
+    isbn VARCHAR(255) UNIQUE NOT NULL,
+    category_id BIGINT UNSIGNED,
+    description TEXT,
+    quantity INT DEFAULT 1,
+    available_quantity INT DEFAULT 1,
+    cover_image VARCHAR(255),
+    publication_year YEAR,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP,
+    FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE
+);
+```
+
+### Borrowings Table
+```sql
+CREATE TABLE borrowings (
+    id BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    user_id BIGINT UNSIGNED,
+    book_id BIGINT UNSIGNED,
+    borrowed_date DATE NOT NULL,
+    due_date DATE NOT NULL,
+    return_date DATE,
+    status ENUM('borrowed', 'returned', 'overdue') DEFAULT 'borrowed',
+    notes TEXT,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (book_id) REFERENCES books(id) ON DELETE CASCADE
+);
+```
+
+## API Endpoints
+
+### Authentication
+- POST /register - Register new user
+- POST /login - User login
+- POST /logout - User logout
+
+### Books
+- GET /books - List all books (paginated)
+- GET /books/{id} - Get single book
+- POST /books - Create new book (admin only)
+- PUT /books/{id} - Update book (admin only)
+- DELETE /books/{id} - Delete book (admin only)
+
+### Borrowings
+- GET /borrowings - List borrowings
+- POST /borrowings - Create new borrowing
+- POST /borrowings/{id}/return - Return a book
+
+## Environment Variables
+
+Required `.env` variables:
+
+```
+APP_NAME="Library Management System"
+APP_ENV=production
+APP_DEBUG=false
+APP_URL=https://your-domain.com
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=library_db
+DB_USERNAME=db_user
+DB_PASSWORD=secure_password
+
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=your-email@gmail.com
+MAIL_PASSWORD=app-password
+MAIL_ENCRYPTION=tls
+```
+
+## Deployment Checklist
+
+- [ ] Set `APP_ENV=production`
+- [ ] Set `APP_DEBUG=false`
+- [ ] Generate new `APP_KEY`
+- [ ] Configure production database
+- [ ] Configure mail settings
+- [ ] Run migrations
+- [ ] Run `php artisan optimize`
+- [ ] Run `php artisan config:cache`
+- [ ] Run `php artisan route:cache`
+- [ ] Run `php artisan view:cache`
+- [ ] Set proper file permissions
+- [ ] Configure backup schedule
+- [ ] Set up SSL certificate
+
+## Performance Optimization
+
+1. **Query Optimization**
+   - Use eager loading for relationships
+   - Add database indexes on frequently queried columns
+   - Use pagination for large datasets
+
+2. **Caching**
+   - Cache categories and static data
+   - Use Redis for session storage (production)
+   - Cache configuration and routes
+
+3. **Asset Optimization**
+   - Minify CSS and JavaScript
+   - Optimize and compress images
+   - Use CDN for static assets
+
+## Security Best Practices
+
+- All passwords are hashed using bcrypt
+- CSRF protection enabled on all forms
+- SQL injection prevention via Eloquent ORM
+- XSS protection via Blade escaping
+- Authentication middleware on protected routes
+- File upload validation and sanitization</code></pre>
+        </div>
+
+        <div class="exercise">
+            <h2>✏️ Today's Tasks</h2>
+            
+            <h3>Task 1: Create README.md (60 minutes)</h3>
+            <ol>
+                <li>Write project overview and features list</li>
+                <li>Document installation steps</li>
+                <li>Add usage instructions</li>
+                <li>Include database schema diagram</li>
+                <li>Add team member information</li>
+            </ol>
+
+            <h3>Task 2: Write User Manual (90 minutes)</h3>
+            <ol>
+                <li>Create step-by-step guides for each user role</li>
+                <li>Add screenshots of key features</li>
+                <li>Document common workflows</li>
+                <li>Include troubleshooting section</li>
+                <li>Add FAQ section</li>
+            </ol>
+
+            <h3>Task 3: Technical Documentation (60 minutes)</h3>
+            <ol>
+                <li>Document database schema</li>
+                <li>List all API endpoints</li>
+                <li>Document environment variables</li>
+                <li>Add deployment instructions</li>
+                <li>Document code structure</li>
+            </ol>
+
+            <h3>Task 4: Code Comments (30 minutes)</h3>
+            <ol>
+                <li>Add PHPDoc comments to controllers</li>
+                <li>Comment complex functions</li>
+                <li>Document model relationships</li>
+                <li>Add inline comments for tricky code</li>
+            </ol>
+        </div>
+
+        <div class="deliverable">
+            <h2>📦 Deliverables</h2>
+            <h3>By end of day:</h3>
+            <ol>
+                <li><strong>README.md</strong> - Complete project documentation in repository root</li>
+                <li><strong>USER_MANUAL.md</strong> - Step-by-step user guide</li>
+                <li><strong>TECHNICAL_DOCS.md</strong> - Technical documentation for developers</li>
+                <li><strong>Code Comments</strong> - Well-commented source code</li>
+                <li><strong>Screenshots</strong> - Folder with application screenshots</li>
+            </ol>
+        </div>
+
+        <div class="tip">
+            <strong>💡 Documentation Tips:</strong>
+            <ul>
+                <li>Write for your audience (users vs developers)</li>
+                <li>Use clear, simple language</li>
+                <li>Include plenty of examples</li>
+                <li>Add screenshots and diagrams</li>
+                <li>Keep documentation up-to-date</li>
+                <li>Use proper Markdown formatting</li>
+                <li>Test all instructions yourself</li>
+            </ul>
+        </div>
+
+        <div class="navigation">
+            <a href="day1-testing-debugging.html" class="nav-button">← Previous: Testing & Debugging</a>
+            <a href="day3-deployment.html" class="nav-button">Next: Deployment →</a>
+        </div>
+    </div>
+</body>
+</html>

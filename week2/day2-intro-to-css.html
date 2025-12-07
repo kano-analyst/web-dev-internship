@@ -4,59 +4,182 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Week 2 Day 2: Introduction to CSS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #10b981;
+            --secondary: #34d399;
+            --accent: #6ee7b7;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gradient-1: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+            --gradient-2: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--gradient-1);
             padding: 20px;
         }
+        
+        .top-nav {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .top-nav .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2em;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .top-nav .logo i {
+            font-size: 1.5em;
+        }
+        
+        .top-nav .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        
+        .top-nav .nav-links a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 0.95em;
+        }
+        
+        .top-nav .nav-links a:hover {
+            color: var(--primary);
+        }
+        
         .container {
             max-width: 1200px;
             margin: 0 auto;
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
             overflow: hidden;
         }
-        header { background: #5e35b1; color: white; padding: 30px; }
-        .nav-breadcrumb {
-            background: #ede7f6;
-            padding: 15px 30px;
-            border-bottom: 2px solid #673ab7;
+        
+        header {
+            background: var(--gradient-1);
+            color: white;
+            padding: 40px 30px;
+            position: relative;
         }
-        .nav-breadcrumb a { color: #5e35b1; text-decoration: none; margin-right: 10px; }
-        .content { padding: 40px; }
-        .section { margin-bottom: 40px; }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+        
+        header h1 {
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        
+        .nav-breadcrumb {
+            background: #ecfdf5;
+            padding: 15px 30px;
+            border-bottom: 2px solid var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .nav-breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        .nav-breadcrumb a:hover {
+            color: var(--secondary);
+        }
+        
+        .nav-breadcrumb i {
+            color: var(--accent);
+            font-size: 0.8em;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
         .section h2 {
-            color: #5e35b1;
+            color: var(--dark);
             margin-bottom: 20px;
             padding-bottom: 10px;
-            border-bottom: 3px solid #673ab7;
+            border-bottom: 3px solid var(--primary);
+            font-weight: 700;
         }
-        .section h3 { color: #673ab7; margin: 20px 0 15px 0; }
+        
+        .section h3 {
+            color: var(--primary);
+            margin: 20px 0 15px 0;
+            font-weight: 600;
+        }
+        
+        .section h4 {
+            color: var(--secondary);
+            margin: 15px 0 10px 0;
+        }
+        
         .info-box {
-            background: #e8eaf6;
-            border-left: 5px solid #5e35b1;
+            background: #ecfdf5;
+            border-left: 5px solid var(--primary);
             padding: 20px;
             margin: 20px 0;
-            border-radius: 5px;
+            border-radius: 8px;
         }
+        
         .tip-box {
-            background: #fff3e0;
-            border-left: 5px solid #ff9800;
+            background: #fff7ed;
+            border-left: 5px solid #f59e0b;
             padding: 20px;
             margin: 20px 0;
-            border-radius: 5px;
+            border-radius: 8px;
         }
+        
         .activity-box {
-            background: #f1f8e9;
-            border-left: 5px solid #4caf50;
+            background: #f0fdf4;
+            border-left: 5px solid var(--secondary);
             padding: 20px;
             margin: 20px 0;
-            border-radius: 5px;
+            border-radius: 8px;
         }
+        
         .code-block {
             background: #2d2d2d;
             color: #f8f8f2;
@@ -66,52 +189,195 @@
             margin: 20px 0;
             font-family: 'Courier New', monospace;
         }
+        
+        .html-code {
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--primary);
+        }
+        
+        .html-code .tag {
+            color: #34d399;
+        }
+        
+        .html-code .attr {
+            color: #60a5fa;
+        }
+        
+        .html-code .value {
+            color: #fbbf24;
+        }
+        
+        .html-code .text {
+            color: #f8fafc;
+        }
+        
+        .html-code .comment {
+            color: #94a3b8;
+            font-style: italic;
+        }
+        
+        .html-code .line {
+            display: block;
+            padding: 2px 0;
+        }
+        
+        .html-code .indent-1 {
+            padding-left: 20px;
+        }
+        
+        .html-code .indent-2 {
+            padding-left: 40px;
+        }
+        
+        .html-code .indent-3 {
+            padding-left: 60px;
+        }
+        
+        .html-code .indent-4 {
+            padding-left: 80px;
+        }
+        
+        .css-code {
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--primary);
+        }
+        
+        .css-code .selector {
+            color: #fbbf24;
+        }
+        
+        .css-code .property {
+            color: #60a5fa;
+        }
+        
+        .css-code .value {
+            color: #34d399;
+        }
+        
+        .css-code .punctuation {
+            color: #f8fafc;
+        }
+        
+        .css-code .comment {
+            color: #94a3b8;
+            font-style: italic;
+        }
+        
+        .css-code .line {
+            display: block;
+            padding: 2px 0;
+        }
+        
+        .css-code .indent-1 {
+            padding-left: 20px;
+        }
+        
+        .css-code .indent-2 {
+            padding-left: 40px;
+        }
+        
         .preview-box {
-            border: 3px solid #673ab7;
+            border: 3px solid var(--primary);
             padding: 20px;
             margin: 20px 0;
             border-radius: 8px;
             background: #fafafa;
         }
+        
         .css-example {
-            border: 2px dashed #673ab7;
+            border: 2px dashed var(--primary);
             padding: 15px;
             margin: 15px 0;
             border-radius: 5px;
+            background: #f0fdf4;
         }
+        
         .btn-primary {
-            display: inline-block;
-            background: #673ab7;
+            background: var(--gradient-1);
             color: white;
-            padding: 12px 30px;
+            padding: 12px 24px;
+            border-radius: 8px;
             text-decoration: none;
-            border-radius: 6px;
+            display: inline-block;
             margin: 10px 10px 10px 0;
-            transition: all 0.3s;
-            font-weight: bold;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
-        .btn-primary:hover { background: #5e35b1; }
-        ul, ol { margin-left: 30px; margin-top: 10px; }
-        li { margin-bottom: 10px; }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-top: 10px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+        }
+        
         table {
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
         }
+        
         th, td {
             border: 1px solid #ddd;
             padding: 12px;
             text-align: left;
         }
-        th { background: #673ab7; color: white; }
-        .checklist { list-style: none; margin-left: 0; }
+        
+        th {
+            background: var(--primary);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .checklist {
+            list-style: none;
+            margin-left: 0;
+        }
+        
         .checklist li:before {
             content: "✓ ";
-            color: #4caf50;
+            color: var(--primary);
             font-weight: bold;
             margin-right: 10px;
         }
-        footer { background: #5e35b1; color: white; padding: 20px; text-align: center; }
+        
+        footer {
+            background: var(--gradient-1);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        footer p {
+            margin: 5px 0;
+        }
+        
         .color-swatch {
             display: inline-block;
             width: 50px;
@@ -120,9 +386,33 @@
             margin: 5px;
             vertical-align: middle;
         }
+        
+        @media (max-width: 768px) {
+            .top-nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .top-nav .nav-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
     </style>
 </head>
 <body>
+    <nav class="top-nav">
+        <a href="../index.html" class="logo">
+            <i class="fas fa-home"></i>
+            <span>Back to Home</span>
+        </a>
+        <div class="nav-links">
+            <a href="../index.html#overview"><i class="fas fa-info-circle"></i> Overview</a>
+            <a href="../index.html#curriculum"><i class="fas fa-book"></i> Curriculum</a>
+            <a href="../index.html#technologies"><i class="fas fa-code"></i> Technologies</a>
+        </div>
+    </nav>
+    
     <div class="container">
         <header>
             <h1>📅 Week 2 - Day 2: Introduction to CSS</h1>
@@ -130,7 +420,11 @@
         </header>
 
         <div class="nav-breadcrumb">
-            <a href="../index.html">← Back to Course Home</a> / Week 2 / Day 2
+            <a href="../index.html"><i class="fas fa-home"></i> Back to Course Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>Week 2</span>
+            <i class="fas fa-chevron-right"></i>
+            <span>Day 2</span>
         </div>
 
         <div class="content">
@@ -170,19 +464,19 @@
 
             <div class="section">
                 <h2>📝 CSS Syntax</h2>
-                <div class="code-block">
-selector {
-    property: value;
-    property: value;
-}
+                <div class="css-code">
+<span class="line"><span class="selector">selector</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">property</span><span class="punctuation">:</span> <span class="value">value</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">property</span><span class="punctuation">:</span> <span class="value">value</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
                 </div>
                 <p><strong>Example:</strong></p>
-                <div class="code-block">
-h1 {
-    color: blue;
-    font-size: 32px;
-    text-align: center;
-}
+                <div class="css-code">
+<span class="line"><span class="selector">h1</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">color</span><span class="punctuation">:</span> <span class="value">blue</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">font-size</span><span class="punctuation">:</span> <span class="value">32px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">text-align</span><span class="punctuation">:</span> <span class="value">center</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
                 </div>
                 <ul>
                     <li><strong>Selector:</strong> What element to style (h1)</li>
@@ -196,8 +490,8 @@ h1 {
                 
                 <h3>1. Inline CSS (Not Recommended)</h3>
                 <p>Applied directly to an element using the style attribute.</p>
-                <div class="code-block">
-&lt;p style="color: red; font-size: 20px;"&gt;This is red text.&lt;/p&gt;
+                <div class="html-code">
+<span class="line"><span class="tag">&lt;p</span> <span class="attr">style</span>=<span class="value">"color: red; font-size: 20px;"</span><span class="tag">&gt;</span><span class="text">This is red text.</span><span class="tag">&lt;/p&gt;</span></span>
                 </div>
                 <div class="tip-box">
                     <p><strong>⚠️ Avoid inline CSS</strong> - It's hard to maintain and mixes content with presentation.</p>
@@ -205,37 +499,37 @@ h1 {
 
                 <h3>2. Internal CSS (For Single Pages)</h3>
                 <p>Written in the &lt;style&gt; tag within the &lt;head&gt; section.</p>
-                <div class="code-block">
-&lt;head&gt;
-    &lt;style&gt;
-        body {
-            background-color: #f0f0f0;
-        }
-        h1 {
-            color: navy;
-        }
-    &lt;/style&gt;
-&lt;/head&gt;
+                <div class="html-code">
+<span class="line"><span class="tag">&lt;head&gt;</span></span>
+<span class="line indent-1"><span class="tag">&lt;style&gt;</span></span>
+<span class="line indent-2"><span class="text">body {</span></span>
+<span class="line indent-3"><span class="text">background-color: #f0f0f0;</span></span>
+<span class="line indent-2"><span class="text">}</span></span>
+<span class="line indent-2"><span class="text">h1 {</span></span>
+<span class="line indent-3"><span class="text">color: navy;</span></span>
+<span class="line indent-2"><span class="text">}</span></span>
+<span class="line indent-1"><span class="tag">&lt;/style&gt;</span></span>
+<span class="line"><span class="tag">&lt;/head&gt;</span></span>
                 </div>
 
                 <h3>3. External CSS (Best Practice) ✅</h3>
                 <p>Written in a separate .css file and linked to HTML.</p>
-                <div class="code-block">
-&lt;!-- In HTML file --&gt;
-&lt;head&gt;
-    &lt;link rel="stylesheet" href="style.css"&gt;
-&lt;/head&gt;
+                <div class="html-code">
+<span class="line"><span class="comment">&lt;!-- In HTML file --&gt;</span></span>
+<span class="line"><span class="tag">&lt;head&gt;</span></span>
+<span class="line indent-1"><span class="tag">&lt;link</span> <span class="attr">rel</span>=<span class="value">"stylesheet"</span> <span class="attr">href</span>=<span class="value">"style.css"</span><span class="tag">&gt;</span></span>
+<span class="line"><span class="tag">&lt;/head&gt;</span></span>
                 </div>
-                <div class="code-block">
-/* In style.css file */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-}
-
-h1 {
-    color: #333;
-}
+                <div class="css-code">
+<span class="line"><span class="comment">/* In style.css file */</span></span>
+<span class="line"><span class="selector">body</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">font-family</span><span class="punctuation">:</span> <span class="value">Arial, sans-serif</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">margin</span><span class="punctuation">:</span> <span class="value">0</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">h1</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">color</span><span class="punctuation">:</span> <span class="value">#333</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
                 </div>
             </div>
 
@@ -243,32 +537,32 @@ h1 {
                 <h2>🎯 CSS Selectors</h2>
                 
                 <h3>1. Element Selector</h3>
-                <div class="code-block">
-p {
-    color: black;
-}
+                <div class="css-code">
+<span class="line"><span class="selector">p</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">color</span><span class="punctuation">:</span> <span class="value">black</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
                 </div>
                 <p>Selects all &lt;p&gt; elements.</p>
 
                 <h3>2. Class Selector (.)</h3>
-                <div class="code-block">
-.highlight {
-    background-color: yellow;
-}
+                <div class="css-code">
+<span class="line"><span class="selector">.highlight</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">background-color</span><span class="punctuation">:</span> <span class="value">yellow</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
                 </div>
-                <div class="code-block">
-&lt;p class="highlight"&gt;This paragraph is highlighted.&lt;/p&gt;
+                <div class="html-code">
+<span class="line"><span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="value">"highlight"</span><span class="tag">&gt;</span><span class="text">This paragraph is highlighted.</span><span class="tag">&lt;/p&gt;</span></span>
                 </div>
 
                 <h3>3. ID Selector (#)</h3>
-                <div class="code-block">
-#header {
-    background-color: navy;
-    color: white;
-}
+                <div class="css-code">
+<span class="line"><span class="selector">#header</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">background-color</span><span class="punctuation">:</span> <span class="value">navy</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">color</span><span class="punctuation">:</span> <span class="value">white</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
                 </div>
-                <div class="code-block">
-&lt;div id="header"&gt;Header content&lt;/div&gt;
+                <div class="html-code">
+<span class="line"><span class="tag">&lt;div</span> <span class="attr">id</span>=<span class="value">"header"</span><span class="tag">&gt;</span><span class="text">Header content</span><span class="tag">&lt;/div&gt;</span></span>
                 </div>
                 <div class="tip-box">
                     <p><strong>💡 Classes vs IDs:</strong></p>
@@ -279,18 +573,18 @@ p {
                 </div>
 
                 <h3>4. Multiple Selectors</h3>
-                <div class="code-block">
-h1, h2, h3 {
-    color: blue;
-    font-family: Arial;
-}
+                <div class="css-code">
+<span class="line"><span class="selector">h1, h2, h3</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">color</span><span class="punctuation">:</span> <span class="value">blue</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">font-family</span><span class="punctuation">:</span> <span class="value">Arial</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
                 </div>
 
                 <h3>5. Descendant Selector</h3>
-                <div class="code-block">
-article p {
-    line-height: 1.6;
-}
+                <div class="css-code">
+<span class="line"><span class="selector">article p</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">line-height</span><span class="punctuation">:</span> <span class="value">1.6</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
                 </div>
                 <p>Selects all &lt;p&gt; elements inside &lt;article&gt;.</p>
             </div>
@@ -338,13 +632,13 @@ article p {
                 </table>
 
                 <h3>Background Properties</h3>
-                <div class="code-block">
-body {
-    background-color: #f5f5f5;
-    background-image: url('background.jpg');
-    background-size: cover;
-    background-position: center;
-}
+                <div class="css-code">
+<span class="line"><span class="selector">body</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">background-color</span><span class="punctuation">:</span> <span class="value">#f5f5f5</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">background-image</span><span class="punctuation">:</span> <span class="value">url('background.jpg')</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">background-size</span><span class="punctuation">:</span> <span class="value">cover</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">background-position</span><span class="punctuation">:</span> <span class="value">center</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
                 </div>
 
                 <h3>Colors in CSS</h3>
@@ -356,40 +650,40 @@ body {
                 </div>
 
                 <h3>Spacing: Margin and Padding</h3>
-                <div class="code-block">
-div {
-    margin: 20px;        /* Space outside element */
-    padding: 15px;       /* Space inside element */
-}
-
-/* Individual sides */
-div {
-    margin-top: 10px;
-    margin-right: 20px;
-    margin-bottom: 10px;
-    margin-left: 20px;
-}
-
-/* Shorthand */
-div {
-    margin: 10px 20px;           /* top/bottom left/right */
-    margin: 10px 20px 15px 25px; /* top right bottom left */
-}
+                <div class="css-code">
+<span class="line"><span class="selector">div</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">margin</span><span class="punctuation">:</span> <span class="value">20px</span><span class="punctuation">;</span>        <span class="comment">/* Space outside element */</span></span>
+<span class="line indent-1"><span class="property">padding</span><span class="punctuation">:</span> <span class="value">15px</span><span class="punctuation">;</span>       <span class="comment">/* Space inside element */</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Individual sides */</span></span>
+<span class="line"><span class="selector">div</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">margin-top</span><span class="punctuation">:</span> <span class="value">10px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">margin-right</span><span class="punctuation">:</span> <span class="value">20px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">margin-bottom</span><span class="punctuation">:</span> <span class="value">10px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">margin-left</span><span class="punctuation">:</span> <span class="value">20px</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Shorthand */</span></span>
+<span class="line"><span class="selector">div</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">margin</span><span class="punctuation">:</span> <span class="value">10px 20px</span><span class="punctuation">;</span>           <span class="comment">/* top/bottom left/right */</span></span>
+<span class="line indent-1"><span class="property">margin</span><span class="punctuation">:</span> <span class="value">10px 20px 15px 25px</span><span class="punctuation">;</span> <span class="comment">/* top right bottom left */</span></span>
+<span class="line"><span class="punctuation">}</span></span>
                 </div>
 
                 <h3>Borders</h3>
-                <div class="code-block">
-div {
-    border: 2px solid black;
-    border-radius: 10px;        /* Rounded corners */
-}
-
-/* Individual properties */
-div {
-    border-width: 3px;
-    border-style: dashed;
-    border-color: red;
-}
+                <div class="css-code">
+<span class="line"><span class="selector">div</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">border</span><span class="punctuation">:</span> <span class="value">2px solid black</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">10px</span><span class="punctuation">;</span>        <span class="comment">/* Rounded corners */</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Individual properties */</span></span>
+<span class="line"><span class="selector">div</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">border-width</span><span class="punctuation">:</span> <span class="value">3px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">border-style</span><span class="punctuation">:</span> <span class="value">dashed</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">border-color</span><span class="punctuation">:</span> <span class="value">red</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
                 </div>
             </div>
 
@@ -418,173 +712,173 @@ div {
 
                 <h3>Step 1: Link CSS to HTML</h3>
                 <p>Add this in the &lt;head&gt; of news-article.html:</p>
-                <div class="code-block">
-&lt;link rel="stylesheet" href="css/style.css"&gt;
+                <div class="html-code">
+<span class="line"><span class="tag">&lt;link</span> <span class="attr">rel</span>=<span class="value">"stylesheet"</span> <span class="attr">href</span>=<span class="value">"css/style.css"</span><span class="tag">&gt;</span></span>
                 </div>
 
                 <h3>Step 2: Create style.css</h3>
-                <div class="code-block">
-/* Reset default styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Body styling */
-body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    line-height: 1.6;
-    color: #333;
-    background-color: #f4f4f4;
-}
-
-/* Header styling */
-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 20px;
-    text-align: center;
-}
-
-header h1 {
-    font-size: 2.5em;
-    margin-bottom: 10px;
-}
-
-/* Navigation */
-nav {
-    background-color: #333;
-    padding: 10px;
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-    padding: 10px 20px;
-    display: inline-block;
-    transition: background 0.3s;
-}
-
-nav a:hover {
-    background-color: #555;
-}
-
-/* Main content */
-main {
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-
-/* Article styling */
-article {
-    margin-bottom: 30px;
-}
-
-article h2 {
-    color: #667eea;
-    font-size: 2em;
-    margin-bottom: 15px;
-}
-
-article h3 {
-    color: #555;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    border-bottom: 2px solid #667eea;
-    padding-bottom: 5px;
-}
-
-article p {
-    margin-bottom: 15px;
-    text-align: justify;
-}
-
-/* Images */
-figure {
-    margin: 20px 0;
-}
-
-figure img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-}
-
-figcaption {
-    font-style: italic;
-    color: #666;
-    margin-top: 10px;
-    text-align: center;
-}
-
-/* Blockquote */
-blockquote {
-    background: #f9f9f9;
-    border-left: 5px solid #667eea;
-    padding: 15px 20px;
-    margin: 20px 0;
-    font-style: italic;
-}
-
-blockquote footer {
-    margin-top: 10px;
-    font-size: 0.9em;
-    color: #666;
-}
-
-/* Lists */
-ul {
-    margin-left: 30px;
-    margin-bottom: 15px;
-}
-
-li {
-    margin-bottom: 8px;
-}
-
-/* Sidebar */
-aside {
-    background: #f9f9f9;
-    padding: 20px;
-    border-radius: 8px;
-    margin-top: 30px;
-}
-
-aside h3 {
-    color: #667eea;
-    margin-bottom: 15px;
-}
-
-/* Footer */
-footer {
-    background: #333;
-    color: white;
-    text-align: center;
-    padding: 20px;
-    margin-top: 30px;
-}
-
-footer a {
-    color: #667eea;
-    text-decoration: none;
-}
-
-footer a:hover {
-    text-decoration: underline;
-}
-
-/* Video and Audio */
-video, audio {
-    width: 100%;
-    max-width: 640px;
-    border-radius: 8px;
-    margin: 15px 0;
-}
+                <div class="css-code">
+<span class="line"><span class="comment">/* Reset default styles */</span></span>
+<span class="line"><span class="selector">*</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">margin</span><span class="punctuation">:</span> <span class="value">0</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">padding</span><span class="punctuation">:</span> <span class="value">0</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">box-sizing</span><span class="punctuation">:</span> <span class="value">border-box</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Body styling */</span></span>
+<span class="line"><span class="selector">body</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">font-family</span><span class="punctuation">:</span> <span class="value">'Segoe UI', Arial, sans-serif</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">line-height</span><span class="punctuation">:</span> <span class="value">1.6</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">color</span><span class="punctuation">:</span> <span class="value">#333</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">background-color</span><span class="punctuation">:</span> <span class="value">#f4f4f4</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Header styling */</span></span>
+<span class="line"><span class="selector">header</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">background</span><span class="punctuation">:</span> <span class="value">linear-gradient(135deg, #667eea 0%, #764ba2 100%)</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">color</span><span class="punctuation">:</span> <span class="value">white</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">padding</span><span class="punctuation">:</span> <span class="value">20px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">text-align</span><span class="punctuation">:</span> <span class="value">center</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">header h1</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">font-size</span><span class="punctuation">:</span> <span class="value">2.5em</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">margin-bottom</span><span class="punctuation">:</span> <span class="value">10px</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Navigation */</span></span>
+<span class="line"><span class="selector">nav</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">background-color</span><span class="punctuation">:</span> <span class="value">#333</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">padding</span><span class="punctuation">:</span> <span class="value">10px</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">nav a</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">color</span><span class="punctuation">:</span> <span class="value">white</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">text-decoration</span><span class="punctuation">:</span> <span class="value">none</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">padding</span><span class="punctuation">:</span> <span class="value">10px 20px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">display</span><span class="punctuation">:</span> <span class="value">inline-block</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">transition</span><span class="punctuation">:</span> <span class="value">background 0.3s</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">nav a:hover</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">background-color</span><span class="punctuation">:</span> <span class="value">#555</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Main content */</span></span>
+<span class="line"><span class="selector">main</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">max-width</span><span class="punctuation">:</span> <span class="value">1200px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">margin</span><span class="punctuation">:</span> <span class="value">20px auto</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">padding</span><span class="punctuation">:</span> <span class="value">20px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">background</span><span class="punctuation">:</span> <span class="value">white</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">10px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">0 2px 10px rgba(0,0,0,0.1)</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Article styling */</span></span>
+<span class="line"><span class="selector">article</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">margin-bottom</span><span class="punctuation">:</span> <span class="value">30px</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">article h2</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">color</span><span class="punctuation">:</span> <span class="value">#667eea</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">font-size</span><span class="punctuation">:</span> <span class="value">2em</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">margin-bottom</span><span class="punctuation">:</span> <span class="value">15px</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">article h3</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">color</span><span class="punctuation">:</span> <span class="value">#555</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">margin-top</span><span class="punctuation">:</span> <span class="value">20px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">margin-bottom</span><span class="punctuation">:</span> <span class="value">10px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">border-bottom</span><span class="punctuation">:</span> <span class="value">2px solid #667eea</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">padding-bottom</span><span class="punctuation">:</span> <span class="value">5px</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">article p</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">margin-bottom</span><span class="punctuation">:</span> <span class="value">15px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">text-align</span><span class="punctuation">:</span> <span class="value">justify</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Images */</span></span>
+<span class="line"><span class="selector">figure</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">margin</span><span class="punctuation">:</span> <span class="value">20px 0</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">figure img</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">width</span><span class="punctuation">:</span> <span class="value">100%</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">height</span><span class="punctuation">:</span> <span class="value">auto</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">8px</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">figcaption</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">font-style</span><span class="punctuation">:</span> <span class="value">italic</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">color</span><span class="punctuation">:</span> <span class="value">#666</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">margin-top</span><span class="punctuation">:</span> <span class="value">10px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">text-align</span><span class="punctuation">:</span> <span class="value">center</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Blockquote */</span></span>
+<span class="line"><span class="selector">blockquote</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">background</span><span class="punctuation">:</span> <span class="value">#f9f9f9</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">border-left</span><span class="punctuation">:</span> <span class="value">5px solid #667eea</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">padding</span><span class="punctuation">:</span> <span class="value">15px 20px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">margin</span><span class="punctuation">:</span> <span class="value">20px 0</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">font-style</span><span class="punctuation">:</span> <span class="value">italic</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">blockquote footer</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">margin-top</span><span class="punctuation">:</span> <span class="value">10px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">font-size</span><span class="punctuation">:</span> <span class="value">0.9em</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">color</span><span class="punctuation">:</span> <span class="value">#666</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Lists */</span></span>
+<span class="line"><span class="selector">ul</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">margin-left</span><span class="punctuation">:</span> <span class="value">30px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">margin-bottom</span><span class="punctuation">:</span> <span class="value">15px</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">li</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">margin-bottom</span><span class="punctuation">:</span> <span class="value">8px</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Sidebar */</span></span>
+<span class="line"><span class="selector">aside</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">background</span><span class="punctuation">:</span> <span class="value">#f9f9f9</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">padding</span><span class="punctuation">:</span> <span class="value">20px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">8px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">margin-top</span><span class="punctuation">:</span> <span class="value">30px</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">aside h3</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">color</span><span class="punctuation">:</span> <span class="value">#667eea</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">margin-bottom</span><span class="punctuation">:</span> <span class="value">15px</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Footer */</span></span>
+<span class="line"><span class="selector">footer</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">background</span><span class="punctuation">:</span> <span class="value">#333</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">color</span><span class="punctuation">:</span> <span class="value">white</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">text-align</span><span class="punctuation">:</span> <span class="value">center</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">padding</span><span class="punctuation">:</span> <span class="value">20px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">margin-top</span><span class="punctuation">:</span> <span class="value">30px</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">footer a</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">color</span><span class="punctuation">:</span> <span class="value">#667eea</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">text-decoration</span><span class="punctuation">:</span> <span class="value">none</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">footer a:hover</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">text-decoration</span><span class="punctuation">:</span> <span class="value">underline</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Video and Audio */</span></span>
+<span class="line"><span class="selector">video, audio</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">width</span><span class="punctuation">:</span> <span class="value">100%</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">max-width</span><span class="punctuation">:</span> <span class="value">640px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">8px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">margin</span><span class="punctuation">:</span> <span class="value">15px 0</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
                 </div>
             </div>
 
@@ -619,15 +913,15 @@ video, audio {
                         <li>Create bordered boxes with border-radius</li>
                         <li>Add box-shadow to elements</li>
                     </ul>
-                    <div class="code-block">
-/* Example */
-.card {
-    padding: 20px;
-    margin: 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
+                    <div class="css-code">
+<span class="line"><span class="comment">/* Example */</span></span>
+<span class="line"><span class="selector">.card</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">padding</span><span class="punctuation">:</span> <span class="value">20px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">margin</span><span class="punctuation">:</span> <span class="value">15px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">border</span><span class="punctuation">:</span> <span class="value">1px solid #ddd</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">8px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">0 2px 5px rgba(0,0,0,0.1)</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
                     </div>
                 </div>
 
@@ -640,12 +934,12 @@ video, audio {
                         <li>Style links (change color, remove underline, add hover effect)</li>
                         <li>Make the profile image circular</li>
                     </ul>
-                    <div class="code-block">
-/* Circular image */
-img {
-    border-radius: 50%;
-    border: 3px solid #667eea;
-}
+                    <div class="css-code">
+<span class="line"><span class="comment">/* Circular image */</span></span>
+<span class="line"><span class="selector">img</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">50%</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">border</span><span class="punctuation">:</span> <span class="value">3px solid #667eea</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
                     </div>
                 </div>
             </div>
@@ -654,36 +948,36 @@ img {
                 <h2>📝 CSS Cheat Sheet</h2>
                 <div class="info-box">
                     <h4>Common Properties Quick Reference:</h4>
-                    <div class="code-block">
-/* Text */
-color: blue;
-font-size: 16px;
-font-weight: bold;
-text-align: center;
-text-decoration: underline;
-line-height: 1.5;
-
-/* Background */
-background-color: #f0f0f0;
-background-image: url('image.jpg');
-
-/* Spacing */
-margin: 10px;
-padding: 15px;
-
-/* Border */
-border: 1px solid black;
-border-radius: 5px;
-
-/* Display */
-display: block;
-display: inline;
-display: none;
-
-/* Size */
-width: 100%;
-height: 200px;
-max-width: 1200px;
+                    <div class="css-code">
+<span class="line"><span class="comment">/* Text */</span></span>
+<span class="line"><span class="property">color</span><span class="punctuation">:</span> <span class="value">blue</span><span class="punctuation">;</span></span>
+<span class="line"><span class="property">font-size</span><span class="punctuation">:</span> <span class="value">16px</span><span class="punctuation">;</span></span>
+<span class="line"><span class="property">font-weight</span><span class="punctuation">:</span> <span class="value">bold</span><span class="punctuation">;</span></span>
+<span class="line"><span class="property">text-align</span><span class="punctuation">:</span> <span class="value">center</span><span class="punctuation">;</span></span>
+<span class="line"><span class="property">text-decoration</span><span class="punctuation">:</span> <span class="value">underline</span><span class="punctuation">;</span></span>
+<span class="line"><span class="property">line-height</span><span class="punctuation">:</span> <span class="value">1.5</span><span class="punctuation">;</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Background */</span></span>
+<span class="line"><span class="property">background-color</span><span class="punctuation">:</span> <span class="value">#f0f0f0</span><span class="punctuation">;</span></span>
+<span class="line"><span class="property">background-image</span><span class="punctuation">:</span> <span class="value">url('image.jpg')</span><span class="punctuation">;</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Spacing */</span></span>
+<span class="line"><span class="property">margin</span><span class="punctuation">:</span> <span class="value">10px</span><span class="punctuation">;</span></span>
+<span class="line"><span class="property">padding</span><span class="punctuation">:</span> <span class="value">15px</span><span class="punctuation">;</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Border */</span></span>
+<span class="line"><span class="property">border</span><span class="punctuation">:</span> <span class="value">1px solid black</span><span class="punctuation">;</span></span>
+<span class="line"><span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">5px</span><span class="punctuation">;</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Display */</span></span>
+<span class="line"><span class="property">display</span><span class="punctuation">:</span> <span class="value">block</span><span class="punctuation">;</span></span>
+<span class="line"><span class="property">display</span><span class="punctuation">:</span> <span class="value">inline</span><span class="punctuation">;</span></span>
+<span class="line"><span class="property">display</span><span class="punctuation">:</span> <span class="value">none</span><span class="punctuation">;</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Size */</span></span>
+<span class="line"><span class="property">width</span><span class="punctuation">:</span> <span class="value">100%</span><span class="punctuation">;</span></span>
+<span class="line"><span class="property">height</span><span class="punctuation">:</span> <span class="value">200px</span><span class="punctuation">;</span></span>
+<span class="line"><span class="property">max-width</span><span class="punctuation">:</span> <span class="value">1200px</span><span class="punctuation">;</span></span>
                     </div>
                 </div>
             </div>
@@ -721,7 +1015,7 @@ max-width: 1200px;
 
         <footer>
             <p>Week 2 - Day 2: Introduction to CSS</p>
-            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+            <p>&copy; 2025 Next Step Innovation and Impact Space | Web Development Internship</p>
         </footer>
     </div>
 </body>

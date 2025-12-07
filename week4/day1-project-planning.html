@@ -4,12 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Week 4 Day 1: Project Planning & Wireframing</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #10b981;
+            --secondary: #34d399;
+            --accent: #6ee7b7;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gradient-1: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--gradient-1);
             padding: 20px;
         }
         .container {
@@ -20,44 +29,81 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.3);
             overflow: hidden;
         }
-        header { background: #512da8; color: white; padding: 30px; }
-        .nav-breadcrumb {
-            background: #ede7f6;
-            padding: 15px 30px;
-            border-bottom: 2px solid #673ab7;
+        .top-nav {
+            background: var(--dark);
+            padding: 10px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .nav-breadcrumb a { color: #512da8; text-decoration: none; margin-right: 10px; }
+        .top-nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s;
+        }
+        .top-nav a:hover { color: var(--secondary); }
+        header { background: var(--gradient-1); color: white; padding: 30px; }
+        .nav-breadcrumb {
+            background: #ecfdf5;
+            padding: 15px 30px;
+            border-bottom: 2px solid var(--secondary);
+        }
+        .nav-breadcrumb a { color: var(--primary); text-decoration: none; margin-right: 10px; }
         .content { padding: 40px; }
         .section { margin-bottom: 40px; }
         .section h2 {
-            color: #512da8;
+            color: var(--primary);
             margin-bottom: 20px;
             padding-bottom: 10px;
-            border-bottom: 3px solid #673ab7;
+            border-bottom: 3px solid var(--secondary);
         }
-        .section h3 { color: #673ab7; margin: 20px 0 15px 0; }
+        .section h3 { color: var(--primary); margin: 20px 0 15px 0; }
         .info-box {
-            background: #ede7f6;
-            border-left: 5px solid #512da8;
+            background: #ecfdf5;
+            border-left: 5px solid var(--primary);
             padding: 20px;
             margin: 20px 0;
             border-radius: 5px;
         }
         .activity-box {
-            background: #e8f5e9;
-            border-left: 5px solid #4caf50;
+            background: #fef3c7;
+            border-left: 5px solid #f59e0b;
             padding: 20px;
             margin: 20px 0;
             border-radius: 5px;
         }
         .code-block {
-            background: #2d2d2d;
-            color: #f8f8f2;
+            background: var(--dark);
+            color: var(--light);
             padding: 20px;
             border-radius: 8px;
             overflow-x: auto;
             margin: 20px 0;
             font-family: 'Courier New', monospace;
+            line-height: 1.8;
+        }
+        .terminal-code {
+            background: var(--dark);
+            color: var(--light);
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            line-height: 1.8;
+        }
+        .terminal-code .prompt {
+            color: #fbbf24;
+            font-weight: bold;
+        }
+        .terminal-code .command {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+        .terminal-code .comment {
+            color: #64748b;
+            font-style: italic;
         }
         .wireframe {
             border: 2px solid #ddd;
@@ -94,24 +140,49 @@
             border: 1px solid #ddd;
         }
         th {
-            background: #512da8;
+            background: var(--primary);
             color: white;
         }
         tr:nth-child(even) { background: #f9f9f9; }
-        footer { background: #512da8; color: white; padding: 20px; text-align: center; }
+        footer { background: var(--dark); color: white; padding: 20px; text-align: center; }
         .btn-primary {
-            background: #512da8;
+            background: var(--primary);
             color: white;
             padding: 10px 20px;
             text-decoration: none;
             border-radius: 5px;
             display: inline-block;
             margin: 10px 10px 10px 0;
+            transition: background 0.3s;
+        }
+        .btn-primary:hover { background: var(--secondary); }
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px solid #e5e7eb;
+            flex-wrap: wrap;
+        }
+        .nav-buttons .btn-primary {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="top-nav">
+            <div>
+                <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+            </div>
+            <div>
+                <a href="https://github.com" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+            </div>
+        </div>
+
         <header>
             <h1>📅 Week 4 - Day 1: Project Planning & Wireframing</h1>
             <p>Monday | Duration: 3 hours</p>
@@ -119,7 +190,11 @@
         </header>
 
         <div class="nav-breadcrumb">
-            <a href="../index.html">← Back to Course Home</a> / Week 4 / Day 1
+            <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+            <i class="fas fa-chevron-right" style="color: #10b981; font-size: 0.8em;"></i>
+            <span style="color: #10b981;">Week 4</span>
+            <i class="fas fa-chevron-right" style="color: #10b981; font-size: 0.8em;"></i>
+            <span style="color: #10b981;">Day 1: Project Planning</span>
         </div>
 
         <div class="content">
@@ -312,45 +387,60 @@
                 </table>
 
                 <h3>Example Content Structure</h3>
+                
+                <h4>Hero Section</h4>
                 <div class="code-block">
-<!-- Hero Section -->
 Name: John Doe
 Title: Junior Web Developer
 Tagline: Building beautiful and responsive websites
 CTA: View My Work
+                </div>
 
-<!-- About Section -->
+                <h4>About Section</h4>
+                <div class="code-block">
 Heading: About Me
+
 Bio: Passionate web developer with strong foundation in HTML, CSS, 
 and JavaScript. Completed intensive web development bootcamp at 
 Next-Step Technology...
+
 Education: Bachelor in Computer Science
 Location: City, Country
+                </div>
 
-<!-- Skills Section -->
-- HTML5 & Semantic Markup
-- CSS3 & Responsive Design
-- Git & GitHub
-- Web Performance Optimization
-- Problem Solving
+                <h4>Skills Section</h4>
+                <ul>
+                    <li>HTML5 & Semantic Markup</li>
+                    <li>CSS3 & Responsive Design</li>
+                    <li>Git & GitHub</li>
+                    <li>Web Performance Optimization</li>
+                    <li>Problem Solving</li>
+                </ul>
 
-<!-- Projects Section -->
-Project 1: Student Registration Form
-Description: Responsive form with validation and styling
-Tech: HTML, CSS
-Link: GitHub repository
+                <h4>Projects Section</h4>
+                <div class="info-box">
+                    <h5>Project 1: Student Registration Form</h5>
+                    <p><strong>Description:</strong> Responsive form with validation and styling</p>
+                    <p><strong>Tech:</strong> HTML, CSS</p>
+                    <p><strong>Link:</strong> GitHub repository</p>
+                </div>
 
-Project 2: Portfolio Website
-Description: Personal portfolio showcasing my work
-Tech: HTML, CSS, Responsive Design
-Link: Live demo
+                <div class="info-box">
+                    <h5>Project 2: Portfolio Website</h5>
+                    <p><strong>Description:</strong> Personal portfolio showcasing my work</p>
+                    <p><strong>Tech:</strong> HTML, CSS, Responsive Design</p>
+                    <p><strong>Link:</strong> Live demo</p>
+                </div>
 
-Project 3: Restaurant Landing Page
-Description: Modern landing page for local restaurant
-Tech: HTML, CSS, CSS Grid
-Link: GitHub repository
+                <div class="info-box">
+                    <h5>Project 3: Restaurant Landing Page</h5>
+                    <p><strong>Description:</strong> Modern landing page for local restaurant</p>
+                    <p><strong>Tech:</strong> HTML, CSS, CSS Grid</p>
+                    <p><strong>Link:</strong> GitHub repository</p>
+                </div>
 
-<!-- Contact -->
+                <h4>Contact</h4>
+                <div class="code-block">
 Email: johndoe@email.com
 GitHub: github.com/johndoe
 LinkedIn: linkedin.com/in/johndoe
@@ -362,114 +452,195 @@ Twitter: @johndoe
                 <h2>📁 Project Setup</h2>
                 
                 <h3>Folder Structure</h3>
-                <div class="code-block">
-portfolio/
-│
-├── index.html           # Main HTML file
-├── style.css            # Main stylesheet
-├── README.md            # Project documentation
-│
-├── images/              # Image folder
-│   ├── profile.jpg
-│   ├── project1.png
-│   ├── project2.png
-│   └── project3.png
-│
-└── assets/              # Other assets (optional)
-    ├── icons/
-    └── documents/
-        └── resume.pdf
+                <div class="activity-box">
+                    <p><strong>Your portfolio project should follow this structure:</strong></p>
+                    <div style="background: #1e293b; padding: 20px; border-radius: 8px; margin-top: 15px; font-family: 'Courier New', monospace; line-height: 1.8;">
+                        <div style="margin-bottom: 10px;">
+                            <i class="fas fa-folder" style="color: #fbbf24;"></i>
+                            <span style="color: #fbbf24; font-weight: bold;"> portfolio/</span>
+                        </div>
+                        <div style="margin-left: 20px;">
+                            <div style="margin-bottom: 8px;">
+                                <i class="fas fa-file-code" style="color: #34d399;"></i>
+                                <span style="color: #34d399;"> index.html</span>
+                                <span style="color: #64748b; font-style: italic; margin-left: 15px;"># Main HTML file</span>
+                            </div>
+                            <div style="margin-bottom: 8px;">
+                                <i class="fas fa-file-code" style="color: #34d399;"></i>
+                                <span style="color: #34d399;"> style.css</span>
+                                <span style="color: #64748b; font-style: italic; margin-left: 15px;"># Main stylesheet</span>
+                            </div>
+                            <div style="margin-bottom: 15px;">
+                                <i class="fas fa-file-alt" style="color: #34d399;"></i>
+                                <span style="color: #34d399;"> README.md</span>
+                                <span style="color: #64748b; font-style: italic; margin-left: 15px;"># Project documentation</span>
+                            </div>
+                            
+                            <div style="margin-bottom: 10px;">
+                                <i class="fas fa-folder-open" style="color: #fbbf24;"></i>
+                                <span style="color: #fbbf24; font-weight: bold;"> images/</span>
+                                <span style="color: #64748b; font-style: italic; margin-left: 15px;"># Image folder</span>
+                            </div>
+                            <div style="margin-left: 20px; margin-bottom: 15px;">
+                                <div style="margin-bottom: 5px;">
+                                    <i class="fas fa-image" style="color: #34d399;"></i>
+                                    <span style="color: #34d399;"> profile.jpg</span>
+                                </div>
+                                <div style="margin-bottom: 5px;">
+                                    <i class="fas fa-image" style="color: #34d399;"></i>
+                                    <span style="color: #34d399;"> project1.png</span>
+                                </div>
+                                <div style="margin-bottom: 5px;">
+                                    <i class="fas fa-image" style="color: #34d399;"></i>
+                                    <span style="color: #34d399;"> project2.png</span>
+                                </div>
+                                <div style="margin-bottom: 5px;">
+                                    <i class="fas fa-image" style="color: #34d399;"></i>
+                                    <span style="color: #34d399;"> project3.png</span>
+                                </div>
+                            </div>
+                            
+                            <div style="margin-bottom: 10px;">
+                                <i class="fas fa-folder-open" style="color: #fbbf24;"></i>
+                                <span style="color: #fbbf24; font-weight: bold;"> assets/</span>
+                                <span style="color: #64748b; font-style: italic; margin-left: 15px;"># Other assets (optional)</span>
+                            </div>
+                            <div style="margin-left: 20px;">
+                                <div style="margin-bottom: 8px;">
+                                    <i class="fas fa-folder" style="color: #fbbf24;"></i>
+                                    <span style="color: #fbbf24;"> icons/</span>
+                                </div>
+                                <div style="margin-bottom: 8px;">
+                                    <i class="fas fa-folder" style="color: #fbbf24;"></i>
+                                    <span style="color: #fbbf24;"> documents/</span>
+                                </div>
+                                <div style="margin-left: 20px;">
+                                    <i class="fas fa-file-pdf" style="color: #ef4444;"></i>
+                                    <span style="color: #34d399;"> resume.pdf</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <h3>Setup Commands</h3>
-                <div class="code-block">
-# 1. Create project folder
-mkdir portfolio
-cd portfolio
-
-# 2. Initialize Git
-git init
-
-# 3. Create files
-New-Item index.html
-New-Item style.css
-New-Item README.md
-
-# 4. Create folders
-mkdir images
-mkdir assets
-
-# 5. Create .gitignore
-@"
+                <ol>
+                    <li><strong>Create project folder</strong>
+                        <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">mkdir portfolio</span>
+<span class="prompt">$</span> <span class="command">cd portfolio</span>
+                        </div>
+                    </li>
+                    <li><strong>Initialize Git</strong>
+                        <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git init</span>
+                        </div>
+                    </li>
+                    <li><strong>Create files</strong>
+                        <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">New-Item index.html</span>
+<span class="prompt">$</span> <span class="command">New-Item style.css</span>
+<span class="prompt">$</span> <span class="command">New-Item README.md</span>
+                        </div>
+                    </li>
+                    <li><strong>Create folders</strong>
+                        <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">mkdir images</span>
+<span class="prompt">$</span> <span class="command">mkdir assets</span>
+                        </div>
+                    </li>
+                    <li><strong>Create .gitignore</strong>
+                        <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">@"
 .DS_Store
 Thumbs.db
 *.log
-"@ | Out-File -FilePath .gitignore
-
-# 6. Initial commit
-git add .
-git commit -m "Initial commit: Project setup"
-
-# 7. Create GitHub repository (on GitHub.com)
-# Then connect local to remote
-git remote add origin https://github.com/yourusername/portfolio.git
-git branch -M main
-git push -u origin main
-                </div>
+"@ | Out-File -FilePath .gitignore</span>
+                        </div>
+                    </li>
+                    <li><strong>Initial commit</strong>
+                        <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git add .</span>
+<span class="prompt">$</span> <span class="command">git commit -m "Initial commit: Project setup"</span>
+                        </div>
+                    </li>
+                    <li><strong>Create GitHub repository (on GitHub.com), then connect local to remote</strong>
+                        <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git remote add origin https://github.com/yourusername/portfolio.git</span>
+<span class="prompt">$</span> <span class="command">git branch -M main</span>
+<span class="prompt">$</span> <span class="command">git push -u origin main</span>
+                        </div>
+                    </li>
+                </ol>
             </div>
 
             <div class="section">
                 <h2>📋 README Template</h2>
+                
+                <h3># Personal Portfolio Website</h3>
+                
+                <h4>## Overview</h4>
                 <div class="code-block">
-# Personal Portfolio Website
-
-## Overview
 This is my personal portfolio website showcasing my web development 
 skills and projects.
+                </div>
 
-## Features
-- Responsive design (mobile-first approach)
-- Semantic HTML5
-- Custom CSS styling
-- Interactive contact form
-- Project showcase
-- Smooth scrolling navigation
+                <h4>## Features</h4>
+                <ul>
+                    <li>Responsive design (mobile-first approach)</li>
+                    <li>Semantic HTML5</li>
+                    <li>Custom CSS styling</li>
+                    <li>Interactive contact form</li>
+                    <li>Project showcase</li>
+                    <li>Smooth scrolling navigation</li>
+                </ul>
 
-## Technologies Used
-- HTML5
-- CSS3
-- Git & GitHub
-- GitHub Pages (deployment)
+                <h4>## Technologies Used</h4>
+                <ul>
+                    <li>HTML5</li>
+                    <li>CSS3</li>
+                    <li>Git & GitHub</li>
+                    <li>GitHub Pages (deployment)</li>
+                </ul>
 
-## Sections
-1. **Hero** - Introduction and call-to-action
-2. **About** - Background and education
-3. **Skills** - Technical skills showcase
-4. **Projects** - Portfolio of work
-5. **Contact** - Contact form and social links
+                <h4>## Sections</h4>
+                <ol>
+                    <li><strong>Hero</strong> - Introduction and call-to-action</li>
+                    <li><strong>About</strong> - Background and education</li>
+                    <li><strong>Skills</strong> - Technical skills showcase</li>
+                    <li><strong>Projects</strong> - Portfolio of work</li>
+                    <li><strong>Contact</strong> - Contact form and social links</li>
+                </ol>
 
-## Installation
-```bash
-git clone https://github.com/yourusername/portfolio.git
-cd portfolio
-# Open index.html in browser
-```
+                <h4>## Installation</h4>
+                <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git clone https://github.com/yourusername/portfolio.git</span>
+<span class="prompt">$</span> <span class="command">cd portfolio</span>
+<span class="comment"># Open index.html in browser</span>
+                </div>
 
-## Live Demo
+                <h4>## Live Demo</h4>
+                <div class="code-block">
 [View Live Site](https://yourusername.github.io/portfolio/)
+                </div>
 
-## Author
+                <h4>## Author</h4>
+                <div class="code-block">
 Your Name
 - GitHub: [@yourusername](https://github.com/yourusername)
 - LinkedIn: [Your Name](https://linkedin.com/in/yourprofile)
-
-## License
-MIT License
-
-## Acknowledgments
-- Next-Step Technology Web Development Bootcamp
-- Inspiration from [list any sites that inspired you]
                 </div>
+
+                <h4>## License</h4>
+                <div class="code-block">
+MIT License
+                </div>
+
+                <h4>## Acknowledgments</h4>
+                <ul>
+                    <li>Next-Step Technology Web Development Bootcamp</li>
+                    <li>Inspiration from [list any sites that inspired you]</li>
+                </ul>
             </div>
 
             <div class="section">
@@ -597,16 +768,16 @@ MIT License
                 </ul>
             </div>
 
-            <div class="section">
-                <a href="../week3/day3-git-advanced.html" class="btn-primary">← Previous: Week 3 Day 3</a>
-                <a href="../index.html" class="btn-primary">Back to Course Home</a>
-                <a href="day2-portfolio-development.html" class="btn-primary">Next: Day 2 →</a>
+            <div class="nav-buttons">
+                <a href="../week3/day3-git-advanced.html" class="btn-primary"><i class="fas fa-arrow-left"></i> Previous: Week 3 Day 3</a>
+                <a href="../index.html" class="btn-primary"><i class="fas fa-home"></i> Course Home</a>
+                <a href="day2-portfolio-development.html" class="btn-primary">Next: Day 2 <i class="fas fa-arrow-right"></i></a>
             </div>
         </div>
 
         <footer>
             <p>Week 4 - Day 1: Project Planning & Wireframing</p>
-            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+            <p>&copy; 2025 Next Step Innovation and Impact Space | Web Development Internship</p>
         </footer>
     </div>
 </body>

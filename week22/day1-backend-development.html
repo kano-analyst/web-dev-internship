@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 1: Backend Development Kickoff | Week 22</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%);
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        h1 { color: #ff6e7f; border-bottom: 3px solid #bfe9ff; padding-bottom: 15px; margin-bottom: 25px; }
+        h2 { color: #ff6e7f; margin-top: 30px; margin-bottom: 15px; }
+        h3 { color: #5a9fd4; margin-top: 20px; margin-bottom: 10px; }
+        .objectives, .key-concept, .example, .exercise, .deliverable {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #ff6e7f;
+            border-radius: 8px;
+        }
+        .key-concept { border-left-color: #5a9fd4; background: #e7f3ff; }
+        .example { border-left-color: #28a745; background: #d4edda; }
+        .exercise { border-left-color: #ffc107; background: #fff3cd; }
+        .deliverable { border-left-color: #17a2b8; background: #d1ecf1; }
+        code {
+            background: #272822;
+            color: #f8f8f2;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        pre {
+            background: #272822;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th { background: #ff6e7f; color: white; }
+        tr:nth-child(even) { background: #f8f9fa; }
+        ul, ol { margin: 15px 0; padding-left: 30px; }
+        li { margin: 8px 0; }
+        .navigation {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+        .nav-button {
+            padding: 10px 20px;
+            background: #ff6e7f;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .nav-button:hover { background: #e55d6e; }
+        .tip {
+            background: #fff9e6;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💻 Week 22, Day 1: Backend Development Kickoff</h1>
+        
+        <div class="objectives">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Set up Laravel project structure and environment</li>
+                <li>Design and implement database migrations</li>
+                <li>Create Eloquent models with relationships</li>
+                <li>Build controllers for core functionality</li>
+                <li>Implement authentication using Laravel Breeze</li>
+                <li>Set up API routes and resource controllers</li>
+            </ul>
+        </div>
+
+        <h2>🚀 Step 1: Project Setup & Environment</h2>
+        
+        <div class="key-concept">
+            <h3>Initial Setup Checklist</h3>
+            
+            <h4>1. Create Laravel Project</h4>
+            <pre><code># Create new Laravel project
+composer create-project laravel/laravel library-system
+
+# Navigate to project
+cd library-system
+
+# Install Laravel Breeze for authentication
+composer require laravel/breeze --dev
+php artisan breeze:install
+
+# Install npm dependencies
+npm install
+npm run dev
+
+# Create database (in phpMyAdmin or MySQL)
+# Database name: library_system</code></pre>
+
+            <h4>2. Configure Environment (.env)</h4>
+            <pre><code>APP_NAME="Library Management System"
+APP_ENV=local
+APP_DEBUG=true
+APP_URL=http://localhost
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=library_system
+DB_USERNAME=root
+DB_PASSWORD=
+
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=your-email@gmail.com
+MAIL_PASSWORD=your-app-password
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=your-email@gmail.com
+MAIL_FROM_NAME="${APP_NAME}"</code></pre>
+
+            <h4>3. Run Initial Migration</h4>
+            <pre><code>php artisan migrate</code></pre>
+        </div>
+
+        <h2>🗄️ Step 2: Database Design & Migrations</h2>
+        
+        <div class="example">
+            <h3>Example: Library Management System Migrations</h3>
+            
+            <h4>Create Migrations</h4>
+            <pre><code># Create all migrations
+php artisan make:migration create_categories_table
+php artisan make:migration create_books_table
+php artisan make:migration create_borrowings_table
+php artisan make:migration create_fines_table</code></pre>
+
+            <h4>1. Categories Migration</h4>
+            <pre><code>// database/migrations/xxxx_create_categories_table.php
+public function up()
+{
+    Schema::create('categories', function (Blueprint $table) {
+        $table->id();
+        $table->string('name');
+        $table->text('description')->nullable();
+        $table->timestamps();
+    });
+}</code></pre>
+
+            <h4>2. Books Migration</h4>
+            <pre><code>// database/migrations/xxxx_create_books_table.php
+public function up()
+{
+    Schema::create('books', function (Blueprint $table) {
+        $table->id();
+        $table->string('title');
+        $table->string('author');
+        $table->string('isbn')->unique();
+        $table->foreignId('category_id')->constrained()->onDelete('cascade');
+        $table->text('description')->nullable();
+        $table->integer('quantity')->default(1);
+        $table->integer('available_quantity')->default(1);
+        $table->string('cover_image')->nullable();
+        $table->year('publication_year')->nullable();
+        $table->timestamps();
+    });
+}</code></pre>
+
+            <h4>3. Borrowings Migration</h4>
+            <pre><code>// database/migrations/xxxx_create_borrowings_table.php
+public function up()
+{
+    Schema::create('borrowings', function (Blueprint $table) {
+        $table->id();
+        $table->foreignId('user_id')->constrained()->onDelete('cascade');
+        $table->foreignId('book_id')->constrained()->onDelete('cascade');
+        $table->date('borrowed_date');
+        $table->date('due_date');
+        $table->date('return_date')->nullable();
+        $table->enum('status', ['borrowed', 'returned', 'overdue'])->default('borrowed');
+        $table->text('notes')->nullable();
+        $table->timestamps();
+    });
+}</code></pre>
+
+            <h4>4. Fines Migration</h4>
+            <pre><code>// database/migrations/xxxx_create_fines_table.php
+public function up()
+{
+    Schema::create('fines', function (Blueprint $table) {
+        $table->id();
+        $table->foreignId('borrowing_id')->constrained()->onDelete('cascade');
+        $table->decimal('amount', 8, 2);
+        $table->timestamp('paid_at')->nullable();
+        $table->enum('status', ['pending', 'paid'])->default('pending');
+        $table->timestamps();
+    });
+}</code></pre>
+
+            <h4>Run Migrations</h4>
+            <pre><code>php artisan migrate</code></pre>
+        </div>
+
+        <h2>📦 Step 3: Eloquent Models</h2>
+        
+        <div class="example">
+            <h3>Create Models with Relationships</h3>
+            
+            <h4>Generate Models</h4>
+            <pre><code>php artisan make:model Category
+php artisan make:model Book
+php artisan make:model Borrowing
+php artisan make:model Fine</code></pre>
+
+            <h4>1. Category Model</h4>
+            <pre><code>// app/Models/Category.php
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Category extends Model
+{
+    use HasFactory;
+
+    protected $fillable = ['name', 'description'];
+
+    // One category has many books
+    public function books()
+    {
+        return $this->hasMany(Book::class);
+    }
+}</code></pre>
+
+            <h4>2. Book Model</h4>
+            <pre><code>// app/Models/Book.php
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Book extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'title', 'author', 'isbn', 'category_id', 
+        'description', 'quantity', 'available_quantity', 
+        'cover_image', 'publication_year'
+    ];
+
+    // Book belongs to a category
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    // Book has many borrowings
+    public function borrowings()
+    {
+        return $this->hasMany(Borrowing::class);
+    }
+
+    // Check if book is available
+    public function isAvailable()
+    {
+        return $this->available_quantity > 0;
+    }
+}</code></pre>
+
+            <h4>3. Borrowing Model</h4>
+            <pre><code>// app/Models/Borrowing.php
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Borrowing extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'user_id', 'book_id', 'borrowed_date', 
+        'due_date', 'return_date', 'status', 'notes'
+    ];
+
+    protected $casts = [
+        'borrowed_date' => 'date',
+        'due_date' => 'date',
+        'return_date' => 'date',
+    ];
+
+    // Borrowing belongs to a user
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    // Borrowing belongs to a book
+    public function book()
+    {
+        return $this->belongsTo(Book::class);
+    }
+
+    // Borrowing has one fine
+    public function fine()
+    {
+        return $this->hasOne(Fine::class);
+    }
+
+    // Check if borrowing is overdue
+    public function isOverdue()
+    {
+        return $this->status === 'overdue' || 
+               ($this->status === 'borrowed' && now()->isAfter($this->due_date));
+    }
+}</code></pre>
+
+            <h4>4. Fine Model</h4>
+            <pre><code>// app/Models/Fine.php
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Fine extends Model
+{
+    use HasFactory;
+
+    protected $fillable = ['borrowing_id', 'amount', 'paid_at', 'status'];
+
+    protected $casts = [
+        'paid_at' => 'datetime',
+        'amount' => 'decimal:2',
+    ];
+
+    // Fine belongs to a borrowing
+    public function borrowing()
+    {
+        return $this->belongsTo(Borrowing::class);
+    }
+}</code></pre>
+
+            <h4>5. Update User Model</h4>
+            <pre><code>// app/Models/User.php
+// Add this method to the User model
+
+public function borrowings()
+{
+    return $this->hasMany(Borrowing::class);
+}
+
+public function activeBorrowings()
+{
+    return $this->hasMany(Borrowing::class)
+                ->where('status', 'borrowed');
+}</code></pre>
+        </div>
+
+        <h2>🎮 Step 4: Controllers</h2>
+        
+        <div class="key-concept">
+            <h3>Create Resource Controllers</h3>
+            <pre><code># Generate controllers
+php artisan make:controller BookController --resource
+php artisan make:controller BorrowingController --resource
+php artisan make:controller CategoryController --resource
+php artisan make:controller DashboardController</code></pre>
+        </div>
+
+        <div class="example">
+            <h3>Example: BookController</h3>
+            <pre><code>// app/Http/Controllers/BookController.php
+namespace App\Http\Controllers;
+
+use App\Models\Book;
+use App\Models\Category;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
+class BookController extends Controller
+{
+    // Display all books
+    public function index()
+    {
+        $books = Book::with('category')
+                     ->latest()
+                     ->paginate(12);
+        
+        return view('books.index', compact('books'));
+    }
+
+    // Show create form
+    public function create()
+    {
+        $categories = Category::all();
+        return view('books.create', compact('categories'));
+    }
+
+    // Store new book
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'author' => 'required|string|max:255',
+            'isbn' => 'required|unique:books,isbn',
+            'category_id' => 'required|exists:categories,id',
+            'description' => 'nullable|string',
+            'quantity' => 'required|integer|min:1',
+            'publication_year' => 'nullable|integer|min:1900|max:' . date('Y'),
+            'cover_image' => 'nullable|image|max:2048'
+        ]);
+
+        // Handle file upload
+        if ($request->hasFile('cover_image')) {
+            $validated['cover_image'] = $request->file('cover_image')
+                                                ->store('book-covers', 'public');
+        }
+
+        $validated['available_quantity'] = $validated['quantity'];
+
+        Book::create($validated);
+
+        return redirect()->route('books.index')
+                        ->with('success', 'Book added successfully!');
+    }
+
+    // Show single book
+    public function show(Book $book)
+    {
+        $book->load('category', 'borrowings.user');
+        return view('books.show', compact('book'));
+    }
+
+    // Show edit form
+    public function edit(Book $book)
+    {
+        $categories = Category::all();
+        return view('books.edit', compact('book', 'categories'));
+    }
+
+    // Update book
+    public function update(Request $request, Book $book)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'author' => 'required|string|max:255',
+            'isbn' => 'required|unique:books,isbn,' . $book->id,
+            'category_id' => 'required|exists:categories,id',
+            'description' => 'nullable|string',
+            'quantity' => 'required|integer|min:1',
+            'publication_year' => 'nullable|integer|min:1900|max:' . date('Y'),
+            'cover_image' => 'nullable|image|max:2048'
+        ]);
+
+        if ($request->hasFile('cover_image')) {
+            // Delete old image
+            if ($book->cover_image) {
+                Storage::disk('public')->delete($book->cover_image);
+            }
+            $validated['cover_image'] = $request->file('cover_image')
+                                                ->store('book-covers', 'public');
+        }
+
+        $book->update($validated);
+
+        return redirect()->route('books.show', $book)
+                        ->with('success', 'Book updated successfully!');
+    }
+
+    // Delete book
+    public function destroy(Book $book)
+    {
+        if ($book->cover_image) {
+            Storage::disk('public')->delete($book->cover_image);
+        }
+
+        $book->delete();
+
+        return redirect()->route('books.index')
+                        ->with('success', 'Book deleted successfully!');
+    }
+}</code></pre>
+        </div>
+
+        <h2>🛣️ Step 5: Routes Setup</h2>
+        
+        <div class="example">
+            <h3>Configure Web Routes</h3>
+            <pre><code>// routes/web.php
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\BorrowingController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
+
+// Public routes
+Route::get('/', function () {
+    return view('welcome');
+});
+
+// Authentication routes (provided by Breeze)
+require __DIR__.'/auth.php';
+
+// Protected routes
+Route::middleware(['auth'])->group(function () {
+    
+    // Dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+         ->name('dashboard');
+    
+    // Books
+    Route::resource('books', BookController::class);
+    
+    // Borrowings
+    Route::resource('borrowings', BorrowingController::class);
+    Route::post('borrowings/{borrowing}/return', [BorrowingController::class, 'return'])
+         ->name('borrowings.return');
+    
+    // Categories (admin only)
+    Route::middleware(['role:admin'])->group(function () {
+        Route::resource('categories', CategoryController::class);
+    });
+});</code></pre>
+        </div>
+
+        <h2>🌱 Step 6: Database Seeding</h2>
+        
+        <div class="example">
+            <h3>Create Seeders for Test Data</h3>
+            
+            <h4>Category Seeder</h4>
+            <pre><code>php artisan make:seeder CategorySeeder
+
+// database/seeders/CategorySeeder.php
+public function run()
+{
+    $categories = [
+        ['name' => 'Fiction', 'description' => 'Novels and fictional stories'],
+        ['name' => 'Science', 'description' => 'Scientific books and research'],
+        ['name' => 'Technology', 'description' => 'Computer science and IT books'],
+        ['name' => 'History', 'description' => 'Historical books and biographies'],
+        ['name' => 'Education', 'description' => 'Educational and textbooks'],
+    ];
+
+    foreach ($categories as $category) {
+        Category::create($category);
+    }
+}</code></pre>
+
+            <h4>Run Seeder</h4>
+            <pre><code>php artisan db:seed --class=CategorySeeder</code></pre>
+        </div>
+
+        <div class="exercise">
+            <h2>✏️ Today's Tasks</h2>
+            
+            <h3>Task 1: Project Setup (30 minutes)</h3>
+            <ol>
+                <li>Create new Laravel project</li>
+                <li>Install Laravel Breeze</li>
+                <li>Configure .env file with database credentials</li>
+                <li>Test that authentication works</li>
+            </ol>
+
+            <h3>Task 2: Create Migrations (45 minutes)</h3>
+            <ol>
+                <li>Create all 4 migration files (categories, books, borrowings, fines)</li>
+                <li>Define table structure with proper columns and relationships</li>
+                <li>Run migrations and verify tables in phpMyAdmin</li>
+            </ol>
+
+            <h3>Task 3: Build Models (45 minutes)</h3>
+            <ol>
+                <li>Create all model files</li>
+                <li>Define relationships (hasMany, belongsTo, hasOne)</li>
+                <li>Add fillable properties</li>
+                <li>Add helper methods (isAvailable, isOverdue)</li>
+            </ol>
+
+            <h3>Task 4: Create Controllers (60 minutes)</h3>
+            <ol>
+                <li>Generate resource controllers</li>
+                <li>Implement BookController with all CRUD methods</li>
+                <li>Add validation rules</li>
+                <li>Test controller methods</li>
+            </ol>
+
+            <h3>Task 5: Setup Routes (15 minutes)</h3>
+            <ol>
+                <li>Configure web.php with all routes</li>
+                <li>Add authentication middleware</li>
+                <li>Test routes with <code>php artisan route:list</code></li>
+            </ol>
+
+            <h3>Task 6: Seed Database (15 minutes)</h3>
+            <ol>
+                <li>Create and run CategorySeeder</li>
+                <li>Verify data in database</li>
+            </ol>
+        </div>
+
+        <div class="deliverable">
+            <h2>📦 Deliverables</h2>
+            <h3>By end of day:</h3>
+            <ol>
+                <li><strong>Functional Database Schema:</strong>
+                    <ul>
+                        <li>All tables created and verified</li>
+                        <li>Foreign keys properly configured</li>
+                        <li>Test data seeded</li>
+                    </ul>
+                </li>
+                <li><strong>Complete Models:</strong>
+                    <ul>
+                        <li>All models created with relationships</li>
+                        <li>Helper methods implemented</li>
+                    </ul>
+                </li>
+                <li><strong>Working Controllers:</strong>
+                    <ul>
+                        <li>BookController with full CRUD</li>
+                        <li>Other controllers scaffolded</li>
+                    </ul>
+                </li>
+                <li><strong>Routes Configured:</strong>
+                    <ul>
+                        <li>All routes defined</li>
+                        <li>Authentication middleware applied</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <div class="tip">
+            <strong>💡 Pro Tips:</strong>
+            <ul>
+                <li>Use <code>php artisan tinker</code> to test models and relationships</li>
+                <li>Run <code>php artisan route:list</code> to verify all routes</li>
+                <li>Test database connections before creating migrations</li>
+                <li>Use <code>php artisan migrate:fresh --seed</code> to reset and reseed</li>
+                <li>Commit your code to Git after each completed task</li>
+            </ul>
+        </div>
+
+        <div class="navigation">
+            <a href="../week21/day3-proposal-writing.html" class="nav-button">← Previous: Proposal Writing</a>
+            <a href="day2-frontend-integration.html" class="nav-button">Next: Frontend Integration →</a>
+        </div>
+    </div>
+</body>
+</html>

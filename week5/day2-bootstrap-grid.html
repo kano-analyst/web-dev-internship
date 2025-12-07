@@ -4,12 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Week 5 Day 2: Bootstrap Grid System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        :root {
+            --primary: #10b981;
+            --secondary: #34d399;
+            --accent: #6ee7b7;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --text-dark: #333;
+            --text-light: #666;
+            --white: #ffffff;
+            --success: #4caf50;
+            --gradient-1: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+        }
+        
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            background: var(--gradient-1);
             padding: 20px;
         }
         .container {
@@ -20,37 +35,59 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.3);
             overflow: hidden;
         }
-        header { background: #fa709a; color: white; padding: 30px; }
-        .nav-breadcrumb {
-            background: #fff0f5;
+        
+        /* Top Navigation */
+        .top-nav {
+            background: var(--dark);
             padding: 15px 30px;
-            border-bottom: 2px solid #fa709a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .nav-breadcrumb a { color: #fa709a; text-decoration: none; margin-right: 10px; }
+        .top-nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            transition: color 0.3s;
+        }
+        .top-nav a:hover { color: var(--secondary); }
+        .top-nav i { margin-right: 5px; }
+        
+        header { background: var(--gradient-1); color: white; padding: 30px; }
+        .nav-breadcrumb {
+            background: var(--light);
+            padding: 15px 30px;
+            border-bottom: 2px solid var(--primary);
+        }
+        .nav-breadcrumb a { color: var(--primary); text-decoration: none; margin-right: 10px; }
+        .nav-breadcrumb i { margin: 0 5px; color: var(--secondary); }
         .content { padding: 40px; }
         .section { margin-bottom: 40px; }
         .section h2 {
-            color: #fa709a;
+            color: var(--primary);
             margin-bottom: 20px;
             padding-bottom: 10px;
-            border-bottom: 3px solid #fee140;
+            border-bottom: 3px solid var(--secondary);
         }
-        .section h3 { color: #fa709a; margin: 20px 0 15px 0; }
+        .section h3 { color: var(--primary); margin: 20px 0 15px 0; }
+        .section h4 { color: var(--text-dark); margin: 15px 0 10px 0; }
         .info-box {
-            background: #fff0f5;
-            border-left: 5px solid #fa709a;
+            background: var(--light);
+            border-left: 5px solid var(--primary);
             padding: 20px;
             margin: 20px 0;
             border-radius: 5px;
         }
         .activity-box {
-            background: #fff8e1;
-            border-left: 5px solid #fee140;
+            background: #f0fdf4;
+            border-left: 5px solid var(--secondary);
             padding: 20px;
             margin: 20px 0;
             border-radius: 5px;
         }
-        .code-block {
+        
+        /* Syntax Highlighting */
+        .html-code, .css-code, .js-code, .bash-code {
             background: #2d2d2d;
             color: #f8f8f2;
             padding: 20px;
@@ -58,13 +95,21 @@
             overflow-x: auto;
             margin: 20px 0;
             font-family: 'Courier New', monospace;
+            line-height: 2;
+            font-size: 14px;
         }
+        .line { display: block; padding: 2px 0; }
+        .tag { color: #34d399; }
+        .attr { color: #60a5fa; }
+        .value { color: #fbbf24; }
+        .comment { color: #64748b; font-style: italic; }
+        
         ul, ol { margin-left: 30px; margin-top: 10px; }
         li { margin-bottom: 10px; }
         .checklist { list-style: none; margin-left: 0; }
         .checklist li:before {
             content: "✓ ";
-            color: #4caf50;
+            color: var(--success);
             font-weight: bold;
             margin-right: 10px;
         }
@@ -79,20 +124,22 @@
             border: 1px solid #ddd;
         }
         th {
-            background: #fa709a;
+            background: var(--primary);
             color: white;
         }
         tr:nth-child(even) { background: #f9f9f9; }
-        footer { background: #fa709a; color: white; padding: 20px; text-align: center; }
+        footer { background: var(--primary); color: white; padding: 20px; text-align: center; }
         .btn-primary {
-            background: #fa709a;
+            background: var(--primary);
             color: white;
             padding: 10px 20px;
             text-decoration: none;
             border-radius: 5px;
             display: inline-block;
             margin: 10px 10px 10px 0;
+            transition: background 0.3s;
         }
+        .btn-primary:hover { background: var(--secondary); }
         .grid-demo {
             background: #f0f0f0;
             border: 2px solid #ddd;
@@ -101,17 +148,32 @@
             border-radius: 8px;
         }
         .grid-item {
-            background: #fa709a;
+            background: var(--primary);
             color: white;
             padding: 15px;
             margin: 5px 0;
             border-radius: 5px;
             text-align: center;
         }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: var(--primary);
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="top-nav">
+            <div>
+                <a href="day1-bootstrap-intro.html"><i class="fas fa-arrow-left"></i> Previous</a>
+                <a href="day3-bootstrap-components.html">Next <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <a href="../index.html"><i class="fas fa-home"></i> Course Home</a>
+        </div>
+
         <header>
             <h1>📅 Week 5 - Day 2: Bootstrap Grid System</h1>
             <p>Wednesday | Duration: 3 hours</p>
@@ -119,7 +181,11 @@
         </header>
 
         <div class="nav-breadcrumb">
-            <a href="../index.html">← Back to Course Home</a> / Week 5 / Day 2
+            <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <a href="../index.html">Week 5</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>Day 2: Grid System</span>
         </div>
 
         <div class="content">
@@ -150,14 +216,14 @@
                 </ul>
 
                 <h3>Grid Structure</h3>
-                <div class="code-block">
-&lt;div class="container"&gt;
-    &lt;div class="row"&gt;
-        &lt;div class="col"&gt;Column 1&lt;/div&gt;
-        &lt;div class="col"&gt;Column 2&lt;/div&gt;
-        &lt;div class="col"&gt;Column 3&lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
+                <div class="html-code">
+<span class="line"><span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"container"</span><span class="tag">&gt;</span></span>
+<span class="line">    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"row"</span><span class="tag">&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col"</span><span class="tag">&gt;</span>Column 1<span class="tag">&lt;/div&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col"</span><span class="tag">&gt;</span>Column 2<span class="tag">&lt;/div&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col"</span><span class="tag">&gt;</span>Column 3<span class="tag">&lt;/div&gt;</span></span>
+<span class="line">    <span class="tag">&lt;/div&gt;</span></span>
+<span class="line"><span class="tag">&lt;/div&gt;</span></span>
                 </div>
             </div>
 
@@ -211,59 +277,107 @@
                 <h2>📊 2-Column Layout</h2>
                 
                 <h3>Equal Width Columns</h3>
-                <div class="code-block">
-&lt;div class="container"&gt;
-    &lt;div class="row"&gt;
-        &lt;div class="col"&gt;
-            Column 1 - Equal Width
-        &lt;/div&gt;
-        &lt;div class="col"&gt;
-            Column 2 - Equal Width
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
+                <div class="html-code">
+<span class="line"><span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"container"</span><span class="tag">&gt;</span></span>
+<span class="line">    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"row"</span><span class="tag">&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col"</span><span class="tag">&gt;</span></span>
+<span class="line">            Column 1 - Equal Width</span>
+<span class="line">        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col"</span><span class="tag">&gt;</span></span>
+<span class="line">            Column 2 - Equal Width</span>
+<span class="line">        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">    <span class="tag">&lt;/div&gt;</span></span>
+<span class="line"><span class="tag">&lt;/div&gt;</span></span>
+                </div>
+
+                <h4>Visual Result:</h4>
+                <div class="grid-demo">
+                    <div class="row">
+                        <div class="col">
+                            <div class="grid-item">Column 1 - Equal Width</div>
+                        </div>
+                        <div class="col">
+                            <div class="grid-item">Column 2 - Equal Width</div>
+                        </div>
+                    </div>
                 </div>
 
                 <h3>Fixed Width Columns (6/6 Split)</h3>
-                <div class="code-block">
-&lt;div class="container"&gt;
-    &lt;div class="row"&gt;
-        &lt;div class="col-6"&gt;
-            Column 1 - 50% Width
-        &lt;/div&gt;
-        &lt;div class="col-6"&gt;
-            Column 2 - 50% Width
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
+                <div class="html-code">
+<span class="line"><span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"container"</span><span class="tag">&gt;</span></span>
+<span class="line">    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"row"</span><span class="tag">&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col-6"</span><span class="tag">&gt;</span></span>
+<span class="line">            Column 1 - 50% Width</span>
+<span class="line">        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col-6"</span><span class="tag">&gt;</span></span>
+<span class="line">            Column 2 - 50% Width</span>
+<span class="line">        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">    <span class="tag">&lt;/div&gt;</span></span>
+<span class="line"><span class="tag">&lt;/div&gt;</span></span>
+                </div>
+
+                <h4>Visual Result:</h4>
+                <div class="grid-demo">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="grid-item">Column 1 - 50% Width</div>
+                        </div>
+                        <div class="col-6">
+                            <div class="grid-item">Column 2 - 50% Width</div>
+                        </div>
+                    </div>
                 </div>
 
                 <h3>Different Width Columns (8/4 Split)</h3>
-                <div class="code-block">
-&lt;div class="container"&gt;
-    &lt;div class="row"&gt;
-        &lt;div class="col-8"&gt;
-            Main Content - 66.67% Width
-        &lt;/div&gt;
-        &lt;div class="col-4"&gt;
-            Sidebar - 33.33% Width
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
+                <div class="html-code">
+<span class="line"><span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"container"</span><span class="tag">&gt;</span></span>
+<span class="line">    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"row"</span><span class="tag">&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col-8"</span><span class="tag">&gt;</span></span>
+<span class="line">            Main Content - 66.67% Width</span>
+<span class="line">        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col-4"</span><span class="tag">&gt;</span></span>
+<span class="line">            Sidebar - 33.33% Width</span>
+<span class="line">        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">    <span class="tag">&lt;/div&gt;</span></span>
+<span class="line"><span class="tag">&lt;/div&gt;</span></span>
+                </div>
+
+                <h4>Visual Result:</h4>
+                <div class="grid-demo">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="grid-item">Main Content - 66.67% Width</div>
+                        </div>
+                        <div class="col-4">
+                            <div class="grid-item">Sidebar - 33.33% Width</div>
+                        </div>
+                    </div>
                 </div>
 
                 <h3>Responsive 2-Column Layout</h3>
-                <div class="code-block">
-&lt;div class="container"&gt;
-    &lt;div class="row"&gt;
-        &lt;div class="col-md-6"&gt;
-            Stacks on mobile, side-by-side on tablets+
-        &lt;/div&gt;
-        &lt;div class="col-md-6"&gt;
-            Stacks on mobile, side-by-side on tablets+
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
+                <div class="html-code">
+<span class="line"><span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"container"</span><span class="tag">&gt;</span></span>
+<span class="line">    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"row"</span><span class="tag">&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col-md-6"</span><span class="tag">&gt;</span></span>
+<span class="line">            Stacks on mobile, side-by-side on tablets+</span>
+<span class="line">        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col-md-6"</span><span class="tag">&gt;</span></span>
+<span class="line">            Stacks on mobile, side-by-side on tablets+</span>
+<span class="line">        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">    <span class="tag">&lt;/div&gt;</span></span>
+<span class="line"><span class="tag">&lt;/div&gt;</span></span>
+                </div>
+
+                <h4>Visual Result:</h4>
+                <div class="grid-demo">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="grid-item">Stacks on mobile, side-by-side on tablets+</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="grid-item">Stacks on mobile, side-by-side on tablets+</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -271,130 +385,245 @@
                 <h2>📊 3-Column Layout</h2>
                 
                 <h3>Equal Width Columns</h3>
-                <div class="code-block">
-&lt;div class="container"&gt;
-    &lt;div class="row"&gt;
-        &lt;div class="col"&gt;Column 1&lt;/div&gt;
-        &lt;div class="col"&gt;Column 2&lt;/div&gt;
-        &lt;div class="col"&gt;Column 3&lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
+                <div class="html-code">
+<span class="line"><span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"container"</span><span class="tag">&gt;</span></span>
+<span class="line">    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"row"</span><span class="tag">&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col"</span><span class="tag">&gt;</span>Column 1<span class="tag">&lt;/div&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col"</span><span class="tag">&gt;</span>Column 2<span class="tag">&lt;/div&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col"</span><span class="tag">&gt;</span>Column 3<span class="tag">&lt;/div&gt;</span></span>
+<span class="line">    <span class="tag">&lt;/div&gt;</span></span>
+<span class="line"><span class="tag">&lt;/div&gt;</span></span>
+                </div>
+
+                <h4>Visual Result:</h4>
+                <div class="grid-demo">
+                    <div class="row">
+                        <div class="col">
+                            <div class="grid-item">Column 1</div>
+                        </div>
+                        <div class="col">
+                            <div class="grid-item">Column 2</div>
+                        </div>
+                        <div class="col">
+                            <div class="grid-item">Column 3</div>
+                        </div>
+                    </div>
                 </div>
 
                 <h3>Fixed Width (4/4/4 Split)</h3>
-                <div class="code-block">
-&lt;div class="container"&gt;
-    &lt;div class="row"&gt;
-        &lt;div class="col-4"&gt;Column 1 - 33.33%&lt;/div&gt;
-        &lt;div class="col-4"&gt;Column 2 - 33.33%&lt;/div&gt;
-        &lt;div class="col-4"&gt;Column 3 - 33.33%&lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
+                <div class="html-code">
+<span class="line"><span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"container"</span><span class="tag">&gt;</span></span>
+<span class="line">    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"row"</span><span class="tag">&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col-4"</span><span class="tag">&gt;</span>Column 1 - 33.33%<span class="tag">&lt;/div&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col-4"</span><span class="tag">&gt;</span>Column 2 - 33.33%<span class="tag">&lt;/div&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col-4"</span><span class="tag">&gt;</span>Column 3 - 33.33%<span class="tag">&lt;/div&gt;</span></span>
+<span class="line">    <span class="tag">&lt;/div&gt;</span></span>
+<span class="line"><span class="tag">&lt;/div&gt;</span></span>
+                </div>
+
+                <h4>Visual Result:</h4>
+                <div class="grid-demo">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="grid-item">Column 1 - 33.33%</div>
+                        </div>
+                        <div class="col-4">
+                            <div class="grid-item">Column 2 - 33.33%</div>
+                        </div>
+                        <div class="col-4">
+                            <div class="grid-item">Column 3 - 33.33%</div>
+                        </div>
+                    </div>
                 </div>
 
                 <h3>Responsive 3-Column Layout</h3>
-                <div class="code-block">
-&lt;div class="container"&gt;
-    &lt;div class="row"&gt;
-        &lt;div class="col-md-4"&gt;
-            &lt;!-- Stacks on mobile, 3 columns on tablets+ --&gt;
-            Column 1
-        &lt;/div&gt;
-        &lt;div class="col-md-4"&gt;
-            Column 2
-        &lt;/div&gt;
-        &lt;div class="col-md-4"&gt;
-            Column 3
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
+                <div class="html-code">
+<span class="line"><span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"container"</span><span class="tag">&gt;</span></span>
+<span class="line">    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"row"</span><span class="tag">&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col-md-4"</span><span class="tag">&gt;</span></span>
+<span class="line">            <span class="comment">&lt;!-- Stacks on mobile, 3 columns on tablets+ --&gt;</span></span>
+<span class="line">            Column 1</span>
+<span class="line">        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col-md-4"</span><span class="tag">&gt;</span></span>
+<span class="line">            Column 2</span>
+<span class="line">        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col-md-4"</span><span class="tag">&gt;</span></span>
+<span class="line">            Column 3</span>
+<span class="line">        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">    <span class="tag">&lt;/div&gt;</span></span>
+<span class="line"><span class="tag">&lt;/div&gt;</span></span>
+                </div>
+
+                <h4>Visual Result:</h4>
+                <div class="grid-demo">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="grid-item">Column 1<br><small>Stacks on mobile</small></div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="grid-item">Column 2<br><small>3 columns on tablets+</small></div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="grid-item">Column 3<br><small>Responsive</small></div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="section">
                 <h2>💻 Complete Grid Layout Example</h2>
                 
-                <div class="code-block">
-&lt;!DOCTYPE html&gt;
-&lt;html lang="en"&gt;
-&lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
-    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
-    &lt;title&gt;Bootstrap Grid Practice&lt;/title&gt;
-    &lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
-          rel="stylesheet"&gt;
-    &lt;style&gt;
-        .grid-demo {
-            background: #f8f9fa;
-            border: 2px solid #dee2e6;
-            padding: 20px;
-            margin-bottom: 15px;
-            border-radius: 5px;
-            text-align: center;
-        }
-    &lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;div class="container mt-5"&gt;
-        &lt;h1 class="text-center mb-4"&gt;Bootstrap Grid Examples&lt;/h1&gt;
+                <div class="html-code">
+<span class="line"><span class="tag">&lt;!DOCTYPE html&gt;</span></span>
+<span class="line"><span class="tag">&lt;html</span> <span class="attr">lang</span>=<span class="value">"en"</span><span class="tag">&gt;</span></span>
+<span class="line"><span class="tag">&lt;head&gt;</span></span>
+<span class="line">    <span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="value">"UTF-8"</span><span class="tag">&gt;</span></span>
+<span class="line">    <span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="value">"viewport"</span> <span class="attr">content</span>=<span class="value">"width=device-width, initial-scale=1.0"</span><span class="tag">&gt;</span></span>
+<span class="line">    <span class="tag">&lt;title&gt;</span>Bootstrap Grid Practice<span class="tag">&lt;/title&gt;</span></span>
+<span class="line">    <span class="tag">&lt;link</span> <span class="attr">href</span>=<span class="value">"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"</span></span>
+<span class="line">          <span class="attr">rel</span>=<span class="value">"stylesheet"</span><span class="tag">&gt;</span></span>
+<span class="line">    <span class="tag">&lt;style&gt;</span></span>
+<span class="line">        .grid-demo {</span>
+<span class="line">            background: #f8f9fa;</span>
+<span class="line">            border: 2px solid #dee2e6;</span>
+<span class="line">            padding: 20px;</span>
+<span class="line">            margin-bottom: 15px;</span>
+<span class="line">            border-radius: 5px;</span>
+<span class="line">            text-align: center;</span>
+<span class="line">        }</span>
+<span class="line">    <span class="tag">&lt;/style&gt;</span></span>
+<span class="line"><span class="tag">&lt;/head&gt;</span></span>
+<span class="line"><span class="tag">&lt;body&gt;</span></span>
+<span class="line">    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"container mt-5"</span><span class="tag">&gt;</span></span>
+<span class="line">        <span class="tag">&lt;h1</span> <span class="attr">class</span>=<span class="value">"text-center mb-4"</span><span class="tag">&gt;</span>Bootstrap Grid Examples<span class="tag">&lt;/h1&gt;</span></span>
+<span class="line"></span>
+<span class="line">        <span class="comment">&lt;!-- 2-Column Layout --&gt;</span></span>
+<span class="line">        <span class="tag">&lt;h2</span> <span class="attr">class</span>=<span class="value">"mt-5"</span><span class="tag">&gt;</span>2-Column Layout<span class="tag">&lt;/h2&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"row"</span><span class="tag">&gt;</span></span>
+<span class="line">            <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col-md-6"</span><span class="tag">&gt;</span></span>
+<span class="line">                <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"grid-demo"</span><span class="tag">&gt;</span>Column 1 (50%)<span class="tag">&lt;/div&gt;</span></span>
+<span class="line">            <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">            <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col-md-6"</span><span class="tag">&gt;</span></span>
+<span class="line">                <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"grid-demo"</span><span class="tag">&gt;</span>Column 2 (50%)<span class="tag">&lt;/div&gt;</span></span>
+<span class="line">            <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line"></span>
+<span class="line">        <span class="comment">&lt;!-- 3-Column Layout --&gt;</span></span>
+<span class="line">        <span class="tag">&lt;h2</span> <span class="attr">class</span>=<span class="value">"mt-5"</span><span class="tag">&gt;</span>3-Column Layout<span class="tag">&lt;/h2&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"row"</span><span class="tag">&gt;</span></span>
+<span class="line">            <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col-md-4"</span><span class="tag">&gt;</span></span>
+<span class="line">                <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"grid-demo"</span><span class="tag">&gt;</span>Column 1 (33%)<span class="tag">&lt;/div&gt;</span></span>
+<span class="line">            <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">            <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col-md-4"</span><span class="tag">&gt;</span></span>
+<span class="line">                <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"grid-demo"</span><span class="tag">&gt;</span>Column 2 (33%)<span class="tag">&lt;/div&gt;</span></span>
+<span class="line">            <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">            <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col-md-4"</span><span class="tag">&gt;</span></span>
+<span class="line">                <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"grid-demo"</span><span class="tag">&gt;</span>Column 3 (33%)<span class="tag">&lt;/div&gt;</span></span>
+<span class="line">            <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line"></span>
+<span class="line">        <span class="comment">&lt;!-- 4-Column Layout --&gt;</span></span>
+<span class="line">        <span class="tag">&lt;h2</span> <span class="attr">class</span>=<span class="value">"mt-5"</span><span class="tag">&gt;</span>4-Column Layout<span class="tag">&lt;/h2&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"row"</span><span class="tag">&gt;</span></span>
+<span class="line">            <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col-lg-3 col-md-6"</span><span class="tag">&gt;</span></span>
+<span class="line">                <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"grid-demo"</span><span class="tag">&gt;</span>Column 1<span class="tag">&lt;/div&gt;</span></span>
+<span class="line">            <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">            <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col-lg-3 col-md-6"</span><span class="tag">&gt;</span></span>
+<span class="line">                <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"grid-demo"</span><span class="tag">&gt;</span>Column 2<span class="tag">&lt;/div&gt;</span></span>
+<span class="line">            <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">            <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col-lg-3 col-md-6"</span><span class="tag">&gt;</span></span>
+<span class="line">                <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"grid-demo"</span><span class="tag">&gt;</span>Column 3<span class="tag">&lt;/div&gt;</span></span>
+<span class="line">            <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">            <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col-lg-3 col-md-6"</span><span class="tag">&gt;</span></span>
+<span class="line">                <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"grid-demo"</span><span class="tag">&gt;</span>Column 4<span class="tag">&lt;/div&gt;</span></span>
+<span class="line">            <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line"></span>
+<span class="line">        <span class="comment">&lt;!-- Mixed Column Widths --&gt;</span></span>
+<span class="line">        <span class="tag">&lt;h2</span> <span class="attr">class</span>=<span class="value">"mt-5"</span><span class="tag">&gt;</span>Mixed Column Widths<span class="tag">&lt;/h2&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"row"</span><span class="tag">&gt;</span></span>
+<span class="line">            <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col-md-8"</span><span class="tag">&gt;</span></span>
+<span class="line">                <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"grid-demo"</span><span class="tag">&gt;</span>Main Content (66%)<span class="tag">&lt;/div&gt;</span></span>
+<span class="line">            <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">            <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col-md-4"</span><span class="tag">&gt;</span></span>
+<span class="line">                <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"grid-demo"</span><span class="tag">&gt;</span>Sidebar (33%)<span class="tag">&lt;/div&gt;</span></span>
+<span class="line">            <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">    <span class="tag">&lt;/div&gt;</span></span>
+<span class="line"></span>
+<span class="line">    <span class="tag">&lt;script</span> <span class="attr">src</span>=<span class="value">"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"</span><span class="tag">&gt;&lt;/script&gt;</span></span>
+<span class="line"><span class="tag">&lt;/body&gt;</span></span>
+<span class="line"><span class="tag">&lt;/html&gt;</span></span>
+                </div>
 
-        &lt;!-- 2-Column Layout --&gt;
-        &lt;h2 class="mt-5"&gt;2-Column Layout&lt;/h2&gt;
-        &lt;div class="row"&gt;
-            &lt;div class="col-md-6"&gt;
-                &lt;div class="grid-demo"&gt;Column 1 (50%)&lt;/div&gt;
-            &lt;/div&gt;
-            &lt;div class="col-md-6"&gt;
-                &lt;div class="grid-demo"&gt;Column 2 (50%)&lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
+                <div class="visual-result">
+                    <h3>📱 Visual Result:</h3>
+                    <p>This complete example demonstrates all grid patterns together:</p>
+                    
+                    <!-- 2-Column Layout -->
+                    <h4 style="margin-top: 20px; color: var(--primary);">2-Column Layout (50% / 50%)</h4>
+                    <div class="grid-demo">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="grid-item">Column 1 (50%)<br><small>Half width</small></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="grid-item">Column 2 (50%)<br><small>Half width</small></div>
+                            </div>
+                        </div>
+                    </div>
 
-        &lt;!-- 3-Column Layout --&gt;
-        &lt;h2 class="mt-5"&gt;3-Column Layout&lt;/h2&gt;
-        &lt;div class="row"&gt;
-            &lt;div class="col-md-4"&gt;
-                &lt;div class="grid-demo"&gt;Column 1 (33%)&lt;/div&gt;
-            &lt;/div&gt;
-            &lt;div class="col-md-4"&gt;
-                &lt;div class="grid-demo"&gt;Column 2 (33%)&lt;/div&gt;
-            &lt;/div&gt;
-            &lt;div class="col-md-4"&gt;
-                &lt;div class="grid-demo"&gt;Column 3 (33%)&lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
+                    <!-- 3-Column Layout -->
+                    <h4 style="margin-top: 20px; color: var(--primary);">3-Column Layout (33% / 33% / 33%)</h4>
+                    <div class="grid-demo">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="grid-item">Column 1 (33%)<br><small>Equal thirds</small></div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="grid-item">Column 2 (33%)<br><small>Equal thirds</small></div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="grid-item">Column 3 (33%)<br><small>Equal thirds</small></div>
+                            </div>
+                        </div>
+                    </div>
 
-        &lt;!-- 4-Column Layout --&gt;
-        &lt;h2 class="mt-5"&gt;4-Column Layout&lt;/h2&gt;
-        &lt;div class="row"&gt;
-            &lt;div class="col-lg-3 col-md-6"&gt;
-                &lt;div class="grid-demo"&gt;Column 1&lt;/div&gt;
-            &lt;/div&gt;
-            &lt;div class="col-lg-3 col-md-6"&gt;
-                &lt;div class="grid-demo"&gt;Column 2&lt;/div&gt;
-            &lt;/div&gt;
-            &lt;div class="col-lg-3 col-md-6"&gt;
-                &lt;div class="grid-demo"&gt;Column 3&lt;/div&gt;
-            &lt;/div&gt;
-            &lt;div class="col-lg-3 col-md-6"&gt;
-                &lt;div class="grid-demo"&gt;Column 4&lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
+                    <!-- 4-Column Layout -->
+                    <h4 style="margin-top: 20px; color: var(--primary);">4-Column Layout (25% each)</h4>
+                    <div class="grid-demo">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-6">
+                                <div class="grid-item">Column 1<br><small>4 columns on large<br>2 columns on medium</small></div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="grid-item">Column 2<br><small>4 columns on large<br>2 columns on medium</small></div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="grid-item">Column 3<br><small>4 columns on large<br>2 columns on medium</small></div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="grid-item">Column 4<br><small>4 columns on large<br>2 columns on medium</small></div>
+                            </div>
+                        </div>
+                    </div>
 
-        &lt;!-- Mixed Column Widths --&gt;
-        &lt;h2 class="mt-5"&gt;Mixed Column Widths&lt;/h2&gt;
-        &lt;div class="row"&gt;
-            &lt;div class="col-md-8"&gt;
-                &lt;div class="grid-demo"&gt;Main Content (66%)&lt;/div&gt;
-            &lt;/div&gt;
-            &lt;div class="col-md-4"&gt;
-                &lt;div class="grid-demo"&gt;Sidebar (33%)&lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
+                    <!-- Mixed Column Widths -->
+                    <h4 style="margin-top: 20px; color: var(--primary);">Mixed Column Widths (66% / 33%)</h4>
+                    <div class="grid-demo">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="grid-item">Main Content (66%)<br><small>8 columns wide</small></div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="grid-item">Sidebar (33%)<br><small>4 columns wide</small></div>
+                            </div>
+                        </div>
+                    </div>
 
-    &lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;
+                    <p style="margin-top: 15px; padding: 10px; background: #e0f2fe; border-left: 4px solid var(--primary); border-radius: 5px;">
+                        <strong>💡 Pro Tip:</strong> This complete example shows how to combine different grid patterns in one page. Notice how the 4-column layout uses <code>col-lg-3 col-md-6</code> to create a responsive design that shows 4 columns on large screens and 2 columns on medium screens!
+                    </p>
                 </div>
             </div>
 
@@ -406,63 +635,63 @@
                     <p>Create <code>grid-practice.html</code> with product cards in a responsive grid</p>
                 </div>
 
-                <div class="code-block">
-&lt;div class="container mt-5"&gt;
-    &lt;h1 class="text-center mb-4"&gt;Our Products&lt;/h1&gt;
-    
-    &lt;div class="row"&gt;
-        &lt;!-- Product 1 --&gt;
-        &lt;div class="col-md-4 mb-4"&gt;
-            &lt;div class="card"&gt;
-                &lt;img src="https://via.placeholder.com/300x200" 
-                     class="card-img-top" 
-                     alt="Product 1"&gt;
-                &lt;div class="card-body"&gt;
-                    &lt;h5 class="card-title"&gt;Product 1&lt;/h5&gt;
-                    &lt;p class="card-text"&gt;
-                        Description of product 1 goes here.
-                    &lt;/p&gt;
-                    &lt;p class="h4 text-primary"&gt;$99.99&lt;/p&gt;
-                    &lt;a href="#" class="btn btn-primary"&gt;Buy Now&lt;/a&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-
-        &lt;!-- Product 2 --&gt;
-        &lt;div class="col-md-4 mb-4"&gt;
-            &lt;div class="card"&gt;
-                &lt;img src="https://via.placeholder.com/300x200" 
-                     class="card-img-top" 
-                     alt="Product 2"&gt;
-                &lt;div class="card-body"&gt;
-                    &lt;h5 class="card-title"&gt;Product 2&lt;/h5&gt;
-                    &lt;p class="card-text"&gt;
-                        Description of product 2 goes here.
-                    &lt;/p&gt;
-                    &lt;p class="h4 text-primary"&gt;$149.99&lt;/p&gt;
-                    &lt;a href="#" class="btn btn-primary"&gt;Buy Now&lt;/a&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-
-        &lt;!-- Product 3 --&gt;
-        &lt;div class="col-md-4 mb-4"&gt;
-            &lt;div class="card"&gt;
-                &lt;img src="https://via.placeholder.com/300x200" 
-                     class="card-img-top" 
-                     alt="Product 3"&gt;
-                &lt;div class="card-body"&gt;
-                    &lt;h5 class="card-title"&gt;Product 3&lt;/h5&gt;
-                    &lt;p class="card-text"&gt;
-                        Description of product 3 goes here.
-                    &lt;/p&gt;
-                    &lt;p class="h4 text-primary"&gt;$199.99&lt;/p&gt;
-                    &lt;a href="#" class="btn btn-primary"&gt;Buy Now&lt;/a&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
+                <div class="html-code">
+<span class="line"><span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"container mt-5"</span><span class="tag">&gt;</span></span>
+<span class="line">    <span class="tag">&lt;h1</span> <span class="attr">class</span>=<span class="value">"text-center mb-4"</span><span class="tag">&gt;</span>Our Products<span class="tag">&lt;/h1&gt;</span></span>
+<span class="line">    </span>
+<span class="line">    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"row"</span><span class="tag">&gt;</span></span>
+<span class="line">        <span class="comment">&lt;!-- Product 1 --&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col-md-4 mb-4"</span><span class="tag">&gt;</span></span>
+<span class="line">            <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"card"</span><span class="tag">&gt;</span></span>
+<span class="line">                <span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="value">"https://via.placeholder.com/300x200"</span></span>
+<span class="line">                     <span class="attr">class</span>=<span class="value">"card-img-top"</span></span>
+<span class="line">                     <span class="attr">alt</span>=<span class="value">"Product 1"</span><span class="tag">&gt;</span></span>
+<span class="line">                <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"card-body"</span><span class="tag">&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;h5</span> <span class="attr">class</span>=<span class="value">"card-title"</span><span class="tag">&gt;</span>Product 1<span class="tag">&lt;/h5&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="value">"card-text"</span><span class="tag">&gt;</span></span>
+<span class="line">                        Description of product 1 goes here.</span>
+<span class="line">                    <span class="tag">&lt;/p&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="value">"h4 text-primary"</span><span class="tag">&gt;</span>$99.99<span class="tag">&lt;/p&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="value">"#"</span> <span class="attr">class</span>=<span class="value">"btn btn-primary"</span><span class="tag">&gt;</span>Buy Now<span class="tag">&lt;/a&gt;</span></span>
+<span class="line">                <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">            <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line"></span>
+<span class="line">        <span class="comment">&lt;!-- Product 2 --&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col-md-4 mb-4"</span><span class="tag">&gt;</span></span>
+<span class="line">            <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"card"</span><span class="tag">&gt;</span></span>
+<span class="line">                <span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="value">"https://via.placeholder.com/300x200"</span></span>
+<span class="line">                     <span class="attr">class</span>=<span class="value">"card-img-top"</span></span>
+<span class="line">                     <span class="attr">alt</span>=<span class="value">"Product 2"</span><span class="tag">&gt;</span></span>
+<span class="line">                <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"card-body"</span><span class="tag">&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;h5</span> <span class="attr">class</span>=<span class="value">"card-title"</span><span class="tag">&gt;</span>Product 2<span class="tag">&lt;/h5&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="value">"card-text"</span><span class="tag">&gt;</span></span>
+<span class="line">                        Description of product 2 goes here.</span>
+<span class="line">                    <span class="tag">&lt;/p&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="value">"h4 text-primary"</span><span class="tag">&gt;</span>$149.99<span class="tag">&lt;/p&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="value">"#"</span> <span class="attr">class</span>=<span class="value">"btn btn-primary"</span><span class="tag">&gt;</span>Buy Now<span class="tag">&lt;/a&gt;</span></span>
+<span class="line">                <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">            <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line"></span>
+<span class="line">        <span class="comment">&lt;!-- Product 3 --&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col-md-4 mb-4"</span><span class="tag">&gt;</span></span>
+<span class="line">            <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"card"</span><span class="tag">&gt;</span></span>
+<span class="line">                <span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="value">"https://via.placeholder.com/300x200"</span></span>
+<span class="line">                     <span class="attr">class</span>=<span class="value">"card-img-top"</span></span>
+<span class="line">                     <span class="attr">alt</span>=<span class="value">"Product 3"</span><span class="tag">&gt;</span></span>
+<span class="line">                <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"card-body"</span><span class="tag">&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;h5</span> <span class="attr">class</span>=<span class="value">"card-title"</span><span class="tag">&gt;</span>Product 3<span class="tag">&lt;/h5&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="value">"card-text"</span><span class="tag">&gt;</span></span>
+<span class="line">                        Description of product 3 goes here.</span>
+<span class="line">                    <span class="tag">&lt;/p&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="value">"h4 text-primary"</span><span class="tag">&gt;</span>$199.99<span class="tag">&lt;/p&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="value">"#"</span> <span class="attr">class</span>=<span class="value">"btn btn-primary"</span><span class="tag">&gt;</span>Buy Now<span class="tag">&lt;/a&gt;</span></span>
+<span class="line">                <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">            <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">    <span class="tag">&lt;/div&gt;</span></span>
+<span class="line"><span class="tag">&lt;/div&gt;</span></span>
                 </div>
             </div>
 

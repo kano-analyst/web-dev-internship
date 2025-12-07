@@ -5,231 +5,498 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Week 5 Day 3: Bootstrap Components & Utilities</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #10b981;
+            --secondary: #34d399;
+            --accent: #6ee7b7;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gradient-1: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: var(--gradient-1);
             padding: 20px;
         }
-        .main-container {
+
+        .container {
             max-width: 1200px;
             margin: 0 auto;
             background: white;
             border-radius: 15px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
         }
-        header { background: #fa709a; color: white; padding: 30px; border-radius: 15px 15px 0 0; }
+
+        /* Top Navigation */
+        .top-nav {
+            background: var(--dark);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .top-nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            transition: color 0.3s;
+        }
+        .top-nav a:hover { color: var(--secondary); }
+        .top-nav i { margin-right: 5px; }
+
+        .nav-breadcrumb {
+            background: var(--light);
+            padding: 15px 30px;
+            border-bottom: 2px solid var(--primary);
+        }
+        .nav-breadcrumb a { color: var(--primary); text-decoration: none; margin-right: 10px; }
+        .nav-breadcrumb i { margin: 0 5px; color: var(--secondary); }
+
+        header {
+            background: var(--gradient-1);
+            color: white;
+            padding: 30px;
+        }
+
         .content { padding: 40px; }
-        .code-block {
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--secondary);
+        }
+        .section h3 { color: var(--primary); margin: 20px 0 15px 0; }
+        .section h4 { color: var(--dark); margin: 15px 0 10px 0; }
+
+        .html-code, .css-code {
             background: #2d2d2d;
             color: #f8f8f2;
-            padding: 20px;
+            padding: 1.5rem;
             border-radius: 8px;
             overflow-x: auto;
-            margin: 20px 0;
+            margin: 1rem 0;
             font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 2;
+            border-left: 4px solid var(--primary);
         }
-        footer { background: #fa709a; color: white; padding: 20px; text-align: center; border-radius: 0 0 15px 15px; }
+
+        .line {
+            display: block;
+            padding: 2px 0;
+        }
+
+        .tag { color: #34d399; }
+        .attr { color: #60a5fa; }
+        .value { color: #fbbf24; }
+        .comment { color: #64748b; font-style: italic; }
+
+        .visual-result {
+            background: #f0f9ff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid var(--primary);
+        }
+
+        .visual-result h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .grid-demo {
+            background: #f0f0f0;
+            border: 2px solid #ddd;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 8px;
+        }
+
+        .grid-item {
+            background: var(--primary);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        ul {
+            margin-left: 2rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        code {
+            background: #e2e8f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e11d48;
+        }
+
+        .activity-box {
+            background: #fef3c7;
+            border-left: 5px solid #f59e0b;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        table th, table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        table th {
+            background: var(--primary);
+            color: white;
+        }
+
+        table tr:hover {
+            background: #f8fafc;
+        }
+        /* Top Navigation */
+        .top-nav {
+            background: var(--dark);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .top-nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            transition: color 0.3s;
+        }
+        .top-nav a:hover { color: var(--secondary); }
+        .top-nav i { margin-right: 5px; }
+
+        .nav-breadcrumb {
+            background: var(--light);
+            padding: 15px 30px;
+            border-bottom: 2px solid var(--primary);
+        }
+        .nav-breadcrumb a { color: var(--primary); text-decoration: none; margin-right: 10px; }
+        .nav-breadcrumb i { margin: 0 5px; color: var(--secondary); }
     </style>
 </head>
 <body>
-    <div class="main-container">
+    <div class="container">
+        <!-- Top Navigation -->
+        <div class="top-nav">
+            <div>
+                <a href="day2-bootstrap-grid.html"><i class="fas fa-arrow-left"></i> Previous: Day 2</a>
+            </div>
+            <div>
+                <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+            </div>
+            <div>
+                <a href="../week6/day1-js-variables.html">Next: Week 6 Day 1 <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Breadcrumb Navigation -->
+        <div class="nav-breadcrumb">
+            <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>Week 5</span>
+            <i class="fas fa-chevron-right"></i>
+            <span>Day 3: Bootstrap Components & Utilities</span>
+        </div>
+
         <header>
             <h1>📅 Week 5 - Day 3: Bootstrap Components & Utilities</h1>
             <p>Friday | Duration: 3 hours</p>
         </header>
 
         <div class="content">
-            <h2 class="text-primary mb-4">🎯 Learning Objectives</h2>
+            <div class="section">
+                <h2>🎯 Learning Objectives</h2>
             <ul>
                 <li>Master Bootstrap cards, buttons, and alerts</li>
                 <li>Learn navbar components</li>
                 <li>Use spacing utilities (margin & padding)</li>
                 <li>Redesign portfolio with Bootstrap</li>
             </ul>
+        </div>
 
-            <h2 class="text-primary mt-5 mb-3">🎴 Bootstrap Cards</h2>
+        <div class="section">
+            <h2>🎴 Bootstrap Cards</h2>
             <p>Cards are flexible content containers with multiple variants and options.</p>
-            
-            <div class="row mt-4">
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Card image">
-                        <div class="card-body">
-                            <h5 class="card-title">Card Title</h5>
-                            <p class="card-text">Some quick example text to build on the card title.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
+
+            <h3>Basic Card Structure:</h3>
+            <div class="html-code">
+<span class="line"><span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"card"</span><span class="tag">&gt;</span></span>
+<span class="line">    <span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="value">"image.jpg"</span> <span class="attr">class</span>=<span class="value">"card-img-top"</span> <span class="attr">alt</span>=<span class="value">"..."</span><span class="tag">&gt;</span></span>
+<span class="line">    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"card-body"</span><span class="tag">&gt;</span></span>
+<span class="line">        <span class="tag">&lt;h5</span> <span class="attr">class</span>=<span class="value">"card-title"</span><span class="tag">&gt;</span>Card Title<span class="tag">&lt;/h5&gt;</span></span>
+<span class="line">        <span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="value">"card-text"</span><span class="tag">&gt;</span>Card content goes here.<span class="tag">&lt;/p&gt;</span></span>
+<span class="line">        <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="value">"#"</span> <span class="attr">class</span>=<span class="value">"btn btn-primary"</span><span class="tag">&gt;</span>Button<span class="tag">&lt;/a&gt;</span></span>
+<span class="line">    <span class="tag">&lt;/div&gt;</span></span>
+<span class="line"><span class="tag">&lt;/div&gt;</span></span>
+            </div>
+
+            <div class="visual-result">
+                <h3>📱 Visual Result:</h3>
+                <div class="row mt-3">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=250&fit=crop" class="card-img-top" alt="Web Development">
+                            <div class="card-body">
+                                <h5 class="card-title">Web Development</h5>
+                                <p class="card-text">Build modern, responsive websites with HTML, CSS, and JavaScript.</p>
+                                <a href="#" class="btn btn-primary">Learn More</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card border-primary">
-                        <div class="card-header bg-primary text-white">Featured</div>
-                        <div class="card-body">
-                            <h5 class="card-title">Special Card</h5>
-                            <p class="card-text">Card with custom header and border.</p>
-                            <a href="#" class="btn btn-outline-primary">Learn More</a>
+                    <div class="col-md-4">
+                        <div class="card border-primary">
+                            <div class="card-header bg-primary text-white">Featured Course</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Bootstrap Mastery</h5>
+                                <p class="card-text">Master the world's most popular CSS framework.</p>
+                                <a href="#" class="btn btn-outline-primary">Enroll Now</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Card without Image</h5>
-                            <p class="card-text">Cards can be used without images too!</p>
-                            <a href="#" class="btn btn-success">Click Here</a>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Quick Start Guide</h5>
+                                <p class="card-text">Get started with Bootstrap in minutes, not hours!</p>
+                                <a href="#" class="btn btn-success">Get Started</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="code-block mt-4">
-&lt;div class="card"&gt;
-    &lt;img src="image.jpg" class="card-img-top" alt="..."&gt;
-    &lt;div class="card-body"&gt;
-        &lt;h5 class="card-title"&gt;Card Title&lt;/h5&gt;
-        &lt;p class="card-text"&gt;Card content goes here.&lt;/p&gt;
-        &lt;a href="#" class="btn btn-primary"&gt;Button&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-            </div>
+        <div class="section">
+            <h2>📐 Spacing Utilities</h2>
+            <p>Bootstrap provides utility classes for controlling spacing (margin and padding):</p>
 
-            <h2 class="text-primary mt-5 mb-3">📐 Spacing Utilities</h2>
-            <table class="table table-striped">
-                <thead class="table-primary">
+            <table>
+                <thead>
                     <tr>
                         <th>Class</th>
                         <th>Property</th>
+                        <th>Size</th>
                         <th>Example</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td><code>m-3</code></td>
-                        <td>Margin all sides (1rem)</td>
+                        <td>Margin all sides</td>
+                        <td>1rem (16px)</td>
                         <td><code>&lt;div class="m-3"&gt;</code></td>
                     </tr>
                     <tr>
                         <td><code>mt-4</code></td>
-                        <td>Margin top (1.5rem)</td>
+                        <td>Margin top</td>
+                        <td>1.5rem (24px)</td>
                         <td><code>&lt;div class="mt-4"&gt;</code></td>
                     </tr>
                     <tr>
                         <td><code>mb-5</code></td>
-                        <td>Margin bottom (3rem)</td>
+                        <td>Margin bottom</td>
+                        <td>3rem (48px)</td>
                         <td><code>&lt;div class="mb-5"&gt;</code></td>
                     </tr>
                     <tr>
                         <td><code>p-3</code></td>
                         <td>Padding all sides</td>
+                        <td>1rem (16px)</td>
                         <td><code>&lt;div class="p-3"&gt;</code></td>
                     </tr>
                     <tr>
                         <td><code>px-4</code></td>
                         <td>Padding left & right</td>
+                        <td>1.5rem (24px)</td>
                         <td><code>&lt;div class="px-4"&gt;</code></td>
                     </tr>
                     <tr>
                         <td><code>py-2</code></td>
                         <td>Padding top & bottom</td>
+                        <td>0.5rem (8px)</td>
                         <td><code>&lt;div class="py-2"&gt;</code></td>
                     </tr>
                 </tbody>
             </table>
 
-            <h2 class="text-primary mt-5 mb-3">🎨 Activity: Redesign Portfolio with Bootstrap</h2>
-            <div class="alert alert-warning">
-                <strong>Task:</strong> Convert your existing portfolio to use Bootstrap components
+            <div class="visual-result">
+                <h3>📏 Spacing Scale:</h3>
+                <ul>
+                    <li><code>0</code> = 0</li>
+                    <li><code>1</code> = 0.25rem (4px)</li>
+                    <li><code>2</code> = 0.5rem (8px)</li>
+                    <li><code>3</code> = 1rem (16px)</li>
+                    <li><code>4</code> = 1.5rem (24px)</li>
+                    <li><code>5</code> = 3rem (48px)</li>
+                </ul>
+                <p style="margin-top: 1rem;"><strong>Directions:</strong> <code>t</code>=top, <code>b</code>=bottom, <code>l</code>=left, <code>r</code>=right, <code>x</code>=horizontal, <code>y</code>=vertical</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🎨 Activity: Redesign Portfolio with Bootstrap</h2>
+            <div class="activity-box">
+                <h3>Task: Convert Your Portfolio to Bootstrap</h3>
+                <p><strong>Objective:</strong> Take your existing portfolio and redesign it using Bootstrap components</p>
+                <p><strong>Requirements:</strong></p>
+                <ul>
+                    <li>Responsive navbar with brand and navigation links</li>
+                    <li>Hero section with call-to-action button</li>
+                    <li>Skills section using Bootstrap cards</li>
+                    <li>Apply spacing utilities throughout</li>
+                    <li>Test on mobile, tablet, and desktop</li>
+                </ul>
             </div>
 
-            <div class="code-block">
-&lt;!DOCTYPE html&gt;
-&lt;html lang="en"&gt;
-&lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
-    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
-    &lt;title&gt;My Bootstrap Portfolio&lt;/title&gt;
-    &lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;!-- Navbar --&gt;
-    &lt;nav class="navbar navbar-expand-lg navbar-dark bg-dark"&gt;
-        &lt;div class="container"&gt;
-            &lt;a class="navbar-brand" href="#"&gt;My Portfolio&lt;/a&gt;
-            &lt;button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"&gt;
-                &lt;span class="navbar-toggler-icon"&gt;&lt;/span&gt;
-            &lt;/button&gt;
-            &lt;div class="collapse navbar-collapse" id="navbarNav"&gt;
-                &lt;ul class="navbar-nav ms-auto"&gt;
-                    &lt;li class="nav-item"&gt;&lt;a class="nav-link" href="#about"&gt;About&lt;/a&gt;&lt;/li&gt;
-                    &lt;li class="nav-item"&gt;&lt;a class="nav-link" href="#skills"&gt;Skills&lt;/a&gt;&lt;/li&gt;
-                    &lt;li class="nav-item"&gt;&lt;a class="nav-link" href="#projects"&gt;Projects&lt;/a&gt;&lt;/li&gt;
-                    &lt;li class="nav-item"&gt;&lt;a class="nav-link" href="#contact"&gt;Contact&lt;/a&gt;&lt;/li&gt;
-                &lt;/ul&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/nav&gt;
-
-    &lt;!-- Hero Section --&gt;
-    &lt;section class="bg-primary text-white text-center py-5"&gt;
-        &lt;div class="container"&gt;
-            &lt;h1 class="display-4"&gt;Welcome to My Portfolio&lt;/h1&gt;
-            &lt;p class="lead"&gt;I'm a Web Developer&lt;/p&gt;
-            &lt;a href="#projects" class="btn btn-light btn-lg"&gt;View My Work&lt;/a&gt;
-        &lt;/div&gt;
-    &lt;/section&gt;
-
-    &lt;!-- Skills Section --&gt;
-    &lt;section id="skills" class="py-5"&gt;
-        &lt;div class="container"&gt;
-            &lt;h2 class="text-center mb-4"&gt;My Skills&lt;/h2&gt;
-            &lt;div class="row"&gt;
-                &lt;div class="col-md-4 mb-3"&gt;
-                    &lt;div class="card text-center"&gt;
-                        &lt;div class="card-body"&gt;
-                            &lt;h3&gt;HTML5&lt;/h3&gt;
-                            &lt;p&gt;Semantic markup and structure&lt;/p&gt;
-                        &lt;/div&gt;
-                    &lt;/div&gt;
-                &lt;/div&gt;
-                &lt;div class="col-md-4 mb-3"&gt;
-                    &lt;div class="card text-center"&gt;
-                        &lt;div class="card-body"&gt;
-                            &lt;h3&gt;CSS3&lt;/h3&gt;
-                            &lt;p&gt;Styling and responsive design&lt;/p&gt;
-                        &lt;/div&gt;
-                    &lt;/div&gt;
-                &lt;/div&gt;
-                &lt;div class="col-md-4 mb-3"&gt;
-                    &lt;div class="card text-center"&gt;
-                        &lt;div class="card-body"&gt;
-                            &lt;h3&gt;Bootstrap&lt;/h3&gt;
-                            &lt;p&gt;Rapid development framework&lt;/p&gt;
-                        &lt;/div&gt;
-                    &lt;/div&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/section&gt;
-
-    &lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;
+            <h3>Complete Bootstrap Portfolio Example:</h3>
+            <div class="html-code">
+<span class="line"><span class="tag">&lt;!DOCTYPE html&gt;</span></span>
+<span class="line"><span class="tag">&lt;html</span> <span class="attr">lang</span>=<span class="value">"en"</span><span class="tag">&gt;</span></span>
+<span class="line"><span class="tag">&lt;head&gt;</span></span>
+<span class="line">    <span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="value">"UTF-8"</span><span class="tag">&gt;</span></span>
+<span class="line">    <span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="value">"viewport"</span> <span class="attr">content</span>=<span class="value">"width=device-width, initial-scale=1.0"</span><span class="tag">&gt;</span></span>
+<span class="line">    <span class="tag">&lt;title&gt;</span>My Bootstrap Portfolio<span class="tag">&lt;/title&gt;</span></span>
+<span class="line">    <span class="tag">&lt;link</span> <span class="attr">href</span>=<span class="value">"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"</span></span>
+<span class="line">          <span class="attr">rel</span>=<span class="value">"stylesheet"</span><span class="tag">&gt;</span></span>
+<span class="line"><span class="tag">&lt;/head&gt;</span></span>
+<span class="line"><span class="tag">&lt;body&gt;</span></span>
+<span class="line">    <span class="comment">&lt;!-- Navbar --&gt;</span></span>
+<span class="line">    <span class="tag">&lt;nav</span> <span class="attr">class</span>=<span class="value">"navbar navbar-expand-lg navbar-dark bg-dark"</span><span class="tag">&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"container"</span><span class="tag">&gt;</span></span>
+<span class="line">            <span class="tag">&lt;a</span> <span class="attr">class</span>=<span class="value">"navbar-brand"</span> <span class="attr">href</span>=<span class="value">"#"</span><span class="tag">&gt;</span>My Portfolio<span class="tag">&lt;/a&gt;</span></span>
+<span class="line">            <span class="tag">&lt;button</span> <span class="attr">class</span>=<span class="value">"navbar-toggler"</span> <span class="attr">type</span>=<span class="value">"button"</span></span>
+<span class="line">                    <span class="attr">data-bs-toggle</span>=<span class="value">"collapse"</span> <span class="attr">data-bs-target</span>=<span class="value">"#navbarNav"</span><span class="tag">&gt;</span></span>
+<span class="line">                <span class="tag">&lt;span</span> <span class="attr">class</span>=<span class="value">"navbar-toggler-icon"</span><span class="tag">&gt;&lt;/span&gt;</span></span>
+<span class="line">            <span class="tag">&lt;/button&gt;</span></span>
+<span class="line">            <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"collapse navbar-collapse"</span> <span class="attr">id</span>=<span class="value">"navbarNav"</span><span class="tag">&gt;</span></span>
+<span class="line">                <span class="tag">&lt;ul</span> <span class="attr">class</span>=<span class="value">"navbar-nav ms-auto"</span><span class="tag">&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;li</span> <span class="attr">class</span>=<span class="value">"nav-item"</span><span class="tag">&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;a</span> <span class="attr">class</span>=<span class="value">"nav-link"</span> <span class="attr">href</span>=<span class="value">"#about"</span><span class="tag">&gt;</span>About<span class="tag">&lt;/a&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;/li&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;li</span> <span class="attr">class</span>=<span class="value">"nav-item"</span><span class="tag">&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;a</span> <span class="attr">class</span>=<span class="value">"nav-link"</span> <span class="attr">href</span>=<span class="value">"#skills"</span><span class="tag">&gt;</span>Skills<span class="tag">&lt;/a&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;/li&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;li</span> <span class="attr">class</span>=<span class="value">"nav-item"</span><span class="tag">&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;a</span> <span class="attr">class</span>=<span class="value">"nav-link"</span> <span class="attr">href</span>=<span class="value">"#projects"</span><span class="tag">&gt;</span>Projects<span class="tag">&lt;/a&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;/li&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;li</span> <span class="attr">class</span>=<span class="value">"nav-item"</span><span class="tag">&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;a</span> <span class="attr">class</span>=<span class="value">"nav-link"</span> <span class="attr">href</span>=<span class="value">"#contact"</span><span class="tag">&gt;</span>Contact<span class="tag">&lt;/a&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;/li&gt;</span></span>
+<span class="line">                <span class="tag">&lt;/ul&gt;</span></span>
+<span class="line">            <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">    <span class="tag">&lt;/nav&gt;</span></span>
+<span class="line"></span>
+<span class="line">    <span class="comment">&lt;!-- Hero Section --&gt;</span></span>
+<span class="line">    <span class="tag">&lt;section</span> <span class="attr">class</span>=<span class="value">"bg-primary text-white text-center py-5"</span><span class="tag">&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"container"</span><span class="tag">&gt;</span></span>
+<span class="line">            <span class="tag">&lt;h1</span> <span class="attr">class</span>=<span class="value">"display-4"</span><span class="tag">&gt;</span>Welcome to My Portfolio<span class="tag">&lt;/h1&gt;</span></span>
+<span class="line">            <span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="value">"lead"</span><span class="tag">&gt;</span>I'm a Web Developer<span class="tag">&lt;/p&gt;</span></span>
+<span class="line">            <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="value">"#projects"</span> <span class="attr">class</span>=<span class="value">"btn btn-light btn-lg"</span><span class="tag">&gt;</span>View My Work<span class="tag">&lt;/a&gt;</span></span>
+<span class="line">        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">    <span class="tag">&lt;/section&gt;</span></span>
+<span class="line"></span>
+<span class="line">    <span class="comment">&lt;!-- Skills Section --&gt;</span></span>
+<span class="line">    <span class="tag">&lt;section</span> <span class="attr">id</span>=<span class="value">"skills"</span> <span class="attr">class</span>=<span class="value">"py-5"</span><span class="tag">&gt;</span></span>
+<span class="line">        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"container"</span><span class="tag">&gt;</span></span>
+<span class="line">            <span class="tag">&lt;h2</span> <span class="attr">class</span>=<span class="value">"text-center mb-4"</span><span class="tag">&gt;</span>My Skills<span class="tag">&lt;/h2&gt;</span></span>
+<span class="line">            <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"row"</span><span class="tag">&gt;</span></span>
+<span class="line">                <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col-md-4 mb-3"</span><span class="tag">&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"card text-center"</span><span class="tag">&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"card-body"</span><span class="tag">&gt;</span></span>
+<span class="line">                            <span class="tag">&lt;h3&gt;</span>HTML5<span class="tag">&lt;/h3&gt;</span></span>
+<span class="line">                            <span class="tag">&lt;p&gt;</span>Semantic markup and structure<span class="tag">&lt;/p&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col-md-4 mb-3"</span><span class="tag">&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"card text-center"</span><span class="tag">&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"card-body"</span><span class="tag">&gt;</span></span>
+<span class="line">                            <span class="tag">&lt;h3&gt;</span>CSS3<span class="tag">&lt;/h3&gt;</span></span>
+<span class="line">                            <span class="tag">&lt;p&gt;</span>Styling and responsive design<span class="tag">&lt;/p&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"col-md-4 mb-3"</span><span class="tag">&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"card text-center"</span><span class="tag">&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"card-body"</span><span class="tag">&gt;</span></span>
+<span class="line">                            <span class="tag">&lt;h3&gt;</span>Bootstrap<span class="tag">&lt;/h3&gt;</span></span>
+<span class="line">                            <span class="tag">&lt;p&gt;</span>Rapid development framework<span class="tag">&lt;/p&gt;</span></span>
+<span class="line">                        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                    <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">                <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">            <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">        <span class="tag">&lt;/div&gt;</span></span>
+<span class="line">    <span class="tag">&lt;/section&gt;</span></span>
+<span class="line"></span>
+<span class="line">    <span class="tag">&lt;script</span> <span class="attr">src</span>=<span class="value">"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"</span><span class="tag">&gt;</span></span>
+<span class="line">    <span class="tag">&lt;/script&gt;</span></span>
+<span class="line"><span class="tag">&lt;/body&gt;</span></span>
+<span class="line"><span class="tag">&lt;/html&gt;</span></span>
             </div>
+        </div>
 
-            <h2 class="text-primary mt-5 mb-3">✅ Today's Deliverable</h2>
-            <ul class="list-group">
-                <li class="list-group-item">✓ Bootstrap navbar implemented</li>
-                <li class="list-group-item">✓ At least 3 card components created</li>
-                <li class="list-group-item">✓ Buttons with different styles</li>
-                <li class="list-group-item">✓ Spacing utilities applied throughout</li>
-                <li class="list-group-item">✓ Portfolio redesigned with Bootstrap</li>
-                <li class="list-group-item">✓ Responsive on all devices</li>
+        <div class="section">
+            <h2>✅ Today's Deliverable</h2>
+            <ul>
+                <li><i class="fas fa-check-circle" style="color: var(--primary);"></i> Bootstrap navbar implemented with brand and navigation</li>
+                <li><i class="fas fa-check-circle" style="color: var(--primary);"></i> At least 3 card components created with images</li>
+                <li><i class="fas fa-check-circle" style="color: var(--primary);"></i> Buttons with different Bootstrap styles applied</li>
+                <li><i class="fas fa-check-circle" style="color: var(--primary);"></i> Spacing utilities (margin & padding) used throughout</li>
+                <li><i class="fas fa-check-circle" style="color: var(--primary);"></i> Portfolio redesigned with Bootstrap components</li>
+                <li><i class="fas fa-check-circle" style="color: var(--primary);"></i> Fully responsive on all devices (mobile, tablet, desktop)</li>
             </ul>
 
-            <div class="mt-5 d-flex justify-content-between">
-                <a href="day2-bootstrap-grid.html" class="btn btn-secondary">← Previous: Day 2</a>
-                <a href="../index.html" class="btn btn-primary">Back to Course Home</a>
-                <a href="../week6/day1-js-variables.html" class="btn btn-secondary">Next: Week 6 Day 1 →</a>
+            <div class="activity-box" style="margin-top: 2rem;">
+                <h3>🎉 Congratulations!</h3>
+                <p>You've completed <strong>Week 5: Bootstrap Framework</strong>! You now know how to:</p>
+                <ul>
+                    <li>Set up Bootstrap and use its CDN</li>
+                    <li>Create responsive layouts with the 12-column grid system</li>
+                    <li>Build modern UIs with Bootstrap components (cards, navbars, buttons)</li>
+                    <li>Apply spacing utilities for professional layouts</li>
+                </ul>
+                <p style="margin-top: 1rem;"><strong>Next week:</strong> You'll dive into <strong>JavaScript</strong> and add interactivity to your websites!</p>
             </div>
         </div>
 

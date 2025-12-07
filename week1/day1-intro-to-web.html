@@ -4,43 +4,130 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Week 1 Day 1: Introduction to Web Technologies</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+        
+        :root {
+            --primary: #10b981;
+            --secondary: #34d399;
+            --accent: #6ee7b7;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gradient-1: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+            --gradient-2: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--gradient-1);
             padding: 20px;
         }
+        
+        /* Top Navigation Bar */
+        .top-nav {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .top-nav .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2em;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .top-nav .logo i {
+            font-size: 1.5em;
+        }
+        
+        .top-nav .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        
+        .top-nav .nav-links a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 0.95em;
+        }
+        
+        .top-nav .nav-links a:hover {
+            color: var(--primary);
+        }
+        
         .container {
             max-width: 1200px;
             margin: 0 auto;
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
             overflow: hidden;
         }
+        
         header {
-            background: #1e3c72;
+            background: var(--gradient-1);
             color: white;
-            padding: 30px;
+            padding: 40px 30px;
+            position: relative;
         }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+        
         header h1 {
             margin-bottom: 10px;
+            font-size: 2.2em;
         }
+        
         .nav-breadcrumb {
-            background: #f0f4ff;
+            background: #ecfdf5;
             padding: 15px 30px;
-            border-bottom: 2px solid #667eea;
+            border-bottom: 2px solid var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
+        
         .nav-breadcrumb a {
-            color: #667eea;
+            color: var(--primary);
             text-decoration: none;
-            margin-right: 10px;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        .nav-breadcrumb a:hover {
+            color: var(--secondary);
+        }
+        
+        .nav-breadcrumb i {
+            color: var(--accent);
+            font-size: 0.8em;
         }
         .content {
             padding: 40px;
@@ -49,35 +136,41 @@
             margin-bottom: 40px;
         }
         .section h2 {
-            color: #1e3c72;
+            color: var(--dark);
             margin-bottom: 20px;
             padding-bottom: 10px;
-            border-bottom: 3px solid #667eea;
+            border-bottom: 3px solid var(--primary);
+            font-weight: 700;
         }
+        
         .section h3 {
-            color: #667eea;
+            color: var(--primary);
             margin: 20px 0 15px 0;
+            font-weight: 600;
         }
+        
         .info-box {
-            background: #e3f2fd;
-            border-left: 5px solid #2196f3;
+            background: #ecfdf5;
+            border-left: 5px solid var(--primary);
             padding: 20px;
             margin: 20px 0;
-            border-radius: 5px;
+            border-radius: 8px;
         }
+        
         .tip-box {
-            background: #fff3e0;
-            border-left: 5px solid #ff9800;
+            background: #fff7ed;
+            border-left: 5px solid #f59e0b;
             padding: 20px;
             margin: 20px 0;
-            border-radius: 5px;
+            border-radius: 8px;
         }
+        
         .activity-box {
-            background: #f1f8e9;
-            border-left: 5px solid #4caf50;
+            background: #f0fdf4;
+            border-left: 5px solid var(--secondary);
             padding: 20px;
             margin: 20px 0;
-            border-radius: 5px;
+            border-radius: 8px;
         }
         .code-block {
             background: #2d2d2d;
@@ -88,6 +181,129 @@
             margin: 20px 0;
             font-family: 'Courier New', monospace;
         }
+        
+        .folder-structure {
+            background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+            border: 2px solid var(--primary);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.1);
+        }
+        
+        .folder-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            font-family: 'Courier New', monospace;
+            transition: all 0.3s;
+        }
+        
+        .folder-item:hover {
+            padding-left: 5px;
+        }
+        
+        .folder-item.root {
+            font-size: 1.1em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--accent);
+        }
+        
+        .folder-item i {
+            font-size: 1.2em;
+        }
+        
+        .folder-item.folder i {
+            color: #f59e0b;
+        }
+        
+        .folder-item.file i {
+            color: var(--primary);
+        }
+        
+        .folder-item .fa-image {
+            color: var(--secondary);
+        }
+        
+        .folder-name {
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .file-name {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .file-desc {
+            color: #64748b;
+            font-style: italic;
+            margin-left: auto;
+        }
+        
+        .indent-1 {
+            padding-left: 30px;
+        }
+        
+        .indent-2 {
+            padding-left: 60px;
+        }
+        
+        .html-code {
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--primary);
+        }
+        
+        .html-code .tag {
+            color: #34d399;
+        }
+        
+        .html-code .attr {
+            color: #60a5fa;
+        }
+        
+        .html-code .value {
+            color: #fbbf24;
+        }
+        
+        .html-code .text {
+            color: #f8fafc;
+        }
+        
+        .html-code .comment {
+            color: #94a3b8;
+            font-style: italic;
+        }
+        
+        .html-code .line {
+            display: block;
+            padding: 2px 0;
+        }
+        
+        .html-code .indent-1 {
+            padding-left: 20px;
+        }
+        
+        .html-code .indent-2 {
+            padding-left: 40px;
+        }
+        
+        .html-code .indent-3 {
+            padding-left: 60px;
+        }
+        
         .diagram {
             background: white;
             border: 2px solid #667eea;
@@ -165,15 +381,62 @@
         tr:nth-child(even) {
             background: #f9f9f9;
         }
-        footer {
-            background: #1e3c72;
+        
+        .btn-primary {
+            background: var(--gradient-1);
             color: white;
-            padding: 20px;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px 10px 10px 0;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+        }
+        
+        footer {
+            background: var(--gradient-1);
+            color: white;
+            padding: 30px;
             text-align: center;
+        }
+        
+        footer p {
+            margin: 5px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .top-nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .top-nav .nav-links {
+                flex-direction: column;
+                gap: 10px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <a href="../index.html" class="logo">
+            <i class="fas fa-home"></i>
+            <span>Back to Home</span>
+        </a>
+        <div class="nav-links">
+            <a href="../index.html#overview"><i class="fas fa-info-circle"></i> Overview</a>
+            <a href="../index.html#curriculum"><i class="fas fa-book"></i> Curriculum</a>
+            <a href="../index.html#technologies"><i class="fas fa-code"></i> Technologies</a>
+        </div>
+    </nav>
+    
     <div class="container">
         <header>
             <h1>📅 Week 1 - Day 1: Introduction to Web Technologies</h1>
@@ -328,17 +591,47 @@
                 </div>
 
                 <h3>Step 5: Create Your Project Folder</h3>
-                <div class="code-block">
-C:\xampp\htdocs\web_basics\
-│
-├── index.html          (your main page)
-├── about.html          (about page)
-├── css/
-│   └── style.css       (stylesheets)
-├── images/
-│   └── (your images)
-└── js/
-    └── script.js       (JavaScript files)
+                <div class="folder-structure">
+                    <div class="folder-item root">
+                        <i class="fas fa-folder-open"></i>
+                        <span class="folder-name">C:\xampp\htdocs\web_basics\</span>
+                    </div>
+                    <div class="folder-item file indent-1">
+                        <i class="fas fa-file-code"></i>
+                        <span class="file-name">index.html</span>
+                        <span class="file-desc">your main page</span>
+                    </div>
+                    <div class="folder-item file indent-1">
+                        <i class="fas fa-file-code"></i>
+                        <span class="file-name">about.html</span>
+                        <span class="file-desc">about page</span>
+                    </div>
+                    <div class="folder-item folder indent-1">
+                        <i class="fas fa-folder"></i>
+                        <span class="folder-name">css/</span>
+                    </div>
+                    <div class="folder-item file indent-2">
+                        <i class="fas fa-file-code"></i>
+                        <span class="file-name">style.css</span>
+                        <span class="file-desc">stylesheets</span>
+                    </div>
+                    <div class="folder-item folder indent-1">
+                        <i class="fas fa-folder"></i>
+                        <span class="folder-name">images/</span>
+                    </div>
+                    <div class="folder-item file indent-2">
+                        <i class="fas fa-image"></i>
+                        <span class="file-desc">your images</span>
+                    </div>
+                    <div class="folder-item folder indent-1">
+                        <i class="fas fa-folder"></i>
+                        <span class="folder-name">js/</span>
+                    </div>
+                    <div class="folder-item file indent-2">
+                        <i class="fas fa-file-code"></i>
+                        <span class="file-name">script.js</span>
+                        <span class="file-desc">JavaScript files</span>
+                    </div>
                 </div>
                 <div class="tip-box">
                     <p><strong>💡 Best Practice:</strong> Keep files organized in folders. Use lowercase names without spaces (use hyphens or underscores).</p>
@@ -362,20 +655,26 @@ C:\xampp\htdocs\web_basics\
                     </ol>
                 </div>
 
-                <div class="code-block">
-&lt;!DOCTYPE html&gt;
-&lt;html lang="en"&gt;
-&lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
-    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
-    &lt;title&gt;My First Web Page&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;h1&gt;Hello World!&lt;/h1&gt;
-    &lt;p&gt;Welcome to my first web page. My name is [Your Name].&lt;/p&gt;
-    &lt;p&gt;I am learning web development at Next-Step Technology.&lt;/p&gt;
-&lt;/body&gt;
-&lt;/html&gt;
+                <div class="html-code">
+<span class="line"><span class="comment">&lt;!-- HTML5 Document Type Declaration --&gt;</span></span>
+<span class="line"><span class="tag">&lt;!DOCTYPE</span> <span class="attr">html</span><span class="tag">&gt;</span></span>
+<span class="line"><span class="tag">&lt;html</span> <span class="attr">lang</span>=<span class="value">"en"</span><span class="tag">&gt;</span></span>
+<span class="line indent-1"><span class="tag">&lt;head&gt;</span></span>
+<span class="line indent-2"><span class="comment">&lt;!-- Character encoding for proper text display --&gt;</span></span>
+<span class="line indent-2"><span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="value">"UTF-8"</span><span class="tag">&gt;</span></span>
+<span class="line indent-2"><span class="comment">&lt;!-- Responsive design for mobile devices --&gt;</span></span>
+<span class="line indent-2"><span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="value">"viewport"</span> <span class="attr">content</span>=<span class="value">"width=device-width, initial-scale=1.0"</span><span class="tag">&gt;</span></span>
+<span class="line indent-2"><span class="comment">&lt;!-- Page title shown in browser tab --&gt;</span></span>
+<span class="line indent-2"><span class="tag">&lt;title&gt;</span><span class="text">My First Web Page</span><span class="tag">&lt;/title&gt;</span></span>
+<span class="line indent-1"><span class="tag">&lt;/head&gt;</span></span>
+<span class="line indent-1"><span class="tag">&lt;body&gt;</span></span>
+<span class="line indent-2"><span class="comment">&lt;!-- Main heading --&gt;</span></span>
+<span class="line indent-2"><span class="tag">&lt;h1&gt;</span><span class="text">Hello World!</span><span class="tag">&lt;/h1&gt;</span></span>
+<span class="line indent-2"><span class="comment">&lt;!-- Paragraph content --&gt;</span></span>
+<span class="line indent-2"><span class="tag">&lt;p&gt;</span><span class="text">Welcome to my first web page. My name is </span><span class="value">[Your Name]</span><span class="text">.</span><span class="tag">&lt;/p&gt;</span></span>
+<span class="line indent-2"><span class="tag">&lt;p&gt;</span><span class="text">I am learning web development at Next Step Innovation and Impact Space.</span><span class="tag">&lt;/p&gt;</span></span>
+<span class="line indent-1"><span class="tag">&lt;/body&gt;</span></span>
+<span class="line"><span class="tag">&lt;/html&gt;</span></span>
                 </div>
 
                 <h3>Understanding the Code</h3>
@@ -477,7 +776,7 @@ C:\xampp\htdocs\web_basics\
 
         <footer>
             <p>Week 1 - Day 1: Introduction to Web Technologies</p>
-            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+            <p>&copy; 2025 Next Step Innovation and Impact Space | Web Development Internship</p>
         </footer>
     </div>
 </body>

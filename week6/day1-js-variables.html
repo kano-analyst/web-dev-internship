@@ -4,11 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Week 6 Day 1: JavaScript Variables & Data Types</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #10b981;
+            --secondary: #34d399;
+            --accent: #6ee7b7;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --text-dark: #333;
+            --text-light: #666;
+            --white: #ffffff;
+            --gradient-1: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+        }
+        
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: var(--gradient-1);
             padding: 20px;
         }
         .container {
@@ -17,11 +31,55 @@
             background: white;
             border-radius: 15px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
         }
-        header { background: #4facfe; color: white; padding: 30px; border-radius: 15px 15px 0 0; }
+        
+        /* Top Navigation */
+        .top-nav {
+            background: var(--dark);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .top-nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            transition: color 0.3s;
+        }
+        .top-nav a:hover { color: var(--secondary); }
+        .top-nav i { margin-right: 5px; }
+        
+        .nav-breadcrumb {
+            background: var(--light);
+            padding: 15px 30px;
+            border-bottom: 2px solid var(--primary);
+        }
+        .nav-breadcrumb a { color: var(--primary); text-decoration: none; margin-right: 10px; }
+        .nav-breadcrumb i { margin: 0 5px; color: var(--secondary); }
+        
+        header { background: var(--gradient-1); color: white; padding: 30px; }
         .content { padding: 40px; }
-        h2 { color: #4facfe; border-bottom: 3px solid #00f2fe; padding-bottom: 10px; margin: 30px 0 20px; }
-        .code-block {
+        .section { margin-bottom: 40px; }
+        .section h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--secondary);
+        }
+        .section h3 { color: var(--primary); margin: 20px 0 15px 0; }
+        .section h4 { color: var(--text-dark); margin: 15px 0 10px 0; }
+        
+        .info-box {
+            background: var(--light);
+            border-left: 5px solid var(--primary);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .html-code, .js-code {
             background: #2d2d2d;
             color: #f8f8f2;
             padding: 20px;
@@ -29,215 +87,296 @@
             overflow-x: auto;
             margin: 20px 0;
             font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 2;
+            border-left: 4px solid var(--primary);
         }
-        .info-box { background: #e3f2fd; border-left: 5px solid #4facfe; padding: 20px; margin: 20px 0; border-radius: 5px; }
-        .btn { background: #4facfe; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 10px 10px 0; }
-        footer { background: #4facfe; color: white; padding: 20px; text-align: center; border-radius: 0 0 15px 15px; }
+        
+        .line {
+            display: block;
+            padding: 2px 0;
+        }
+        
+        .keyword { color: #c792ea; }
+        .string { color: #c3e88d; }
+        .number { color: #f78c6c; }
+        .comment { color: #676e95; font-style: italic; }
+        .function { color: #82aaff; }
+        .operator { color: #89ddff; }
+        .tag { color: #34d399; }
+        .attr { color: #60a5fa; }
+        .value { color: #fbbf24; }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        ul, ol {
+            margin-left: 2rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        code {
+            background: #e2e8f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e11d48;
+        }
+        
+        .activity-box {
+            background: #fef3c7;
+            border-left: 5px solid #f59e0b;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Top Navigation -->
+        <div class="top-nav">
+            <div>
+                <a href="../week5/day3-bootstrap-components.html"><i class="fas fa-arrow-left"></i> Previous: Week 5 Day 3</a>
+            </div>
+            <div>
+                <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+            </div>
+            <div>
+                <a href="day2-js-operators.html">Next: Day 2 <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Breadcrumb Navigation -->
+        <div class="nav-breadcrumb">
+            <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>Week 6</span>
+            <i class="fas fa-chevron-right"></i>
+            <span>Day 1: JavaScript Variables & Data Types</span>
+        </div>
+
         <header>
             <h1>📅 Week 6 - Day 1: JavaScript Variables & Data Types</h1>
             <p>Monday | Duration: 3 hours</p>
         </header>
 
         <div class="content">
-            <h2>🎯 Learning Objectives</h2>
-            <ul>
-                <li>Understand var, let, and const</li>
-                <li>Learn JavaScript data types</li>
-                <li>Work with strings, numbers, and booleans</li>
-                <li>Create and manipulate arrays</li>
-                <li>Practice variable declaration and usage</li>
-            </ul>
-
-            <h2>📝 What is JavaScript?</h2>
-            <div class="info-box">
-                <p><strong>JavaScript</strong> is a programming language that makes websites interactive. It runs in the browser and can respond to user actions.</p>
+            <div class="section">
+                <h2>🎯 Learning Objectives</h2>
+                <ul>
+                    <li>Understand var, let, and const</li>
+                    <li>Learn JavaScript data types</li>
+                    <li>Work with strings, numbers, and booleans</li>
+                    <li>Create and manipulate arrays</li>
+                    <li>Practice variable declaration and usage</li>
+                </ul>
             </div>
 
-            <h2>🔤 Variables: Storing Data</h2>
-            <p>Variables are containers for storing data values.</p>
-
-            <h3>Three Ways to Declare Variables</h3>
-            <div class="code-block">
-// var - old way (function-scoped)
-var name = "John";
-
-// let - modern way (block-scoped, can be reassigned)
-let age = 25;
-age = 26;  // Can change
-
-// const - modern way (block-scoped, cannot be reassigned)
-const country = "Nigeria";
-// country = "USA";  // Error! Cannot reassign const
+            <div class="section">
+                <h2>📝 What is JavaScript?</h2>
+                <div class="info-box">
+                    <p><strong>JavaScript</strong> is a programming language that makes websites interactive. It runs in the browser and can respond to user actions.</p>
+                </div>
             </div>
 
-            <h3>When to Use Each?</h3>
-            <ul>
-                <li><strong>const:</strong> Use by default (values that won't change)</li>
-                <li><strong>let:</strong> Use when value will change</li>
-                <li><strong>var:</strong> Avoid in modern JavaScript</li>
-            </ul>
+            <div class="section">
+                <h2>🔤 Variables: Storing Data</h2>
+                <p>Variables are containers for storing data values.</p>
 
-            <h2>📊 Data Types</h2>
-            
-            <h3>1. String (Text)</h3>
-            <div class="code-block">
-let firstName = "Ahmad";
-let lastName = 'Garba';
-let fullName = "Ahmad Tijjani";
+                <h3>Three Ways to Declare Variables</h3>
+                <div class="js-code">
+<span class="line"><span class="comment">// var - old way (function-scoped)</span></span>
+<span class="line"><span class="keyword">var</span> name <span class="operator">=</span> <span class="string">"John"</span>;</span>
+<span class="line"></span>
+<span class="line"><span class="comment">// let - modern way (block-scoped, can be reassigned)</span></span>
+<span class="line"><span class="keyword">let</span> age <span class="operator">=</span> <span class="number">25</span>;</span>
+<span class="line">age <span class="operator">=</span> <span class="number">26</span>;  <span class="comment">// Can change</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">// const - modern way (block-scoped, cannot be reassigned)</span></span>
+<span class="line"><span class="keyword">const</span> country <span class="operator">=</span> <span class="string">"Nigeria"</span>;</span>
+<span class="line"><span class="comment">// country = "USA";  // Error! Cannot reassign const</span></span>
+                </div>
 
-// String concatenation
-let greeting = "Hello, " + firstName + "!";
-console.log(greeting);  // Hello, Ahmad!
-
-// Template literals (modern way)
-let message = `Welcome ${firstName} ${lastName}`;
-console.log(message);  // Welcome Ahmad Garba
+                <h3>When to Use Each?</h3>
+                <ul>
+                    <li><strong>const:</strong> Use by default (values that won't change)</li>
+                    <li><strong>let:</strong> Use when value will change</li>
+                    <li><strong>var:</strong> Avoid in modern JavaScript</li>
+                </ul>
             </div>
 
-            <h3>2. Number</h3>
-            <div class="code-block">
-let age = 25;
-let price = 99.99;
-let temperature = -5;
+            <div class="section">
+                <h2>📊 Data Types</h2>
+                
+                <h3>1. String (Text)</h3>
+                <div class="js-code">
+<span class="line"><span class="keyword">let</span> firstName <span class="operator">=</span> <span class="string">"Ahmad"</span>;</span>
+<span class="line"><span class="keyword">let</span> lastName <span class="operator">=</span> <span class="string">'Garba'</span>;</span>
+<span class="line"><span class="keyword">let</span> fullName <span class="operator">=</span> <span class="string">"Ahmad Tijjani"</span>;</span>
+<span class="line"></span>
+<span class="line"><span class="comment">// String concatenation</span></span>
+<span class="line"><span class="keyword">let</span> greeting <span class="operator">=</span> <span class="string">"Hello, "</span> <span class="operator">+</span> firstName <span class="operator">+</span> <span class="string">"!"</span>;</span>
+<span class="line"><span class="function">console</span>.<span class="function">log</span>(greeting);  <span class="comment">// Hello, Ahmad!</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">// Template literals (modern way)</span></span>
+<span class="line"><span class="keyword">let</span> message <span class="operator">=</span> <span class="string">`Welcome ${firstName} ${lastName}`</span>;</span>
+<span class="line"><span class="function">console</span>.<span class="function">log</span>(message);  <span class="comment">// Welcome Ahmad Garba</span></span>
+                </div>
 
-// Math operations
-let sum = 10 + 5;      // 15
-let difference = 20 - 8;  // 12
-let product = 4 * 3;    // 12
-let quotient = 15 / 3;  // 5
-let remainder = 10 % 3; // 1 (modulus)
+                <h3>2. Number</h3>
+                <div class="js-code">
+<span class="line"><span class="keyword">let</span> age <span class="operator">=</span> <span class="number">25</span>;</span>
+<span class="line"><span class="keyword">let</span> price <span class="operator">=</span> <span class="number">99.99</span>;</span>
+<span class="line"><span class="keyword">let</span> temperature <span class="operator">=</span> <span class="number">-5</span>;</span>
+<span class="line"></span>
+<span class="line"><span class="comment">// Math operations</span></span>
+<span class="line"><span class="keyword">let</span> sum <span class="operator">=</span> <span class="number">10</span> <span class="operator">+</span> <span class="number">5</span>;      <span class="comment">// 15</span></span>
+<span class="line"><span class="keyword">let</span> difference <span class="operator">=</span> <span class="number">20</span> <span class="operator">-</span> <span class="number">8</span>;  <span class="comment">// 12</span></span>
+<span class="line"><span class="keyword">let</span> product <span class="operator">=</span> <span class="number">4</span> <span class="operator">*</span> <span class="number">3</span>;    <span class="comment">// 12</span></span>
+<span class="line"><span class="keyword">let</span> quotient <span class="operator">=</span> <span class="number">15</span> <span class="operator">/</span> <span class="number">3</span>;  <span class="comment">// 5</span></span>
+<span class="line"><span class="keyword">let</span> remainder <span class="operator">=</span> <span class="number">10</span> <span class="operator">%</span> <span class="number">3</span>; <span class="comment">// 1 (modulus)</span></span>
+                </div>
+
+                <h3>3. Boolean (True/False)</h3>
+                <div class="js-code">
+<span class="line"><span class="keyword">let</span> isStudent <span class="operator">=</span> <span class="keyword">true</span>;</span>
+<span class="line"><span class="keyword">let</span> hasGraduated <span class="operator">=</span> <span class="keyword">false</span>;</span>
+<span class="line"><span class="keyword">let</span> isLoggedIn <span class="operator">=</span> <span class="keyword">true</span>;</span>
+<span class="line"></span>
+<span class="line"><span class="function">console</span>.<span class="function">log</span>(isStudent);  <span class="comment">// true</span></span>
+                </div>
+
+                <h3>4. Array (List of Values)</h3>
+                <div class="js-code">
+<span class="line"><span class="comment">// Creating arrays</span></span>
+<span class="line"><span class="keyword">let</span> fruits <span class="operator">=</span> [<span class="string">"Apple"</span>, <span class="string">"Banana"</span>, <span class="string">"Orange"</span>];</span>
+<span class="line"><span class="keyword">let</span> numbers <span class="operator">=</span> [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span>
+<span class="line"><span class="keyword">let</span> mixed <span class="operator">=</span> [<span class="string">"text"</span>, <span class="number">42</span>, <span class="keyword">true</span>];</span>
+<span class="line"></span>
+<span class="line"><span class="comment">// Accessing array elements (index starts at 0)</span></span>
+<span class="line"><span class="function">console</span>.<span class="function">log</span>(fruits[<span class="number">0</span>]);  <span class="comment">// Apple</span></span>
+<span class="line"><span class="function">console</span>.<span class="function">log</span>(fruits[<span class="number">1</span>]);  <span class="comment">// Banana</span></span>
+<span class="line"><span class="function">console</span>.<span class="function">log</span>(fruits[<span class="number">2</span>]);  <span class="comment">// Orange</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">// Array length</span></span>
+<span class="line"><span class="function">console</span>.<span class="function">log</span>(fruits.<span class="function">length</span>);  <span class="comment">// 3</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">// Adding elements</span></span>
+<span class="line">fruits.<span class="function">push</span>(<span class="string">"Mango"</span>);  <span class="comment">// Add to end</span></span>
+<span class="line"><span class="function">console</span>.<span class="function">log</span>(fruits);   <span class="comment">// ["Apple", "Banana", "Orange", "Mango"]</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">// Removing elements</span></span>
+<span class="line">fruits.<span class="function">pop</span>();  <span class="comment">// Remove last element</span></span>
+<span class="line"><span class="function">console</span>.<span class="function">log</span>(fruits);  <span class="comment">// ["Apple", "Banana", "Orange"]</span></span>
+                </div>
             </div>
 
-            <h3>3. Boolean (True/False)</h3>
-            <div class="code-block">
-let isStudent = true;
-let hasGraduated = false;
-let isLoggedIn = true;
-
-console.log(isStudent);  // true
+            <div class="section">
+                <h2>💻 Console.log() - Printing Output</h2>
+                <div class="js-code">
+<span class="line"><span class="comment">// Print to browser console</span></span>
+<span class="line"><span class="function">console</span>.<span class="function">log</span>(<span class="string">"Hello, World!"</span>);</span>
+<span class="line"></span>
+<span class="line"><span class="comment">// Print variables</span></span>
+<span class="line"><span class="keyword">let</span> name <span class="operator">=</span> <span class="string">"Sarah"</span>;</span>
+<span class="line"><span class="function">console</span>.<span class="function">log</span>(name);</span>
+<span class="line"></span>
+<span class="line"><span class="comment">// Print multiple values</span></span>
+<span class="line"><span class="function">console</span>.<span class="function">log</span>(<span class="string">"Name:"</span>, name, <span class="string">"Age:"</span>, <span class="number">23</span>);</span>
+                </div>
             </div>
 
-            <h3>4. Array (List of Values)</h3>
-            <div class="code-block">
-// Creating arrays
-let fruits = ["Apple", "Banana", "Orange"];
-let numbers = [1, 2, 3, 4, 5];
-let mixed = ["text", 42, true];
-
-// Accessing array elements (index starts at 0)
-console.log(fruits[0]);  // Apple
-console.log(fruits[1]);  // Banana
-console.log(fruits[2]);  // Orange
-
-// Array length
-console.log(fruits.length);  // 3
-
-// Adding elements
-fruits.push("Mango");  // Add to end
-console.log(fruits);   // ["Apple", "Banana", "Orange", "Mango"]
-
-// Removing elements
-fruits.pop();  // Remove last element
-console.log(fruits);  // ["Apple", "Banana", "Orange"]
+            <div class="section">
+                <h2>🧪 Complete Practice Example</h2>
+                <div class="html-code">
+<span class="line"><span class="tag">&lt;!DOCTYPE html&gt;</span></span>
+<span class="line"><span class="tag">&lt;html</span> <span class="attr">lang</span>=<span class="value">"en"</span><span class="tag">&gt;</span></span>
+<span class="line"><span class="tag">&lt;head&gt;</span></span>
+<span class="line">    <span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="value">"UTF-8"</span><span class="tag">&gt;</span></span>
+<span class="line">    <span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="value">"viewport"</span> <span class="attr">content</span>=<span class="value">"width=device-width, initial-scale=1.0"</span><span class="tag">&gt;</span></span>
+<span class="line">    <span class="tag">&lt;title&gt;</span>JavaScript Variables Practice<span class="tag">&lt;/title&gt;</span></span>
+<span class="line"><span class="tag">&lt;/head&gt;</span></span>
+<span class="line"><span class="tag">&lt;body&gt;</span></span>
+<span class="line">    <span class="tag">&lt;h1&gt;</span>JavaScript Variables Practice<span class="tag">&lt;/h1&gt;</span></span>
+<span class="line">    <span class="tag">&lt;p&gt;</span>Open browser console (F12) to see output<span class="tag">&lt;/p&gt;</span></span>
+<span class="line"></span>
+<span class="line">    <span class="tag">&lt;script&gt;</span></span>
+<span class="line">        <span class="comment">// Strings</span></span>
+<span class="line">        <span class="keyword">const</span> firstName <span class="operator">=</span> <span class="string">"Ahmad"</span>;</span>
+<span class="line">        <span class="keyword">const</span> lastName <span class="operator">=</span> <span class="string">"Garba"</span>;</span>
+<span class="line">        <span class="keyword">const</span> fullName <span class="operator">=</span> firstName <span class="operator">+</span> <span class="string">" "</span> <span class="operator">+</span> lastName;</span>
+<span class="line">        <span class="function">console</span>.<span class="function">log</span>(<span class="string">"Full Name:"</span>, fullName);</span>
+<span class="line"></span>
+<span class="line">        <span class="comment">// Numbers</span></span>
+<span class="line">        <span class="keyword">const</span> age <span class="operator">=</span> <span class="number">25</span>;</span>
+<span class="line">        <span class="keyword">const</span> nextYearAge <span class="operator">=</span> age <span class="operator">+</span> <span class="number">1</span>;</span>
+<span class="line">        <span class="function">console</span>.<span class="function">log</span>(<span class="string">"Age:"</span>, age);</span>
+<span class="line">        <span class="function">console</span>.<span class="function">log</span>(<span class="string">"Next year:"</span>, nextYearAge);</span>
+<span class="line"></span>
+<span class="line">        <span class="comment">// Booleans</span></span>
+<span class="line">        <span class="keyword">const</span> isStudent <span class="operator">=</span> <span class="keyword">true</span>;</span>
+<span class="line">        <span class="keyword">const</span> hasJob <span class="operator">=</span> <span class="keyword">false</span>;</span>
+<span class="line">        <span class="function">console</span>.<span class="function">log</span>(<span class="string">"Is Student?"</span>, isStudent);</span>
+<span class="line">        <span class="function">console</span>.<span class="function">log</span>(<span class="string">"Has Job?"</span>, hasJob);</span>
+<span class="line"></span>
+<span class="line">        <span class="comment">// Arrays</span></span>
+<span class="line">        <span class="keyword">const</span> skills <span class="operator">=</span> [<span class="string">"HTML"</span>, <span class="string">"CSS"</span>, <span class="string">"JavaScript"</span>];</span>
+<span class="line">        <span class="function">console</span>.<span class="function">log</span>(<span class="string">"My Skills:"</span>, skills);</span>
+<span class="line">        <span class="function">console</span>.<span class="function">log</span>(<span class="string">"First Skill:"</span>, skills[<span class="number">0</span>]);</span>
+<span class="line">        <span class="function">console</span>.<span class="function">log</span>(<span class="string">"Number of skills:"</span>, skills.<span class="function">length</span>);</span>
+<span class="line"></span>
+<span class="line">        <span class="comment">// Add new skill</span></span>
+<span class="line">        skills.<span class="function">push</span>(<span class="string">"Bootstrap"</span>);</span>
+<span class="line">        <span class="function">console</span>.<span class="function">log</span>(<span class="string">"Updated Skills:"</span>, skills);</span>
+<span class="line"></span>
+<span class="line">        <span class="comment">// Math operations</span></span>
+<span class="line">        <span class="keyword">const</span> price1 <span class="operator">=</span> <span class="number">100</span>;</span>
+<span class="line">        <span class="keyword">const</span> price2 <span class="operator">=</span> <span class="number">50</span>;</span>
+<span class="line">        <span class="keyword">const</span> total <span class="operator">=</span> price1 <span class="operator">+</span> price2;</span>
+<span class="line">        <span class="function">console</span>.<span class="function">log</span>(<span class="string">"Total Price:"</span>, total);</span>
+<span class="line"></span>
+<span class="line">        <span class="comment">// Template literals</span></span>
+<span class="line">        <span class="keyword">const</span> message <span class="operator">=</span> <span class="string">`My name is ${fullName} and I am ${age} years old.`</span>;</span>
+<span class="line">        <span class="function">console</span>.<span class="function">log</span>(message);</span>
+<span class="line">    <span class="tag">&lt;/script&gt;</span></span>
+<span class="line"><span class="tag">&lt;/body&gt;</span></span>
+<span class="line"><span class="tag">&lt;/html&gt;</span></span>
+                </div>
             </div>
 
-            <h2>💻 Console.log() - Printing Output</h2>
-            <div class="code-block">
-// Print to browser console
-console.log("Hello, World!");
-
-// Print variables
-let name = "Sarah";
-console.log(name);
-
-// Print multiple values
-console.log("Name:", name, "Age:", 23);
+            <div class="section">
+                <h2>✏️ Practice Exercises</h2>
+                <div class="activity-box">
+                    <h3>Your Turn to Code!</h3>
+                    <ol>
+                        <li>Create variables for your name, age, and city</li>
+                        <li>Create an array of your favorite foods (at least 5)</li>
+                        <li>Calculate: (10 + 5) * 3 and store in variable</li>
+                        <li>Use console.log to print all variables</li>
+                        <li>Add two more items to your food array</li>
+                    </ol>
+                </div>
             </div>
 
-            <h2>🧪 Complete Practice Example</h2>
-            <div class="code-block">
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JavaScript Variables Practice</title>
-</head>
-<body>
-    <h1>JavaScript Variables Practice</h1>
-    <p>Open browser console (F12) to see output</p>
-
-    <script>
-        // Strings
-        const firstName = "Ahmad";
-        const lastName = "Garba";
-        const fullName = firstName + " " + lastName;
-        console.log("Full Name:", fullName);
-
-        // Numbers
-        const age = 25;
-        const nextYearAge = age + 1;
-        console.log("Age:", age);
-        console.log("Next year:", nextYearAge);
-
-        // Booleans
-        const isStudent = true;
-        const hasJob = false;
-        console.log("Is Student?", isStudent);
-        console.log("Has Job?", hasJob);
-
-        // Arrays
-        const skills = ["HTML", "CSS", "JavaScript"];
-        console.log("My Skills:", skills);
-        console.log("First Skill:", skills[0]);
-        console.log("Number of skills:", skills.length);
-
-        // Add new skill
-        skills.push("Bootstrap");
-        console.log("Updated Skills:", skills);
-
-        // Math operations
-        const price1 = 100;
-        const price2 = 50;
-        const total = price1 + price2;
-        console.log("Total Price:", total);
-
-        // Template literals
-        const message = `My name is ${fullName} and I am ${age} years old.`;
-        console.log(message);
-    </script>
-</body>
-</html>
-            </div>
-
-            <h2>✏️ Practice Exercises</h2>
-            <ol>
-                <li>Create variables for your name, age, and city</li>
-                <li>Create an array of your favorite foods (at least 5)</li>
-                <li>Calculate: (10 + 5) * 3 and store in variable</li>
-                <li>Use console.log to print all variables</li>
-                <li>Add two more items to your food array</li>
-            </ol>
-
-            <h2>✅ Today's Deliverable</h2>
-            <ul>
-                <li>✓ variables-practice.html with JavaScript code</li>
-                <li>✓ Variables using const and let</li>
-                <li>✓ At least 5 string variables</li>
-                <li>✓ At least 5 number variables</li>
-                <li>✓ At least 2 arrays</li>
-                <li>✓ All output visible in console</li>
-                <li>✓ Screenshot of console output</li>
-            </ul>
-
-            <div style="margin-top: 40px;">
-                <a href="../week5/day3-bootstrap-components.html" class="btn">← Previous</a>
-                <a href="../index.html" class="btn">Course Home</a>
-                <a href="day2-js-operators.html" class="btn">Next: Day 2 →</a>
+            <div class="section">
+                <h2>✅ Today's Deliverable</h2>
+                <ul>
+                    <li><i class="fas fa-check-circle" style="color: var(--primary);"></i> variables-practice.html with JavaScript code</li>
+                    <li><i class="fas fa-check-circle" style="color: var(--primary);"></i> Variables using const and let</li>
+                    <li><i class="fas fa-check-circle" style="color: var(--primary);"></i> At least 5 string variables</li>
+                    <li><i class="fas fa-check-circle" style="color: var(--primary);"></i> At least 5 number variables</li>
+                    <li><i class="fas fa-check-circle" style="color: var(--primary);"></i> At least 2 arrays</li>
+                    <li><i class="fas fa-check-circle" style="color: var(--primary);"></i> All output visible in console</li>
+                    <li><i class="fas fa-check-circle" style="color: var(--primary);"></i> Screenshot of console output</li>
+                </ul>
             </div>
         </div>
 

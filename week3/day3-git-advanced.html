@@ -4,12 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Week 3 Day 3: Git Advanced - Branching & Merging</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #10b981;
+            --secondary: #34d399;
+            --accent: #6ee7b7;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gradient-1: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+        }
+        
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: var(--gradient-1);
             padding: 20px;
         }
         .container {
@@ -20,25 +30,75 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.3);
             overflow: hidden;
         }
-        header { background: #c2185b; color: white; padding: 30px; }
-        .nav-breadcrumb {
-            background: #fce4ec;
+        
+        .top-nav {
+            background: var(--dark);
             padding: 15px 30px;
-            border-bottom: 2px solid #e91e63;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .nav-breadcrumb a { color: #c2185b; text-decoration: none; margin-right: 10px; }
+        
+        .top-nav a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        .top-nav a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        header {
+            background: var(--gradient-1);
+            color: white;
+            padding: 30px;
+        }
+        .nav-breadcrumb {
+            background: #ecfdf5;
+            padding: 15px 30px;
+            border-bottom: 2px solid var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .nav-breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        .nav-breadcrumb a:hover {
+            color: var(--secondary);
+        }
+        
+        .nav-breadcrumb i {
+            color: var(--accent);
+            font-size: 0.8em;
+        }
         .content { padding: 40px; }
         .section { margin-bottom: 40px; }
         .section h2 {
-            color: #c2185b;
+            color: var(--dark);
             margin-bottom: 20px;
             padding-bottom: 10px;
-            border-bottom: 3px solid #e91e63;
+            border-bottom: 3px solid var(--primary);
+            font-weight: 700;
         }
-        .section h3 { color: #e91e63; margin: 20px 0 15px 0; }
+        
+        .section h3 {
+            color: var(--primary);
+            margin: 20px 0 15px 0;
+            font-weight: 600;
+        }
+        
         .info-box {
-            background: #fce4ec;
-            border-left: 5px solid #c2185b;
+            background: #ecfdf5;
+            border-left: 5px solid var(--primary);
             padding: 20px;
             margin: 20px 0;
             border-radius: 5px;
@@ -65,6 +125,37 @@
             overflow-x: auto;
             margin: 20px 0;
             font-family: 'Courier New', monospace;
+            line-height: 1.6;
+        }
+        
+        .terminal-code {
+            background: #1e293b;
+            color: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            line-height: 1.8;
+        }
+        
+        .terminal-code .command {
+            color: #34d399;
+            font-weight: 600;
+        }
+        
+        .terminal-code .output {
+            color: #94a3b8;
+        }
+        
+        .terminal-code .prompt {
+            color: #fbbf24;
+            font-weight: bold;
+        }
+        
+        .terminal-code .comment {
+            color: #64748b;
+            font-style: italic;
         }
         .diagram {
             background: #f9f9f9;
@@ -95,31 +186,72 @@
             border: 1px solid #ddd;
         }
         th {
-            background: #c2185b;
+            background: var(--primary);
             color: white;
         }
         tr:nth-child(even) { background: #f9f9f9; }
-        footer { background: #c2185b; color: white; padding: 20px; text-align: center; }
-        .btn-primary {
-            background: #c2185b;
+        
+        footer {
+            background: var(--dark);
             color: white;
-            padding: 10px 20px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background: var(--gradient-1);
+            color: white;
+            padding: 12px 24px;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 8px;
             display: inline-block;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
             margin: 10px 10px 10px 0;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #e5e7eb;
+            flex-wrap: wrap;
+        }
+        
+        .nav-buttons .btn-primary {
+            margin: 0;
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="top-nav">
+            <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+            <a href="https://github.com/kano-analyst/web-dev-internship" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+        </div>
+        
         <header>
             <h1>📅 Week 3 - Day 3: Git Advanced - Branching & Merging</h1>
             <p>Friday | Duration: 3 hours</p>
         </header>
 
         <div class="nav-breadcrumb">
-            <a href="../index.html">← Back to Course Home</a> / Week 3 / Day 3
+            <a href="../index.html">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>Week 3</span>
+            <i class="fas fa-chevron-right"></i>
+            <span>Day 3: Git Advanced</span>
         </div>
 
         <div class="content">
@@ -213,59 +345,59 @@ feature:        D---E
                 <h2>📝 Creating and Using Branches</h2>
                 
                 <h3>Step 1: Check Current Branch</h3>
-                <div class="code-block">
-# See which branch you're on
-git branch
+                <div class="terminal-code">
+<span class="comment"># See which branch you're on</span>
+<span class="prompt">$</span> <span class="command">git branch</span>
 
-# Output shows all branches, current branch has *
-* main
+<span class="comment"># Output shows all branches, current branch has *</span>
+<span class="output">* main</span>
                 </div>
 
                 <h3>Step 2: Create a New Branch</h3>
-                <div class="code-block">
-# Method 1: Create branch
-git branch feature-form-styling
+                <div class="terminal-code">
+<span class="comment"># Method 1: Create branch</span>
+<span class="prompt">$</span> <span class="command">git branch feature-form-styling</span>
 
-# Then switch to it
-git checkout feature-form-styling
+<span class="comment"># Then switch to it</span>
+<span class="prompt">$</span> <span class="command">git checkout feature-form-styling</span>
 
-# Method 2: Create and switch in one command (recommended)
-git checkout -b feature-form-styling
+<span class="comment"># Method 2: Create and switch in one command (recommended)</span>
+<span class="prompt">$</span> <span class="command">git checkout -b feature-form-styling</span>
                 </div>
 
                 <h3>Step 3: Work on Your Branch</h3>
-                <div class="code-block">
-# Make changes to files
-# Then add and commit as usual
+                <div class="terminal-code">
+<span class="comment"># Make changes to files</span>
+<span class="comment"># Then add and commit as usual</span>
 
-git add .
-git commit -m "Add beautiful form styling with transitions"
+<span class="prompt">$</span> <span class="command">git add .</span>
+<span class="prompt">$</span> <span class="command">git commit -m "Add beautiful form styling with transitions"</span>
 
-# Make more commits
-git add .
-git commit -m "Add hover effects to buttons"
+<span class="comment"># Make more commits</span>
+<span class="prompt">$</span> <span class="command">git add .</span>
+<span class="prompt">$</span> <span class="command">git commit -m "Add hover effects to buttons"</span>
                 </div>
 
                 <h3>Step 4: Push Branch to GitHub</h3>
-                <div class="code-block">
-# First time pushing a new branch
-git push -u origin feature-form-styling
+                <div class="terminal-code">
+<span class="comment"># First time pushing a new branch</span>
+<span class="prompt">$</span> <span class="command">git push -u origin feature-form-styling</span>
 
-# After that, just use
-git push
+<span class="comment"># After that, just use</span>
+<span class="prompt">$</span> <span class="command">git push</span>
                 </div>
 
                 <h3>Step 5: Switch Between Branches</h3>
-                <div class="code-block">
-# Go back to main
-git checkout main
+                <div class="terminal-code">
+<span class="comment"># Go back to main</span>
+<span class="prompt">$</span> <span class="command">git checkout main</span>
 
-# Go to feature branch
-git checkout feature-form-styling
+<span class="comment"># Go to feature branch</span>
+<span class="prompt">$</span> <span class="command">git checkout feature-form-styling</span>
 
-# Or use newer syntax (Git 2.23+)
-git switch main
-git switch feature-form-styling
+<span class="comment"># Or use newer syntax (Git 2.23+)</span>
+<span class="prompt">$</span> <span class="command">git switch main</span>
+<span class="prompt">$</span> <span class="command">git switch feature-form-styling</span>
                 </div>
             </div>
 
@@ -291,17 +423,17 @@ main:     A---B---C---D
 </pre>
                 </div>
 
-                <div class="code-block">
-# Switch to main branch
-git checkout main
+                <div class="terminal-code">
+<span class="comment"># Switch to main branch</span>
+<span class="prompt">$</span> <span class="command">git checkout main</span>
 
-# Merge feature branch
-git merge feature-form-styling
+<span class="comment"># Merge feature branch</span>
+<span class="prompt">$</span> <span class="command">git merge feature-form-styling</span>
 
-# Output:
-# Fast-forward
-#  styled-form.css | 150 +++++++++++++++++
-#  1 file changed, 150 insertions(+)
+<span class="comment"># Output:</span>
+<span class="output">Fast-forward
+ styled-form.css | 150 +++++++++++++++++
+ 1 file changed, 150 insertions(+)</span>
                 </div>
 
                 <h3>Three-Way Merge</h3>
@@ -321,24 +453,24 @@ feature:        C-D
 </pre>
                 </div>
 
-                <div class="code-block">
-# Switch to main
-git checkout main
+                <div class="terminal-code">
+<span class="comment"># Switch to main</span>
+<span class="prompt">$</span> <span class="command">git checkout main</span>
 
-# Merge creates a merge commit
-git merge feature-form-styling
+<span class="comment"># Merge creates a merge commit</span>
+<span class="prompt">$</span> <span class="command">git merge feature-form-styling</span>
 
-# Git opens editor for merge commit message
-# Save and close to complete merge
+<span class="comment"># Git opens editor for merge commit message</span>
+<span class="comment"># Save and close to complete merge</span>
                 </div>
 
                 <h3>Delete Branch After Merge</h3>
-                <div class="code-block">
-# Delete local branch
-git branch -d feature-form-styling
+                <div class="terminal-code">
+<span class="comment"># Delete local branch</span>
+<span class="prompt">$</span> <span class="command">git branch -d feature-form-styling</span>
 
-# Delete remote branch
-git push origin --delete feature-form-styling
+<span class="comment"># Delete remote branch</span>
+<span class="prompt">$</span> <span class="command">git push origin --delete feature-form-styling</span>
                 </div>
             </div>
 
@@ -350,14 +482,14 @@ git push origin --delete feature-form-styling
                 </div>
 
                 <h3>When Conflicts Occur</h3>
-                <div class="code-block">
-git checkout main
-git merge feature-branch
+                <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git checkout main</span>
+<span class="prompt">$</span> <span class="command">git merge feature-branch</span>
 
-# Output:
-# Auto-merging style.css
-# CONFLICT (content): Merge conflict in style.css
-# Automatic merge failed; fix conflicts and then commit the result.
+<span class="comment"># Output:</span>
+<span class="output">Auto-merging style.css
+CONFLICT (content): Merge conflict in style.css
+Automatic merge failed; fix conflicts and then commit the result.</span>
                 </div>
 
                 <h3>Conflict Markers in File</h3>
@@ -402,23 +534,23 @@ button {
 }
                 </div>
 
-                <div class="code-block">
-# After fixing conflicts
-git add style.css
-git commit -m "Resolve merge conflict in button styling"
+                <div class="terminal-code">
+<span class="comment"># After fixing conflicts</span>
+<span class="prompt">$</span> <span class="command">git add style.css</span>
+<span class="prompt">$</span> <span class="command">git commit -m "Resolve merge conflict in button styling"</span>
                 </div>
 
                 <h3>Check Conflict Status</h3>
-                <div class="code-block">
-# See conflicted files
-git status
+                <div class="terminal-code">
+<span class="comment"># See conflicted files</span>
+<span class="prompt">$</span> <span class="command">git status</span>
 
-# Unmerged paths:
-#   (use "git add <file>..." to mark resolution)
-#         both modified:   style.css
+<span class="output">Unmerged paths:
+  (use "git add <file>..." to mark resolution)
+        both modified:   style.css</span>
 
-# Abort merge if needed
-git merge --abort
+<span class="comment"># Abort merge if needed</span>
+<span class="prompt">$</span> <span class="command">git merge --abort</span>
                 </div>
             </div>
 
@@ -460,116 +592,169 @@ git merge --abort
                 <h3>Activity Steps</h3>
                 
                 <h4>Part 1: Create Feature Branch for Form Styling</h4>
-                <div class="code-block">
-# 1. Make sure you're on main and up to date
-git checkout main
-git pull origin main
-
-# 2. Create new branch for form styling
-git checkout -b feature-form-styling
-
-# 3. Create styled-form.css (from previous lesson)
-# Add your CSS code
-
-# 4. Commit changes
-git add styled-form.css
-git commit -m "Add comprehensive form styling"
-
-# 5. Make another change - update HTML
-# Link CSS in your HTML file
-
-git add registration.html
-git commit -m "Link form stylesheet to registration page"
-
-# 6. Push branch to GitHub
-git push -u origin feature-form-styling
-                </div>
+                <ol>
+                    <li><strong>Make sure you're on main and up to date</strong>
+                        <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git checkout main</span>
+<span class="prompt">$</span> <span class="command">git pull origin main</span>
+                        </div>
+                    </li>
+                    <li><strong>Create new branch for form styling</strong>
+                        <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git checkout -b feature-form-styling</span>
+                        </div>
+                    </li>
+                    <li><strong>Create styled-form.css (from previous lesson)</strong>
+                        <p>Add your CSS code to the file</p>
+                    </li>
+                    <li><strong>Commit changes</strong>
+                        <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git add styled-form.css</span>
+<span class="prompt">$</span> <span class="command">git commit -m "Add comprehensive form styling"</span>
+                        </div>
+                    </li>
+                    <li><strong>Make another change - update HTML</strong>
+                        <p>Link CSS in your HTML file</p>
+                        <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git add registration.html</span>
+<span class="prompt">$</span> <span class="command">git commit -m "Link form stylesheet to registration page"</span>
+                        </div>
+                    </li>
+                    <li><strong>Push branch to GitHub</strong>
+                        <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git push -u origin feature-form-styling</span>
+                        </div>
+                    </li>
+                </ol>
 
                 <h4>Part 2: Create Another Branch for Button Styles</h4>
-                <div class="code-block">
-# 1. Go back to main
-git checkout main
-
-# 2. Create branch for buttons
-git checkout -b feature-button-library
-
-# 3. Create buttons.html with various button styles
-# (Create the file with different button examples)
-
-# 4. Commit
-git add buttons.html
-git commit -m "Create button library with multiple styles"
-
-# 5. Push to GitHub
-git push -u origin feature-button-library
-                </div>
+                <ol>
+                    <li><strong>Go back to main</strong>
+                        <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git checkout main</span>
+                        </div>
+                    </li>
+                    <li><strong>Create branch for buttons</strong>
+                        <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git checkout -b feature-button-library</span>
+                        </div>
+                    </li>
+                    <li><strong>Create buttons.html with various button styles</strong>
+                        <p>Create the file with different button examples</p>
+                    </li>
+                    <li><strong>Commit</strong>
+                        <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git add buttons.html</span>
+<span class="prompt">$</span> <span class="command">git commit -m "Create button library with multiple styles"</span>
+                        </div>
+                    </li>
+                    <li><strong>Push to GitHub</strong>
+                        <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git push -u origin feature-button-library</span>
+                        </div>
+                    </li>
+                </ol>
 
                 <h4>Part 3: Merge Branches</h4>
-                <div class="code-block">
-# 1. Switch to main
-git checkout main
-
-# 2. Merge form styling
-git merge feature-form-styling
-# Message: "Merge form styling into main"
-
-# 3. Push updated main
-git push origin main
-
-# 4. Merge button library
-git merge feature-button-library
-# Message: "Merge button library into main"
-
-# 5. Push again
-git push origin main
-
-# 6. Delete merged branches
-git branch -d feature-form-styling
-git branch -d feature-button-library
-
-# 7. Delete remote branches
-git push origin --delete feature-form-styling
-git push origin --delete feature-button-library
-                </div>
+                <ol>
+                    <li><strong>Switch to main</strong>
+                        <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git checkout main</span>
+                        </div>
+                    </li>
+                    <li><strong>Merge form styling</strong>
+                        <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git merge feature-form-styling</span>
+                        </div>
+                        <p><em>Message: "Merge form styling into main"</em></p>
+                    </li>
+                    <li><strong>Push updated main</strong>
+                        <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git push origin main</span>
+                        </div>
+                    </li>
+                    <li><strong>Merge button library</strong>
+                        <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git merge feature-button-library</span>
+                        </div>
+                        <p><em>Message: "Merge button library into main"</em></p>
+                    </li>
+                    <li><strong>Push again</strong>
+                        <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git push origin main</span>
+                        </div>
+                    </li>
+                    <li><strong>Delete merged branches</strong>
+                        <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git branch -d feature-form-styling</span>
+<span class="prompt">$</span> <span class="command">git branch -d feature-button-library</span>
+                        </div>
+                    </li>
+                    <li><strong>Delete remote branches</strong>
+                        <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git push origin --delete feature-form-styling</span>
+<span class="prompt">$</span> <span class="command">git push origin --delete feature-button-library</span>
+                        </div>
+                    </li>
+                </ol>
 
                 <h4>Part 4: Simulate Merge Conflict</h4>
-                <div class="code-block">
-# 1. Create two branches from main
-git checkout main
-git checkout -b style-update-1
-
-# 2. Edit style.css - change button color to blue
-git add style.css
-git commit -m "Change button color to blue"
-
-# 3. Go back to main
-git checkout main
-
-# 4. Create another branch
-git checkout -b style-update-2
-
-# 5. Edit style.css - change SAME button color to green
-git add style.css
-git commit -m "Change button color to green"
-
-# 6. Merge first branch - no problem
-git checkout main
-git merge style-update-1
-
-# 7. Try to merge second branch - CONFLICT!
-git merge style-update-2
-
-# 8. Open style.css and resolve conflict
-# Choose one color or combine changes
-
-# 9. Complete merge
-git add style.css
-git commit -m "Resolve button color conflict"
-
-# 10. Clean up
-git branch -d style-update-1
-git branch -d style-update-2
-                </div>
+                <ol>
+                    <li><strong>Create two branches from main</strong>
+                        <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git checkout main</span>
+<span class="prompt">$</span> <span class="command">git checkout -b style-update-1</span>
+                        </div>
+                    </li>
+                    <li><strong>Edit style.css - change button color to blue</strong>
+                        <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git add style.css</span>
+<span class="prompt">$</span> <span class="command">git commit -m "Change button color to blue"</span>
+                        </div>
+                    </li>
+                    <li><strong>Go back to main</strong>
+                        <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git checkout main</span>
+                        </div>
+                    </li>
+                    <li><strong>Create another branch</strong>
+                        <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git checkout -b style-update-2</span>
+                        </div>
+                    </li>
+                    <li><strong>Edit style.css - change SAME button color to green</strong>
+                        <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git add style.css</span>
+<span class="prompt">$</span> <span class="command">git commit -m "Change button color to green"</span>
+                        </div>
+                    </li>
+                    <li><strong>Merge first branch - no problem</strong>
+                        <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git checkout main</span>
+<span class="prompt">$</span> <span class="command">git merge style-update-1</span>
+                        </div>
+                    </li>
+                    <li><strong>Try to merge second branch - CONFLICT!</strong>
+                        <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git merge style-update-2</span>
+                        </div>
+                    </li>
+                    <li><strong>Open style.css and resolve conflict</strong>
+                        <p>Choose one color or combine changes</p>
+                    </li>
+                    <li><strong>Complete merge</strong>
+                        <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git add style.css</span>
+<span class="prompt">$</span> <span class="command">git commit -m "Resolve button color conflict"</span>
+                        </div>
+                    </li>
+                    <li><strong>Clean up</strong>
+                        <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git branch -d style-update-1</span>
+<span class="prompt">$</span> <span class="command">git branch -d style-update-2</span>
+                        </div>
+                    </li>
+                </ol>
             </div>
 
             <div class="section">
@@ -612,40 +797,55 @@ git branch -d style-update-2
 
             <div class="section">
                 <h2>🎓 Git Branching Cheat Sheet</h2>
-                <div class="code-block">
-# View branches
-git branch                    # Local branches
-git branch -a                 # All branches
-git branch -r                 # Remote branches
+                
+                <h3>View branches</h3>
+                <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git branch</span>                    <span class="comment"># Local branches</span>
+<span class="prompt">$</span> <span class="command">git branch -a</span>                 <span class="comment"># All branches</span>
+<span class="prompt">$</span> <span class="command">git branch -r</span>                 <span class="comment"># Remote branches</span>
+                </div>
 
-# Create branches
-git branch branch-name        # Create
-git checkout -b branch-name   # Create and switch
+                <h3>Create branches</h3>
+                <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git branch branch-name</span>        <span class="comment"># Create</span>
+<span class="prompt">$</span> <span class="command">git checkout -b branch-name</span>   <span class="comment"># Create and switch</span>
+                </div>
 
-# Switch branches
-git checkout branch-name      # Old way
-git switch branch-name        # New way (Git 2.23+)
+                <h3>Switch branches</h3>
+                <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git checkout branch-name</span>      <span class="comment"># Old way</span>
+<span class="prompt">$</span> <span class="command">git switch branch-name</span>        <span class="comment"># New way (Git 2.23+)</span>
+                </div>
 
-# Merge branches
-git merge branch-name         # Merge into current branch
-git merge --no-ff branch-name # Force merge commit
+                <h3>Merge branches</h3>
+                <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git merge branch-name</span>         <span class="comment"># Merge into current branch</span>
+<span class="prompt">$</span> <span class="command">git merge --no-ff branch-name</span> <span class="comment"># Force merge commit</span>
+                </div>
 
-# Delete branches
-git branch -d branch-name     # Safe delete (merged only)
-git branch -D branch-name     # Force delete
-git push origin --delete branch-name  # Delete remote
+                <h3>Delete branches</h3>
+                <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git branch -d branch-name</span>     <span class="comment"># Safe delete (merged only)</span>
+<span class="prompt">$</span> <span class="command">git branch -D branch-name</span>     <span class="comment"># Force delete</span>
+<span class="prompt">$</span> <span class="command">git push origin --delete branch-name</span>  <span class="comment"># Delete remote</span>
+                </div>
 
-# Update branch
-git pull origin main          # Get latest from remote
-git fetch                     # Fetch without merging
+                <h3>Update branch</h3>
+                <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git pull origin main</span>          <span class="comment"># Get latest from remote</span>
+<span class="prompt">$</span> <span class="command">git fetch</span>                     <span class="comment"># Fetch without merging</span>
+                </div>
 
-# Undo merge
-git merge --abort             # Cancel conflicted merge
-git reset --hard HEAD~1       # Undo last merge (careful!)
+                <h3>Undo merge</h3>
+                <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git merge --abort</span>             <span class="comment"># Cancel conflicted merge</span>
+<span class="prompt">$</span> <span class="command">git reset --hard HEAD~1</span>       <span class="comment"># Undo last merge (careful!)</span>
+                </div>
 
-# Compare branches
-git diff main..feature        # See differences
-git log main..feature         # See commits
+                <h3>Compare branches</h3>
+                <div class="terminal-code">
+<span class="prompt">$</span> <span class="command">git diff main..feature</span>        <span class="comment"># See differences</span>
+<span class="prompt">$</span> <span class="command">git log main..feature</span>         <span class="comment"># See commits</span>
                 </div>
             </div>
 
@@ -664,17 +864,17 @@ git log main..feature         # See commits
                 </div>
 
                 <h3>Visualize Your Branches</h3>
-                <div class="code-block">
-# See branch graph in terminal
-git log --graph --oneline --all --decorate
+                <div class="terminal-code">
+<span class="comment"># See branch graph in terminal</span>
+<span class="prompt">$</span> <span class="command">git log --graph --oneline --all --decorate</span>
 
-# Example output:
-# *   a4b5c6d (HEAD -> main) Merge branch 'feature-form-styling'
-# |\
-# | * d3e4f5g Add button hover effects
-# | * c2d3e4f Add form styling
-# |/
-# * b1c2d3e Initial commit
+<span class="comment"># Example output:</span>
+<span class="output">*   a4b5c6d (HEAD -> main) Merge branch 'feature-form-styling'
+|\
+| * d3e4f5g Add button hover effects
+| * c2d3e4f Add form styling
+|/
+* b1c2d3e Initial commit</span>
                 </div>
             </div>
 
@@ -688,7 +888,7 @@ git log --graph --oneline --all --decorate
                 </ul>
             </div>
 
-            <div class="section">
+            <div class="nav-buttons">
                 <a href="day2-styling-forms.html" class="btn-primary">← Previous: Day 2</a>
                 <a href="../index.html" class="btn-primary">Back to Course Home</a>
                 <a href="../week4/day1-project-planning.html" class="btn-primary">Next: Week 4 Day 1 →</a>
@@ -697,7 +897,7 @@ git log --graph --oneline --all --decorate
 
         <footer>
             <p>Week 3 - Day 3: Git Advanced - Branching & Merging</p>
-            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+            <p>&copy; 2025 Next Step Innovation and Impact Space | Web Development Internship</p>
         </footer>
     </div>
 </body>

@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 3: Deployment (cPanel / Laravel Forge) | Week 23</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%);
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        h1 { color: #ff6e7f; border-bottom: 3px solid #bfe9ff; padding-bottom: 15px; margin-bottom: 25px; }
+        h2 { color: #ff6e7f; margin-top: 30px; margin-bottom: 15px; }
+        h3 { color: #5a9fd4; margin-top: 20px; margin-bottom: 10px; }
+        .objectives, .key-concept, .example, .exercise, .deliverable {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #ff6e7f;
+            border-radius: 8px;
+        }
+        .key-concept { border-left-color: #5a9fd4; background: #e7f3ff; }
+        .example { border-left-color: #28a745; background: #d4edda; }
+        .exercise { border-left-color: #ffc107; background: #fff3cd; }
+        .deliverable { border-left-color: #17a2b8; background: #d1ecf1; }
+        code {
+            background: #272822;
+            color: #f8f8f2;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        pre {
+            background: #272822;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th { background: #ff6e7f; color: white; }
+        tr:nth-child(even) { background: #f8f9fa; }
+        ul, ol { margin: 15px 0; padding-left: 30px; }
+        li { margin: 8px 0; }
+        .navigation {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+        .nav-button {
+            padding: 10px 20px;
+            background: #ff6e7f;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .nav-button:hover { background: #e55d6e; }
+        .tip {
+            background: #fff9e6;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .warning {
+            background: #ffe6e6;
+            border-left: 5px solid #dc3545;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .success {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Week 23, Day 3: Deployment (cPanel / Laravel Forge)</h1>
+        
+        <div class="objectives">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Prepare Laravel application for production deployment</li>
+                <li>Deploy to shared hosting using cPanel</li>
+                <li>Configure database and environment settings</li>
+                <li>Set up domain and SSL certificate</li>
+                <li>Test deployed application</li>
+                <li>Learn troubleshooting techniques</li>
+            </ul>
+        </div>
+
+        <h2>📋 Pre-Deployment Checklist</h2>
+        
+        <div class="key-concept">
+            <h3>Production Readiness Checklist</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Task</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Environment Variables</td>
+                        <td>Set APP_ENV=production, APP_DEBUG=false</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>Database Migrations</td>
+                        <td>All migrations tested and working</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>Seeders</td>
+                        <td>Production seeders ready (if needed)</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>Testing</td>
+                        <td>All tests passing</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>Documentation</td>
+                        <td>README and user manual complete</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>Git Repository</td>
+                        <td>All code committed and pushed</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>Dependencies</td>
+                        <td>composer.lock and package-lock.json updated</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>Assets</td>
+                        <td>CSS/JS compiled for production</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>Security</td>
+                        <td>All security best practices implemented</td>
+                        <td>☐</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>🔧 Step 1: Prepare Application</h2>
+        
+        <div class="example">
+            <h3>1. Update .env for Production</h3>
+            <pre><code># Application
+APP_NAME="Library Management System"
+APP_ENV=production
+APP_DEBUG=false
+APP_URL=https://yourdomain.com
+
+# Database
+DB_CONNECTION=mysql
+DB_HOST=localhost
+DB_PORT=3306
+DB_DATABASE=your_database_name
+DB_USERNAME=your_database_user
+DB_PASSWORD=your_secure_password
+
+# Mail (Update with production SMTP)
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=your-email@gmail.com
+MAIL_PASSWORD=your-app-password
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=your-email@gmail.com
+MAIL_FROM_NAME="${APP_NAME}"
+
+# Session & Cache (Use database in production)
+SESSION_DRIVER=database
+CACHE_DRIVER=database
+
+# Queue (Use database for simplicity)
+QUEUE_CONNECTION=database</code></pre>
+
+            <h3>2. Optimize Application</h3>
+            <pre><code># Clear all caches
+php artisan cache:clear
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
+
+# Optimize for production
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+php artisan optimize
+
+# Compile assets
+npm run build</code></pre>
+
+            <h3>3. Create Deployment Archive</h3>
+            <pre><code># Exclude unnecessary files
+# Create .deployignore or use Git archive
+
+# Using Git (recommended)
+git archive --format=zip --output=library-system.zip main
+
+# Or manually zip (excluding node_modules, .git, etc.)
+# Exclude: node_modules, .git, .env, storage/logs/*</code></pre>
+        </div>
+
+        <h2>🌐 Step 2: Deploy to cPanel</h2>
+        
+        <div class="example">
+            <h3>cPanel Deployment Steps</h3>
+            
+            <h4>1. Access cPanel</h4>
+            <ol>
+                <li>Login to your hosting cPanel (usually: yourdomain.com/cpanel)</li>
+                <li>Navigate to "File Manager"</li>
+            </ol>
+
+            <h4>2. Upload Files</h4>
+            <ol>
+                <li>Navigate to <code>public_html</code> directory</li>
+                <li>Create a subfolder (e.g., <code>library-system</code>) or use root</li>
+                <li>Upload your ZIP file</li>
+                <li>Extract the ZIP file</li>
+            </ol>
+
+            <h4>3. Configure File Permissions</h4>
+            <pre><code># Set permissions via cPanel File Manager:
+# Right-click → Change Permissions
+
+storage/                    - 755
+storage/framework/          - 755
+storage/framework/cache/    - 755
+storage/framework/sessions/ - 755
+storage/framework/views/    - 755
+storage/logs/               - 755
+bootstrap/cache/            - 755</code></pre>
+
+            <h4>4. Create Database</h4>
+            <ol>
+                <li>Go to cPanel → MySQL Databases</li>
+                <li>Create new database (e.g., <code>username_library</code>)</li>
+                <li>Create database user with strong password</li>
+                <li>Add user to database with ALL PRIVILEGES</li>
+                <li>Note down database name, username, and password</li>
+            </ol>
+
+            <h4>5. Configure .env File</h4>
+            <ol>
+                <li>In File Manager, locate <code>.env</code> file</li>
+                <li>Right-click → Edit</li>
+                <li>Update database credentials</li>
+                <li>Set APP_URL to your domain</li>
+                <li>Set APP_DEBUG=false</li>
+                <li>Save changes</li>
+            </ol>
+
+            <h4>6. Run Migrations via Terminal</h4>
+            <pre><code># Access Terminal in cPanel or use SSH
+
+# Navigate to project directory
+cd public_html/library-system
+
+# Install dependencies (if not included)
+composer install --optimize-autoloader --no-dev
+
+# Generate application key
+php artisan key:generate
+
+# Run migrations
+php artisan migrate --force
+
+# Create storage link
+php artisan storage:link
+
+# Cache configurations
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache</code></pre>
+
+            <h4>7. Configure Document Root</h4>
+            <p>Point your domain to the <code>public</code> folder:</p>
+            <ol>
+                <li>cPanel → Domains</li>
+                <li>Click on domain you want to configure</li>
+                <li>Change Document Root to: <code>public_html/library-system/public</code></li>
+                <li>Save changes</li>
+            </ol>
+        </div>
+
+        <h2>🔐 Step 3: SSL Certificate Setup</h2>
+        
+        <div class="example">
+            <h3>Free SSL with Let's Encrypt (cPanel)</h3>
+            <ol>
+                <li>cPanel → Security → SSL/TLS Status</li>
+                <li>Select your domain</li>
+                <li>Click "Run AutoSSL"</li>
+                <li>Wait for certificate installation (1-2 minutes)</li>
+                <li>Test: Visit <code>https://yourdomain.com</code></li>
+            </ol>
+
+            <h3>Force HTTPS</h3>
+            <p>Create/edit <code>.htaccess</code> in public folder:</p>
+            <pre><code>&lt;IfModule mod_rewrite.c&gt;
+    RewriteEngine On
+    
+    # Force HTTPS
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+    
+    # Laravel rewrite rules
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+&lt;/IfModule&gt;</code></pre>
+        </div>
+
+        <h2>✅ Step 4: Post-Deployment Testing</h2>
+        
+        <div class="key-concept">
+            <h3>Testing Checklist</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Test</th>
+                        <th>Expected Result</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Homepage loads</td>
+                        <td>No errors, CSS/JS working</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>Registration works</td>
+                        <td>Can create new account</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>Login works</td>
+                        <td>Can authenticate successfully</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>Database connection</td>
+                        <td>Data displays correctly</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>File uploads</td>
+                        <td>Images upload and display</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>Email sending</td>
+                        <td>Notifications received</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>CRUD operations</td>
+                        <td>Create/Read/Update/Delete work</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>HTTPS enabled</td>
+                        <td>Secure connection (padlock icon)</td>
+                        <td>☐</td>
+                    </tr>
+                    <tr>
+                        <td>Mobile responsive</td>
+                        <td>Works on mobile devices</td>
+                        <td>☐</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>🔧 Troubleshooting Common Issues</h2>
+        
+        <div class="example">
+            <h3>Common Errors & Solutions</h3>
+            
+            <h4>Error: 500 Internal Server Error</h4>
+            <pre><code># Solutions:
+1. Check .env file exists and has correct values
+2. Check file permissions (storage and bootstrap/cache)
+3. Run: php artisan config:clear
+4. Check error logs: storage/logs/laravel.log
+5. Enable error display temporarily in .env:
+   APP_DEBUG=true (remember to set to false after fixing!)</code></pre>
+
+            <h4>Error: Database Connection Failed</h4>
+            <pre><code># Solutions:
+1. Verify database credentials in .env
+2. Check database exists in cPanel
+3. Verify database user has privileges
+4. Check DB_HOST (usually 'localhost' in shared hosting)
+5. Test connection via cPanel → phpMyAdmin</code></pre>
+
+            <h4>Error: Assets (CSS/JS) Not Loading</h4>
+            <pre><code># Solutions:
+1. Check APP_URL in .env matches your domain
+2. Run: php artisan storage:link
+3. Verify public folder is document root
+4. Check .htaccess file exists in public folder
+5. Clear browser cache</code></pre>
+
+            <h4>Error: File Upload Not Working</h4>
+            <pre><code># Solutions:
+1. Run: php artisan storage:link
+2. Check storage/app/public folder permissions (755)
+3. Verify upload_max_filesize in PHP settings
+4. Check post_max_size in PHP settings
+5. Verify storage disk configuration in config/filesystems.php</code></pre>
+
+            <h4>Error: Email Not Sending</h4>
+            <pre><code># Solutions:
+1. Verify SMTP credentials in .env
+2. Check MAIL_FROM_ADDRESS is valid
+3. Enable "Less secure apps" for Gmail (or use App Password)
+4. Test with: php artisan tinker
+   >>> Mail::raw('Test', function($msg) {
+           $msg->to('test@example.com')->subject('Test');
+       });
+5. Check spam folder</code></pre>
+        </div>
+
+        <h2>📊 Step 5: Monitoring & Maintenance</h2>
+        
+        <div class="key-concept">
+            <h3>Post-Deployment Tasks</h3>
+            
+            <h4>1. Set Up Monitoring</h4>
+            <ul>
+                <li>Monitor error logs regularly: <code>storage/logs/laravel.log</code></li>
+                <li>Set up uptime monitoring (e.g., UptimeRobot)</li>
+                <li>Monitor disk space usage</li>
+                <li>Check SSL certificate expiry</li>
+            </ul>
+
+            <h4>2. Backup Strategy</h4>
+            <pre><code># Database Backup (via cPanel or command)
+mysqldump -u username -p database_name > backup.sql
+
+# File Backup
+# Use cPanel Backup Wizard or FTP to download files regularly
+
+# Automated Backups
+# Configure cPanel automated backups if available</code></pre>
+
+            <h4>3. Regular Maintenance</h4>
+            <ul>
+                <li>Update Laravel and dependencies monthly</li>
+                <li>Review and clean old log files</li>
+                <li>Monitor database size and optimize tables</li>
+                <li>Review security patches and apply them</li>
+                <li>Test backup restoration process</li>
+            </ul>
+        </div>
+
+        <div class="exercise">
+            <h2>✏️ Today's Tasks</h2>
+            
+            <h3>Task 1: Prepare Application (45 minutes)</h3>
+            <ol>
+                <li>Update .env with production settings</li>
+                <li>Run optimization commands</li>
+                <li>Test application locally one final time</li>
+                <li>Create deployment package</li>
+            </ol>
+
+            <h3>Task 2: Deploy to cPanel (90 minutes)</h3>
+            <ol>
+                <li>Upload files to cPanel</li>
+                <li>Create and configure database</li>
+                <li>Update .env file</li>
+                <li>Run migrations</li>
+                <li>Configure file permissions</li>
+                <li>Set document root</li>
+            </ol>
+
+            <h3>Task 3: Configure SSL (15 minutes)</h3>
+            <ol>
+                <li>Install SSL certificate</li>
+                <li>Force HTTPS</li>
+                <li>Test secure connection</li>
+            </ol>
+
+            <h3>Task 4: Test Deployment (45 minutes)</h3>
+            <ol>
+                <li>Test all features thoroughly</li>
+                <li>Test on different devices</li>
+                <li>Create test accounts and data</li>
+                <li>Fix any issues found</li>
+            </ol>
+
+            <h3>Task 5: Documentation (15 minutes)</h3>
+            <ol>
+                <li>Document deployment process</li>
+                <li>Note production URL and credentials</li>
+                <li>Update README with live URL</li>
+            </ol>
+        </div>
+
+        <div class="deliverable">
+            <h2>📦 Deliverables</h2>
+            <h3>By end of day:</h3>
+            <ol>
+                <li><strong>Live Application:</strong>
+                    <ul>
+                        <li>Publicly accessible URL</li>
+                        <li>HTTPS enabled</li>
+                        <li>All features working</li>
+                    </ul>
+                </li>
+                <li><strong>Production Credentials:</strong>
+                    <ul>
+                        <li>Admin login details</li>
+                        <li>Database credentials</li>
+                        <li>cPanel login (if applicable)</li>
+                    </ul>
+                </li>
+                <li><strong>Deployment Documentation:</strong>
+                    <ul>
+                        <li>Step-by-step deployment guide</li>
+                        <li>Troubleshooting notes</li>
+                        <li>Server configuration details</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <div class="success">
+            <h2>🎉 Congratulations!</h2>
+            <p>Your application is now live and accessible to users worldwide!</p>
+            <p><strong>Share your project:</strong></p>
+            <ul>
+                <li>Add live URL to your GitHub README</li>
+                <li>Share on LinkedIn with project description</li>
+                <li>Add to your portfolio</li>
+                <li>Prepare for final presentation next week!</li>
+            </ul>
+        </div>
+
+        <div class="warning">
+            <strong>⚠️ Security Reminder:</strong> Never commit your production .env file to Git! Keep database credentials secure!
+        </div>
+
+        <div class="tip">
+            <strong>💡 Pro Tips:</strong>
+            <ul>
+                <li>Keep a local backup before deploying</li>
+                <li>Test database connection before running migrations</li>
+                <li>Use subdomain for testing (e.g., test.yourdomain.com)</li>
+                <li>Document any custom server configurations</li>
+                <li>Set up email notifications for errors</li>
+            </ul>
+        </div>
+
+        <div class="navigation">
+            <a href="day2-documentation.html" class="nav-button">← Previous: Documentation</a>
+            <a href="../week24/day1-presentation-prep.html" class="nav-button">Next Week: Presentation Prep →</a>
+        </div>
+    </div>
+</body>
+</html>

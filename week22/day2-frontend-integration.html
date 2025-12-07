@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 2: Frontend Development Integration | Week 22</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%);
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        h1 { color: #ff6e7f; border-bottom: 3px solid #bfe9ff; padding-bottom: 15px; margin-bottom: 25px; }
+        h2 { color: #ff6e7f; margin-top: 30px; margin-bottom: 15px; }
+        h3 { color: #5a9fd4; margin-top: 20px; margin-bottom: 10px; }
+        .objectives, .key-concept, .example, .exercise, .deliverable {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #ff6e7f;
+            border-radius: 8px;
+        }
+        .key-concept { border-left-color: #5a9fd4; background: #e7f3ff; }
+        .example { border-left-color: #28a745; background: #d4edda; }
+        .exercise { border-left-color: #ffc107; background: #fff3cd; }
+        .deliverable { border-left-color: #17a2b8; background: #d1ecf1; }
+        code {
+            background: #272822;
+            color: #f8f8f2;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        pre {
+            background: #272822;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th { background: #ff6e7f; color: white; }
+        tr:nth-child(even) { background: #f8f9fa; }
+        ul, ol { margin: 15px 0; padding-left: 30px; }
+        li { margin: 8px 0; }
+        .navigation {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+        .nav-button {
+            padding: 10px 20px;
+            background: #ff6e7f;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .nav-button:hover { background: #e55d6e; }
+        .tip {
+            background: #fff9e6;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Week 22, Day 2: Frontend Development Integration</h1>
+        
+        <div class="objectives">
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Create Blade layout templates and partials</li>
+                <li>Design responsive UI with Bootstrap 5</li>
+                <li>Build dashboard views with statistics</li>
+                <li>Create forms for CRUD operations</li>
+                <li>Implement search and filtering functionality</li>
+                <li>Add JavaScript interactivity</li>
+                <li>Integrate frontend with backend controllers</li>
+            </ul>
+        </div>
+
+        <h2>📐 Step 1: Layout Structure</h2>
+        
+        <div class="key-concept">
+            <h3>Create Master Layout</h3>
+            
+            <h4>Main Layout Template</h4>
+            <pre><code>&lt;!-- resources/views/layouts/app.blade.php --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;@yield('title', 'Library Management System')&lt;/title&gt;
+    
+    &lt;!-- Bootstrap CSS --&gt;
+    &lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"&gt;
+    &lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"&gt;
+    
+    &lt;!-- Custom CSS --&gt;
+    &lt;style&gt;
+        :root {
+            --primary-color: #ff6e7f;
+            --secondary-color: #bfe9ff;
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: #e55d6e;
+            border-color: #e55d6e;
+        }
+        
+        .card {
+            border: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .sidebar {
+            min-height: calc(100vh - 56px);
+            background-color: #f8f9fa;
+        }
+    &lt;/style&gt;
+    
+    @stack('styles')
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- Navigation --&gt;
+    @include('layouts.navigation')
+    
+    &lt;div class="container-fluid"&gt;
+        &lt;div class="row"&gt;
+            &lt;!-- Sidebar --&gt;
+            @auth
+            &lt;nav class="col-md-3 col-lg-2 d-md-block sidebar"&gt;
+                @include('layouts.sidebar')
+            &lt;/nav&gt;
+            @endauth
+            
+            &lt;!-- Main Content --&gt;
+            &lt;main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"&gt;
+                &lt;!-- Success/Error Messages --&gt;
+                @if(session('success'))
+                &lt;div class="alert alert-success alert-dismissible fade show mt-3" role="alert"&gt;
+                    {{ session('success') }}
+                    &lt;button type="button" class="btn-close" data-bs-dismiss="alert"&gt;&lt;/button&gt;
+                &lt;/div&gt;
+                @endif
+                
+                @if(session('error'))
+                &lt;div class="alert alert-danger alert-dismissible fade show mt-3" role="alert"&gt;
+                    {{ session('error') }}
+                    &lt;button type="button" class="btn-close" data-bs-dismiss="alert"&gt;&lt;/button&gt;
+                &lt;/div&gt;
+                @endif
+                
+                &lt;!-- Page Content --&gt;
+                @yield('content')
+            &lt;/main&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    
+    &lt;!-- Bootstrap JS --&gt;
+    &lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;
+    
+    @stack('scripts')
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </div>
+
+        <div class="example">
+            <h3>Navigation Partial</h3>
+            <pre><code>&lt;!-- resources/views/layouts/navigation.blade.php --&gt;
+&lt;nav class="navbar navbar-expand-lg navbar-dark"&gt;
+    &lt;div class="container-fluid"&gt;
+        &lt;a class="navbar-brand" href="{{ route('dashboard') }}"&gt;
+            &lt;i class="bi bi-book"&gt;&lt;/i&gt; Library System
+        &lt;/a&gt;
+        
+        &lt;button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"&gt;
+            &lt;span class="navbar-toggler-icon"&gt;&lt;/span&gt;
+        &lt;/button&gt;
+        
+        &lt;div class="collapse navbar-collapse" id="navbarNav"&gt;
+            &lt;ul class="navbar-nav ms-auto"&gt;
+                @auth
+                &lt;li class="nav-item dropdown"&gt;
+                    &lt;a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"&gt;
+                        {{ Auth::user()->name }}
+                    &lt;/a&gt;
+                    &lt;ul class="dropdown-menu dropdown-menu-end"&gt;
+                        &lt;li&gt;&lt;a class="dropdown-item" href="{{ route('profile.edit') }}"&gt;Profile&lt;/a&gt;&lt;/li&gt;
+                        &lt;li&gt;&lt;hr class="dropdown-divider"&gt;&lt;/li&gt;
+                        &lt;li&gt;
+                            &lt;form method="POST" action="{{ route('logout') }}"&gt;
+                                @csrf
+                                &lt;button type="submit" class="dropdown-item"&gt;Logout&lt;/button&gt;
+                            &lt;/form&gt;
+                        &lt;/li&gt;
+                    &lt;/ul&gt;
+                &lt;/li&gt;
+                @else
+                &lt;li class="nav-item"&gt;
+                    &lt;a class="nav-link" href="{{ route('login') }}"&gt;Login&lt;/a&gt;
+                &lt;/li&gt;
+                &lt;li class="nav-item"&gt;
+                    &lt;a class="nav-link" href="{{ route('register') }}"&gt;Register&lt;/a&gt;
+                &lt;/li&gt;
+                @endauth
+            &lt;/ul&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/nav&gt;</code></pre>
+
+            <h3>Sidebar Partial</h3>
+            <pre><code>&lt;!-- resources/views/layouts/sidebar.blade.php --&gt;
+&lt;div class="position-sticky pt-3"&gt;
+    &lt;ul class="nav flex-column"&gt;
+        &lt;li class="nav-item"&gt;
+            &lt;a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}"&gt;
+                &lt;i class="bi bi-speedometer2"&gt;&lt;/i&gt; Dashboard
+            &lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li class="nav-item"&gt;
+            &lt;a class="nav-link {{ request()->routeIs('books.*') ? 'active' : '' }}" href="{{ route('books.index') }}"&gt;
+                &lt;i class="bi bi-book"&gt;&lt;/i&gt; Books
+            &lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li class="nav-item"&gt;
+            &lt;a class="nav-link {{ request()->routeIs('borrowings.*') ? 'active' : '' }}" href="{{ route('borrowings.index') }}"&gt;
+                &lt;i class="bi bi-arrow-left-right"&gt;&lt;/i&gt; Borrowings
+            &lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li class="nav-item"&gt;
+            &lt;a class="nav-link {{ request()->routeIs('categories.*') ? 'active' : '' }}" href="{{ route('categories.index') }}"&gt;
+                &lt;i class="bi bi-tags"&gt;&lt;/i&gt; Categories
+            &lt;/a&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+
+        <h2>📊 Step 2: Dashboard View</h2>
+        
+        <div class="example">
+            <h3>Dashboard Controller</h3>
+            <pre><code>// app/Http/Controllers/DashboardController.php
+namespace App\Http\Controllers;
+
+use App\Models\Book;
+use App\Models\Borrowing;
+use App\Models\User;
+use Illuminate\Http\Request;
+
+class DashboardController extends Controller
+{
+    public function index()
+    {
+        $totalBooks = Book::count();
+        $availableBooks = Book::where('available_quantity', '>', 0)->count();
+        $activeBorrowings = Borrowing::where('status', 'borrowed')->count();
+        $overdueBorrowings = Borrowing::where('status', 'overdue')->count();
+        
+        $recentBorrowings = Borrowing::with(['user', 'book'])
+                                    ->latest()
+                                    ->take(5)
+                                    ->get();
+        
+        $popularBooks = Book::withCount('borrowings')
+                           ->orderBy('borrowings_count', 'desc')
+                           ->take(5)
+                           ->get();
+        
+        return view('dashboard', compact(
+            'totalBooks',
+            'availableBooks',
+            'activeBorrowings',
+            'overdueBorrowings',
+            'recentBorrowings',
+            'popularBooks'
+        ));
+    }
+}</code></pre>
+
+            <h3>Dashboard View</h3>
+            <pre><code>&lt;!-- resources/views/dashboard.blade.php --&gt;
+@extends('layouts.app')
+
+@section('title', 'Dashboard')
+
+@section('content')
+&lt;div class="py-4"&gt;
+    &lt;h1 class="mb-4"&gt;Dashboard&lt;/h1&gt;
+    
+    &lt;!-- Statistics Cards --&gt;
+    &lt;div class="row mb-4"&gt;
+        &lt;div class="col-md-3 mb-3"&gt;
+            &lt;div class="card text-white bg-primary"&gt;
+                &lt;div class="card-body"&gt;
+                    &lt;h5 class="card-title"&gt;Total Books&lt;/h5&gt;
+                    &lt;h2&gt;{{ $totalBooks }}&lt;/h2&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        
+        &lt;div class="col-md-3 mb-3"&gt;
+            &lt;div class="card text-white bg-success"&gt;
+                &lt;div class="card-body"&gt;
+                    &lt;h5 class="card-title"&gt;Available Books&lt;/h5&gt;
+                    &lt;h2&gt;{{ $availableBooks }}&lt;/h2&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        
+        &lt;div class="col-md-3 mb-3"&gt;
+            &lt;div class="card text-white bg-warning"&gt;
+                &lt;div class="card-body"&gt;
+                    &lt;h5 class="card-title"&gt;Active Borrowings&lt;/h5&gt;
+                    &lt;h2&gt;{{ $activeBorrowings }}&lt;/h2&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        
+        &lt;div class="col-md-3 mb-3"&gt;
+            &lt;div class="card text-white bg-danger"&gt;
+                &lt;div class="card-body"&gt;
+                    &lt;h5 class="card-title"&gt;Overdue Books&lt;/h5&gt;
+                    &lt;h2&gt;{{ $overdueBorrowings }}&lt;/h2&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    
+    &lt;!-- Recent Borrowings --&gt;
+    &lt;div class="card mb-4"&gt;
+        &lt;div class="card-header"&gt;
+            &lt;h5&gt;Recent Borrowings&lt;/h5&gt;
+        &lt;/div&gt;
+        &lt;div class="card-body"&gt;
+            &lt;table class="table table-hover"&gt;
+                &lt;thead&gt;
+                    &lt;tr&gt;
+                        &lt;th&gt;Book&lt;/th&gt;
+                        &lt;th&gt;Borrower&lt;/th&gt;
+                        &lt;th&gt;Borrowed Date&lt;/th&gt;
+                        &lt;th&gt;Due Date&lt;/th&gt;
+                        &lt;th&gt;Status&lt;/th&gt;
+                    &lt;/tr&gt;
+                &lt;/thead&gt;
+                &lt;tbody&gt;
+                    @forelse($recentBorrowings as $borrowing)
+                    &lt;tr&gt;
+                        &lt;td&gt;{{ $borrowing->book->title }}&lt;/td&gt;
+                        &lt;td&gt;{{ $borrowing->user->name }}&lt;/td&gt;
+                        &lt;td&gt;{{ $borrowing->borrowed_date->format('M d, Y') }}&lt;/td&gt;
+                        &lt;td&gt;{{ $borrowing->due_date->format('M d, Y') }}&lt;/td&gt;
+                        &lt;td&gt;
+                            &lt;span class="badge bg-{{ $borrowing->status === 'returned' ? 'success' : ($borrowing->status === 'overdue' ? 'danger' : 'warning') }}"&gt;
+                                {{ ucfirst($borrowing->status) }}
+                            &lt;/span&gt;
+                        &lt;/td&gt;
+                    &lt;/tr&gt;
+                    @empty
+                    &lt;tr&gt;
+                        &lt;td colspan="5" class="text-center"&gt;No borrowings yet&lt;/td&gt;
+                    &lt;/tr&gt;
+                    @endforelse
+                &lt;/tbody&gt;
+            &lt;/table&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+@endsection</code></pre>
+        </div>
+
+        <h2>📚 Step 3: Books Index View</h2>
+        
+        <div class="example">
+            <h3>Books Listing with Search</h3>
+            <pre><code>&lt;!-- resources/views/books/index.blade.php --&gt;
+@extends('layouts.app')
+
+@section('title', 'Books')
+
+@section('content')
+&lt;div class="py-4"&gt;
+    &lt;div class="d-flex justify-content-between align-items-center mb-4"&gt;
+        &lt;h1&gt;Books&lt;/h1&gt;
+        &lt;a href="{{ route('books.create') }}" class="btn btn-primary"&gt;
+            &lt;i class="bi bi-plus-lg"&gt;&lt;/i&gt; Add Book
+        &lt;/a&gt;
+    &lt;/div&gt;
+    
+    &lt;!-- Search and Filter --&gt;
+    &lt;div class="card mb-4"&gt;
+        &lt;div class="card-body"&gt;
+            &lt;form method="GET" action="{{ route('books.index') }}"&gt;
+                &lt;div class="row"&gt;
+                    &lt;div class="col-md-6 mb-3"&gt;
+                        &lt;input type="text" name="search" class="form-control" 
+                               placeholder="Search by title, author, or ISBN..." 
+                               value="{{ request('search') }}"&gt;
+                    &lt;/div&gt;
+                    &lt;div class="col-md-4 mb-3"&gt;
+                        &lt;select name="category" class="form-select"&gt;
+                            &lt;option value=""&gt;All Categories&lt;/option&gt;
+                            @foreach($categories as $category)
+                            &lt;option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}&gt;
+                                {{ $category->name }}
+                            &lt;/option&gt;
+                            @endforeach
+                        &lt;/select&gt;
+                    &lt;/div&gt;
+                    &lt;div class="col-md-2 mb-3"&gt;
+                        &lt;button type="submit" class="btn btn-primary w-100"&gt;
+                            &lt;i class="bi bi-search"&gt;&lt;/i&gt; Search
+                        &lt;/button&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/form&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    
+    &lt;!-- Books Grid --&gt;
+    &lt;div class="row"&gt;
+        @forelse($books as $book)
+        &lt;div class="col-md-4 col-lg-3 mb-4"&gt;
+            &lt;div class="card h-100"&gt;
+                @if($book->cover_image)
+                &lt;img src="{{ asset('storage/' . $book->cover_image) }}" class="card-img-top" alt="{{ $book->title }}" style="height: 250px; object-fit: cover;"&gt;
+                @else
+                &lt;div class="bg-secondary text-white d-flex align-items-center justify-content-center" style="height: 250px;"&gt;
+                    &lt;i class="bi bi-book" style="font-size: 4rem;"&gt;&lt;/i&gt;
+                &lt;/div&gt;
+                @endif
+                
+                &lt;div class="card-body"&gt;
+                    &lt;h5 class="card-title"&gt;{{ $book->title }}&lt;/h5&gt;
+                    &lt;p class="card-text text-muted"&gt;{{ $book->author }}&lt;/p&gt;
+                    &lt;p class="card-text"&gt;
+                        &lt;small class="text-muted"&gt;{{ $book->category->name }}&lt;/small&gt;
+                    &lt;/p&gt;
+                    &lt;div class="d-flex justify-content-between align-items-center"&gt;
+                        &lt;span class="badge {{ $book->isAvailable() ? 'bg-success' : 'bg-danger' }}"&gt;
+                            {{ $book->available_quantity }} available
+                        &lt;/span&gt;
+                        &lt;a href="{{ route('books.show', $book) }}" class="btn btn-sm btn-outline-primary"&gt;
+                            View Details
+                        &lt;/a&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        @empty
+        &lt;div class="col-12"&gt;
+            &lt;div class="alert alert-info"&gt;No books found.&lt;/div&gt;
+        &lt;/div&gt;
+        @endforelse
+    &lt;/div&gt;
+    
+    &lt;!-- Pagination --&gt;
+    &lt;div class="d-flex justify-content-center"&gt;
+        {{ $books->links() }}
+    &lt;/div&gt;
+&lt;/div&gt;
+@endsection</code></pre>
+        </div>
+
+        <h2>📝 Step 4: Create/Edit Forms</h2>
+        
+        <div class="example">
+            <h3>Book Create Form</h3>
+            <pre><code>&lt;!-- resources/views/books/create.blade.php --&gt;
+@extends('layouts.app')
+
+@section('title', 'Add New Book')
+
+@section('content')
+&lt;div class="py-4"&gt;
+    &lt;div class="row justify-content-center"&gt;
+        &lt;div class="col-md-8"&gt;
+            &lt;div class="card"&gt;
+                &lt;div class="card-header"&gt;
+                    &lt;h4&gt;Add New Book&lt;/h4&gt;
+                &lt;/div&gt;
+                &lt;div class="card-body"&gt;
+                    &lt;form method="POST" action="{{ route('books.store') }}" enctype="multipart/form-data"&gt;
+                        @csrf
+                        
+                        &lt;div class="mb-3"&gt;
+                            &lt;label class="form-label"&gt;Title *&lt;/label&gt;
+                            &lt;input type="text" name="title" class="form-control @error('title') is-invalid @enderror" 
+                                   value="{{ old('title') }}" required&gt;
+                            @error('title')
+                            &lt;div class="invalid-feedback"&gt;{{ $message }}&lt;/div&gt;
+                            @enderror
+                        &lt;/div&gt;
+                        
+                        &lt;div class="mb-3"&gt;
+                            &lt;label class="form-label"&gt;Author *&lt;/label&gt;
+                            &lt;input type="text" name="author" class="form-control @error('author') is-invalid @enderror" 
+                                   value="{{ old('author') }}" required&gt;
+                            @error('author')
+                            &lt;div class="invalid-feedback"&gt;{{ $message }}&lt;/div&gt;
+                            @enderror
+                        &lt;/div&gt;
+                        
+                        &lt;div class="row"&gt;
+                            &lt;div class="col-md-6 mb-3"&gt;
+                                &lt;label class="form-label"&gt;ISBN *&lt;/label&gt;
+                                &lt;input type="text" name="isbn" class="form-control @error('isbn') is-invalid @enderror" 
+                                       value="{{ old('isbn') }}" required&gt;
+                                @error('isbn')
+                                &lt;div class="invalid-feedback"&gt;{{ $message }}&lt;/div&gt;
+                                @enderror
+                            &lt;/div&gt;
+                            
+                            &lt;div class="col-md-6 mb-3"&gt;
+                                &lt;label class="form-label"&gt;Category *&lt;/label&gt;
+                                &lt;select name="category_id" class="form-select @error('category_id') is-invalid @enderror" required&gt;
+                                    &lt;option value=""&gt;Select Category&lt;/option&gt;
+                                    @foreach($categories as $category)
+                                    &lt;option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}&gt;
+                                        {{ $category->name }}
+                                    &lt;/option&gt;
+                                    @endforeach
+                                &lt;/select&gt;
+                                @error('category_id')
+                                &lt;div class="invalid-feedback"&gt;{{ $message }}&lt;/div&gt;
+                                @enderror
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                        
+                        &lt;div class="mb-3"&gt;
+                            &lt;label class="form-label"&gt;Description&lt;/label&gt;
+                            &lt;textarea name="description" class="form-control @error('description') is-invalid @enderror" 
+                                      rows="3"&gt;{{ old('description') }}&lt;/textarea&gt;
+                            @error('description')
+                            &lt;div class="invalid-feedback"&gt;{{ $message }}&lt;/div&gt;
+                            @enderror
+                        &lt;/div&gt;
+                        
+                        &lt;div class="row"&gt;
+                            &lt;div class="col-md-6 mb-3"&gt;
+                                &lt;label class="form-label"&gt;Quantity *&lt;/label&gt;
+                                &lt;input type="number" name="quantity" class="form-control @error('quantity') is-invalid @enderror" 
+                                       value="{{ old('quantity', 1) }}" min="1" required&gt;
+                                @error('quantity')
+                                &lt;div class="invalid-feedback"&gt;{{ $message }}&lt;/div&gt;
+                                @enderror
+                            &lt;/div&gt;
+                            
+                            &lt;div class="col-md-6 mb-3"&gt;
+                                &lt;label class="form-label"&gt;Publication Year&lt;/label&gt;
+                                &lt;input type="number" name="publication_year" 
+                                       class="form-control @error('publication_year') is-invalid @enderror" 
+                                       value="{{ old('publication_year') }}" min="1900" max="{{ date('Y') }}"&gt;
+                                @error('publication_year')
+                                &lt;div class="invalid-feedback"&gt;{{ $message }}&lt;/div&gt;
+                                @enderror
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                        
+                        &lt;div class="mb-3"&gt;
+                            &lt;label class="form-label"&gt;Cover Image&lt;/label&gt;
+                            &lt;input type="file" name="cover_image" class="form-control @error('cover_image') is-invalid @enderror" 
+                                   accept="image/*"&gt;
+                            @error('cover_image')
+                            &lt;div class="invalid-feedback"&gt;{{ $message }}&lt;/div&gt;
+                            @enderror
+                            &lt;small class="text-muted"&gt;Max size: 2MB. Supported formats: JPG, PNG, GIF&lt;/small&gt;
+                        &lt;/div&gt;
+                        
+                        &lt;div class="d-flex justify-content-between"&gt;
+                            &lt;a href="{{ route('books.index') }}" class="btn btn-secondary"&gt;Cancel&lt;/a&gt;
+                            &lt;button type="submit" class="btn btn-primary"&gt;
+                                &lt;i class="bi bi-save"&gt;&lt;/i&gt; Add Book
+                            &lt;/button&gt;
+                        &lt;/div&gt;
+                    &lt;/form&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+@endsection</code></pre>
+        </div>
+
+        <div class="exercise">
+            <h2>✏️ Today's Tasks</h2>
+            
+            <h3>Task 1: Create Layout Structure (45 minutes)</h3>
+            <ol>
+                <li>Create master layout (app.blade.php)</li>
+                <li>Create navigation partial</li>
+                <li>Create sidebar partial</li>
+                <li>Add Bootstrap 5 and icons</li>
+                <li>Test responsive design</li>
+            </ol>
+
+            <h3>Task 2: Build Dashboard (60 minutes)</h3>
+            <ol>
+                <li>Update DashboardController with statistics</li>
+                <li>Create dashboard view with cards</li>
+                <li>Display recent borrowings table</li>
+                <li>Add popular books section</li>
+                <li>Test all dashboard features</li>
+            </ol>
+
+            <h3>Task 3: Create Books Views (90 minutes)</h3>
+            <ol>
+                <li>Create books index (listing with grid layout)</li>
+                <li>Add search and filter functionality</li>
+                <li>Create book create form</li>
+                <li>Create book edit form</li>
+                <li>Create book details page</li>
+                <li>Add pagination</li>
+            </ol>
+
+            <h3>Task 4: JavaScript Interactivity (30 minutes)</h3>
+            <ol>
+                <li>Add image preview on file upload</li>
+                <li>Add confirmation dialogs for delete actions</li>
+                <li>Add search auto-submit functionality</li>
+                <li>Add loading indicators</li>
+            </ol>
+        </div>
+
+        <div class="deliverable">
+            <h2>📦 Deliverables</h2>
+            <h3>By end of day:</h3>
+            <ol>
+                <li><strong>Complete Layout System:</strong>
+                    <ul>
+                        <li>Responsive master layout</li>
+                        <li>Navigation and sidebar</li>
+                        <li>Alert system for messages</li>
+                    </ul>
+                </li>
+                <li><strong>Functional Dashboard:</strong>
+                    <ul>
+                        <li>Statistics cards</li>
+                        <li>Recent activity tables</li>
+                        <li>Quick links to actions</li>
+                    </ul>
+                </li>
+                <li><strong>Books CRUD Interface:</strong>
+                    <ul>
+                        <li>Books listing with search</li>
+                        <li>Create/Edit forms</li>
+                        <li>Book details page</li>
+                        <li>Image upload functionality</li>
+                    </ul>
+                </li>
+                <li><strong>Responsive Design:</strong>
+                    <ul>
+                        <li>Mobile-friendly interface</li>
+                        <li>Bootstrap grid system</li>
+                        <li>Touch-friendly buttons</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <div class="tip">
+            <strong>💡 Pro Tips:</strong>
+            <ul>
+                <li>Use Bootstrap utilities for quick styling</li>
+                <li>Test on mobile devices or browser DevTools</li>
+                <li>Use @forelse instead of @foreach for empty state handling</li>
+                <li>Create reusable components for repeated UI elements</li>
+                <li>Add meaningful alt text for images (accessibility)</li>
+            </ul>
+        </div>
+
+        <div class="navigation">
+            <a href="day1-backend-development.html" class="nav-button">← Previous: Backend Development</a>
+            <a href="day3-integration-debugging.html" class="nav-button">Next: Integration & Debugging →</a>
+        </div>
+    </div>
+</body>
+</html>

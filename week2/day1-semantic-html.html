@@ -4,45 +4,166 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Week 2 Day 1: Semantic HTML & Multimedia</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #10b981;
+            --secondary: #34d399;
+            --accent: #6ee7b7;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gradient-1: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+            --gradient-2: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: var(--gradient-1);
             padding: 20px;
         }
+        
+        .top-nav {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .top-nav .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2em;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .top-nav .logo i {
+            font-size: 1.5em;
+        }
+        
+        .top-nav .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        
+        .top-nav .nav-links a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 0.95em;
+        }
+        
+        .top-nav .nav-links a:hover {
+            color: var(--primary);
+        }
+        
         .container {
             max-width: 1200px;
             margin: 0 auto;
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
             overflow: hidden;
         }
-        header { background: #d5006d; color: white; padding: 30px; }
-        .nav-breadcrumb {
-            background: #fff0f6;
-            padding: 15px 30px;
-            border-bottom: 2px solid #f5576c;
+        
+        header {
+            background: var(--gradient-1);
+            color: white;
+            padding: 40px 30px;
+            position: relative;
         }
-        .nav-breadcrumb a { color: #d5006d; text-decoration: none; margin-right: 10px; }
-        .content { padding: 40px; }
-        .section { margin-bottom: 40px; }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+        
+        header h1 {
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        
+        .nav-breadcrumb {
+            background: #ecfdf5;
+            padding: 15px 30px;
+            border-bottom: 2px solid var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .nav-breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        .nav-breadcrumb a:hover {
+            color: var(--secondary);
+        }
+        
+        .nav-breadcrumb i {
+            color: var(--accent);
+            font-size: 0.8em;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
         .section h2 {
-            color: #d5006d;
+            color: var(--dark);
             margin-bottom: 20px;
             padding-bottom: 10px;
-            border-bottom: 3px solid #f5576c;
+            border-bottom: 3px solid var(--primary);
+            font-weight: 700;
         }
-        .section h3 { color: #f5576c; margin: 20px 0 15px 0; }
+        
+        .section h3 {
+            color: var(--primary);
+            margin: 20px 0 15px 0;
+            font-weight: 600;
+        }
+        
+        .section h4 {
+            color: var(--secondary);
+            margin: 15px 0 10px 0;
+        }
+        
         .info-box {
-            background: #fff0f6;
-            border-left: 5px solid #f5576c;
+            background: #ecfdf5;
+            border-left: 5px solid var(--primary);
             padding: 20px;
             margin: 20px 0;
-            border-radius: 5px;
+            border-radius: 8px;
         }
+        
         .code-block {
             background: #2d2d2d;
             color: #f8f8f2;
@@ -52,63 +173,183 @@
             margin: 20px 0;
             font-family: 'Courier New', monospace;
         }
+        
+        .html-code {
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--primary);
+        }
+        
+        .html-code .tag {
+            color: #34d399;
+        }
+        
+        .html-code .attr {
+            color: #60a5fa;
+        }
+        
+        .html-code .value {
+            color: #fbbf24;
+        }
+        
+        .html-code .text {
+            color: #f8fafc;
+        }
+        
+        .html-code .comment {
+            color: #94a3b8;
+            font-style: italic;
+        }
+        
+        .html-code .line {
+            display: block;
+            padding: 2px 0;
+        }
+        
+        .html-code .indent-1 {
+            padding-left: 20px;
+        }
+        
+        .html-code .indent-2 {
+            padding-left: 40px;
+        }
+        
+        .html-code .indent-3 {
+            padding-left: 60px;
+        }
+        
+        .html-code .indent-4 {
+            padding-left: 80px;
+        }
+        
         .activity-box {
-            background: #f1f8e9;
-            border-left: 5px solid #4caf50;
+            background: #f0fdf4;
+            border-left: 5px solid var(--secondary);
             padding: 20px;
             margin: 20px 0;
-            border-radius: 5px;
+            border-radius: 8px;
         }
+        
         .btn-primary {
-            display: inline-block;
-            background: #f5576c;
+            background: var(--gradient-1);
             color: white;
-            padding: 12px 30px;
+            padding: 12px 24px;
+            border-radius: 8px;
             text-decoration: none;
-            border-radius: 6px;
+            display: inline-block;
             margin: 10px 10px 10px 0;
-            transition: all 0.3s;
-            font-weight: bold;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
-        .btn-primary:hover { background: #d5006d; }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+        }
+        
         .semantic-diagram {
-            border: 3px solid #f5576c;
+            border: 3px solid var(--primary);
             padding: 20px;
             margin: 20px 0;
             border-radius: 10px;
+            background: #f0fdf4;
         }
+        
         .semantic-element {
-            background: #f5576c;
+            background: var(--gradient-1);
             color: white;
             padding: 15px;
             margin: 10px 0;
             border-radius: 5px;
             font-weight: bold;
         }
-        ul, ol { margin-left: 30px; margin-top: 10px; }
-        li { margin-bottom: 10px; }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-top: 10px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+        }
+        
         table {
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
         }
+        
         th, td {
             border: 1px solid #ddd;
             padding: 12px;
             text-align: left;
         }
-        th { background: #f5576c; color: white; }
-        .checklist { list-style: none; margin-left: 0; }
+        
+        th {
+            background: var(--primary);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .checklist {
+            list-style: none;
+            margin-left: 0;
+        }
+        
         .checklist li:before {
             content: "✓ ";
-            color: #4caf50;
+            color: var(--primary);
             font-weight: bold;
             margin-right: 10px;
         }
-        footer { background: #d5006d; color: white; padding: 20px; text-align: center; }
+        
+        footer {
+            background: var(--gradient-1);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        footer p {
+            margin: 5px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .top-nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .top-nav .nav-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
     </style>
 </head>
 <body>
+    <nav class="top-nav">
+        <a href="../index.html" class="logo">
+            <i class="fas fa-home"></i>
+            <span>Back to Home</span>
+        </a>
+        <div class="nav-links">
+            <a href="../index.html#overview"><i class="fas fa-info-circle"></i> Overview</a>
+            <a href="../index.html#curriculum"><i class="fas fa-book"></i> Curriculum</a>
+            <a href="../index.html#technologies"><i class="fas fa-code"></i> Technologies</a>
+        </div>
+    </nav>
+    
     <div class="container">
         <header>
             <h1>📅 Week 2 - Day 1: Semantic HTML & Multimedia</h1>
@@ -116,7 +357,11 @@
         </header>
 
         <div class="nav-breadcrumb">
-            <a href="../index.html">← Back to Course Home</a> / Week 2 / Day 1
+            <a href="../index.html"><i class="fas fa-home"></i> Back to Course Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>Week 2</span>
+            <i class="fas fa-chevron-right"></i>
+            <span>Day 1</span>
         </div>
 
         <div class="content">
@@ -183,27 +428,27 @@
                 
                 <h4>1. &lt;header&gt;</h4>
                 <p>Contains introductory content, typically logo, site title, and navigation.</p>
-                <div class="code-block">
-&lt;header&gt;
-    &lt;h1&gt;My Website&lt;/h1&gt;
-    &lt;nav&gt;
-        &lt;a href="/"&gt;Home&lt;/a&gt;
-        &lt;a href="/about"&gt;About&lt;/a&gt;
-        &lt;a href="/contact"&gt;Contact&lt;/a&gt;
-    &lt;/nav&gt;
-&lt;/header&gt;
+                <div class="html-code">
+<span class="line"><span class="tag">&lt;header&gt;</span></span>
+<span class="line indent-1"><span class="tag">&lt;h1&gt;</span><span class="text">My Website</span><span class="tag">&lt;/h1&gt;</span></span>
+<span class="line indent-1"><span class="tag">&lt;nav&gt;</span></span>
+<span class="line indent-2"><span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="value">"/"</span><span class="tag">&gt;</span><span class="text">Home</span><span class="tag">&lt;/a&gt;</span></span>
+<span class="line indent-2"><span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="value">"/about"</span><span class="tag">&gt;</span><span class="text">About</span><span class="tag">&lt;/a&gt;</span></span>
+<span class="line indent-2"><span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="value">"/contact"</span><span class="tag">&gt;</span><span class="text">Contact</span><span class="tag">&lt;/a&gt;</span></span>
+<span class="line indent-1"><span class="tag">&lt;/nav&gt;</span></span>
+<span class="line"><span class="tag">&lt;/header&gt;</span></span>
                 </div>
 
                 <h4>2. &lt;nav&gt;</h4>
                 <p>Contains navigation links.</p>
-                <div class="code-block">
-&lt;nav&gt;
-    &lt;ul&gt;
-        &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
-        &lt;li&gt;&lt;a href="/blog"&gt;Blog&lt;/a&gt;&lt;/li&gt;
-        &lt;li&gt;&lt;a href="/services"&gt;Services&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-&lt;/nav&gt;
+                <div class="html-code">
+<span class="line"><span class="tag">&lt;nav&gt;</span></span>
+<span class="line indent-1"><span class="tag">&lt;ul&gt;</span></span>
+<span class="line indent-2"><span class="tag">&lt;li&gt;&lt;a</span> <span class="attr">href</span>=<span class="value">"/"</span><span class="tag">&gt;</span><span class="text">Home</span><span class="tag">&lt;/a&gt;&lt;/li&gt;</span></span>
+<span class="line indent-2"><span class="tag">&lt;li&gt;&lt;a</span> <span class="attr">href</span>=<span class="value">"/blog"</span><span class="tag">&gt;</span><span class="text">Blog</span><span class="tag">&lt;/a&gt;&lt;/li&gt;</span></span>
+<span class="line indent-2"><span class="tag">&lt;li&gt;&lt;a</span> <span class="attr">href</span>=<span class="value">"/services"</span><span class="tag">&gt;</span><span class="text">Services</span><span class="tag">&lt;/a&gt;&lt;/li&gt;</span></span>
+<span class="line indent-1"><span class="tag">&lt;/ul&gt;</span></span>
+<span class="line"><span class="tag">&lt;/nav&gt;</span></span>
                 </div>
 
                 <h4>3. &lt;main&gt;</h4>
@@ -211,11 +456,11 @@
 
                 <h4>4. &lt;article&gt;</h4>
                 <p>Self-contained, independent content (blog post, news article).</p>
-                <div class="code-block">
-&lt;article&gt;
-    &lt;h2&gt;Article Title&lt;/h2&gt;
-    &lt;p&gt;Article content...&lt;/p&gt;
-&lt;/article&gt;
+                <div class="html-code">
+<span class="line"><span class="tag">&lt;article&gt;</span></span>
+<span class="line indent-1"><span class="tag">&lt;h2&gt;</span><span class="text">Article Title</span><span class="tag">&lt;/h2&gt;</span></span>
+<span class="line indent-1"><span class="tag">&lt;p&gt;</span><span class="text">Article content...</span><span class="tag">&lt;/p&gt;</span></span>
+<span class="line"><span class="tag">&lt;/article&gt;</span></span>
                 </div>
 
                 <h4>5. &lt;section&gt;</h4>
@@ -232,12 +477,12 @@
                 <h2>🎵 Embedding Multimedia</h2>
                 
                 <h3>Audio Element</h3>
-                <div class="code-block">
-&lt;audio controls&gt;
-    &lt;source src="audio.mp3" type="audio/mpeg"&gt;
-    &lt;source src="audio.ogg" type="audio/ogg"&gt;
-    Your browser does not support the audio element.
-&lt;/audio&gt;
+                <div class="html-code">
+<span class="line"><span class="tag">&lt;audio</span> <span class="attr">controls</span><span class="tag">&gt;</span></span>
+<span class="line indent-1"><span class="tag">&lt;source</span> <span class="attr">src</span>=<span class="value">"audio.mp3"</span> <span class="attr">type</span>=<span class="value">"audio/mpeg"</span><span class="tag">&gt;</span></span>
+<span class="line indent-1"><span class="tag">&lt;source</span> <span class="attr">src</span>=<span class="value">"audio.ogg"</span> <span class="attr">type</span>=<span class="value">"audio/ogg"</span><span class="tag">&gt;</span></span>
+<span class="line indent-1"><span class="text">Your browser does not support the audio element.</span></span>
+<span class="line"><span class="tag">&lt;/audio&gt;</span></span>
                 </div>
                 <p><strong>Attributes:</strong></p>
                 <ul>
@@ -248,22 +493,22 @@
                 </ul>
 
                 <h3>Video Element</h3>
-                <div class="code-block">
-&lt;video width="640" height="360" controls&gt;
-    &lt;source src="video.mp4" type="video/mp4"&gt;
-    &lt;source src="video.webm" type="video/webm"&gt;
-    Your browser does not support the video tag.
-&lt;/video&gt;
+                <div class="html-code">
+<span class="line"><span class="tag">&lt;video</span> <span class="attr">width</span>=<span class="value">"640"</span> <span class="attr">height</span>=<span class="value">"360"</span> <span class="attr">controls</span><span class="tag">&gt;</span></span>
+<span class="line indent-1"><span class="tag">&lt;source</span> <span class="attr">src</span>=<span class="value">"video.mp4"</span> <span class="attr">type</span>=<span class="value">"video/mp4"</span><span class="tag">&gt;</span></span>
+<span class="line indent-1"><span class="tag">&lt;source</span> <span class="attr">src</span>=<span class="value">"video.webm"</span> <span class="attr">type</span>=<span class="value">"video/webm"</span><span class="tag">&gt;</span></span>
+<span class="line indent-1"><span class="text">Your browser does not support the video tag.</span></span>
+<span class="line"><span class="tag">&lt;/video&gt;</span></span>
                 </div>
 
                 <h3>Embedding YouTube Videos</h3>
-                <div class="code-block">
-&lt;iframe width="560" height="315" 
-    src="https://www.youtube.com/embed/VIDEO_ID" 
-    frameborder="0" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-    allowfullscreen&gt;
-&lt;/iframe&gt;
+                <div class="html-code">
+<span class="line"><span class="tag">&lt;iframe</span> <span class="attr">width</span>=<span class="value">"560"</span> <span class="attr">height</span>=<span class="value">"315"</span></span>
+<span class="line indent-1"><span class="attr">src</span>=<span class="value">"https://www.youtube.com/embed/VIDEO_ID"</span></span>
+<span class="line indent-1"><span class="attr">frameborder</span>=<span class="value">"0"</span></span>
+<span class="line indent-1"><span class="attr">allow</span>=<span class="value">"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"</span></span>
+<span class="line indent-1"><span class="attr">allowfullscreen</span><span class="tag">&gt;</span></span>
+<span class="line"><span class="tag">&lt;/iframe&gt;</span></span>
                 </div>
             </div>
 
@@ -424,7 +669,7 @@
 
         <footer>
             <p>Week 2 - Day 1: Semantic HTML & Multimedia</p>
-            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+            <p>&copy; 2025 Next Step Innovation and Impact Space | Web Development Internship</p>
         </footer>
     </div>
 </body>

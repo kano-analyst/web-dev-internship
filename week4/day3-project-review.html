@@ -4,12 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Week 4 Day 3: Project Review & Presentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #10b981;
+            --secondary: #34d399;
+            --accent: #6ee7b7;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gradient-1: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+        }
+        
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            background: var(--gradient-1);
             padding: 20px;
         }
         .container {
@@ -20,32 +30,51 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.3);
             overflow: hidden;
         }
-        header { background: #00796b; color: white; padding: 30px; }
-        .nav-breadcrumb {
-            background: #e0f2f1;
+        
+        /* Top Navigation */
+        .top-nav {
+            background: var(--dark);
             padding: 15px 30px;
-            border-bottom: 2px solid #00897b;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .nav-breadcrumb a { color: #00796b; text-decoration: none; margin-right: 10px; }
+        .top-nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            transition: color 0.3s;
+        }
+        .top-nav a:hover { color: var(--secondary); }
+        .top-nav i { margin-right: 5px; }
+        
+        header { background: var(--gradient-1); color: white; padding: 30px; }
+        .nav-breadcrumb {
+            background: #ecfdf5;
+            padding: 15px 30px;
+            border-bottom: 2px solid var(--primary);
+        }
+        .nav-breadcrumb a { color: var(--primary); text-decoration: none; margin-right: 10px; }
+        .nav-breadcrumb i { margin: 0 5px; color: var(--secondary); }
         .content { padding: 40px; }
         .section { margin-bottom: 40px; }
         .section h2 {
-            color: #00796b;
+            color: var(--primary);
             margin-bottom: 20px;
             padding-bottom: 10px;
-            border-bottom: 3px solid #00897b;
+            border-bottom: 3px solid var(--secondary);
         }
-        .section h3 { color: #00897b; margin: 20px 0 15px 0; }
+        .section h3 { color: var(--primary); margin: 20px 0 15px 0; }
         .info-box {
-            background: #e0f2f1;
-            border-left: 5px solid #00796b;
+            background: #ecfdf5;
+            border-left: 5px solid var(--primary);
             padding: 20px;
             margin: 20px 0;
             border-radius: 5px;
         }
         .activity-box {
-            background: #fff3e0;
-            border-left: 5px solid #ff9800;
+            background: #f1f8e9;
+            border-left: 5px solid #4caf50;
             padding: 20px;
             margin: 20px 0;
             border-radius: 5px;
@@ -66,6 +95,58 @@
             margin: 20px 0;
             font-family: 'Courier New', monospace;
         }
+        
+        /* Syntax Highlighting */
+        .html-code, .css-code, .js-code, .bash-code, .md-code {
+            background: #2d2d2d;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+        }
+        
+        /* HTML Syntax */
+        .html-code .tag { color: #34d399; }
+        .html-code .attr { color: #60a5fa; }
+        .html-code .value { color: #fbbf24; }
+        .html-code .text { color: #f8fafc; }
+        .html-code .comment { color: #94a3b8; font-style: italic; }
+        
+        /* CSS Syntax */
+        .css-code .selector { color: #fbbf24; }
+        .css-code .property { color: #60a5fa; }
+        .css-code .value { color: #34d399; }
+        .css-code .punctuation { color: #f8fafc; }
+        .css-code .comment { color: #94a3b8; font-style: italic; }
+        
+        /* JavaScript Syntax */
+        .js-code .keyword { color: #c792ea; }
+        .js-code .function { color: #fbbf24; }
+        .js-code .string { color: #34d399; }
+        .js-code .variable { color: #60a5fa; }
+        .js-code .comment { color: #94a3b8; font-style: italic; }
+        
+        /* Bash/Command Syntax */
+        .bash-code .command { color: #34d399; }
+        .bash-code .flag { color: #60a5fa; }
+        .bash-code .string { color: #fbbf24; }
+        .bash-code .comment { color: #94a3b8; font-style: italic; }
+        
+        /* Markdown Syntax */
+        .md-code .heading { color: #fbbf24; font-weight: bold; }
+        .md-code .link { color: #60a5fa; }
+        .md-code .code { color: #34d399; }
+        .md-code .list { color: #f8fafc; }
+        .md-code .bold { color: #f8fafc; font-weight: bold; }
+        
+        .line { display: block; padding: 2px 0; }
+        .indent-1 { padding-left: 20px; }
+        .indent-2 { padding-left: 40px; }
+        .indent-3 { padding-left: 60px; }
+        .indent-4 { padding-left: 80px; }
+        
         ul, ol { margin-left: 30px; margin-top: 10px; }
         li { margin-bottom: 10px; }
         .checklist { list-style: none; margin-left: 0; }
@@ -86,24 +167,30 @@
             border: 1px solid #ddd;
         }
         th {
-            background: #00796b;
+            background: var(--primary);
             color: white;
         }
         tr:nth-child(even) { background: #f9f9f9; }
-        footer { background: #00796b; color: white; padding: 20px; text-align: center; }
+        footer { background: var(--dark); color: white; padding: 20px; text-align: center; }
         .btn-primary {
-            background: #00796b;
+            background: var(--primary);
             color: white;
             padding: 10px 20px;
             text-decoration: none;
             border-radius: 5px;
             display: inline-block;
             margin: 10px 10px 10px 0;
+            transition: all 0.3s;
+        }
+        .btn-primary:hover { 
+            background: var(--secondary); 
+            transform: translateY(-2px); 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2); 
         }
         .congrats {
             text-align: center;
             padding: 40px;
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            background: var(--gradient-1);
             color: white;
             border-radius: 10px;
             margin: 40px 0;
@@ -113,6 +200,16 @@
 </head>
 <body>
     <div class="container">
+        <nav class="top-nav">
+            <div>
+                <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+                <a href="day2-portfolio-development.html"><i class="fas fa-arrow-left"></i> Previous</a>
+            </div>
+            <div>
+                <a href="https://github.com" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+            </div>
+        </nav>
+        
         <header>
             <h1>📅 Week 4 - Day 3: Project Review & Presentation</h1>
             <p>Wednesday | Duration: 3 hours</p>
@@ -120,7 +217,11 @@
         </header>
 
         <div class="nav-breadcrumb">
-            <a href="../index.html">← Back to Course Home</a> / Week 4 / Day 3
+            <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>Week 4</span>
+            <i class="fas fa-chevron-right"></i>
+            <span>Day 3: Project Review & Presentation</span>
         </div>
 
         <div class="content">
@@ -187,17 +288,17 @@
                 </table>
 
                 <h3>Responsive Testing</h3>
-                <div class="code-block">
-# Test these breakpoints in Chrome DevTools:
-
-1. Mobile (375px) - iPhone SE
-2. Mobile (414px) - iPhone Pro Max
-3. Tablet (768px) - iPad
-4. Tablet (1024px) - iPad Pro
-5. Desktop (1280px) - Laptop
-6. Desktop (1920px) - Full HD Monitor
-
-Right-click → Inspect → Toggle Device Toolbar (Ctrl+Shift+M)
+                <div class="bash-code">
+<span class="line"><span class="comment"># Test these breakpoints in Chrome DevTools:</span></span>
+<span class="line"></span>
+<span class="line"><span class="string">1. Mobile (375px) - iPhone SE</span></span>
+<span class="line"><span class="string">2. Mobile (414px) - iPhone Pro Max</span></span>
+<span class="line"><span class="string">3. Tablet (768px) - iPad</span></span>
+<span class="line"><span class="string">4. Tablet (1024px) - iPad Pro</span></span>
+<span class="line"><span class="string">5. Desktop (1280px) - Laptop</span></span>
+<span class="line"><span class="string">6. Desktop (1920px) - Full HD Monitor</span></span>
+<span class="line"></span>
+<span class="line"><span class="string">Right-click → Inspect → Toggle Device Toolbar (Ctrl+Shift+M)</span></span>
                 </div>
 
                 <table>
@@ -245,16 +346,16 @@ Right-click → Inspect → Toggle Device Toolbar (Ctrl+Shift+M)
                 </ul>
 
                 <h3>Validation</h3>
-                <div class="code-block">
-# Validate HTML
-Visit: https://validator.w3.org/
-Upload your index.html or enter your GitHub Pages URL
-Fix any errors shown
-
-# Validate CSS
-Visit: https://jigsaw.w3.org/css-validator/
-Upload your style.css
-Fix any errors shown
+                <div class="bash-code">
+<span class="line"><span class="comment"># Validate HTML</span></span>
+<span class="line"><span class="string">Visit: https://validator.w3.org/</span></span>
+<span class="line"><span class="string">Upload your index.html or enter your GitHub Pages URL</span></span>
+<span class="line"><span class="string">Fix any errors shown</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment"># Validate CSS</span></span>
+<span class="line"><span class="string">Visit: https://jigsaw.w3.org/css-validator/</span></span>
+<span class="line"><span class="string">Upload your style.css</span></span>
+<span class="line"><span class="string">Fix any errors shown</span></span>
                 </div>
             </div>
 
@@ -266,14 +367,14 @@ Fix any errors shown
                 </div>
 
                 <h3>Step 1: Prepare Your Repository</h3>
-                <div class="code-block">
-# Make sure all changes are committed
-git status
-
-# If there are changes, commit them
-git add .
-git commit -m "Final version ready for deployment"
-git push origin main
+                <div class="bash-code">
+<span class="line"><span class="comment"># Make sure all changes are committed</span></span>
+<span class="line"><span class="command">git</span> <span class="flag">status</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment"># If there are changes, commit them</span></span>
+<span class="line"><span class="command">git</span> <span class="flag">add</span> .</span>
+<span class="line"><span class="command">git</span> <span class="flag">commit</span> <span class="flag">-m</span> <span class="string">"Final version ready for deployment"</span></span>
+<span class="line"><span class="command">git</span> <span class="flag">push</span> origin main</span>
                 </div>
 
                 <h3>Step 2: Enable GitHub Pages</h3>
@@ -329,15 +430,15 @@ git push origin main
                 </table>
 
                 <h3>Custom Domain (Optional)</h3>
-                <div class="code-block">
-# If you own a domain, you can connect it:
-
-1. Create CNAME file in your repository root
-2. Add your domain: www.yourdomain.com
-3. Configure DNS at your domain registrar:
-   - Type: CNAME
-   - Name: www
-   - Value: yourusername.github.io
+                <div class="bash-code">
+<span class="line"><span class="comment"># If you own a domain, you can connect it:</span></span>
+<span class="line"></span>
+<span class="line"><span class="string">1. Create CNAME file in your repository root</span></span>
+<span class="line"><span class="string">2. Add your domain: www.yourdomain.com</span></span>
+<span class="line"><span class="string">3. Configure DNS at your domain registrar:</span></span>
+<span class="line indent-1"><span class="string">- Type: CNAME</span></span>
+<span class="line indent-1"><span class="string">- Name: www</span></span>
+<span class="line indent-1"><span class="string">- Value: yourusername.github.io</span></span>
                 </div>
             </div>
 
@@ -348,47 +449,47 @@ git push origin main
                 
                 <div class="activity-box">
                     <h4>1. Mobile Menu Not Working</h4>
-                    <div class="code-block">
-// Check if JavaScript is included in HTML
-// Verify hamburger click event
-
-const hamburger = document.querySelector('.hamburger');
-const navMenu = document.querySelector('.nav-menu');
-
-hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    navMenu.classList.toggle('active');
-});
+                    <div class="js-code">
+<span class="line"><span class="comment">// Check if JavaScript is included in HTML</span></span>
+<span class="line"><span class="comment">// Verify hamburger click event</span></span>
+<span class="line"></span>
+<span class="line"><span class="keyword">const</span> <span class="variable">hamburger</span> = document.<span class="function">querySelector</span>(<span class="string">'.hamburger'</span>);</span>
+<span class="line"><span class="keyword">const</span> <span class="variable">navMenu</span> = document.<span class="function">querySelector</span>(<span class="string">'.nav-menu'</span>);</span>
+<span class="line"></span>
+<span class="line"><span class="variable">hamburger</span>.<span class="function">addEventListener</span>(<span class="string">'click'</span>, () => {</span>
+<span class="line indent-1"><span class="variable">hamburger</span>.classList.<span class="function">toggle</span>(<span class="string">'active'</span>);</span>
+<span class="line indent-1"><span class="variable">navMenu</span>.classList.<span class="function">toggle</span>(<span class="string">'active'</span>);</span>
+<span class="line">});</span>
                     </div>
                 </div>
 
                 <div class="activity-box">
                     <h4>2. Images Not Displaying</h4>
-                    <div class="code-block">
-<!-- Check image paths -->
-<!-- Make sure images are in correct folder -->
-
-CORRECT:
-&lt;img src="images/profile.jpg" alt="Profile"&gt;
-
-WRONG:
-&lt;img src="/images/profile.jpg" alt="Profile"&gt;
-&lt;img src="C:/Users/images/profile.jpg" alt="Profile"&gt;
+                    <div class="html-code">
+<span class="line"><span class="comment">&lt;!-- Check image paths --&gt;</span></span>
+<span class="line"><span class="comment">&lt;!-- Make sure images are in correct folder --&gt;</span></span>
+<span class="line"></span>
+<span class="line"><span class="text">CORRECT:</span></span>
+<span class="line"><span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="value">"images/profile.jpg"</span> <span class="attr">alt</span>=<span class="value">"Profile"</span><span class="tag">&gt;</span></span>
+<span class="line"></span>
+<span class="line"><span class="text">WRONG:</span></span>
+<span class="line"><span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="value">"/images/profile.jpg"</span> <span class="attr">alt</span>=<span class="value">"Profile"</span><span class="tag">&gt;</span></span>
+<span class="line"><span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="value">"C:/Users/images/profile.jpg"</span> <span class="attr">alt</span>=<span class="value">"Profile"</span><span class="tag">&gt;</span></span>
                     </div>
                 </div>
 
                 <div class="activity-box">
                     <h4>3. Layout Breaking on Mobile</h4>
-                    <div class="code-block">
-/* Ensure viewport meta tag is present */
-&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
-
-/* Check media queries */
-@media (max-width: 768px) {
-    .about-content {
-        grid-template-columns: 1fr; /* Stack on mobile */
-    }
-}
+                    <div class="css-code">
+<span class="line"><span class="comment">/* Ensure viewport meta tag is present */</span></span>
+<span class="line"><span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="value">"viewport"</span> <span class="attr">content</span>=<span class="value">"width=device-width, initial-scale=1.0"</span><span class="tag">&gt;</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Check media queries */</span></span>
+<span class="line"><span class="selector">@media (max-width: 768px)</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="selector">.about-content</span> <span class="punctuation">{</span></span>
+<span class="line indent-2"><span class="property">grid-template-columns</span><span class="punctuation">:</span> <span class="value">1fr</span><span class="punctuation">;</span> <span class="comment">/* Stack on mobile */</span></span>
+<span class="line indent-1"><span class="punctuation">}</span></span>
+<span class="line"><span class="punctuation">}</span></span>
                     </div>
                 </div>
 
@@ -508,104 +609,104 @@ WRONG:
                 </ul>
 
                 <h3>Updated README.md Template</h3>
-                <div class="code-block">
-# 🚀 Personal Portfolio Website
-
-![Portfolio Preview](screenshots/desktop-view.png)
-
-## 📌 Overview
-This is my personal portfolio website built to showcase my web development 
-skills and projects. Developed as the final project for Next-Step Technology 
-Web Development Bootcamp.
-
-## ✨ Features
-- 📱 Fully responsive design (mobile, tablet, desktop)
-- 🎨 Modern and clean UI with smooth animations
-- 🔍 Semantic HTML5 structure
-- 💅 Custom CSS styling (no frameworks)
-- 📬 Contact form with validation
-- 🎯 Smooth scrolling navigation
-- 🍔 Mobile hamburger menu
-
-## 🛠️ Technologies Used
-- HTML5
-- CSS3 (Flexbox, Grid, Media Queries)
-- JavaScript (vanilla)
-- Git & GitHub
-- GitHub Pages (deployment)
-
-## 📸 Screenshots
-
-### Desktop View
-![Desktop](screenshots/desktop.png)
-
-### Mobile View
-![Mobile](screenshots/mobile.png)
-
-## 🌐 Live Demo
-**[View Live Portfolio](https://yourusername.github.io/portfolio/)**
-
-## 📂 Project Structure
-```
-portfolio/
-├── index.html
-├── style.css
-├── README.md
-├── images/
-│   ├── profile.jpg
-│   ├── project1.png
-│   ├── project2.png
-│   └── project3.png
-└── screenshots/
-    ├── desktop.png
-    └── mobile.png
-```
-
-## 🚀 Installation & Setup
-```bash
-# Clone repository
-git clone https://github.com/yourusername/portfolio.git
-
-# Navigate to folder
-cd portfolio
-
-# Open in browser
-start index.html  # Windows
-open index.html   # Mac
-```
-
-## 🎓 Learning Outcomes
-Through this project, I learned:
-- Semantic HTML5 structure and accessibility
-- CSS Grid and Flexbox for layouts
-- Responsive design with mobile-first approach
-- Git version control and GitHub workflow
-- Deploying websites with GitHub Pages
-- Problem-solving and debugging
-
-## 🔮 Future Enhancements
-- [ ] Add dark mode toggle
-- [ ] Implement blog section
-- [ ] Add more interactive animations
-- [ ] Include testimonials section
-- [ ] Connect contact form to backend
-
-## 👤 Author
-**Your Name**
-- GitHub: [@yourusername](https://github.com/yourusername)
-- LinkedIn: [Your Name](https://linkedin.com/in/yourprofile)
-- Email: your.email@example.com
-
-## 📄 License
-This project is open source and available under the [MIT License](LICENSE).
-
-## 🙏 Acknowledgments
-- Next-Step Technology Web Development Bootcamp
-- Instructors and mentors
-- Fellow bootcamp students
-
----
-⭐ Star this repository if you found it helpful!
+                <div class="md-code">
+<span class="line"><span class="heading"># 🚀 Personal Portfolio Website</span></span>
+<span class="line"></span>
+<span class="line"><span class="list">![Portfolio Preview](screenshots/desktop-view.png)</span></span>
+<span class="line"></span>
+<span class="line"><span class="heading">## 📌 Overview</span></span>
+<span class="line"><span class="list">This is my personal portfolio website built to showcase my web development</span></span>
+<span class="line"><span class="list">skills and projects. Developed as the final project for Next-Step Technology</span></span>
+<span class="line"><span class="list">Web Development Bootcamp.</span></span>
+<span class="line"></span>
+<span class="line"><span class="heading">## ✨ Features</span></span>
+<span class="line"><span class="list">- 📱 Fully responsive design (mobile, tablet, desktop)</span></span>
+<span class="line"><span class="list">- 🎨 Modern and clean UI with smooth animations</span></span>
+<span class="line"><span class="list">- 🔍 Semantic HTML5 structure</span></span>
+<span class="line"><span class="list">- 💅 Custom CSS styling (no frameworks)</span></span>
+<span class="line"><span class="list">- 📬 Contact form with validation</span></span>
+<span class="line"><span class="list">- 🎯 Smooth scrolling navigation</span></span>
+<span class="line"><span class="list">- 🍔 Mobile hamburger menu</span></span>
+<span class="line"></span>
+<span class="line"><span class="heading">## 🛠️ Technologies Used</span></span>
+<span class="line"><span class="list">- HTML5</span></span>
+<span class="line"><span class="list">- CSS3 (Flexbox, Grid, Media Queries)</span></span>
+<span class="line"><span class="list">- JavaScript (vanilla)</span></span>
+<span class="line"><span class="list">- Git & GitHub</span></span>
+<span class="line"><span class="list">- GitHub Pages (deployment)</span></span>
+<span class="line"></span>
+<span class="line"><span class="heading">## 📸 Screenshots</span></span>
+<span class="line"></span>
+<span class="line"><span class="heading">### Desktop View</span></span>
+<span class="line"><span class="list">![Desktop](screenshots/desktop.png)</span></span>
+<span class="line"></span>
+<span class="line"><span class="heading">### Mobile View</span></span>
+<span class="line"><span class="list">![Mobile](screenshots/mobile.png)</span></span>
+<span class="line"></span>
+<span class="line"><span class="heading">## 🌐 Live Demo</span></span>
+<span class="line"><span class="bold">**[View Live Portfolio](https://yourusername.github.io/portfolio/)**</span></span>
+<span class="line"></span>
+<span class="line"><span class="heading">## 📂 Project Structure</span></span>
+<span class="line"><span class="code">```</span></span>
+<span class="line"><span class="list">portfolio/</span></span>
+<span class="line"><span class="list">├── index.html</span></span>
+<span class="line"><span class="list">├── style.css</span></span>
+<span class="line"><span class="list">├── README.md</span></span>
+<span class="line"><span class="list">├── images/</span></span>
+<span class="line"><span class="list">│   ├── profile.jpg</span></span>
+<span class="line"><span class="list">│   ├── project1.png</span></span>
+<span class="line"><span class="list">│   ├── project2.png</span></span>
+<span class="line"><span class="list">│   └── project3.png</span></span>
+<span class="line"><span class="list">└── screenshots/</span></span>
+<span class="line"><span class="list">    ├── desktop.png</span></span>
+<span class="line"><span class="list">    └── mobile.png</span></span>
+<span class="line"><span class="code">```</span></span>
+<span class="line"></span>
+<span class="line"><span class="heading">## 🚀 Installation & Setup</span></span>
+<span class="line"><span class="code">```bash</span></span>
+<span class="line"><span class="comment"># Clone repository</span></span>
+<span class="line"><span class="list">git clone https://github.com/yourusername/portfolio.git</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment"># Navigate to folder</span></span>
+<span class="line"><span class="list">cd portfolio</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment"># Open in browser</span></span>
+<span class="line"><span class="list">start index.html  # Windows</span></span>
+<span class="line"><span class="list">open index.html   # Mac</span></span>
+<span class="line"><span class="code">```</span></span>
+<span class="line"></span>
+<span class="line"><span class="heading">## 🎓 Learning Outcomes</span></span>
+<span class="line"><span class="list">Through this project, I learned:</span></span>
+<span class="line"><span class="list">- Semantic HTML5 structure and accessibility</span></span>
+<span class="line"><span class="list">- CSS Grid and Flexbox for layouts</span></span>
+<span class="line"><span class="list">- Responsive design with mobile-first approach</span></span>
+<span class="line"><span class="list">- Git version control and GitHub workflow</span></span>
+<span class="line"><span class="list">- Deploying websites with GitHub Pages</span></span>
+<span class="line"><span class="list">- Problem-solving and debugging</span></span>
+<span class="line"></span>
+<span class="line"><span class="heading">## 🔮 Future Enhancements</span></span>
+<span class="line"><span class="list">- [ ] Add dark mode toggle</span></span>
+<span class="line"><span class="list">- [ ] Implement blog section</span></span>
+<span class="line"><span class="list">- [ ] Add more interactive animations</span></span>
+<span class="line"><span class="list">- [ ] Include testimonials section</span></span>
+<span class="line"><span class="list">- [ ] Connect contact form to backend</span></span>
+<span class="line"></span>
+<span class="line"><span class="heading">## 👤 Author</span></span>
+<span class="line"><span class="bold">**Your Name**</span></span>
+<span class="line"><span class="list">- GitHub: <span class="link">[@yourusername](https://github.com/yourusername)</span></span></span>
+<span class="line"><span class="list">- LinkedIn: <span class="link">[Your Name](https://linkedin.com/in/yourprofile)</span></span></span>
+<span class="line"><span class="list">- Email: your.email@example.com</span></span>
+<span class="line"></span>
+<span class="line"><span class="heading">## 📄 License</span></span>
+<span class="line"><span class="list">This project is open source and available under the <span class="link">[MIT License](LICENSE)</span>.</span></span>
+<span class="line"></span>
+<span class="line"><span class="heading">## 🙏 Acknowledgments</span></span>
+<span class="line"><span class="list">- Next-Step Technology Web Development Bootcamp</span></span>
+<span class="line"><span class="list">- Instructors and mentors</span></span>
+<span class="line"><span class="list">- Fellow bootcamp students</span></span>
+<span class="line"></span>
+<span class="line"><span class="list">---</span></span>
+<span class="line"><span class="list">⭐ Star this repository if you found it helpful!</span></span>
                 </div>
             </div>
 
@@ -652,12 +753,29 @@ This project is open source and available under the [MIT License](LICENSE).
             <div class="congrats">
                 <h2>🎉 Congratulations! 🎉</h2>
                 <p style="font-size: 1.3rem; margin-bottom: 20px;">
-                    You've completed the Next-Step Technology Web Development Bootcamp!
+                    You've completed <strong>1 Month of HTML5 & CSS3 Web Fundamentals!</strong>
                 </p>
                 <p style="font-size: 1.1rem;">
-                    You've learned HTML5, CSS3, Responsive Design, Git, and built a complete portfolio website.
+                    You've mastered HTML5, CSS3, Responsive Design, Git, and built a complete portfolio website.
                     This is just the beginning of your web development journey!
                 </p>
+            </div>
+
+            <div class="section">
+                <h2>🚀 What's Next? Month 2: JavaScript & Interactivity</h2>
+                <div class="info-box">
+                    <h3 style="margin-top: 0;">Learn Bootstrap and JavaScript to create dynamic web applications</h3>
+                    <p style="margin: 15px 0;">In the next month, you'll dive into:</p>
+                    <ul style="margin-left: 20px; line-height: 2;">
+                        <li><strong>Week 5:</strong> Bootstrap Framework & Responsive Components</li>
+                        <li><strong>Week 6:</strong> JavaScript Fundamentals & DOM Manipulation</li>
+                        <li><strong>Week 7:</strong> JavaScript Events & Interactive Features</li>
+                        <li><strong>Week 8:</strong> JavaScript Project - Interactive Web Application</li>
+                    </ul>
+                    <div style="margin-top: 20px;">
+                        <a href="../week5/day1-bootstrap-intro.html" class="btn-primary" style="display: inline-block; padding: 12px 24px; margin-right: 10px;">Start Week 5: Bootstrap →</a>
+                    </div>
+                </div>
             </div>
 
             <div class="section">
@@ -697,7 +815,7 @@ This project is open source and available under the [MIT License](LICENSE).
         <footer>
             <p>Week 4 - Day 3: Project Review & Presentation</p>
             <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
-            <p style="margin-top: 10px;">🎓 Congratulations on completing the bootcamp! 🎓</p>
+            <p style="margin-top: 10px;">🎓 Congratulations on completing Month 1! Ready for JavaScript? 🚀</p>
         </footer>
     </div>
 </body>

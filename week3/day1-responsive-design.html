@@ -4,12 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Week 3 Day 1: Responsive Design Basics</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #10b981;
+            --secondary: #34d399;
+            --accent: #6ee7b7;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gradient-1: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+        }
+        
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
             padding: 20px;
         }
         .container {
@@ -20,25 +30,44 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.3);
             overflow: hidden;
         }
-        header { background: #c2185b; color: white; padding: 30px; }
-        .nav-breadcrumb {
-            background: #fce4ec;
+        
+        /* Top Navigation */
+        .top-nav {
+            background: var(--dark);
             padding: 15px 30px;
-            border-bottom: 2px solid #e91e63;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .nav-breadcrumb a { color: #c2185b; text-decoration: none; margin-right: 10px; }
+        .top-nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            transition: color 0.3s;
+        }
+        .top-nav a:hover { color: var(--secondary); }
+        .top-nav i { margin-right: 5px; }
+        
+        header { background: var(--gradient-1); color: white; padding: 30px; }
+        .nav-breadcrumb {
+            background: #ecfdf5;
+            padding: 15px 30px;
+            border-bottom: 2px solid var(--primary);
+        }
+        .nav-breadcrumb a { color: var(--primary); text-decoration: none; margin-right: 10px; }
+        .nav-breadcrumb i { margin: 0 5px; color: var(--secondary); }
         .content { padding: 40px; }
         .section { margin-bottom: 40px; }
         .section h2 {
-            color: #c2185b;
+            color: var(--primary);
             margin-bottom: 20px;
             padding-bottom: 10px;
-            border-bottom: 3px solid #e91e63;
+            border-bottom: 3px solid var(--secondary);
         }
-        .section h3 { color: #e91e63; margin: 20px 0 15px 0; }
+        .section h3 { color: var(--primary); margin: 20px 0 15px 0; }
         .info-box {
-            background: #fce4ec;
-            border-left: 5px solid #c2185b;
+            background: #ecfdf5;
+            border-left: 5px solid var(--primary);
             padding: 20px;
             margin: 20px 0;
             border-radius: 5px;
@@ -58,6 +87,76 @@
             overflow-x: auto;
             margin: 20px 0;
             font-family: 'Courier New', monospace;
+        }
+        
+        /* CSS Syntax Highlighting */
+        .css-code {
+            background: #2d2d2d;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+        }
+        .css-code .selector { color: #fbbf24; }
+        .css-code .property { color: #60a5fa; }
+        .css-code .value { color: #34d399; }
+        .css-code .punctuation { color: #f8fafc; }
+        .css-code .comment { color: #94a3b8; font-style: italic; }
+        .css-code .line { display: block; padding: 2px 0; }
+        .css-code .indent-1 { padding-left: 20px; }
+        .css-code .indent-2 { padding-left: 40px; }
+        .css-code .indent-3 { padding-left: 60px; }
+        .css-code .indent-4 { padding-left: 80px; }
+        
+        /* HTML Syntax Highlighting */
+        .html-code {
+            background: #2d2d2d;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+        }
+        .html-code .tag { color: #34d399; }
+        .html-code .attr { color: #60a5fa; }
+        .html-code .value { color: #fbbf24; }
+        .html-code .text { color: #f8fafc; }
+        .html-code .comment { color: #94a3b8; font-style: italic; }
+        .html-code .line { display: block; padding: 2px 0; }
+        .html-code .indent-1 { padding-left: 20px; }
+        .html-code .indent-2 { padding-left: 40px; }
+        .html-code .indent-3 { padding-left: 60px; }
+        .html-code .indent-4 { padding-left: 80px; }
+        
+        /* Layout Example Container */
+        .layout-example {
+            border: 2px solid var(--primary);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            background: #f9fafb;
+        }
+        .layout-example h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        /* Responsive Demo Container */
+        .responsive-demo {
+            background: #f9fafb;
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .responsive-demo iframe {
+            width: 100%;
+            border: 2px solid var(--secondary);
+            border-radius: 5px;
+            background: white;
         }
         .device-demo {
             display: flex;
@@ -80,7 +179,7 @@
         .desktop { width: 250px; height: 180px; }
         .btn-primary {
             display: inline-block;
-            background: #e91e63;
+            background: var(--primary);
             color: white;
             padding: 12px 30px;
             text-decoration: none;
@@ -89,7 +188,7 @@
             transition: all 0.3s;
             font-weight: bold;
         }
-        .btn-primary:hover { background: #c2185b; }
+        .btn-primary:hover { background: var(--secondary); }
         ul, ol { margin-left: 30px; margin-top: 10px; }
         li { margin-bottom: 10px; }
         .checklist { list-style: none; margin-left: 0; }
@@ -109,19 +208,33 @@
             padding: 12px;
             text-align: left;
         }
-        th { background: #e91e63; color: white; }
-        footer { background: #c2185b; color: white; padding: 20px; text-align: center; }
+        th { background: var(--primary); color: white; }
+        footer { background: var(--dark); color: white; padding: 20px; text-align: center; }
     </style>
 </head>
 <body>
     <div class="container">
+        <nav class="top-nav">
+            <div>
+                <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+                <a href="day2-styling-forms.html"><i class="fas fa-arrow-right"></i> Next</a>
+            </div>
+            <div>
+                <a href="https://github.com" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+            </div>
+        </nav>
+        
         <header>
             <h1>📅 Week 3 - Day 1: Responsive Design Basics</h1>
             <p>Monday | Duration: 3 hours</p>
         </header>
 
         <div class="nav-breadcrumb">
-            <a href="../index.html">← Back to Course Home</a> / Week 3 / Day 1
+            <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>Week 3</span>
+            <i class="fas fa-chevron-right"></i>
+            <span>Day 1: Responsive Design</span>
         </div>
 
         <div class="content">
@@ -182,8 +295,8 @@
                     <p>The viewport meta tag tells browsers how to control the page's dimensions and scaling.</p>
                 </div>
 
-                <div class="code-block">
-&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+                <div class="html-code">
+<span class="line"><span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="value">"viewport"</span> <span class="attr">content</span>=<span class="value">"width=device-width, initial-scale=1.0"</span><span class="tag">&gt;</span></span>
                 </div>
 
                 <ul>
@@ -204,10 +317,10 @@
                 </div>
 
                 <h3>Basic Syntax</h3>
-                <div class="code-block">
-@media (condition) {
-    /* CSS rules */
-}
+                <div class="css-code">
+<span class="line"><span class="selector">@media</span> <span class="punctuation">(</span><span class="value">condition</span><span class="punctuation">)</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="comment">/* CSS rules */</span></span>
+<span class="line"><span class="punctuation">}</span></span>
                 </div>
 
                 <h3>Common Breakpoints</h3>
@@ -235,59 +348,70 @@
                 </table>
 
                 <h3>Media Query Examples</h3>
-                <div class="code-block">
-/* Default styles for mobile (mobile-first) */
-body {
-    font-size: 16px;
-}
-
-.container {
-    width: 100%;
-    padding: 10px;
-}
-
-/* Tablet and above */
-@media (min-width: 768px) {
-    body {
-        font-size: 18px;
-    }
-    
-    .container {
-        width: 750px;
-        margin: 0 auto;
-    }
-}
-
-/* Desktop and above */
-@media (min-width: 1024px) {
-    body {
-        font-size: 20px;
-    }
-    
-    .container {
-        width: 1000px;
-    }
-}
-
-/* Large desktop */
-@media (min-width: 1200px) {
-    .container {
-        width: 1140px;
-    }
-}
+                <div class="css-code">
+<span class="line"><span class="comment">/* Default styles for mobile (mobile-first) */</span></span>
+<span class="line"><span class="selector">body</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">font-size</span><span class="punctuation">:</span> <span class="value">16px</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">.container</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">width</span><span class="punctuation">:</span> <span class="value">100%</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">padding</span><span class="punctuation">:</span> <span class="value">10px</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Tablet and above */</span></span>
+<span class="line"><span class="selector">@media</span> <span class="punctuation">(</span><span class="property">min-width</span><span class="punctuation">:</span> <span class="value">768px</span><span class="punctuation">)</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="selector">body</span> <span class="punctuation">{</span></span>
+<span class="line indent-2"><span class="property">font-size</span><span class="punctuation">:</span> <span class="value">18px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="punctuation">}</span></span>
+<span class="line indent-1"></span>
+<span class="line indent-1"><span class="selector">.container</span> <span class="punctuation">{</span></span>
+<span class="line indent-2"><span class="property">width</span><span class="punctuation">:</span> <span class="value">750px</span><span class="punctuation">;</span></span>
+<span class="line indent-2"><span class="property">margin</span><span class="punctuation">:</span> <span class="value">0 auto</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="punctuation">}</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Desktop and above */</span></span>
+<span class="line"><span class="selector">@media</span> <span class="punctuation">(</span><span class="property">min-width</span><span class="punctuation">:</span> <span class="value">1024px</span><span class="punctuation">)</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="selector">body</span> <span class="punctuation">{</span></span>
+<span class="line indent-2"><span class="property">font-size</span><span class="punctuation">:</span> <span class="value">20px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="punctuation">}</span></span>
+<span class="line indent-1"></span>
+<span class="line indent-1"><span class="selector">.container</span> <span class="punctuation">{</span></span>
+<span class="line indent-2"><span class="property">width</span><span class="punctuation">:</span> <span class="value">1000px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="punctuation">}</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Large desktop */</span></span>
+<span class="line"><span class="selector">@media</span> <span class="punctuation">(</span><span class="property">min-width</span><span class="punctuation">:</span> <span class="value">1200px</span><span class="punctuation">)</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="selector">.container</span> <span class="punctuation">{</span></span>
+<span class="line indent-2"><span class="property">width</span><span class="punctuation">:</span> <span class="value">1140px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="punctuation">}</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+                </div>
+                
+                <div class="layout-example">
+                    <h4>Live Example - Responsive Container:</h4>
+                    <p style="margin-bottom: 15px;">Resize your browser window to see how the container adapts:</p>
+                    <div style="background: #ecfdf5; padding: 20px; border: 2px solid #10b981; text-align: center; transition: all 0.3s;">
+                        <p style="margin: 0; font-weight: bold; color: #10b981;">📱 This container is responsive!</p>
+                        <p style="margin: 10px 0 0 0; font-size: 0.9em; color: #64748b;">
+                            <em>Try resizing your browser: Mobile (100% width) → Tablet (750px) → Desktop (1000px) → Large (1140px)</em>
+                        </p>
+                    </div>
                 </div>
 
                 <h3>Max-Width vs Min-Width</h3>
-                <div class="code-block">
-/* Max-width: Desktop-first (styles for smaller screens) */
-@media (max-width: 768px) {
-    /* Applies when screen is 768px or less */
-}
-
-/* Min-width: Mobile-first (styles for larger screens) ✅ Recommended */
-@media (min-width: 768px) {
-    /* Applies when screen is 768px or more */
-}
+                <div class="css-code">
+<span class="line"><span class="comment">/* Max-width: Desktop-first (styles for smaller screens) */</span></span>
+<span class="line"><span class="selector">@media</span> <span class="punctuation">(</span><span class="property">max-width</span><span class="punctuation">:</span> <span class="value">768px</span><span class="punctuation">)</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="comment">/* Applies when screen is 768px or less */</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Min-width: Mobile-first (styles for larger screens) ✅ Recommended */</span></span>
+<span class="line"><span class="selector">@media</span> <span class="punctuation">(</span><span class="property">min-width</span><span class="punctuation">:</span> <span class="value">768px</span><span class="punctuation">)</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="comment">/* Applies when screen is 768px or more */</span></span>
+<span class="line"><span class="punctuation">}</span></span>
                 </div>
             </div>
 
@@ -306,57 +430,82 @@ body {
                 </ul>
 
                 <h3>Example: Mobile-First Navigation</h3>
-                <div class="code-block">
-/* Mobile styles (default) */
-nav {
-    display: flex;
-    flex-direction: column;
-}
-
-nav a {
-    padding: 15px;
-    border-bottom: 1px solid #ddd;
-}
-
-/* Tablet and up: horizontal navigation */
-@media (min-width: 768px) {
-    nav {
-        flex-direction: row;
-        justify-content: space-around;
-    }
-    
-    nav a {
-        border-bottom: none;
-        border-right: 1px solid #ddd;
-    }
-}
+                <div class="css-code">
+<span class="line"><span class="comment">/* Mobile styles (default) */</span></span>
+<span class="line"><span class="selector">nav</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">display</span><span class="punctuation">:</span> <span class="value">flex</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">flex-direction</span><span class="punctuation">:</span> <span class="value">column</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">nav a</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">padding</span><span class="punctuation">:</span> <span class="value">15px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">border-bottom</span><span class="punctuation">:</span> <span class="value">1px solid #ddd</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Tablet and up: horizontal navigation */</span></span>
+<span class="line"><span class="selector">@media</span> <span class="punctuation">(</span><span class="property">min-width</span><span class="punctuation">:</span> <span class="value">768px</span><span class="punctuation">)</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="selector">nav</span> <span class="punctuation">{</span></span>
+<span class="line indent-2"><span class="property">flex-direction</span><span class="punctuation">:</span> <span class="value">row</span><span class="punctuation">;</span></span>
+<span class="line indent-2"><span class="property">justify-content</span><span class="punctuation">:</span> <span class="value">space-around</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="punctuation">}</span></span>
+<span class="line indent-1"></span>
+<span class="line indent-1"><span class="selector">nav a</span> <span class="punctuation">{</span></span>
+<span class="line indent-2"><span class="property">border-bottom</span><span class="punctuation">:</span> <span class="value">none</span><span class="punctuation">;</span></span>
+<span class="line indent-2"><span class="property">border-right</span><span class="punctuation">:</span> <span class="value">1px solid #ddd</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="punctuation">}</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+                </div>
+                
+                <div class="layout-example">
+                    <h4>Live Example - Responsive Navigation:</h4>
+                    <p style="margin-bottom: 15px;">On mobile (< 768px): Vertical stack | On desktop (≥ 768px): Horizontal row</p>
+                    <nav style="display: flex; flex-direction: column; background: #ecfdf5; border: 2px solid #10b981; border-radius: 5px; overflow: hidden;">
+                        <a href="#" style="padding: 15px; color: #10b981; text-decoration: none; border-bottom: 1px solid #ddd; transition: background 0.3s;" onmouseover="this.style.background='#d1fae5'" onmouseout="this.style.background='transparent'">Home</a>
+                        <a href="#" style="padding: 15px; color: #10b981; text-decoration: none; border-bottom: 1px solid #ddd; transition: background 0.3s;" onmouseover="this.style.background='#d1fae5'" onmouseout="this.style.background='transparent'">About</a>
+                        <a href="#" style="padding: 15px; color: #10b981; text-decoration: none; border-bottom: 1px solid #ddd; transition: background 0.3s;" onmouseover="this.style.background='#d1fae5'" onmouseout="this.style.background='transparent'">Services</a>
+                        <a href="#" style="padding: 15px; color: #10b981; text-decoration: none; transition: background 0.3s;" onmouseover="this.style.background='#d1fae5'" onmouseout="this.style.background='transparent'">Contact</a>
+                    </nav>
+                    <p style="margin-top: 15px; font-size: 0.9em; color: #64748b;">
+                        <em>Notice: This is showing the mobile version. At 768px+, it would switch to horizontal layout.</em>
+                    </p>
                 </div>
             </div>
 
             <div class="section">
                 <h2>🖼️ Responsive Images</h2>
-                <div class="code-block">
-/* Make images responsive */
-img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-}
+                <div class="css-code">
+<span class="line"><span class="comment">/* Make images responsive */</span></span>
+<span class="line"><span class="selector">img</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">max-width</span><span class="punctuation">:</span> <span class="value">100%</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">height</span><span class="punctuation">:</span> <span class="value">auto</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">display</span><span class="punctuation">:</span> <span class="value">block</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+                </div>
+                
+                <div class="layout-example">
+                    <h4>Live Example - Responsive Image:</h4>
+                    <p style="margin-bottom: 15px;">This image scales with its container (try resizing your browser):</p>
+                    <div style="max-width: 400px; margin: 0 auto;">
+                        <img src="https://via.placeholder.com/400x300/10b981/ffffff?text=Responsive+Image" alt="Responsive demo" style="max-width: 100%; height: auto; border-radius: 8px; border: 2px solid #10b981;">
+                    </div>
+                    <p style="margin-top: 15px; font-size: 0.9em; color: #64748b;">
+                        <em>Notice: The image never exceeds its container width and maintains aspect ratio.</em>
+                    </p>
                 </div>
 
                 <h3>Responsive Background Images</h3>
-                <div class="code-block">
-.hero {
-    background-image: url('mobile-bg.jpg');
-    background-size: cover;
-    background-position: center;
-}
-
-@media (min-width: 768px) {
-    .hero {
-        background-image: url('desktop-bg.jpg');
-    }
-}
+                <div class="css-code">
+<span class="line"><span class="selector">.hero</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">background-image</span><span class="punctuation">:</span> <span class="value">url('mobile-bg.jpg')</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">background-size</span><span class="punctuation">:</span> <span class="value">cover</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">background-position</span><span class="punctuation">:</span> <span class="value">center</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">@media</span> <span class="punctuation">(</span><span class="property">min-width</span><span class="punctuation">:</span> <span class="value">768px</span><span class="punctuation">)</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="selector">.hero</span> <span class="punctuation">{</span></span>
+<span class="line indent-2"><span class="property">background-image</span><span class="punctuation">:</span> <span class="value">url('desktop-bg.jpg')</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="punctuation">}</span></span>
+<span class="line"><span class="punctuation">}</span></span>
                 </div>
             </div>
 
@@ -369,188 +518,212 @@ img {
                 </div>
 
                 <h3>Updated HTML (add viewport)</h3>
-                <div class="code-block">
-&lt;!DOCTYPE html&gt;
-&lt;html lang="en"&gt;
-&lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
-    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
-    &lt;title&gt;Responsive Profile&lt;/title&gt;
-    &lt;link rel="stylesheet" href="css/responsive.css"&gt;
-&lt;/head&gt;
-&lt;!-- Rest of HTML stays the same --&gt;
+                <div class="html-code">
+<span class="line"><span class="tag">&lt;!DOCTYPE html&gt;</span></span>
+<span class="line"><span class="tag">&lt;html</span> <span class="attr">lang</span>=<span class="value">"en"</span><span class="tag">&gt;</span></span>
+<span class="line"><span class="tag">&lt;head&gt;</span></span>
+<span class="line indent-1"><span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="value">"UTF-8"</span><span class="tag">&gt;</span></span>
+<span class="line indent-1"><span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="value">"viewport"</span> <span class="attr">content</span>=<span class="value">"width=device-width, initial-scale=1.0"</span><span class="tag">&gt;</span></span>
+<span class="line indent-1"><span class="tag">&lt;title&gt;</span><span class="text">Responsive Profile</span><span class="tag">&lt;/title&gt;</span></span>
+<span class="line indent-1"><span class="tag">&lt;link</span> <span class="attr">rel</span>=<span class="value">"stylesheet"</span> <span class="attr">href</span>=<span class="value">"css/responsive.css"</span><span class="tag">&gt;</span></span>
+<span class="line"><span class="tag">&lt;/head&gt;</span></span>
+<span class="line"><span class="comment">&lt;!-- Rest of HTML stays the same --&gt;</span></span>
                 </div>
 
                 <h3>Responsive CSS (responsive.css)</h3>
-                <div class="code-block">
-/* Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Base styles (Mobile-first) */
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    color: #333;
-    background-color: #f4f4f4;
-}
-
-/* Header */
-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 20px;
-    text-align: center;
-}
-
-header h1 {
-    font-size: 1.8em;
-}
-
-/* Container: Stacked on mobile */
-.container {
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 0 15px;
-}
-
-/* Columns: Full width on mobile */
-.profile-column,
-.bio-column {
-    width: 100%;
-    background: white;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-
-.profile-column img {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    border: 5px solid #667eea;
-    margin: 0 auto 20px;
-    display: block;
-}
-
-.profile-column h2 {
-    color: #667eea;
-    margin-bottom: 10px;
-    text-align: center;
-    font-size: 1.5em;
-}
-
-.profile-column > p {
-    text-align: center;
-    color: #666;
-    margin-bottom: 20px;
-}
-
-.profile-column h3,
-.bio-column h3 {
-    color: #555;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    border-bottom: 2px solid #667eea;
-    padding-bottom: 5px;
-}
-
-.profile-column ul {
-    list-style: none;
-}
-
-.profile-column li {
-    padding: 8px 0;
-    border-bottom: 1px solid #eee;
-}
-
-.bio-column h2 {
-    color: #667eea;
-    font-size: 1.8em;
-    margin-bottom: 15px;
-}
-
-.bio-column p {
-    margin-bottom: 15px;
-}
-
-.bio-column ul {
-    margin-left: 25px;
-    margin-bottom: 15px;
-}
-
-/* Footer */
-footer {
-    background: #333;
-    color: white;
-    text-align: center;
-    padding: 20px;
-    margin-top: 20px;
-}
-
-/* ========== TABLET (768px and up) ========== */
-@media (min-width: 768px) {
-    header h1 {
-        font-size: 2.5em;
-    }
-    
-    .container {
-        padding: 0 20px;
-    }
-    
-    .profile-column img {
-        width: 200px;
-        height: 200px;
-    }
-    
-    .profile-column h2 {
-        font-size: 1.8em;
-    }
-    
-    .bio-column h2 {
-        font-size: 2.2em;
-    }
-}
-
-/* ========== DESKTOP (1024px and up) ========== */
-@media (min-width: 1024px) {
-    header {
-        padding: 30px;
-    }
-    
-    /* Side-by-side columns */
-    .container {
-        display: flex;
-        gap: 30px;
-        margin: 30px auto;
-    }
-    
-    .profile-column {
-        width: 30%;
-        margin-bottom: 0;
-    }
-    
-    .bio-column {
-        width: 70%;
-        margin-bottom: 0;
-    }
-}
-
-/* ========== LARGE DESKTOP (1200px and up) ========== */
-@media (min-width: 1200px) {
-    header h1 {
-        font-size: 3em;
-    }
-    
-    .profile-column,
-    .bio-column {
-        padding: 30px;
-    }
-}
+                <div class="css-code">
+<span class="line"><span class="comment">/* Reset */</span></span>
+<span class="line"><span class="selector">*</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">margin</span><span class="punctuation">:</span> <span class="value">0</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">padding</span><span class="punctuation">:</span> <span class="value">0</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">box-sizing</span><span class="punctuation">:</span> <span class="value">border-box</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Base styles (Mobile-first) */</span></span>
+<span class="line"><span class="selector">body</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">font-family</span><span class="punctuation">:</span> <span class="value">Arial, sans-serif</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">line-height</span><span class="punctuation">:</span> <span class="value">1.6</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">color</span><span class="punctuation">:</span> <span class="value">#333</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">background-color</span><span class="punctuation">:</span> <span class="value">#f4f4f4</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Header */</span></span>
+<span class="line"><span class="selector">header</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">background</span><span class="punctuation">:</span> <span class="value">linear-gradient(135deg, #667eea 0%, #764ba2 100%)</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">color</span><span class="punctuation">:</span> <span class="value">white</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">padding</span><span class="punctuation">:</span> <span class="value">20px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">text-align</span><span class="punctuation">:</span> <span class="value">center</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">header h1</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">font-size</span><span class="punctuation">:</span> <span class="value">1.8em</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Container: Stacked on mobile */</span></span>
+<span class="line"><span class="selector">.container</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">max-width</span><span class="punctuation">:</span> <span class="value">1200px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">margin</span><span class="punctuation">:</span> <span class="value">20px auto</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">padding</span><span class="punctuation">:</span> <span class="value">0 15px</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Columns: Full width on mobile */</span></span>
+<span class="line"><span class="selector">.profile-column,</span></span>
+<span class="line"><span class="selector">.bio-column</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">width</span><span class="punctuation">:</span> <span class="value">100%</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">background</span><span class="punctuation">:</span> <span class="value">white</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">padding</span><span class="punctuation">:</span> <span class="value">20px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">margin-bottom</span><span class="punctuation">:</span> <span class="value">20px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">10px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">0 2px 10px rgba(0,0,0,0.1)</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">.profile-column img</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">width</span><span class="punctuation">:</span> <span class="value">150px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">height</span><span class="punctuation">:</span> <span class="value">150px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">50%</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">border</span><span class="punctuation">:</span> <span class="value">5px solid #667eea</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">margin</span><span class="punctuation">:</span> <span class="value">0 auto 20px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">display</span><span class="punctuation">:</span> <span class="value">block</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">.profile-column h2</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">color</span><span class="punctuation">:</span> <span class="value">#667eea</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">margin-bottom</span><span class="punctuation">:</span> <span class="value">10px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">text-align</span><span class="punctuation">:</span> <span class="value">center</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">font-size</span><span class="punctuation">:</span> <span class="value">1.5em</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">.profile-column > p</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">text-align</span><span class="punctuation">:</span> <span class="value">center</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">color</span><span class="punctuation">:</span> <span class="value">#666</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">margin-bottom</span><span class="punctuation">:</span> <span class="value">20px</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">.profile-column h3,</span></span>
+<span class="line"><span class="selector">.bio-column h3</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">color</span><span class="punctuation">:</span> <span class="value">#555</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">margin-top</span><span class="punctuation">:</span> <span class="value">20px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">margin-bottom</span><span class="punctuation">:</span> <span class="value">10px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">border-bottom</span><span class="punctuation">:</span> <span class="value">2px solid #667eea</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">padding-bottom</span><span class="punctuation">:</span> <span class="value">5px</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">.profile-column ul</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">list-style</span><span class="punctuation">:</span> <span class="value">none</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">.profile-column li</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">padding</span><span class="punctuation">:</span> <span class="value">8px 0</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">border-bottom</span><span class="punctuation">:</span> <span class="value">1px solid #eee</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">.bio-column h2</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">color</span><span class="punctuation">:</span> <span class="value">#667eea</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">font-size</span><span class="punctuation">:</span> <span class="value">1.8em</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">margin-bottom</span><span class="punctuation">:</span> <span class="value">15px</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">.bio-column p</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">margin-bottom</span><span class="punctuation">:</span> <span class="value">15px</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">.bio-column ul</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">margin-left</span><span class="punctuation">:</span> <span class="value">25px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">margin-bottom</span><span class="punctuation">:</span> <span class="value">15px</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Footer */</span></span>
+<span class="line"><span class="selector">footer</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">background</span><span class="punctuation">:</span> <span class="value">#333</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">color</span><span class="punctuation">:</span> <span class="value">white</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">text-align</span><span class="punctuation">:</span> <span class="value">center</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">padding</span><span class="punctuation">:</span> <span class="value">20px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">margin-top</span><span class="punctuation">:</span> <span class="value">20px</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* ========== TABLET (768px and up) ========== */</span></span>
+<span class="line"><span class="selector">@media</span> <span class="punctuation">(</span><span class="property">min-width</span><span class="punctuation">:</span> <span class="value">768px</span><span class="punctuation">)</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="selector">header h1</span> <span class="punctuation">{</span></span>
+<span class="line indent-2"><span class="property">font-size</span><span class="punctuation">:</span> <span class="value">2.5em</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="punctuation">}</span></span>
+<span class="line indent-1"></span>
+<span class="line indent-1"><span class="selector">.container</span> <span class="punctuation">{</span></span>
+<span class="line indent-2"><span class="property">padding</span><span class="punctuation">:</span> <span class="value">0 20px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="punctuation">}</span></span>
+<span class="line indent-1"></span>
+<span class="line indent-1"><span class="selector">.profile-column img</span> <span class="punctuation">{</span></span>
+<span class="line indent-2"><span class="property">width</span><span class="punctuation">:</span> <span class="value">200px</span><span class="punctuation">;</span></span>
+<span class="line indent-2"><span class="property">height</span><span class="punctuation">:</span> <span class="value">200px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="punctuation">}</span></span>
+<span class="line indent-1"></span>
+<span class="line indent-1"><span class="selector">.profile-column h2</span> <span class="punctuation">{</span></span>
+<span class="line indent-2"><span class="property">font-size</span><span class="punctuation">:</span> <span class="value">1.8em</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="punctuation">}</span></span>
+<span class="line indent-1"></span>
+<span class="line indent-1"><span class="selector">.bio-column h2</span> <span class="punctuation">{</span></span>
+<span class="line indent-2"><span class="property">font-size</span><span class="punctuation">:</span> <span class="value">2.2em</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="punctuation">}</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* ========== DESKTOP (1024px and up) ========== */</span></span>
+<span class="line"><span class="selector">@media</span> <span class="punctuation">(</span><span class="property">min-width</span><span class="punctuation">:</span> <span class="value">1024px</span><span class="punctuation">)</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="selector">header</span> <span class="punctuation">{</span></span>
+<span class="line indent-2"><span class="property">padding</span><span class="punctuation">:</span> <span class="value">30px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="punctuation">}</span></span>
+<span class="line indent-1"></span>
+<span class="line indent-1"><span class="comment">/* Side-by-side columns */</span></span>
+<span class="line indent-1"><span class="selector">.container</span> <span class="punctuation">{</span></span>
+<span class="line indent-2"><span class="property">display</span><span class="punctuation">:</span> <span class="value">flex</span><span class="punctuation">;</span></span>
+<span class="line indent-2"><span class="property">gap</span><span class="punctuation">:</span> <span class="value">30px</span><span class="punctuation">;</span></span>
+<span class="line indent-2"><span class="property">margin</span><span class="punctuation">:</span> <span class="value">30px auto</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="punctuation">}</span></span>
+<span class="line indent-1"></span>
+<span class="line indent-1"><span class="selector">.profile-column</span> <span class="punctuation">{</span></span>
+<span class="line indent-2"><span class="property">width</span><span class="punctuation">:</span> <span class="value">30%</span><span class="punctuation">;</span></span>
+<span class="line indent-2"><span class="property">margin-bottom</span><span class="punctuation">:</span> <span class="value">0</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="punctuation">}</span></span>
+<span class="line indent-1"></span>
+<span class="line indent-1"><span class="selector">.bio-column</span> <span class="punctuation">{</span></span>
+<span class="line indent-2"><span class="property">width</span><span class="punctuation">:</span> <span class="value">70%</span><span class="punctuation">;</span></span>
+<span class="line indent-2"><span class="property">margin-bottom</span><span class="punctuation">:</span> <span class="value">0</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="punctuation">}</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* ========== LARGE DESKTOP (1200px and up) ========== */</span></span>
+<span class="line"><span class="selector">@media</span> <span class="punctuation">(</span><span class="property">min-width</span><span class="punctuation">:</span> <span class="value">1200px</span><span class="punctuation">)</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="selector">header h1</span> <span class="punctuation">{</span></span>
+<span class="line indent-2"><span class="property">font-size</span><span class="punctuation">:</span> <span class="value">3em</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="punctuation">}</span></span>
+<span class="line indent-1"></span>
+<span class="line indent-1"><span class="selector">.profile-column,</span></span>
+<span class="line indent-1"><span class="selector">.bio-column</span> <span class="punctuation">{</span></span>
+<span class="line indent-2"><span class="property">padding</span><span class="punctuation">:</span> <span class="value">30px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="punctuation">}</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+                </div>
+                
+                <div class="layout-example">
+                    <h4>Live Example - Layout Transformation:</h4>
+                    <p style="margin-bottom: 15px;">This demonstrates how a 2-column layout adapts across screen sizes:</p>
+                    <div style="background: #f9fafb; padding: 15px; border: 2px solid #10b981; border-radius: 5px;">
+                        <div style="display: flex; flex-direction: column; gap: 10px;">
+                            <div style="background: #ecfdf5; padding: 20px; border: 2px solid #10b981; border-radius: 5px; text-align: center;">
+                                <strong>📱 Mobile View (< 768px)</strong><br>
+                                <small>Columns stack vertically</small>
+                            </div>
+                            <div style="background: #ecfdf5; padding: 20px; border: 2px solid #34d399; border-radius: 5px; text-align: center;">
+                                <strong>📱 Tablet View (768px - 1023px)</strong><br>
+                                <small>Still stacked, but larger fonts/images</small>
+                            </div>
+                            <div style="background: #ecfdf5; padding: 20px; border: 2px solid #6ee7b7; border-radius: 5px; text-align: center;">
+                                <strong>💻 Desktop View (≥ 1024px)</strong><br>
+                                <small>Side-by-side columns (30% / 70%)</small>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="margin-top: 15px; font-size: 0.9em; color: #64748b;">
+                        <em>Notice: The layout progressively enhances from mobile to desktop.</em>
+                    </p>
                 </div>
             </div>
 
@@ -603,18 +776,36 @@ footer {
                 <div class="activity-box">
                     <h3>Exercise 3: Hide/Show Content</h3>
                     <p>Use media queries to hide sidebar on mobile:</p>
-                    <div class="code-block">
-/* Mobile: hide sidebar */
-.sidebar {
-    display: none;
-}
-
-/* Desktop: show sidebar */
-@media (min-width: 1024px) {
-    .sidebar {
-        display: block;
-    }
-}
+                    <div class="css-code">
+<span class="line"><span class="comment">/* Mobile: hide sidebar */</span></span>
+<span class="line"><span class="selector">.sidebar</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">display</span><span class="punctuation">:</span> <span class="value">none</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Desktop: show sidebar */</span></span>
+<span class="line"><span class="selector">@media</span> <span class="punctuation">(</span><span class="property">min-width</span><span class="punctuation">:</span> <span class="value">1024px</span><span class="punctuation">)</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="selector">.sidebar</span> <span class="punctuation">{</span></span>
+<span class="line indent-2"><span class="property">display</span><span class="punctuation">:</span> <span class="value">block</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="punctuation">}</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+                    </div>
+                    
+                    <div class="layout-example" style="margin-top: 15px;">
+                        <h4>Live Example - Conditional Display:</h4>
+                        <p style="margin-bottom: 15px;">On mobile, the sidebar is hidden. On desktop (≥ 1024px), it appears:</p>
+                        <div style="display: flex; gap: 15px;">
+                            <div style="flex: 1; background: #ecfdf5; padding: 20px; border: 2px solid #10b981; border-radius: 5px; text-align: center;">
+                                <strong>Main Content</strong><br>
+                                <small>Always visible</small>
+                            </div>
+                            <div style="width: 200px; background: #fee; padding: 20px; border: 2px dashed #ef4444; border-radius: 5px; text-align: center; opacity: 0.5;">
+                                <strong>Sidebar</strong><br>
+                                <small>Hidden on mobile</small>
+                            </div>
+                        </div>
+                        <p style="margin-top: 15px; font-size: 0.9em; color: #64748b;">
+                            <em>Notice: The sidebar (shown faded here) would be completely hidden on mobile devices.</em>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -650,7 +841,7 @@ footer {
 
         <footer>
             <p>Week 3 - Day 1: Responsive Design Basics</p>
-            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+            <p>&copy; 2025 Next Step Innovation and Impact Space | Web Development Internship</p>
         </footer>
     </div>
 </body>

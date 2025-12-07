@@ -4,12 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Week 3 Day 2: Styling Forms & Buttons</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #10b981;
+            --secondary: #34d399;
+            --accent: #6ee7b7;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gradient-1: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+        }
+        
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            background: linear-gradient(135deg, #0093E9 0%, #80D0C7 100%);
+            background: var(--gradient-1);
             padding: 20px;
         }
         .container {
@@ -20,25 +30,44 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.3);
             overflow: hidden;
         }
-        header { background: #00695c; color: white; padding: 30px; }
-        .nav-breadcrumb {
-            background: #e0f2f1;
+        
+        /* Top Navigation */
+        .top-nav {
+            background: var(--dark);
             padding: 15px 30px;
-            border-bottom: 2px solid #00897b;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .nav-breadcrumb a { color: #00695c; text-decoration: none; margin-right: 10px; }
+        .top-nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            transition: color 0.3s;
+        }
+        .top-nav a:hover { color: var(--secondary); }
+        .top-nav i { margin-right: 5px; }
+        
+        header { background: var(--gradient-1); color: white; padding: 30px; }
+        .nav-breadcrumb {
+            background: #ecfdf5;
+            padding: 15px 30px;
+            border-bottom: 2px solid var(--primary);
+        }
+        .nav-breadcrumb a { color: var(--primary); text-decoration: none; margin-right: 10px; }
+        .nav-breadcrumb i { margin: 0 5px; color: var(--secondary); }
         .content { padding: 40px; }
         .section { margin-bottom: 40px; }
         .section h2 {
-            color: #00695c;
+            color: var(--primary);
             margin-bottom: 20px;
             padding-bottom: 10px;
-            border-bottom: 3px solid #00897b;
+            border-bottom: 3px solid var(--secondary);
         }
-        .section h3 { color: #00897b; margin: 20px 0 15px 0; }
+        .section h3 { color: var(--primary); margin: 20px 0 15px 0; }
         .info-box {
-            background: #e0f2f1;
-            border-left: 5px solid #00695c;
+            background: #ecfdf5;
+            border-left: 5px solid var(--primary);
             padding: 20px;
             margin: 20px 0;
             border-radius: 5px;
@@ -59,6 +88,61 @@
             margin: 20px 0;
             font-family: 'Courier New', monospace;
         }
+        
+        /* CSS Syntax Highlighting */
+        .css-code {
+            background: #2d2d2d;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+        }
+        .css-code .selector { color: #fbbf24; }
+        .css-code .property { color: #60a5fa; }
+        .css-code .value { color: #34d399; }
+        .css-code .punctuation { color: #f8fafc; }
+        .css-code .comment { color: #94a3b8; font-style: italic; }
+        .css-code .line { display: block; padding: 2px 0; }
+        .css-code .indent-1 { padding-left: 20px; }
+        .css-code .indent-2 { padding-left: 40px; }
+        .css-code .indent-3 { padding-left: 60px; }
+        .css-code .indent-4 { padding-left: 80px; }
+        
+        /* HTML Syntax Highlighting */
+        .html-code {
+            background: #2d2d2d;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+        }
+        .html-code .tag { color: #34d399; }
+        .html-code .attr { color: #60a5fa; }
+        .html-code .value { color: #fbbf24; }
+        .html-code .text { color: #f8fafc; }
+        .html-code .comment { color: #94a3b8; font-style: italic; }
+        .html-code .line { display: block; padding: 2px 0; }
+        .html-code .indent-1 { padding-left: 20px; }
+        .html-code .indent-2 { padding-left: 40px; }
+        .html-code .indent-3 { padding-left: 60px; }
+        .html-code .indent-4 { padding-left: 80px; }
+        
+        /* Layout Example Container */
+        .layout-example {
+            border: 2px solid var(--primary);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            background: #f9fafb;
+        }
+        .layout-example h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
         .btn-preview {
             padding: 20px;
             background: #f5f5f5;
@@ -77,8 +161,8 @@
             border: none;
             transition: all 0.3s;
         }
-        .btn-primary { background: #00897b; color: white; }
-        .btn-primary:hover { background: #00695c; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--secondary); transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
         ul, ol { margin-left: 30px; margin-top: 10px; }
         li { margin-bottom: 10px; }
         .checklist { list-style: none; margin-left: 0; }
@@ -88,7 +172,7 @@
             font-weight: bold;
             margin-right: 10px;
         }
-        footer { background: #00695c; color: white; padding: 20px; text-align: center; }
+        footer { background: var(--dark); color: white; padding: 20px; text-align: center; }
         .form-example {
             max-width: 600px;
             margin: 20px auto;
@@ -101,13 +185,27 @@
 </head>
 <body>
     <div class="container">
+        <nav class="top-nav">
+            <div>
+                <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+                <a href="day3-git-advanced.html"><i class="fas fa-arrow-right"></i> Next</a>
+            </div>
+            <div>
+                <a href="https://github.com" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+            </div>
+        </nav>
+        
         <header>
             <h1>📅 Week 3 - Day 2: Styling Forms & Buttons</h1>
             <p>Wednesday | Duration: 3 hours</p>
         </header>
 
         <div class="nav-breadcrumb">
-            <a href="../index.html">← Back to Course Home</a> / Week 3 / Day 2
+            <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>Week 3</span>
+            <i class="fas fa-chevron-right"></i>
+            <span>Day 2: Styling Forms & Buttons</span>
         </div>
 
         <div class="content">
@@ -126,103 +224,166 @@
                 <h2>🎨 Styling Form Elements</h2>
                 
                 <h3>Input Fields</h3>
-                <div class="code-block">
-/* Basic input styling */
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="tel"],
-input[type="date"],
-textarea,
-select {
-    width: 100%;
-    padding: 12px;
-    border: 2px solid #ddd;
-    border-radius: 5px;
-    font-size: 16px;
-    font-family: inherit;
-    transition: border-color 0.3s;
-}
-
-/* Focus state */
-input:focus,
-textarea:focus,
-select:focus {
-    outline: none;
-    border-color: #00897b;
-    box-shadow: 0 0 5px rgba(0, 137, 123, 0.3);
-}
-
-/* Placeholder styling */
-input::placeholder,
-textarea::placeholder {
-    color: #999;
-    font-style: italic;
-}
+                <div class="css-code">
+<span class="line"><span class="comment">/* Basic input styling */</span></span>
+<span class="line"><span class="selector">input[type="text"],</span></span>
+<span class="line"><span class="selector">input[type="email"],</span></span>
+<span class="line"><span class="selector">input[type="password"],</span></span>
+<span class="line"><span class="selector">input[type="tel"],</span></span>
+<span class="line"><span class="selector">input[type="date"],</span></span>
+<span class="line"><span class="selector">textarea,</span></span>
+<span class="line"><span class="selector">select</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">width</span><span class="punctuation">:</span> <span class="value">100%</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">padding</span><span class="punctuation">:</span> <span class="value">12px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">border</span><span class="punctuation">:</span> <span class="value">2px solid #ddd</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">5px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">font-size</span><span class="punctuation">:</span> <span class="value">16px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">font-family</span><span class="punctuation">:</span> <span class="value">inherit</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">transition</span><span class="punctuation">:</span> <span class="value">border-color 0.3s</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Focus state */</span></span>
+<span class="line"><span class="selector">input:focus,</span></span>
+<span class="line"><span class="selector">textarea:focus,</span></span>
+<span class="line"><span class="selector">select:focus</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">outline</span><span class="punctuation">:</span> <span class="value">none</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">border-color</span><span class="punctuation">:</span> <span class="value">#10b981</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">0 0 5px rgba(16, 185, 129, 0.3)</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Placeholder styling */</span></span>
+<span class="line"><span class="selector">input::placeholder,</span></span>
+<span class="line"><span class="selector">textarea::placeholder</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">color</span><span class="punctuation">:</span> <span class="value">#999</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">font-style</span><span class="punctuation">:</span> <span class="value">italic</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+                </div>
+                
+                <div class="layout-example">
+                    <h4>Live Example - Styled Input:</h4>
+                    <p style="margin-bottom: 10px;">Click inside the input to see the focus effect:</p>
+                    <input type="text" placeholder="Type something..." style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 5px; font-size: 16px; transition: border-color 0.3s;" onfocus="this.style.borderColor='#10b981'; this.style.boxShadow='0 0 5px rgba(16, 185, 129, 0.3)'" onblur="this.style.borderColor='#ddd'; this.style.boxShadow='none'">
+                    <p style="margin-top: 10px; font-size: 0.9em; color: #64748b;">
+                        <em>Notice: The border turns green and gets a subtle shadow when focused.</em>
+                    </p>
                 </div>
 
                 <h3>Labels</h3>
-                <div class="code-block">
-label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-    color: #333;
-}
-
-/* Required indicator */
-label.required::after {
-    content: " *";
-    color: red;
-}
+                <div class="css-code">
+<span class="line"><span class="selector">label</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">display</span><span class="punctuation">:</span> <span class="value">block</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">margin-bottom</span><span class="punctuation">:</span> <span class="value">8px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">font-weight</span><span class="punctuation">:</span> <span class="value">bold</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">color</span><span class="punctuation">:</span> <span class="value">#333</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Required indicator */</span></span>
+<span class="line"><span class="selector">label.required::after</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">content</span><span class="punctuation">:</span> <span class="value">" *"</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">color</span><span class="punctuation">:</span> <span class="value">red</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+                </div>
+                
+                <div class="layout-example">
+                    <h4>Live Example - Label with Required Indicator:</h4>
+                    <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #333;">Email Address<span style="color: red;"> *</span></label>
+                    <input type="email" placeholder="your@email.com" style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 5px; font-size: 16px;">
                 </div>
 
                 <h3>Radio Buttons & Checkboxes</h3>
-                <div class="code-block">
-/* Container for radio/checkbox */
-.radio-group,
-.checkbox-group {
-    margin: 15px 0;
-}
-
-/* Style labels for radio/checkbox */
-.radio-group label,
-.checkbox-group label {
-    display: inline-block;
-    margin-right: 20px;
-    font-weight: normal;
-    cursor: pointer;
-}
-
-/* Make inputs larger */
-input[type="radio"],
-input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    margin-right: 5px;
-    cursor: pointer;
-}
+                <div class="css-code">
+<span class="line"><span class="comment">/* Container for radio/checkbox */</span></span>
+<span class="line"><span class="selector">.radio-group,</span></span>
+<span class="line"><span class="selector">.checkbox-group</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">margin</span><span class="punctuation">:</span> <span class="value">15px 0</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Style labels for radio/checkbox */</span></span>
+<span class="line"><span class="selector">.radio-group label,</span></span>
+<span class="line"><span class="selector">.checkbox-group label</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">display</span><span class="punctuation">:</span> <span class="value">inline-block</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">margin-right</span><span class="punctuation">:</span> <span class="value">20px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">font-weight</span><span class="punctuation">:</span> <span class="value">normal</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">cursor</span><span class="punctuation">:</span> <span class="value">pointer</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Make inputs larger */</span></span>
+<span class="line"><span class="selector">input[type="radio"],</span></span>
+<span class="line"><span class="selector">input[type="checkbox"]</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">width</span><span class="punctuation">:</span> <span class="value">18px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">height</span><span class="punctuation">:</span> <span class="value">18px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">margin-right</span><span class="punctuation">:</span> <span class="value">5px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">cursor</span><span class="punctuation">:</span> <span class="value">pointer</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+                </div>
+                
+                <div class="layout-example">
+                    <h4>Live Example - Radio Buttons & Checkboxes:</h4>
+                    <div style="margin: 15px 0;">
+                        <label style="font-weight: bold; margin-bottom: 10px; display: block;">Choose your level:</label>
+                        <label style="display: inline-block; margin-right: 20px; cursor: pointer;">
+                            <input type="radio" name="level" style="width: 18px; height: 18px; margin-right: 5px; cursor: pointer;"> Beginner
+                        </label>
+                        <label style="display: inline-block; margin-right: 20px; cursor: pointer;">
+                            <input type="radio" name="level" style="width: 18px; height: 18px; margin-right: 5px; cursor: pointer;"> Intermediate
+                        </label>
+                        <label style="display: inline-block; cursor: pointer;">
+                            <input type="radio" name="level" style="width: 18px; height: 18px; margin-right: 5px; cursor: pointer;"> Advanced
+                        </label>
+                    </div>
+                    <div style="margin: 15px 0;">
+                        <label style="font-weight: bold; margin-bottom: 10px; display: block;">Select skills:</label>
+                        <label style="display: inline-block; margin-right: 20px; cursor: pointer;">
+                            <input type="checkbox" style="width: 18px; height: 18px; margin-right: 5px; cursor: pointer;"> HTML
+                        </label>
+                        <label style="display: inline-block; margin-right: 20px; cursor: pointer;">
+                            <input type="checkbox" style="width: 18px; height: 18px; margin-right: 5px; cursor: pointer;"> CSS
+                        </label>
+                        <label style="display: inline-block; cursor: pointer;">
+                            <input type="checkbox" style="width: 18px; height: 18px; margin-right: 5px; cursor: pointer;"> JavaScript
+                        </label>
+                    </div>
                 </div>
 
                 <h3>Select Dropdowns</h3>
-                <div class="code-block">
-select {
-    appearance: none;  /* Remove default arrow */
-    background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-    padding-right: 40px;
-    cursor: pointer;
-}
+                <div class="css-code">
+<span class="line"><span class="selector">select</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">appearance</span><span class="punctuation">:</span> <span class="value">none</span><span class="punctuation">;</span>  <span class="comment">/* Remove default arrow */</span></span>
+<span class="line indent-1"><span class="property">background-image</span><span class="punctuation">:</span> <span class="value">url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>")</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">background-repeat</span><span class="punctuation">:</span> <span class="value">no-repeat</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">background-position</span><span class="punctuation">:</span> <span class="value">right 10px center</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">padding-right</span><span class="punctuation">:</span> <span class="value">40px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">cursor</span><span class="punctuation">:</span> <span class="value">pointer</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+                </div>
+                
+                <div class="layout-example">
+                    <h4>Live Example - Styled Dropdown:</h4>
+                    <label style="display: block; margin-bottom: 8px; font-weight: bold;">Select Country:</label>
+                    <select style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 5px; font-size: 16px; cursor: pointer;">
+                        <option>Nigeria</option>
+                        <option>Ghana</option>
+                        <option>Kenya</option>
+                        <option>South Africa</option>
+                    </select>
                 </div>
 
                 <h3>Textarea</h3>
-                <div class="code-block">
-textarea {
-    resize: vertical;  /* Allow vertical resize only */
-    min-height: 120px;
-    font-family: inherit;
-}
+                <div class="css-code">
+<span class="line"><span class="selector">textarea</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">resize</span><span class="punctuation">:</span> <span class="value">vertical</span><span class="punctuation">;</span>  <span class="comment">/* Allow vertical resize only */</span></span>
+<span class="line indent-1"><span class="property">min-height</span><span class="punctuation">:</span> <span class="value">120px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">font-family</span><span class="punctuation">:</span> <span class="value">inherit</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+                </div>
+                
+                <div class="layout-example">
+                    <h4>Live Example - Styled Textarea:</h4>
+                    <label style="display: block; margin-bottom: 8px; font-weight: bold;">Comments:</label>
+                    <textarea placeholder="Write your message here..." style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 5px; font-size: 16px; resize: vertical; min-height: 120px; font-family: inherit;"></textarea>
+                    <p style="margin-top: 10px; font-size: 0.9em; color: #64748b;">
+                        <em>Notice: You can only resize vertically (drag the bottom-right corner).</em>
+                    </p>
                 </div>
             </div>
 
@@ -230,93 +391,110 @@ textarea {
                 <h2>🔘 Styling Buttons</h2>
                 
                 <h3>Basic Button Styles</h3>
-                <div class="code-block">
-button,
-input[type="submit"],
-input[type="button"],
-.btn {
-    padding: 12px 30px;
-    font-size: 16px;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: inline-block;
-    text-align: center;
-    text-decoration: none;
-}
-
-/* Primary button */
-.btn-primary {
-    background: #00897b;
-    color: white;
-}
-
-.btn-primary:hover {
-    background: #00695c;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-
-/* Secondary button */
-.btn-secondary {
-    background: #757575;
-    color: white;
-}
-
-.btn-secondary:hover {
-    background: #616161;
-}
-
-/* Success button */
-.btn-success {
-    background: #4caf50;
-    color: white;
-}
-
-/* Danger button */
-.btn-danger {
-    background: #f44336;
-    color: white;
-}
-
-/* Outline button */
-.btn-outline {
-    background: transparent;
-    color: #00897b;
-    border: 2px solid #00897b;
-}
-
-.btn-outline:hover {
-    background: #00897b;
-    color: white;
-}
+                <div class="css-code">
+<span class="line"><span class="selector">button,</span></span>
+<span class="line"><span class="selector">input[type="submit"],</span></span>
+<span class="line"><span class="selector">input[type="button"],</span></span>
+<span class="line"><span class="selector">.btn</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">padding</span><span class="punctuation">:</span> <span class="value">12px 30px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">font-size</span><span class="punctuation">:</span> <span class="value">16px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">font-weight</span><span class="punctuation">:</span> <span class="value">bold</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">border</span><span class="punctuation">:</span> <span class="value">none</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">5px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">cursor</span><span class="punctuation">:</span> <span class="value">pointer</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">transition</span><span class="punctuation">:</span> <span class="value">all 0.3s ease</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">display</span><span class="punctuation">:</span> <span class="value">inline-block</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">text-align</span><span class="punctuation">:</span> <span class="value">center</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">text-decoration</span><span class="punctuation">:</span> <span class="value">none</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Primary button */</span></span>
+<span class="line"><span class="selector">.btn-primary</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">background</span><span class="punctuation">:</span> <span class="value">#10b981</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">color</span><span class="punctuation">:</span> <span class="value">white</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">.btn-primary:hover</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">background</span><span class="punctuation">:</span> <span class="value">#34d399</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">transform</span><span class="punctuation">:</span> <span class="value">translateY(-2px)</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">0 4px 8px rgba(0,0,0,0.2)</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Secondary button */</span></span>
+<span class="line"><span class="selector">.btn-secondary</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">background</span><span class="punctuation">:</span> <span class="value">#757575</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">color</span><span class="punctuation">:</span> <span class="value">white</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">.btn-secondary:hover</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">background</span><span class="punctuation">:</span> <span class="value">#616161</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Success button */</span></span>
+<span class="line"><span class="selector">.btn-success</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">background</span><span class="punctuation">:</span> <span class="value">#4caf50</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">color</span><span class="punctuation">:</span> <span class="value">white</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Danger button */</span></span>
+<span class="line"><span class="selector">.btn-danger</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">background</span><span class="punctuation">:</span> <span class="value">#f44336</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">color</span><span class="punctuation">:</span> <span class="value">white</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Outline button */</span></span>
+<span class="line"><span class="selector">.btn-outline</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">background</span><span class="punctuation">:</span> <span class="value">transparent</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">color</span><span class="punctuation">:</span> <span class="value">#10b981</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">border</span><span class="punctuation">:</span> <span class="value">2px solid #10b981</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">.btn-outline:hover</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">background</span><span class="punctuation">:</span> <span class="value">#10b981</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">color</span><span class="punctuation">:</span> <span class="value">white</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
                 </div>
 
-                <div class="btn-preview">
-                    <button class="btn-example btn-primary">Primary Button</button>
-                    <button class="btn-example" style="background: #757575; color: white;">Secondary Button</button>
-                    <button class="btn-example" style="background: #4caf50; color: white;">Success Button</button>
-                    <button class="btn-example" style="background: #f44336; color: white;">Danger Button</button>
+                <div class="layout-example">
+                    <h4>Live Example - Interactive Buttons:</h4>
+                    <p style="margin-bottom: 15px;">Hover over each button to see the effects:</p>
+                    <div style="text-align: center;">
+                        <button style="padding: 12px 30px; font-size: 16px; font-weight: bold; border: none; border-radius: 5px; cursor: pointer; transition: all 0.3s ease; background: #10b981; color: white; margin: 10px;" onmouseover="this.style.background='#34d399'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 8px rgba(0,0,0,0.2)'" onmouseout="this.style.background='#10b981'; this.style.transform='none'; this.style.boxShadow='none'">Primary</button>
+                        <button style="padding: 12px 30px; font-size: 16px; font-weight: bold; border: none; border-radius: 5px; cursor: pointer; transition: all 0.3s ease; background: #757575; color: white; margin: 10px;" onmouseover="this.style.background='#616161'" onmouseout="this.style.background='#757575'">Secondary</button>
+                        <button style="padding: 12px 30px; font-size: 16px; font-weight: bold; border: none; border-radius: 5px; cursor: pointer; transition: all 0.3s ease; background: #4caf50; color: white; margin: 10px;" onmouseover="this.style.background='#45a049'" onmouseout="this.style.background='#4caf50'">Success</button>
+                        <button style="padding: 12px 30px; font-size: 16px; font-weight: bold; border: none; border-radius: 5px; cursor: pointer; transition: all 0.3s ease; background: #f44336; color: white; margin: 10px;" onmouseover="this.style.background='#da190b'" onmouseout="this.style.background='#f44336'">Danger</button>
+                        <button style="padding: 12px 30px; font-size: 16px; font-weight: bold; border-radius: 5px; cursor: pointer; transition: all 0.3s ease; background: transparent; color: #10b981; border: 2px solid #10b981; margin: 10px;" onmouseover="this.style.background='#10b981'; this.style.color='white'" onmouseout="this.style.background='transparent'; this.style.color='#10b981'">Outline</button>
+                    </div>
                 </div>
 
                 <h3>Button Sizes</h3>
-                <div class="code-block">
-.btn-small {
-    padding: 8px 20px;
-    font-size: 14px;
-}
-
-.btn-large {
-    padding: 15px 40px;
-    font-size: 18px;
-}
-
-.btn-block {
-    display: block;
-    width: 100%;
-}
+                <div class="css-code">
+<span class="line"><span class="selector">.btn-small</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">padding</span><span class="punctuation">:</span> <span class="value">8px 20px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">font-size</span><span class="punctuation">:</span> <span class="value">14px</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">.btn-large</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">padding</span><span class="punctuation">:</span> <span class="value">15px 40px</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">font-size</span><span class="punctuation">:</span> <span class="value">18px</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">.btn-block</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">display</span><span class="punctuation">:</span> <span class="value">block</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">width</span><span class="punctuation">:</span> <span class="value">100%</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+                </div>
+                
+                <div class="layout-example">
+                    <h4>Live Example - Button Sizes:</h4>
+                    <div style="text-align: center;">
+                        <button style="padding: 8px 20px; font-size: 14px; font-weight: bold; border: none; border-radius: 5px; cursor: pointer; background: #10b981; color: white; margin: 10px;">Small Button</button>
+                        <button style="padding: 12px 30px; font-size: 16px; font-weight: bold; border: none; border-radius: 5px; cursor: pointer; background: #10b981; color: white; margin: 10px;">Regular Button</button>
+                        <button style="padding: 15px 40px; font-size: 18px; font-weight: bold; border: none; border-radius: 5px; cursor: pointer; background: #10b981; color: white; margin: 10px;">Large Button</button>
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <button style="display: block; width: 100%; padding: 12px; font-size: 16px; font-weight: bold; border: none; border-radius: 5px; cursor: pointer; background: #10b981; color: white;">Block Button (Full Width)</button>
+                    </div>
                 </div>
             </div>
 
@@ -326,38 +504,47 @@ input[type="button"],
                     <p><strong>Transitions</strong> create smooth changes between CSS property values.</p>
                 </div>
 
-                <div class="code-block">
-/* Basic transition */
-.element {
-    transition: property duration timing-function delay;
-}
-
-/* Examples */
-button {
-    background: #00897b;
-    transition: background 0.3s ease;
-}
-
-button:hover {
-    background: #00695c;
-}
-
-/* Multiple properties */
-.card {
-    transform: scale(1);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-}
-
-/* All properties */
-.link {
-    transition: all 0.3s ease;
-}
+                <div class="css-code">
+<span class="line"><span class="comment">/* Basic transition */</span></span>
+<span class="line"><span class="selector">.element</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">transition</span><span class="punctuation">:</span> <span class="value">property duration timing-function delay</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Examples */</span></span>
+<span class="line"><span class="selector">button</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">background</span><span class="punctuation">:</span> <span class="value">#10b981</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">transition</span><span class="punctuation">:</span> <span class="value">background 0.3s ease</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">button:hover</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">background</span><span class="punctuation">:</span> <span class="value">#34d399</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Multiple properties */</span></span>
+<span class="line"><span class="selector">.card</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">transform</span><span class="punctuation">:</span> <span class="value">scale(1)</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">0 2px 5px rgba(0,0,0,0.1)</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">transition</span><span class="punctuation">:</span> <span class="value">transform 0.3s, box-shadow 0.3s</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">.card:hover</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">transform</span><span class="punctuation">:</span> <span class="value">scale(1.05)</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">0 5px 15px rgba(0,0,0,0.3)</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* All properties */</span></span>
+<span class="line"><span class="selector">.link</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">transition</span><span class="punctuation">:</span> <span class="value">all 0.3s ease</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+                </div>
+                
+                <div class="layout-example">
+                    <h4>Live Example - Smooth Transition:</h4>
+                    <p style="margin-bottom: 15px;">Hover over the card to see scale and shadow transition:</p>
+                    <div style="max-width: 300px; margin: 0 auto; background: #ecfdf5; padding: 20px; border-radius: 8px; border: 2px solid #10b981; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 15px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 2px 5px rgba(0,0,0,0.1)'">
+                        <h4 style="color: #10b981; margin-bottom: 10px;">Hover Me!</h4>
+                        <p style="margin: 0; color: #64748b;">This card scales up and shadow intensifies smoothly on hover.</p>
+                    </div>
                 </div>
 
                 <h3>Timing Functions</h3>
@@ -372,55 +559,73 @@ button:hover {
 
             <div class="section">
                 <h2>🎬 Hover Effects</h2>
-                <div class="code-block">
-/* Scale effect */
-.card {
-    transition: transform 0.3s;
-}
-
-.card:hover {
-    transform: scale(1.1);
-}
-
-/* Slide up */
-.element {
-    transition: transform 0.3s;
-}
-
-.element:hover {
-    transform: translateY(-10px);
-}
-
-/* Color change */
-.link {
-    color: #333;
-    transition: color 0.3s;
-}
-
-.link:hover {
-    color: #00897b;
-}
-
-/* Background gradient shift */
-.button {
-    background: linear-gradient(to right, #00897b, #00695c);
-    background-size: 200% 100%;
-    transition: background-position 0.3s;
-}
-
-.button:hover {
-    background-position: 100% 0;
-}
-
-/* Box shadow */
-.card {
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    transition: box-shadow 0.3s;
-}
-
-.card:hover {
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-}
+                <div class="css-code">
+<span class="line"><span class="comment">/* Scale effect */</span></span>
+<span class="line"><span class="selector">.card</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">transition</span><span class="punctuation">:</span> <span class="value">transform 0.3s</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">.card:hover</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">transform</span><span class="punctuation">:</span> <span class="value">scale(1.1)</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Slide up */</span></span>
+<span class="line"><span class="selector">.element</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">transition</span><span class="punctuation">:</span> <span class="value">transform 0.3s</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">.element:hover</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">transform</span><span class="punctuation">:</span> <span class="value">translateY(-10px)</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Color change */</span></span>
+<span class="line"><span class="selector">.link</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">color</span><span class="punctuation">:</span> <span class="value">#333</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">transition</span><span class="punctuation">:</span> <span class="value">color 0.3s</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">.link:hover</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">color</span><span class="punctuation">:</span> <span class="value">#10b981</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Background gradient shift */</span></span>
+<span class="line"><span class="selector">.button</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">background</span><span class="punctuation">:</span> <span class="value">linear-gradient(to right, #10b981, #34d399)</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">background-size</span><span class="punctuation">:</span> <span class="value">200% 100%</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">transition</span><span class="punctuation">:</span> <span class="value">background-position 0.3s</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">.button:hover</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">background-position</span><span class="punctuation">:</span> <span class="value">100% 0</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/* Box shadow */</span></span>
+<span class="line"><span class="selector">.card</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">0 2px 5px rgba(0,0,0,0.1)</span><span class="punctuation">;</span></span>
+<span class="line indent-1"><span class="property">transition</span><span class="punctuation">:</span> <span class="value">box-shadow 0.3s</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="selector">.card:hover</span> <span class="punctuation">{</span></span>
+<span class="line indent-1"><span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">0 8px 20px rgba(0,0,0,0.3)</span><span class="punctuation">;</span></span>
+<span class="line"><span class="punctuation">}</span></span>
+                </div>
+                
+                <div class="layout-example">
+                    <h4>Live Example - Various Hover Effects:</h4>
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; margin-top: 20px;">
+                        <div style="background: #ecfdf5; padding: 20px; border: 2px solid #10b981; border-radius: 8px; transition: transform 0.3s; cursor: pointer; text-align: center; min-width: 150px;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                            <strong style="color: #10b981;">Scale Effect</strong>
+                        </div>
+                        <div style="background: #ecfdf5; padding: 20px; border: 2px solid #10b981; border-radius: 8px; transition: transform 0.3s; cursor: pointer; text-align: center; min-width: 150px;" onmouseover="this.style.transform='translateY(-10px)'" onmouseout="this.style.transform='translateY(0)'">
+                            <strong style="color: #10b981;">Slide Up</strong>
+                        </div>
+                        <div style="background: #ecfdf5; padding: 20px; border: 2px solid #10b981; border-radius: 8px; transition: box-shadow 0.3s; cursor: pointer; text-align: center; min-width: 150px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" onmouseover="this.style.boxShadow='0 8px 20px rgba(0,0,0,0.3)'" onmouseout="this.style.boxShadow='0 2px 5px rgba(0,0,0,0.1)'">
+                            <strong style="color: #10b981;">Shadow Grow</strong>
+                        </div>
+                    </div>
+                    <p style="margin-top: 20px; text-align: center; font-size: 0.9em; color: #64748b;">
+                        <em>Hover over each box to see different transition effects!</em>
+                    </p>
                 </div>
             </div>
 
@@ -433,116 +638,116 @@ button:hover {
                 </div>
 
                 <h3>Complete Form CSS</h3>
-                <div class="code-block">
-/* styled-form.css */
+                <div class="css-code">
+<span class="comment">/* styled-form.css */</span>
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+<span class="selector">*</span> <span class="punctuation">{</span>
+    <span class="property">margin</span><span class="punctuation">:</span> <span class="value">0</span><span class="punctuation">;</span>
+    <span class="property">padding</span><span class="punctuation">:</span> <span class="value">0</span><span class="punctuation">;</span>
+    <span class="property">box-sizing</span><span class="punctuation">:</span> <span class="value">border-box</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
 
-body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    padding: 20px;
-    min-height: 100vh;
-}
+<span class="selector">body</span> <span class="punctuation">{</span>
+    <span class="property">font-family</span><span class="punctuation">:</span> <span class="value">'Segoe UI', Arial, sans-serif</span><span class="punctuation">;</span>
+    <span class="property">background</span><span class="punctuation">:</span> <span class="value">linear-gradient(135deg, #10b981 0%, #34d399 100%)</span><span class="punctuation">;</span>
+    <span class="property">padding</span><span class="punctuation">:</span> <span class="value">20px</span><span class="punctuation">;</span>
+    <span class="property">min-height</span><span class="punctuation">:</span> <span class="value">100vh</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
 
-.form-container {
-    max-width: 700px;
-    margin: 0 auto;
-    background: white;
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-}
+<span class="selector">.form-container</span> <span class="punctuation">{</span>
+    <span class="property">max-width</span><span class="punctuation">:</span> <span class="value">700px</span><span class="punctuation">;</span>
+    <span class="property">margin</span><span class="punctuation">:</span> <span class="value">0 auto</span><span class="punctuation">;</span>
+    <span class="property">background</span><span class="punctuation">:</span> <span class="value">white</span><span class="punctuation">;</span>
+    <span class="property">padding</span><span class="punctuation">:</span> <span class="value">40px</span><span class="punctuation">;</span>
+    <span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">15px</span><span class="punctuation">;</span>
+    <span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">0 10px 40px rgba(0,0,0,0.2)</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
 
-h1 {
-    color: #667eea;
-    text-align: center;
-    margin-bottom: 10px;
-    font-size: 2.5em;
-}
+<span class="selector">h1</span> <span class="punctuation">{</span>
+    <span class="property">color</span><span class="punctuation">:</span> <span class="value">#10b981</span><span class="punctuation">;</span>
+    <span class="property">text-align</span><span class="punctuation">:</span> <span class="value">center</span><span class="punctuation">;</span>
+    <span class="property">margin-bottom</span><span class="punctuation">:</span> <span class="value">10px</span><span class="punctuation">;</span>
+    <span class="property">font-size</span><span class="punctuation">:</span> <span class="value">2.5em</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
 
-.subtitle {
-    text-align: center;
-    color: #666;
-    margin-bottom: 30px;
-}
+<span class="selector">.subtitle</span> <span class="punctuation">{</span>
+    <span class="property">text-align</span><span class="punctuation">:</span> <span class="value">center</span><span class="punctuation">;</span>
+    <span class="property">color</span><span class="punctuation">:</span> <span class="value">#666</span><span class="punctuation">;</span>
+    <span class="property">margin-bottom</span><span class="punctuation">:</span> <span class="value">30px</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
 
-/* Section headers */
-h2 {
-    color: #555;
-    margin-top: 30px;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #667eea;
-}
+<span class="comment">/* Section headers */</span>
+<span class="selector">h2</span> <span class="punctuation">{</span>
+    <span class="property">color</span><span class="punctuation">:</span> <span class="value">#333</span><span class="punctuation">;</span>
+    <span class="property">margin-top</span><span class="punctuation">:</span> <span class="value">30px</span><span class="punctuation">;</span>
+    <span class="property">margin-bottom</span><span class="punctuation">:</span> <span class="value">15px</span><span class="punctuation">;</span>
+    <span class="property">padding-bottom</span><span class="punctuation">:</span> <span class="value">10px</span><span class="punctuation">;</span>
+    <span class="property">border-bottom</span><span class="punctuation">:</span> <span class="value">2px solid #10b981</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
 
-/* Form groups */
-.form-group {
-    margin-bottom: 25px;
-}
+<span class="comment">/* Form groups */</span>
+<span class="selector">.form-group</span> <span class="punctuation">{</span>
+    <span class="property">margin-bottom</span><span class="punctuation">:</span> <span class="value">25px</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
 
-/* Labels */
-label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
-    color: #333;
-}
+<span class="comment">/* Labels */</span>
+<span class="selector">label</span> <span class="punctuation">{</span>
+    <span class="property">display</span><span class="punctuation">:</span> <span class="value">block</span><span class="punctuation">;</span>
+    <span class="property">margin-bottom</span><span class="punctuation">:</span> <span class="value">8px</span><span class="punctuation">;</span>
+    <span class="property">font-weight</span><span class="punctuation">:</span> <span class="value">600</span><span class="punctuation">;</span>
+    <span class="property">color</span><span class="punctuation">:</span> <span class="value">#333</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
 
-label.required::after {
-    content: " *";
-    color: #f44336;
-}
+<span class="selector">label.required::after</span> <span class="punctuation">{</span>
+    <span class="property">content</span><span class="punctuation">:</span> <span class="value">" *"</span><span class="punctuation">;</span>
+    <span class="property">color</span><span class="punctuation">:</span> <span class="value">#f44336</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
 
-/* Input fields */
-input[type="text"],
+<span class="comment">/* Input fields */</span>
+<span class="selector">input[type="text"],
 input[type="email"],
 input[type="tel"],
 input[type="date"],
 select,
-textarea {
-    width: 100%;
-    padding: 12px 15px;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    font-size: 16px;
-    font-family: inherit;
-    transition: all 0.3s;
-}
+textarea</span> <span class="punctuation">{</span>
+    <span class="property">width</span><span class="punctuation">:</span> <span class="value">100%</span><span class="punctuation">;</span>
+    <span class="property">padding</span><span class="punctuation">:</span> <span class="value">12px 15px</span><span class="punctuation">;</span>
+    <span class="property">border</span><span class="punctuation">:</span> <span class="value">2px solid #ddd</span><span class="punctuation">;</span>
+    <span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">8px</span><span class="punctuation">;</span>
+    <span class="property">font-size</span><span class="punctuation">:</span> <span class="value">16px</span><span class="punctuation">;</span>
+    <span class="property">font-family</span><span class="punctuation">:</span> <span class="value">inherit</span><span class="punctuation">;</span>
+    <span class="property">transition</span><span class="punctuation">:</span> <span class="value">all 0.3s</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
 
-input:focus,
+<span class="selector">input:focus,
 select:focus,
-textarea:focus {
-    outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 8px rgba(102, 126, 234, 0.3);
-}
+textarea:focus</span> <span class="punctuation">{</span>
+    <span class="property">outline</span><span class="punctuation">:</span> <span class="value">none</span><span class="punctuation">;</span>
+    <span class="property">border-color</span><span class="punctuation">:</span> <span class="value">#10b981</span><span class="punctuation">;</span>
+    <span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">0 0 8px rgba(16, 185, 129, 0.3)</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
 
-/* Placeholder */
-input::placeholder,
-textarea::placeholder {
-    color: #999;
-}
+<span class="comment">/* Placeholder */</span>
+<span class="selector">input::placeholder,
+textarea::placeholder</span> <span class="punctuation">{</span>
+    <span class="property">color</span><span class="punctuation">:</span> <span class="value">#999</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
 
-/* Select dropdown */
-select {
-    cursor: pointer;
-    appearance: none;
-    background-image: url("data:image/svg+xml;utf8,<svg fill='%23333' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-    padding-right: 40px;
-}
+<span class="comment">/* Select dropdown */</span>
+<span class="selector">select</span> <span class="punctuation">{</span>
+    <span class="property">cursor</span><span class="punctuation">:</span> <span class="value">pointer</span><span class="punctuation">;</span>
+    <span class="property">appearance</span><span class="punctuation">:</span> <span class="value">none</span><span class="punctuation">;</span>
+    <span class="property">background-image</span><span class="punctuation">:</span> <span class="value">url("data:image/svg+xml;utf8,<svg fill='%23333' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>")</span><span class="punctuation">;</span>
+    <span class="property">background-repeat</span><span class="punctuation">:</span> <span class="value">no-repeat</span><span class="punctuation">;</span>
+    <span class="property">background-position</span><span class="punctuation">:</span> <span class="value">right 10px center</span><span class="punctuation">;</span>
+    <span class="property">padding-right</span><span class="punctuation">:</span> <span class="value">40px</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
 
-/* Textarea */
-textarea {
-    resize: vertical;
-    min-height: 120px;
-}
+<span class="comment">/* Textarea */</span>
+<span class="selector">textarea</span> <span class="punctuation">{</span>
+    <span class="property">resize</span><span class="punctuation">:</span> <span class="value">vertical</span><span class="punctuation">;</span>
+    <span class="property">min-height</span><span class="punctuation">:</span> <span class="value">120px</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
 
 /* Radio and checkbox groups */
 .radio-group,
@@ -560,105 +765,105 @@ textarea {
     cursor: pointer;
 }
 
-input[type="radio"],
-input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
-    margin-right: 8px;
-    cursor: pointer;
-    accent-color: #667eea;
-}
+<span class="selector">input[type="radio"],
+input[type="checkbox"]</span> <span class="punctuation">{</span>
+    <span class="property">width</span><span class="punctuation">:</span> <span class="value">20px</span><span class="punctuation">;</span>
+    <span class="property">height</span><span class="punctuation">:</span> <span class="value">20px</span><span class="punctuation">;</span>
+    <span class="property">margin-right</span><span class="punctuation">:</span> <span class="value">8px</span><span class="punctuation">;</span>
+    <span class="property">cursor</span><span class="punctuation">:</span> <span class="value">pointer</span><span class="punctuation">;</span>
+    <span class="property">accent-color</span><span class="punctuation">:</span> <span class="value">#10b981</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
 
-/* Buttons container */
-.button-group {
-    display: flex;
-    gap: 15px;
-    margin-top: 30px;
-}
+<span class="comment">/* Buttons container */</span>
+<span class="selector">.button-group</span> <span class="punctuation">{</span>
+    <span class="property">display</span><span class="punctuation">:</span> <span class="value">flex</span><span class="punctuation">;</span>
+    <span class="property">gap</span><span class="punctuation">:</span> <span class="value">15px</span><span class="punctuation">;</span>
+    <span class="property">margin-top</span><span class="punctuation">:</span> <span class="value">30px</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
 
-/* Buttons */
-button,
+<span class="comment">/* Buttons */</span>
+<span class="selector">button,
 input[type="submit"],
-input[type="reset"] {
-    flex: 1;
-    padding: 15px 30px;
-    font-size: 16px;
-    font-weight: bold;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
+input[type="reset"]</span> <span class="punctuation">{</span>
+    <span class="property">flex</span><span class="punctuation">:</span> <span class="value">1</span><span class="punctuation">;</span>
+    <span class="property">padding</span><span class="punctuation">:</span> <span class="value">15px 30px</span><span class="punctuation">;</span>
+    <span class="property">font-size</span><span class="punctuation">:</span> <span class="value">16px</span><span class="punctuation">;</span>
+    <span class="property">font-weight</span><span class="punctuation">:</span> <span class="value">bold</span><span class="punctuation">;</span>
+    <span class="property">border</span><span class="punctuation">:</span> <span class="value">none</span><span class="punctuation">;</span>
+    <span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">8px</span><span class="punctuation">;</span>
+    <span class="property">cursor</span><span class="punctuation">:</span> <span class="value">pointer</span><span class="punctuation">;</span>
+    <span class="property">transition</span><span class="punctuation">:</span> <span class="value">all 0.3s ease</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
 
-button[type="submit"],
-input[type="submit"] {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-}
+<span class="selector">button[type="submit"],
+input[type="submit"]</span> <span class="punctuation">{</span>
+    <span class="property">background</span><span class="punctuation">:</span> <span class="value">linear-gradient(135deg, #10b981 0%, #34d399 100%)</span><span class="punctuation">;</span>
+    <span class="property">color</span><span class="punctuation">:</span> <span class="value">white</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
 
-button[type="submit"]:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-}
+<span class="selector">button[type="submit"]:hover</span> <span class="punctuation">{</span>
+    <span class="property">transform</span><span class="punctuation">:</span> <span class="value">translateY(-2px)</span><span class="punctuation">;</span>
+    <span class="property">box-shadow</span><span class="punctuation">:</span> <span class="value">0 5px 15px rgba(16, 185, 129, 0.4)</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
 
-button[type="reset"],
-input[type="reset"] {
-    background: #757575;
-    color: white;
-}
+<span class="selector">button[type="reset"],
+input[type="reset"]</span> <span class="punctuation">{</span>
+    <span class="property">background</span><span class="punctuation">:</span> <span class="value">#757575</span><span class="punctuation">;</span>
+    <span class="property">color</span><span class="punctuation">:</span> <span class="value">white</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
 
-button[type="reset"]:hover {
-    background: #616161;
-}
+<span class="selector">button[type="reset"]:hover</span> <span class="punctuation">{</span>
+    <span class="property">background</span><span class="punctuation">:</span> <span class="value">#616161</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
 
-/* Agreement checkbox */
-.agreement {
-    margin: 25px 0;
-    padding: 15px;
-    background: #f9f9f9;
-    border-radius: 8px;
-}
+<span class="comment">/* Agreement checkbox */</span>
+<span class="selector">.agreement</span> <span class="punctuation">{</span>
+    <span class="property">margin</span><span class="punctuation">:</span> <span class="value">25px 0</span><span class="punctuation">;</span>
+    <span class="property">padding</span><span class="punctuation">:</span> <span class="value">15px</span><span class="punctuation">;</span>
+    <span class="property">background</span><span class="punctuation">:</span> <span class="value">#f9f9f9</span><span class="punctuation">;</span>
+    <span class="property">border-radius</span><span class="punctuation">:</span> <span class="value">8px</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
 
-.agreement label {
-    display: flex;
-    align-items: center;
-    font-weight: normal;
-}
+<span class="selector">.agreement label</span> <span class="punctuation">{</span>
+    <span class="property">display</span><span class="punctuation">:</span> <span class="value">flex</span><span class="punctuation">;</span>
+    <span class="property">align-items</span><span class="punctuation">:</span> <span class="value">center</span><span class="punctuation">;</span>
+    <span class="property">font-weight</span><span class="punctuation">:</span> <span class="value">normal</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
 
-.agreement input[type="checkbox"] {
-    margin-right: 10px;
-}
+<span class="selector">.agreement input[type="checkbox"]</span> <span class="punctuation">{</span>
+    <span class="property">margin-right</span><span class="punctuation">:</span> <span class="value">10px</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
 
-/* Error state */
-input:invalid:not(:placeholder-shown) {
-    border-color: #f44336;
-}
+<span class="comment">/* Error state */</span>
+<span class="selector">input:invalid:not(:placeholder-shown)</span> <span class="punctuation">{</span>
+    <span class="property">border-color</span><span class="punctuation">:</span> <span class="value">#f44336</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
 
-/* Success state */
-input:valid:not(:placeholder-shown) {
-    border-color: #4caf50;
-}
+<span class="comment">/* Success state */</span>
+<span class="selector">input:valid:not(:placeholder-shown)</span> <span class="punctuation">{</span>
+    <span class="property">border-color</span><span class="punctuation">:</span> <span class="value">#4caf50</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
 
-/* Responsive */
-@media (max-width: 768px) {
-    .form-container {
-        padding: 30px 20px;
-    }
+<span class="comment">/* Responsive */</span>
+<span class="selector">@media (max-width: 768px)</span> <span class="punctuation">{</span>
+    <span class="selector indent-1">.form-container</span> <span class="punctuation">{</span>
+        <span class="property indent-2">padding</span><span class="punctuation">:</span> <span class="value">30px 20px</span><span class="punctuation">;</span>
+    <span class="punctuation indent-1">}</span>
     
-    h1 {
-        font-size: 2em;
-    }
+    <span class="selector indent-1">h1</span> <span class="punctuation">{</span>
+        <span class="property indent-2">font-size</span><span class="punctuation">:</span> <span class="value">2em</span><span class="punctuation">;</span>
+    <span class="punctuation indent-1">}</span>
     
-    .button-group {
-        flex-direction: column;
-    }
+    <span class="selector indent-1">.button-group</span> <span class="punctuation">{</span>
+        <span class="property indent-2">flex-direction</span><span class="punctuation">:</span> <span class="value">column</span><span class="punctuation">;</span>
+    <span class="punctuation indent-1">}</span>
     
-    .radio-group label,
-    .checkbox-group label {
-        display: flex;
-        width: 100%;
-    }
-}
+    <span class="selector indent-1">.radio-group label,
+    .checkbox-group label</span> <span class="punctuation">{</span>
+        <span class="property indent-2">display</span><span class="punctuation">:</span> <span class="value">flex</span><span class="punctuation">;</span>
+        <span class="property indent-2">width</span><span class="punctuation">:</span> <span class="value">100%</span><span class="punctuation">;</span>
+    <span class="punctuation indent-1">}</span>
+<span class="punctuation">}</span>
                 </div>
             </div>
 
@@ -734,7 +939,7 @@ input:valid:not(:placeholder-shown) {
 
         <footer>
             <p>Week 3 - Day 2: Styling Forms & Buttons</p>
-            <p>&copy; 2025 Next-Step Technology | Web Development Internship</p>
+            <p>&copy; 2025 Next Step Innovation and Impact Space | Web Development Internship</p>
         </footer>
     </div>
 </body>
