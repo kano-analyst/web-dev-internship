@@ -21,19 +21,43 @@
         header { background: #4facfe; color: white; padding: 30px; border-radius: 15px 15px 0 0; }
         .content { padding: 40px; }
         h2 { color: #4facfe; border-bottom: 3px solid #00f2fe; padding-bottom: 10px; margin: 30px 0 20px; }
+        h3 { color: #333; margin: 20px 0 10px; font-size: 1.2em; }
         .code-block {
-            background: #2d2d2d;
-            color: #f8f8f2;
+            background: #1e1e1e;
+            color: #d4d4d4;
             padding: 20px;
             border-radius: 8px;
             overflow-x: auto;
             margin: 20px 0;
-            font-family: 'Courier New', monospace;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            border: 1px solid #333;
+            position: relative;
         }
+        .code-block::before {
+            content: 'Code';
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: #333;
+            color: #fff;
+            padding: 2px 10px;
+            font-size: 10px;
+            border-radius: 0 8px 0 8px;
+        }
+        .code-block .comment { color: #6a9955; }
+        .code-block .keyword { color: #569cd6; }
+        .code-block .string { color: #ce9178; }
+        .code-block .function { color: #dcdcaa; }
+        .code-block .tag { color: #4ec9b0; }
+        .code-block .attribute { color: #9cdcfe; }
+        .code-block .value { color: #ce9178; }
         .info-box { background: #e3f2fd; border-left: 5px solid #4facfe; padding: 20px; margin: 20px 0; border-radius: 5px; }
         .demo { background: #f5f5f5; padding: 20px; margin: 20px 0; border: 2px solid #4facfe; border-radius: 8px; }
         .btn { background: #4facfe; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 10px 10px 0; }
         footer { background: #4facfe; color: white; padding: 20px; text-align: center; border-radius: 0 0 15px 15px; }
+        pre { margin: 0; white-space: pre-wrap; }
     </style>
 </head>
 <body>
@@ -61,182 +85,164 @@
             <h2>🎯 Selecting Elements</h2>
             
             <h3>getElementById()</h3>
-            <div class="code-block">
-// HTML
-&lt;h1 id="title"&gt;Hello World&lt;/h1&gt;
+            <div class="code-block"><pre><span class="comment">// HTML</span>
+<span class="tag">&lt;h1</span> <span class="attribute">id</span>=<span class="value">"title"</span><span class="tag">&gt;</span>Hello World<span class="tag">&lt;/h1&gt;</span>
 
-// JavaScript
-let titleElement = document.getElementById("title");
-console.log(titleElement);  // <h1 id="title">Hello World</h1>
-            </div>
+<span class="comment">// JavaScript</span>
+<span class="keyword">let</span> titleElement = <span class="keyword">document</span>.<span class="function">getElementById</span>(<span class="string">"title"</span>);
+<span class="keyword">console</span>.<span class="function">log</span>(titleElement);  <span class="comment">// &lt;h1 id="title"&gt;Hello World&lt;/h1&gt;</span></pre></div>
 
             <h3>querySelector()</h3>
-            <div class="code-block">
-// Select by ID
-let title = document.querySelector("#title");
+            <div class="code-block"><pre><span class="comment">// Select by ID</span>
+<span class="keyword">let</span> title = <span class="keyword">document</span>.<span class="function">querySelector</span>(<span class="string">"#title"</span>);
 
-// Select by class
-let button = document.querySelector(".btn");
+<span class="comment">// Select by class</span>
+<span class="keyword">let</span> button = <span class="keyword">document</span>.<span class="function">querySelector</span>(<span class="string">".btn"</span>);
 
-// Select by tag
-let paragraph = document.querySelector("p");
-            </div>
+<span class="comment">// Select by tag</span>
+<span class="keyword">let</span> paragraph = <span class="keyword">document</span>.<span class="function">querySelector</span>(<span class="string">"p"</span>);</pre></div>
 
             <h3>querySelectorAll()</h3>
-            <div class="code-block">
-// Select ALL elements with class "card"
-let cards = document.querySelectorAll(".card");
-console.log(cards.length);  // Number of cards
-            </div>
+            <div class="code-block"><pre><span class="comment">// Select ALL elements with class "card"</span>
+<span class="keyword">let</span> cards = <span class="keyword">document</span>.<span class="function">querySelectorAll</span>(<span class="string">".card"</span>);
+<span class="keyword">console</span>.<span class="function">log</span>(cards.length);  <span class="comment">// Number of cards</span></pre></div>
 
             <h2>✏️ Changing HTML Content</h2>
             
             <h3>textContent</h3>
-            <div class="code-block">
-// HTML
-&lt;p id="demo"&gt;Original text&lt;/p&gt;
+            <div class="code-block"><pre><span class="comment">// HTML</span>
+<span class="tag">&lt;p</span> <span class="attribute">id</span>=<span class="value">"demo"</span><span class="tag">&gt;</span>Original text<span class="tag">&lt;/p&gt;</span>
 
-// JavaScript
-let demo = document.getElementById("demo");
-demo.textContent = "New text!";
-// Result: <p id="demo">New text!</p>
-            </div>
+<span class="comment">// JavaScript</span>
+<span class="keyword">let</span> demo = <span class="keyword">document</span>.<span class="function">getElementById</span>(<span class="string">"demo"</span>);
+demo.textContent = <span class="string">"New text!"</span>;
+<span class="comment">// Result: &lt;p id="demo"&gt;New text!&lt;/p&gt;</span></pre></div>
 
             <h3>innerHTML</h3>
-            <div class="code-block">
-// Can include HTML tags
-let container = document.getElementById("container");
-container.innerHTML = "&lt;h2&gt;Hello&lt;/h2&gt;&lt;p&gt;Welcome!&lt;/p&gt;";
-            </div>
+            <div class="code-block"><pre><span class="comment">// Can include HTML tags</span>
+<span class="keyword">let</span> container = <span class="keyword">document</span>.<span class="function">getElementById</span>(<span class="string">"container"</span>);
+container.innerHTML = <span class="string">"&lt;h2&gt;Hello&lt;/h2&gt;&lt;p&gt;Welcome!&lt;/p&gt;"</span>;</pre></div>
 
             <h2>🎨 Changing CSS Styles</h2>
-            <div class="code-block">
-let box = document.getElementById("box");
+            <div class="code-block"><pre><span class="keyword">let</span> box = <span class="keyword">document</span>.<span class="function">getElementById</span>(<span class="string">"box"</span>);
 
-// Change individual styles
-box.style.color = "red";
-box.style.backgroundColor = "yellow";
-box.style.fontSize = "24px";
-box.style.padding = "20px";
-box.style.border = "2px solid black";
-            </div>
+<span class="comment">// Change individual styles</span>
+box.style.color = <span class="string">"red"</span>;
+box.style.backgroundColor = <span class="string">"yellow"</span>;
+box.style.fontSize = <span class="string">"24px"</span>;
+box.style.padding = <span class="string">"20px"</span>;
+box.style.border = <span class="string">"2px solid black"</span>;</pre></div>
 
             <h2>➕ Adding/Removing Classes</h2>
-            <div class="code-block">
-let element = document.getElementById("myElement");
+            <div class="code-block"><pre><span class="keyword">let</span> element = <span class="keyword">document</span>.<span class="function">getElementById</span>(<span class="string">"myElement"</span>);
 
-// Add class
-element.classList.add("active");
+<span class="comment">// Add class</span>
+element.classList.<span class="function">add</span>(<span class="string">"active"</span>);
 
-// Remove class
-element.classList.remove("hidden");
+<span class="comment">// Remove class</span>
+element.classList.<span class="function">remove</span>(<span class="string">"hidden"</span>);
 
-// Toggle class (add if not present, remove if present)
-element.classList.toggle("visible");
-            </div>
+<span class="comment">// Toggle class (add if not present, remove if present)</span>
+element.classList.<span class="function">toggle</span>(<span class="string">"visible"</span>);</pre></div>
 
             <h2>🔘 Changing Attributes</h2>
-            <div class="code-block">
-let image = document.querySelector("img");
+            <div class="code-block"><pre><span class="keyword">let</span> image = <span class="keyword">document</span>.<span class="function">querySelector</span>(<span class="string">"img"</span>);
 
-// Change src attribute
-image.src = "newimage.jpg";
+<span class="comment">// Change src attribute</span>
+image.src = <span class="string">"newimage.jpg"</span>;
 
-// Change alt text
-image.alt = "New description";
+<span class="comment">// Change alt text</span>
+image.alt = <span class="string">"New description"</span>;
 
-// Add/change href
-let link = document.querySelector("a");
-link.href = "https://google.com";
-            </div>
+<span class="comment">// Add/change href</span>
+<span class="keyword">let</span> link = <span class="keyword">document</span>.<span class="function">querySelector</span>(<span class="string">"a"</span>);
+link.href = <span class="string">"https://google.com"</span>;</pre></div>
 
             <h2>💻 Complete Interactive Example</h2>
-            <div class="code-block">
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>DOM Manipulation Demo</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 40px;
-            background: #f0f0f0;
+            <div class="code-block"><pre><span class="tag">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;html</span> <span class="attribute">lang</span>=<span class="value">"en"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attribute">charset</span>=<span class="value">"UTF-8"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;title&gt;</span>DOM Manipulation Demo<span class="tag">&lt;/title&gt;</span>
+    <span class="tag">&lt;style&gt;</span>
+        <span class="keyword">body</span> {
+            <span class="attribute">font-family</span>: Arial, sans-serif;
+            <span class="attribute">padding</span>: <span class="value">40px</span>;
+            <span class="attribute">background</span>: <span class="value">#f0f0f0</span>;
         }
-        .box {
-            width: 200px;
-            height: 200px;
-            background: lightblue;
-            margin: 20px;
-            padding: 20px;
-            border-radius: 10px;
+        <span class="keyword">.box</span> {
+            <span class="attribute">width</span>: <span class="value">200px</span>;
+            <span class="attribute">height</span>: <span class="value">200px</span>;
+            <span class="attribute">background</span>: <span class="value">lightblue</span>;
+            <span class="attribute">margin</span>: <span class="value">20px</span>;
+            <span class="attribute">padding</span>: <span class="value">20px</span>;
+            <span class="attribute">border-radius</span>: <span class="value">10px</span>;
         }
-        .highlight {
-            background: yellow;
-            font-weight: bold;
+        <span class="keyword">.highlight</span> {
+            <span class="attribute">background</span>: <span class="value">yellow</span>;
+            <span class="attribute">font-weight</span>: <span class="value">bold</span>;
         }
-        button {
-            padding: 10px 20px;
-            margin: 5px;
-            cursor: pointer;
+        <span class="keyword">button</span> {
+            <span class="attribute">padding</span>: <span class="value">10px 20px</span>;
+            <span class="attribute">margin</span>: <span class="value">5px</span>;
+            <span class="attribute">cursor</span>: <span class="value">pointer</span>;
         }
-    </style>
-</head>
-<body>
-    <h1 id="heading">DOM Manipulation Practice</h1>
-    <p id="message">This is the original message</p>
+    <span class="tag">&lt;/style&gt;</span>
+<span class="tag">&lt;/head&gt;</span>
+<span class="tag">&lt;body&gt;</span>
+    <span class="tag">&lt;h1</span> <span class="attribute">id</span>=<span class="value">"heading"</span><span class="tag">&gt;</span>DOM Manipulation Practice<span class="tag">&lt;/h1&gt;</span>
+    <span class="tag">&lt;p</span> <span class="attribute">id</span>=<span class="value">"message"</span><span class="tag">&gt;</span>This is the original message<span class="tag">&lt;/p&gt;</span>
     
-    <div id="box" class="box">
-        <p>This is a box</p>
-    </div>
+    <span class="tag">&lt;div</span> <span class="attribute">id</span>=<span class="value">"box"</span> <span class="attribute">class</span>=<span class="value">"box"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;p&gt;</span>This is a box<span class="tag">&lt;/p&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
 
-    <button onclick="changeText()">Change Text</button>
-    <button onclick="changeColor()">Change Color</button>
-    <button onclick="toggleHighlight()">Toggle Highlight</button>
-    <button onclick="addContent()">Add Content</button>
+    <span class="tag">&lt;button</span> <span class="attribute">onclick</span>=<span class="value">"changeText()"</span><span class="tag">&gt;</span>Change Text<span class="tag">&lt;/button&gt;</span>
+    <span class="tag">&lt;button</span> <span class="attribute">onclick</span>=<span class="value">"changeColor()"</span><span class="tag">&gt;</span>Change Color<span class="tag">&lt;/button&gt;</span>
+    <span class="tag">&lt;button</span> <span class="attribute">onclick</span>=<span class="value">"toggleHighlight()"</span><span class="tag">&gt;</span>Toggle Highlight<span class="tag">&lt;/button&gt;</span>
+    <span class="tag">&lt;button</span> <span class="attribute">onclick</span>=<span class="value">"addContent()"</span><span class="tag">&gt;</span>Add Content<span class="tag">&lt;/button&gt;</span>
 
-    <div id="output"></div>
+    <span class="tag">&lt;div</span> <span class="attribute">id</span>=<span class="value">"output"</span><span class="tag">&gt;&lt;/div&gt;</span>
 
-    <script>
-        // Change text content
-        function changeText() {
-            let heading = document.getElementById("heading");
-            heading.textContent = "Text Changed!";
+    <span class="tag">&lt;script&gt;</span>
+        <span class="comment">// Change text content</span>
+        <span class="keyword">function</span> <span class="function">changeText</span>() {
+            <span class="keyword">let</span> heading = <span class="keyword">document</span>.<span class="function">getElementById</span>(<span class="string">"heading"</span>);
+            heading.textContent = <span class="string">"Text Changed!"</span>;
             
-            let message = document.getElementById("message");
-            message.textContent = "The message has been updated";
+            <span class="keyword">let</span> message = <span class="keyword">document</span>.<span class="function">getElementById</span>(<span class="string">"message"</span>);
+            message.textContent = <span class="string">"The message has been updated"</span>;
         }
 
-        // Change CSS styles
-        function changeColor() {
-            let box = document.getElementById("box");
-            box.style.backgroundColor = "lightcoral";
-            box.style.color = "white";
-            box.style.fontSize = "20px";
+        <span class="comment">// Change CSS styles</span>
+        <span class="keyword">function</span> <span class="function">changeColor</span>() {
+            <span class="keyword">let</span> box = <span class="keyword">document</span>.<span class="function">getElementById</span>(<span class="string">"box"</span>);
+            box.style.backgroundColor = <span class="string">"lightcoral"</span>;
+            box.style.color = <span class="string">"white"</span>;
+            box.style.fontSize = <span class="string">"20px"</span>;
         }
 
-        // Toggle CSS class
-        function toggleHighlight() {
-            let message = document.getElementById("message");
-            message.classList.toggle("highlight");
+        <span class="comment">// Toggle CSS class</span>
+        <span class="keyword">function</span> <span class="function">toggleHighlight</span>() {
+            <span class="keyword">let</span> message = <span class="keyword">document</span>.<span class="function">getElementById</span>(<span class="string">"message"</span>);
+            message.classList.<span class="function">toggle</span>(<span class="string">"highlight"</span>);
         }
 
-        // Add new HTML content
-        function addContent() {
-            let output = document.getElementById("output");
-            output.innerHTML += "<p>New paragraph added!</p>";
+        <span class="comment">// Add new HTML content</span>
+        <span class="keyword">function</span> <span class="function">addContent</span>() {
+            <span class="keyword">let</span> output = <span class="keyword">document</span>.<span class="function">getElementById</span>(<span class="string">"output"</span>);
+            output.innerHTML += <span class="string">"&lt;p&gt;New paragraph added!&lt;/p&gt;"</span>;
         }
-    </script>
-</body>
-</html>
-            </div>
+    <span class="tag">&lt;/script&gt;</span>
+<span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span></pre></div>
 
             <h2>🧪 Live Demo on This Page</h2>
-            <div class="demo">
+            <div class="demo"></div>
                 <h3 id="demoHeading">Click the button below!</h3>
                 <button onclick="changeHeading()" style="padding: 10px 20px; cursor: pointer; background: #4facfe; color: white; border: none; border-radius: 5px;">Change Heading</button>
                 
-                <div id="demoBox" style="width: 200px; height: 100px; background: lightblue; margin: 20px 0; padding: 20px; border-radius: 8px;">
+                <div id="demoBox" style="width: 200px; height: 100px; background: lightblue; margin: 20px 0; padding: 20px; border-radius: 8px;"></div>
                     <p>Original Box</p>
                 </div>
                 <button onclick="changeBoxStyle()" style="padding: 10px 20px; cursor: pointer; background: #00f2fe; color: white; border: none; border-radius: 5px;">Change Box Style</button>
@@ -266,56 +272,54 @@ link.href = "https://google.com";
             </ol>
 
             <h2>🎯 Mini Project: Profile Card Updater</h2>
-            <div class="code-block">
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Profile Card Updater</title>
-    <style>
-        .profile-card {
-            width: 300px;
-            padding: 30px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            text-align: center;
+            <div class="code-block"><pre><span class="tag">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;html</span> <span class="attribute">lang</span>=<span class="value">"en"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attribute">charset</span>=<span class="value">"UTF-8"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;title&gt;</span>Profile Card Updater<span class="tag">&lt;/title&gt;</span>
+    <span class="tag">&lt;style&gt;</span>
+        <span class="keyword">.profile-card</span> {
+            <span class="attribute">width</span>: <span class="value">300px</span>;
+            <span class="attribute">padding</span>: <span class="value">30px</span>;
+            <span class="attribute">background</span>: <span class="value">white</span>;
+            <span class="attribute">border-radius</span>: <span class="value">15px</span>;
+            <span class="attribute">box-shadow</span>: <span class="value">0 5px 15px rgba(0,0,0,0.2)</span>;
+            <span class="attribute">text-align</span>: <span class="value">center</span>;
         }
-        .profile-card img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
+        <span class="keyword">.profile-card img</span> {
+            <span class="attribute">width</span>: <span class="value">100px</span>;
+            <span class="attribute">height</span>: <span class="value">100px</span>;
+            <span class="attribute">border-radius</span>: <span class="value">50%</span>;
         }
-        button { margin: 5px; padding: 10px; cursor: pointer; }
-    </style>
-</head>
-<body>
-    <div class="profile-card">
-        <img id="profilePic" src="avatar1.jpg" alt="Profile">
-        <h2 id="profileName">John Doe</h2>
-        <p id="profileRole">Web Developer</p>
-        <p id="profileBio">Learning JavaScript</p>
-    </div>
+        <span class="keyword">button</span> { <span class="attribute">margin</span>: <span class="value">5px</span>; <span class="attribute">padding</span>: <span class="value">10px</span>; <span class="attribute">cursor</span>: <span class="value">pointer</span>; }
+    <span class="tag">&lt;/style&gt;</span>
+<span class="tag">&lt;/head&gt;</span>
+<span class="tag">&lt;body&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attribute">class</span>=<span class="value">"profile-card"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;img</span> <span class="attribute">id</span>=<span class="value">"profilePic"</span> <span class="attribute">src</span>=<span class="value">"avatar1.jpg"</span> <span class="attribute">alt</span>=<span class="value">"Profile"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;h2</span> <span class="attribute">id</span>=<span class="value">"profileName"</span><span class="tag">&gt;</span>John Doe<span class="tag">&lt;/h2&gt;</span>
+        <span class="tag">&lt;p</span> <span class="attribute">id</span>=<span class="value">"profileRole"</span><span class="tag">&gt;</span>Web Developer<span class="tag">&lt;/p&gt;</span>
+        <span class="tag">&lt;p</span> <span class="attribute">id</span>=<span class="value">"profileBio"</span><span class="tag">&gt;</span>Learning JavaScript<span class="tag">&lt;/p&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
 
-    <button onclick="updateProfile()">Update Profile</button>
-    <button onclick="changeTheme()">Change Theme</button>
+    <span class="tag">&lt;button</span> <span class="attribute">onclick</span>=<span class="value">"updateProfile()"</span><span class="tag">&gt;</span>Update Profile<span class="tag">&lt;/button&gt;</span>
+    <span class="tag">&lt;button</span> <span class="attribute">onclick</span>=<span class="value">"changeTheme()"</span><span class="tag">&gt;</span>Change Theme<span class="tag">&lt;/button&gt;</span>
 
-    <script>
-        function updateProfile() {
-            document.getElementById("profileName").textContent = "Ahmad Garba";
-            document.getElementById("profileRole").textContent = "Frontend Developer";
-            document.getElementById("profileBio").textContent = "Expert in HTML, CSS & JavaScript";
+    <span class="tag">&lt;script&gt;</span>
+        <span class="keyword">function</span> <span class="function">updateProfile</span>() {
+            <span class="keyword">document</span>.<span class="function">getElementById</span>(<span class="string">"profileName"</span>).textContent = <span class="string">"Ahmad Garba"</span>;
+            <span class="keyword">document</span>.<span class="function">getElementById</span>(<span class="string">"profileRole"</span>).textContent = <span class="string">"Frontend Developer"</span>;
+            <span class="keyword">document</span>.<span class="function">getElementById</span>(<span class="string">"profileBio"</span>).textContent = <span class="string">"Expert in HTML, CSS & JavaScript"</span>;
         }
 
-        function changeTheme() {
-            let card = document.querySelector(".profile-card");
-            card.style.background = "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
-            card.style.color = "white";
+        <span class="keyword">function</span> <span class="function">changeTheme</span>() {
+            <span class="keyword">let</span> card = <span class="keyword">document</span>.<span class="function">querySelector</span>(<span class="string">".profile-card"</span>);
+            card.style.background = <span class="string">"linear-gradient(135deg, #667eea 0%, #764ba2 100%)"</span>;
+            card.style.color = <span class="string">"white"</span>;
         }
-    </script>
-</body>
-</html>
-            </div>
+    <span class="tag">&lt;/script&gt;</span>
+<span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span></pre></div>
 
             <h2>✅ Today's Deliverable</h2>
             <ul>
@@ -328,7 +332,7 @@ link.href = "https://google.com";
                 <li>✓ Working demo screenshots</li>
             </ul>
 
-            <div style="margin-top: 40px;">
+            <div style="margin-top: 40px;"></div>
                 <a href="day2-js-operators.html" class="btn">← Previous</a>
                 <a href="../index.html" class="btn">Course Home</a>
                 <a href="../week7/day1-js-functions.html" class="btn">Next: Week 7 →</a>
